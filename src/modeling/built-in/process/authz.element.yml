@@ -1,0 +1,79 @@
+module:
+  process:
+    - metadata:
+        id: 02dd4cf4-1e8b-4535-9933-7cca60d5289d
+        name: Normal Authentication Process
+        description: OAuth2 Authentication
+        icon: data:image/png;base64,...
+        type: authentication
+      groups: [ authentication ]
+      attributes:
+        critical: 3
+        isSanitizer: true
+        isAuthn: false
+        operation: 'w'
+
+    - metadata:
+        id: b21dc275-a75f-45fc-9522-b7fb439efeee
+        name: Password Authentication Process
+        description: Authentication uses password as credential
+        icon: data:image/png;base64,...
+        type: authentication
+      groups: [ authentication ]
+      attributes:
+        critical: 3
+        isSanitizer: true
+        isAuthn: false
+        operation: 'w'
+      additions:
+        password:
+          minLength:
+            type: number
+            description: Minimum length of the password
+          requireUppercase:
+            type: boolean
+            description: Whether uppercase letters are required
+          requireLowercase:
+            type: boolean
+            description: Whether lowercase letters are required
+          requireNumbers:
+            type: boolean
+            description: Whether numbers are required
+          requireSpecialChars:
+            type: boolean
+            description: Whether special characters are required
+          expiration:
+            type: number
+            description: Number of days before password expiration
+        requireCaptcha:
+          type: boolean
+          description: Whether CAPTCHA is required during authentication
+        hasRetryLimitation:
+          type: boolean
+          description: Whether there's a limit on retry attempts
+
+    - metadata:
+        id: de98418e-f62b-4ff6-baa9-5f8301eb50b9
+        name: OAuth2 Authentication Process
+        description: OAuth2 Authentication
+        icon: data:image/png;base64,...
+        type: authentication
+      groups: [ authentication ]
+      attributes:
+        critical: 3
+        isSanitizer: true
+        isAuthn: false
+        operation: 'w'
+
+    - metadata:
+        id: 22134942-2735-4cf8-8586-72d28846d725
+        name: SSO Authentication Process
+        description: OAuth2 Authentication
+        icon: data:image/png;base64,...
+        type: authentication
+      groups: [ authentication ]
+      attributes:
+        critical: 3
+        isSanitizer: true
+        isAuthn: false
+        operation: 'w'
