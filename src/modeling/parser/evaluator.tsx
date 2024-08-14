@@ -1,74 +1,115 @@
-import * as mathjs from 'mathjs';
+import { create, all, MathJsInstance } from "mathjs";
+
+type KnownObj = Record<string, any>;
+type Operator = '=' | '!=' | '<' | '<=' | '>' | '>=';
+
+export class EvaluationError extends Error {
+    constructor(message: string) {
+        super(message);
+        this.name = "EvaluationError";
+    }
+}
 
 export default class Evaluator {
-    private math: mathjs.MathJsInstance;
+    private math: MathJsInstance;
 
     constructor() {
-        // restricted mathjs context
-        this.math = mathjs.create(mathjs.all, {});
+        this.math = create(all, {});
+        this.initializeMath();
+    }
 
-        // security configuration
+    private initializeMath(): void {
         this.math.import({
-            equal: mathjs.equal,
-            unequal: mathjs.unequal,
-            smaller: mathjs.smaller,
-            larger: mathjs.larger,
-            smallerEq: mathjs.smallerEq,
-            largerEq: mathjs.largerEq,
-            'import':     function () { throw new Error('Function import is disabled') },
-            'createUnit': function () { throw new Error('Function createUnit is disabled') },
-            'evaluate':   function () { throw new Error('Function evaluate is disabled') },
-            'parse':      function () { throw new Error('Function parse is disabled') },
-            'simplify':   function () { throw new Error('Function simplify is disabled') },
-            'derivative': function () { throw new Error('Function derivative is disabled') }
+            createUnit: () => { throw new EvaluationError('Function createUnit is disabled'); },
+            simplify: () => { throw new EvaluationError('Function simplify is disabled'); },
+            derivative: () => { throw new EvaluationError('Function derivative is disabled'); }
+        }, { override: true });
+
+        this.math.import({
+            equal: (a: any, b: any): boolean => a === b,
+            unequal: (a: any, b: any): boolean => a !== b,
+            smaller: (a: any, b: any): boolean => {
+                if (typeof a === 'string' && typeof b === 'string') {
+                    return a < b;
+                }
+                return Number(a) < Number(b);
+            },
+            larger: (a: any, b: any): boolean => {
+                if (typeof a === 'string' && typeof b === 'string') {
+                    return a > b;
+                }
+                return Number(a) > Number(b);
+            },
+            smallerEq: (a: any, b: any): boolean => {
+                if (typeof a === 'string' && typeof b === 'string') {
+                    return a <= b;
+                }
+                return Number(a) <= Number(b);
+            },
+            largerEq: (a: any, b: any): boolean => {
+                if (typeof a === 'string' && typeof b === 'string') {
+                    return a >= b;
+                }
+                return Number(a) >= Number(b);
+            }
         }, { override: true });
     }
 
-    analyze(node: any, expression: string): boolean {
-        const transformedExpr = String(expression)
-            .replace(/([^<>!])(=)([^=])/g, '$1 equal $3')
-            .replace(/<=/g, 'smallerEq')
-            .replace(/>=/g, 'largerEq')
-            .replace(/!=/g, 'unequal')
-            .replace(/</g, 'smaller')
-            .replace(/>/g, 'larger');
-
-        const context = new Proxy({}, {
-            get: (_, prop) => {
-                if (typeof prop === 'string') {
-                    return this.safeGet(node, prop);
-                }
-                return undefined;
-            }
-        });
-
-        return this.evaluate(transformedExpr, context);
+    private parseRule(rule: string): [string, Operator, string] | null {
+        const match = rule.match(/^(.+?)\s*(=|!=|<=|>=|<|>)\s*(.+)$/);
+        if (!match) {
+            throw new EvaluationError('Invalid rule format');
+        }
+        return [match[1], match[2] as Operator, match[3]];
     }
 
-    /**
-     * This is a really sensitive function which might cause unknown security issue.
-     * It is under sandbox restriction but do not RELY on the sandbox which might have unknown issue.
-     * Carefully **sanitize** and **validate** untrusted data before call this function.
-     *
-     * @param expression
-     * @param context
-     */
-    private evaluate(expression: string, context: Record<string, any>): boolean {
-        try {
-            const parsedExpr = this.math.parse(expression);
-            const code = parsedExpr.compile() as mathjs.EvalFunction;
-            return code.evaluate(context) as boolean;
-        } catch (error) {
-            throw new Error(`Evaluate design failed`);
+    private createSafeExpression(left: string, operator: Operator, right: string): string {
+        switch (operator) {
+            case '=': return `equal(${left}, ${right})`;
+            case '!=': return `unequal(${left}, ${right})`;
+            case '<': return `smaller(${left}, ${right})`;
+            case '<=': return `smallerEq(${left}, ${right})`;
+            case '>': return `larger(${left}, ${right})`;
+            case '>=': return `largerEq(${left}, ${right})`;
+            default: throw new EvaluationError('Unknown operator');
         }
     }
 
-    private safeGet(obj: any, path: string): any {
-        return path.split('.').reduce((acc, part) => {
-            if (acc && typeof acc === 'object' && part in acc) {
-                return acc[part];
+    public analyze(rule: string, knownObj: KnownObj): boolean {
+        try {
+            const parsedRule = this.parseRule(rule);
+            if (!parsedRule) return false;
+
+            const [left, operator, right] = parsedRule;
+            const safeExpression = this.createSafeExpression(left, operator, right);
+            const result = this.math.evaluate(safeExpression, knownObj);
+            return Boolean(result);
+        } catch (error) {
+            if (error instanceof EvaluationError) {
+                console.error('Evaluation error:', error.message);
+            } else {
+                console.error('Unexpected error:', error);
             }
-            return undefined;
-        }, obj);
+            return false;
+        }
+    }
+
+    public validateRule(rule: string): boolean {
+        try {
+            return this.parseRule(rule) !== null;
+        } catch {
+            return false;
+        }
+    }
+
+    public getAccessedProperties(rule: string): string[] | null {
+        try {
+            const parsedRule = this.parseRule(rule);
+            if (!parsedRule) return null;
+            const [left] = parsedRule;
+            return left.split('.');
+        } catch {
+            return null;
+        }
     }
 }

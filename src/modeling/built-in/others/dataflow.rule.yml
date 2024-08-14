@@ -8,8 +8,8 @@ module:
         - design: ssl.isSSL = false
 #        - design: attached.active.trust != attached.passive.trust   # indicate this dataflow connects two nodes in different zones
         - either:  # Even though they are in the same zone, not enough trust might also introduce problems
-          - design: attached.active.trust != 3
-          - design: attached.passive.trust != 3
+          - design: attached.active.zone.trust != 3
+          - design: attached.passive.zone.trust != 3
 
     - id: afe52040-7029-4c04-acb8-609dc9bb71b6
       threat: d06b6da5-1214-4068-9a01-b96572716c02

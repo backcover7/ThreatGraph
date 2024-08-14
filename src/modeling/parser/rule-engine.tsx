@@ -1,11 +1,13 @@
 import Evaluator from './evaluator';
+import {element} from "prop-types";
 
 export default class RuleEngine {
     MAX_DEPTH = 10;
 
     rule: any;
-    relatedThreat:any;
-    relatedElement:any;
+    relatedThreat: any;
+    relatedElements: any;
+    flaggedElements: any[] = [];
 
     evaluator: Evaluator | undefined;
 
@@ -14,10 +16,10 @@ export default class RuleEngine {
         this.rule = rule;
 
         // Find the related element
-        this.relatedElement = allElements[rule.element.type]?.find((element: any) => element.metadata.id === rule.element.id);
+        this.relatedElements = allElements.filter((element: any) => element.metadata.element === rule.element.type || element.metadata.id === rule.element.id);
 
         // Find matched elements in the canvas
-        if (this.relatedElement) {
+        if (this.relatedElements) {
             this.relatedThreat = allThreats.find(threat => threat.id === rule.threat);
         }
 
@@ -27,59 +29,67 @@ export default class RuleEngine {
     }
 
     startEvaluation() {
-        this.evaluateDesigns(this.rule.designs, 0);
+        this.relatedElements.forEach((relatedElement: any) => {
+            this.evaluateDesigns(this.rule.designs, relatedElement, 0);
+        })
     }
 
-    private depthCheck(depth: number) {
-        depth += 1;
+    private depthCheck(depth: number): boolean {
         if (depth > this.MAX_DEPTH) {
             console.error(`The depth of expressions is too deep. Please simplify your rule and make the depth less than ${this.MAX_DEPTH}`);
-            return;
+            return false;
         }
+        return true;
     }
 
     /**
      * if (design && design && ...) {...}
      * @param expressions
+     * @param element
      * @param depth
      */
-    private evaluateDesigns(expressions: any[], depth: number): boolean {
-        this.depthCheck(depth);
-
-        let flag = true;
-        for (const expression of expressions) {
-            if (expression.designs) flag &&= this.evaluateDesigns(expressions, depth);
-            else if (expression.either) flag &&= this.evaluateEitherDesign(expressions, depth);
-            else if (expression.design) flag &&= this.evaluateDesign(expression);
+    private evaluateDesigns(expressions: any[], element: any, depth: number): boolean {
+        if (this.depthCheck(depth += 1)) {
+            let flag = true;
+            for (const expression of expressions) {
+                if (expression.designs) flag &&= this.evaluateDesigns(expressions, element, depth);
+                else if (expression.either) flag &&= this.evaluateEitherDesign(expressions, element, depth);
+                else if (expression.design) flag &&= this.evaluateDesign(expression, element);
+            }
+            return flag;
         }
-        return flag;
+        return false
     }
 
     /**
      * if (design || design || ...) {...}
      * @param expressions
+     * @param element
      * @param depth
      */
-    private evaluateEitherDesign(expressions: any[], depth: number): boolean {
-        this.depthCheck(depth);
-
-        let flag = true;
-        for (const expression of expressions) {
-            if (expression.designs) flag ||= this.evaluateDesigns(expressions, depth);
-            else if (expression.either) flag ||= this.evaluateEitherDesign(expressions, depth);
-            else if (expression.design) flag ||= this.evaluateDesign(expression);
+    private evaluateEitherDesign(expressions: any[], element: any, depth: number): boolean {
+        if (this.depthCheck(depth += 1)) {
+            let flag = true;
+            for (const expression of expressions) {
+                if (expression.designs) flag ||= this.evaluateDesigns(expressions, element, depth);
+                else if (expression.either) flag ||= this.evaluateEitherDesign(expressions, element, depth);
+                else if (expression.design) flag ||= this.evaluateDesign(expression, element);
+            }
+            return flag;
         }
-        return flag;
+        return false;
     }
 
     /**
      * if (design) {...}
      * @param design
+     * @param element
      */
-    private evaluateDesign(design: { design: string } ): boolean {
+    private evaluateDesign(design: { design: string }, element: any): boolean {
         const expression = design.design;
-
-        if (this.evaluator) this.evaluator.analyze(this.relatedElement, expression);
-        return true
+        if (!this.evaluator?.validateRule(expression)) {
+            throw new Error('Invalid rule format');
+        }
+        return this.evaluator.analyze(expression, element);
     }
 }

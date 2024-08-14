@@ -1,6 +1,6 @@
 import * as basicShapes from '../illustrate/basic-shapes'
 
-class diagram {
+export default class Diagram {
     shapes: any = {};
 
     constructor(excalidrawJson: string) {
@@ -10,14 +10,11 @@ class diagram {
 
     processShapes(): any[] {
         try {
-            return this.shapes.map((shape: any) => {
-                try {
-                    const attached =  this.parseShapeToElement(shape);
-                    return shape.model && attached;   // return complete built elements with attached object
-                } catch (error) {
-                    console.error('Error parsing shape:', error);
-                }
-            }).filter(Boolean);
+            return this.shapes.reduce((acc: any[], shape: any) => {
+                const attached = this.parseShapeToElement(shape);
+                if (attached !== null) acc.push({ ...shape.model, attached: { ...attached } });
+                return acc;
+            }, []);
         } catch (error) {
             console.error('Error processing diagram:', error);
             return [];
@@ -35,33 +32,42 @@ class diagram {
             case basicShapes.shapes.NODE:
                 return this.parseRectangleToNode(shape);
             case basicShapes.shapes.PROCESS:
-                return this.parseArrowToDataflow(shape);
-            case basicShapes.shapes.DATAFLOW:
                 return this.parseTextToProcess(shape);
+            case basicShapes.shapes.DATAFLOW:
+                return this.parseArrowToDataflow(shape);
             default:
                 return {};
         }
     }
 
     parseFrameToZone(frameShape: any) {
+        const entities: any[] = this.shapes.filter((rectangleShape: any) =>
+                rectangleShape.frameId === frameShape.id && rectangleShape.type === basicShapes.shapes.NODE && rectangleShape.model.metadata.element === 'entity')
+                .map((rectangleShape: any) => rectangleShape.model);
+        const datastores: any[] = this.shapes.filter((rectangleShape: any) =>
+                rectangleShape.frameId === frameShape.id && rectangleShape.type === basicShapes.shapes.NODE && rectangleShape.model.metadata.element === 'datastore')
+                .map((rectangleShape: any) => rectangleShape.model);
+        const children: any[] = this.shapes.filter((childFrameShape: any) =>
+            childFrameShape.frameId === frameShape.id && childFrameShape.type === basicShapes.shapes.ZONE)
+            .map((childFrameShapes: any) => childFrameShapes.model);
         return {
             // Excalidraw does not support multi-level frames
             // Hack to force applying parent frame.idd to child frameId property when creating frames
-            parent: frameShape.frameId,
-            child: this.shapes.filter((childFrameShapes: any) => childFrameShapes.frameId === frameShape.id),
-
-            entities: this.shapes.filter((rectangleShape: any) =>
-                rectangleShape.frameId === frameShape.id && rectangleShape.type === basicShapes.shapes.NODE && rectangleShape.model.metadata.type === 'entity')
-                .map((rectangleShape: any) => rectangleShape.model),
-            datastores: this.shapes.filter((rectangleShape: any) =>
-                rectangleShape.frameId === frameShape.id && rectangleShape.type === basicShapes.shapes.NODE && rectangleShape.model.metadata.type === 'datastore')
-                .map((rectangleShape: any) => rectangleShape.model),
+            parent: frameShape.frameId?.model ?? null,
+            children,
+            entities,
+            datastores,
         }
     }
 
     parseRectangleToNode(rectangleShape: any) {
+        const boundedArrowShapes = rectangleShape.boundElements.filter(
+            (boundedArrowShape: { type: string; id: string; }) => boundedArrowShape.type === 'arrow' )
+            .map((boundedArrowShape: any) => boundedArrowShape.id);
         return {
             zone: this.shapes.find((frameShape: any) => frameShape.id === rectangleShape.frameId).model,
+            flow: this.shapes.filter((arrowShape: any) =>
+                boundedArrowShapes.includes(arrowShape.id)).map((arrowShape: any) => arrowShape.model)
         }
     }
 
@@ -74,7 +80,7 @@ class diagram {
             startId = arrowShape.endBinding.elementId;
             endId = arrowShape.startBinding.elementId;
         } else {
-            console.error('Dataflow ' + arrowShape.id + ' is not connected correctly with nodes.')
+            throw new Error('Dataflow ' + arrowShape.id + ' is not connected correctly with nodes.')
         }
 
         const processId = arrowShape.boundElements.find((textShape: any) => textShape.type === 'text').id;
@@ -91,6 +97,7 @@ class diagram {
         // Make sure the text shape is bounded on an arrow
         const arrowShape = this.shapes.find((arrowShape: any) =>
             arrowShape.id === textShape.containerId && arrowShape.type === 'arrow');
-        return { flow: arrowShape.model };
+
+        return arrowShape?.model ? { flow: arrowShape.model } : null;
     }
 }

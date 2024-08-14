@@ -13,7 +13,7 @@ export type Element = {
     description?: string;
     icon?: string;
     element: ElementType;
-    type: string;   // "public" zone, "client" entity, "mysql" datastore
+    type: string;   // "public" zone, "client" entity, "mysql" datastore, 'http' protocol
 }
 
 export type AttachedFlow = {
@@ -32,7 +32,7 @@ export type Zone = {
     // Trust of parent zone <= current zone. If not, override trust of current zone with trust of parent zone.
     attached?: {
         parent?: Zone;    // parent zone
-        child?: Zone;     // child zone
+        children?: Zone[];     // children zones
         entities?: Entity[];
         datastores?: DataStore[];
     };

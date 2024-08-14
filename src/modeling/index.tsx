@@ -10,8 +10,10 @@
 // import _ from 'lodash';
 // const lodashCloned = _.cloneDeep(objA);
 
-import * as template from './parser/template';
+import * as template from './template/loader';
 import RuleEngine from "./parser/rule-engine";
+import Diagram from "./parser/diagram";
+import fs from 'fs/promises';
 
 async function main() {
     // Load built in elements
@@ -23,12 +25,14 @@ async function main() {
     // Users add customized templates
 
     // Threat Modeling
+    const diagram = new Diagram(await fs.readFile('../../tests/authz.json', 'utf-8'));
+    const illustratedElements = diagram.processShapes();
 
     const threats = await template.loadBuiltinTemplates(template.THREAT_TEMPLATE).then(templates => { return templates.threat });
     const rules = await template.loadBuiltinTemplates(template.RULE_TEMPLATE).then(templates => { return templates.rule });
 
     rules.forEach((rule) => {
-        const ruleEngine = new RuleEngine(rule, elements, threats);
+        const ruleEngine = new RuleEngine(rule, illustratedElements, threats);
         ruleEngine.startEvaluation();
     })
 
