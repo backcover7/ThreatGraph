@@ -25,7 +25,7 @@ async function main() {
     // Users add customized templates
 
     // Threat Modeling
-    const diagram = new Diagram(await fs.readFile('../../tests/authz.excalidraw', 'utf-8'));
+    const diagram = new Diagram(await fs.readFile('../../tests/authz.json', 'utf-8'));
     const illustratedElements = diagram.processShapes();
 
     const threats = await template.loadBuiltinTemplates(template.THREAT_TEMPLATE).then(templates => { return templates.threat });
