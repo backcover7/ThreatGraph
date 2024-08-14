@@ -5,6 +5,14 @@ export type UUID = string & { readonly [__brand]: 'UUID' };
 
 export function generateUUID(): UUID { return crypto.randomUUID() as UUID; } // Could only use crypto.randomUUID() to generate UUID value
 
+export const ModelElements = {
+    ZONE: 'zone',
+    ENTITY: 'entity',
+    DATASTORE: 'datastore',
+    PROCESS: 'process',
+    DATAFLOW: 'dataflow'
+}
+
 export type ElementType = 'zone' | 'entity' | 'datastore' | 'process' | 'dataflow';
 
 export type Element = {

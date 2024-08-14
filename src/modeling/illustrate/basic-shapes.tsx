@@ -1,8 +1,8 @@
 export const shapes = {
-    ZONE: 'frame',
-    NODE: 'rectangle',
-    PROCESS: 'text',
-    DATAFLOW: 'arrow',
+    FRAME: 'frame',
+    RECTANGLE: 'rectangle',
+    TEXT: 'text',
+    ARROW: 'arrow',
 }
 
 function getAElement(type: string, x: number, y: number): {type: string; x: number; y: number} {
@@ -10,19 +10,19 @@ function getAElement(type: string, x: number, y: number): {type: string; x: numb
 }
 
 export function getAZone(x: number, y: number): {type: string; x: number; y: number} {
-    return { type: shapes.ZONE, x, y }
+    return { type: shapes.FRAME, x, y }
 }
 
 export function getANode(x: number, y: number): {type: string; x: number; y: number} {
-    return { type: shapes.NODE, x, y }
+    return { type: shapes.RECTANGLE, x, y }
 }
 
 export function getAProcess(x: number, y: number): {type: string; x: number; y: number} {
-    return { type: shapes.PROCESS, x, y }
+    return { type: shapes.TEXT, x, y }
 }
 
 export function getADataflow(x: number, y: number): {type: string; x: number; y: number} {
-    return { type: shapes.DATAFLOW, x, y }
+    return { type: shapes.ARROW, x, y }
 }
 
 // TODO on create a new frame
@@ -34,7 +34,7 @@ export function hackHierarchicalFrames(frameShape: any, allShapes:any) {
     let frameArea: number = frameShape.width * frameShape.height;
 
     allShapes.filter((otherFrameShape: any) => {
-        if (otherFrameShape.type === shapes.ZONE && otherFrameShape.id !== frameShape.id) {
+        if (otherFrameShape.type === shapes.FRAME && otherFrameShape.id !== frameShape.id) {
             const startXcordOffset = otherFrameShape.x - frameShape.x;
             const startYcordOffset = otherFrameShape.y - frameShape.y;
             const endXcordOffset = (otherFrameShape.x + otherFrameShape.width) - (frameShape.x + frameShape.width);

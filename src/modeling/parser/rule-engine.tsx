@@ -1,5 +1,4 @@
 import Evaluator from './evaluator';
-import {element} from "prop-types";
 
 export default class RuleEngine {
     MAX_DEPTH = 10;

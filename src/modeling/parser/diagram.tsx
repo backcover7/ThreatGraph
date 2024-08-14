@@ -1,7 +1,9 @@
-import * as basicShapes from '../illustrate/basic-shapes'
+import * as basicShapes from '../illustrate/basic-shapes';
+import * as model from '../model';
 
 export default class Diagram {
     shapes: any = {};
+    processedElements: Map<string, any> = new Map();
 
     constructor(excalidrawJson: string) {
         const excalidraw = JSON.parse(excalidrawJson);
@@ -10,68 +12,80 @@ export default class Diagram {
 
     processShapes(): any[] {
         try {
-            return this.shapes.reduce((acc: any[], shape: any) => {
-                const attached = this.parseShapeToElement(shape);
-                if (attached !== null) acc.push({ ...shape.model, attached: { ...attached } });
-                return acc;
-            }, []);
+            this.shapes.forEach((shape: any) => {
+                if (shape.model && this.parseShapeToElement(shape)) {
+                    this.processedElements.set(shape.id, { ...shape.model, attached: {} });
+                }
+            });
+
+            this.processedElements.forEach((element, id) => {
+                const shape = this.shapes.find((s: any) => s.id === id);
+                element.attached = this.buildAttachedProperty(shape);
+            });
+
+            return Array.from(this.processedElements.values());
         } catch (error) {
             console.error('Error processing diagram:', error);
             return [];
         }
     }
 
-    /**
-     * To get attached object of elements
-     * @param shape
-     */
-    parseShapeToElement(shape: any) {
+    buildAttachedProperty(shape: any): any {
         switch (shape.type) {
-            case basicShapes.shapes.ZONE:
-                return this.parseFrameToZone(shape);
-            case basicShapes.shapes.NODE:
-                return this.parseRectangleToNode(shape);
-            case basicShapes.shapes.PROCESS:
-                return this.parseTextToProcess(shape);
-            case basicShapes.shapes.DATAFLOW:
-                return this.parseArrowToDataflow(shape);
+            case basicShapes.shapes.FRAME:
+                return this.buildFrameAttached(shape);
+            case basicShapes.shapes.RECTANGLE:
+                return this.buildRectangleAttached(shape);
+            case basicShapes.shapes.TEXT:
+                return this.buildTextAttached(shape);
+            case basicShapes.shapes.ARROW:
+                return this.buildArrowAttached(shape);
             default:
                 return {};
         }
     }
 
-    parseFrameToZone(frameShape: any) {
-        const entities: any[] = this.shapes.filter((rectangleShape: any) =>
-                rectangleShape.frameId === frameShape.id && rectangleShape.type === basicShapes.shapes.NODE && rectangleShape.model.metadata.element === 'entity')
-                .map((rectangleShape: any) => rectangleShape.model);
-        const datastores: any[] = this.shapes.filter((rectangleShape: any) =>
-                rectangleShape.frameId === frameShape.id && rectangleShape.type === basicShapes.shapes.NODE && rectangleShape.model.metadata.element === 'datastore')
-                .map((rectangleShape: any) => rectangleShape.model);
-        const children: any[] = this.shapes.filter((childFrameShape: any) =>
-            childFrameShape.frameId === frameShape.id && childFrameShape.type === basicShapes.shapes.ZONE)
-            .map((childFrameShapes: any) => childFrameShapes.model);
+    parseShapeToElement(shape: any): boolean {
+        switch (shape.type) {
+            case basicShapes.shapes.FRAME:
+            case basicShapes.shapes.RECTANGLE:
+            case basicShapes.shapes.TEXT:
+            case basicShapes.shapes.ARROW:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    buildFrameAttached(frameShape: any) {
+        const entities = this.shapes
+            .filter((s: any) => s.frameId === frameShape.id && s.type === basicShapes.shapes.RECTANGLE && s.model.metadata.element === model.ModelElements.ENTITY)
+            .map((s: any) => this.processedElements.get(s.id));
+        const datastores = this.shapes
+            .filter((s: any) => s.frameId === frameShape.id && s.type === basicShapes.shapes.RECTANGLE && s.model.metadata.element === model.ModelElements.DATASTORE)
+            .map((s: any) => this.processedElements.get(s.id));
+        const children = this.shapes
+            .filter((s: any) => s.frameId === frameShape.id && s.type === basicShapes.shapes.FRAME)
+            .map((s: any) => this.processedElements.get(s.id));
         return {
-            // Excalidraw does not support multi-level frames
-            // Hack to force applying parent frame.idd to child frameId property when creating frames
-            parent: frameShape.frameId?.model ?? null,
+            parent: frameShape.frameId ? this.processedElements.get(frameShape.frameId) : null,
             children,
             entities,
             datastores,
-        }
+        };
     }
 
-    parseRectangleToNode(rectangleShape: any) {
-        const boundedArrowShapes = rectangleShape.boundElements.filter(
-            (boundedArrowShape: { type: string; id: string; }) => boundedArrowShape.type === 'arrow' )
-            .map((boundedArrowShape: any) => boundedArrowShape.id);
+    buildRectangleAttached(rectangleShape: any) {
+        const boundedArrowShapes = rectangleShape.boundElements
+            .filter((b: any) => b.type === 'arrow')
+            .map((b: any) => b.id);
         return {
-            zone: this.shapes.find((frameShape: any) => frameShape.id === rectangleShape.frameId).model,
-            flow: this.shapes.filter((arrowShape: any) =>
-                boundedArrowShapes.includes(arrowShape.id)).map((arrowShape: any) => arrowShape.model)
-        }
+            zone: this.processedElements.get(rectangleShape.frameId),
+            flow: boundedArrowShapes.map((id: string) => this.processedElements.get(id))
+        };
     }
 
-    parseArrowToDataflow(arrowShape: any) {
+    buildArrowAttached(arrowShape: any) {
         let startId: string, endId: string;
         if (arrowShape.startArrowhead) {
             startId = arrowShape.startBinding.elementId;
@@ -80,24 +94,20 @@ export default class Diagram {
             startId = arrowShape.endBinding.elementId;
             endId = arrowShape.startBinding.elementId;
         } else {
-            throw new Error('Dataflow ' + arrowShape.id + ' is not connected correctly with nodes.')
+            throw new Error('Dataflow ' + arrowShape.id + ' is not connected correctly with nodes.');
         }
 
         const processId = arrowShape.boundElements.find((textShape: any) => textShape.type === 'text').id;
 
         return {
-            process: this.shapes.find((textShape: any) => textShape.id === processId).model,
-            active: this.shapes.find((rectangleShape: any) => rectangleShape.id === startId).model,
-            passive: this.shapes.find((rectangleShape: any) => rectangleShape.id === endId).model,
-        }
-
+            process: this.processedElements.get(processId),
+            active: this.processedElements.get(startId),
+            passive: this.processedElements.get(endId),
+        };
     }
 
-    parseTextToProcess(textShape: any) {
-        // Make sure the text shape is bounded on an arrow
-        const arrowShape = this.shapes.find((arrowShape: any) =>
-            arrowShape.id === textShape.containerId && arrowShape.type === 'arrow');
-
-        return arrowShape?.model ? { flow: arrowShape.model } : null;
+    buildTextAttached(textShape: any) {
+        const arrowShape = this.shapes.find((s: any) => s.id === textShape.containerId && s.type === 'arrow');
+        return arrowShape ? { flow: this.processedElements.get(arrowShape.id) } : null;
     }
 }
