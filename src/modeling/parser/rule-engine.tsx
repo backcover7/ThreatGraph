@@ -29,7 +29,9 @@ export default class RuleEngine {
 
     startEvaluation() {
         this.relatedElements.forEach((relatedElement: any) => {
-            this.evaluateDesigns(this.rule.designs, relatedElement, 0);
+            if (this.evaluateDesigns(this.rule.designs, relatedElement, 0)) {
+                this.flaggedElements.push(relatedElement);
+            }
         })
     }
 
@@ -51,9 +53,9 @@ export default class RuleEngine {
         if (this.depthCheck(depth += 1)) {
             let flag = true;
             for (const expression of expressions) {
-                if (expression.designs) flag &&= this.evaluateDesigns(expressions, element, depth);
-                else if (expression.either) flag &&= this.evaluateEitherDesign(expressions, element, depth);
-                else if (expression.design) flag &&= this.evaluateDesign(expression, element);
+                if (expression.designs) flag &&= this.evaluateDesigns(expression.designs, element, depth);
+                else if (expression.either) flag &&= this.evaluateEitherDesign(expression.either, element, depth);
+                else if (expression.design) flag &&= this.evaluateDesign(expression.design, element);
             }
             return flag;
         }
@@ -68,11 +70,17 @@ export default class RuleEngine {
      */
     private evaluateEitherDesign(expressions: any[], element: any, depth: number): boolean {
         if (this.depthCheck(depth += 1)) {
-            let flag = true;
+            let flag = false;
             for (const expression of expressions) {
-                if (expression.designs) flag ||= this.evaluateDesigns(expressions, element, depth);
-                else if (expression.either) flag ||= this.evaluateEitherDesign(expressions, element, depth);
-                else if (expression.design) flag ||= this.evaluateDesign(expression, element);
+                if (expression.designs) {
+                    flag ||= this.evaluateDesigns(expression.designs, element, depth);
+                }
+                else if (expression.either) {
+                    flag ||= this.evaluateEitherDesign(expression.either, element, depth);
+                }
+                else if (expression.design) {
+                    flag ||= this.evaluateDesign(expression.design, element);
+                }
             }
             return flag;
         }
@@ -84,11 +92,10 @@ export default class RuleEngine {
      * @param design
      * @param element
      */
-    private evaluateDesign(design: { design: string }, element: any): boolean {
-        const expression = design.design;
-        if (!this.evaluator?.validateRule(expression)) {
+    private evaluateDesign(design: string, element: any): boolean {
+        if (!this.evaluator?.validateRule(design)) {
             throw new Error('Invalid rule format');
         }
-        return this.evaluator.analyze(expression, element);
+        return this.evaluator.analyze(design, element);
     }
 }

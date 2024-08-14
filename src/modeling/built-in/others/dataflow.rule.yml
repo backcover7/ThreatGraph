@@ -8,8 +8,8 @@ module:
         - design: ssl.isSSL = false
 #        - design: attached.active.trust != attached.passive.trust   # indicate this dataflow connects two nodes in different zones
         - either:  # Even though they are in the same zone, not enough trust might also introduce problems
-          - design: attached.active.zone.trust != 3
-          - design: attached.passive.zone.trust != 3
+          - design: attached.active.attached.zone.trust != 3
+          - design: attached.passive.attached.zone.trust != 3
 
     - id: afe52040-7029-4c04-acb8-609dc9bb71b6
       threat: d06b6da5-1214-4068-9a01-b96572716c02
@@ -19,13 +19,13 @@ module:
         - design: attached.active.attached.zone.trust < attached.passive.attached.zone.trust
         - either:
           - designs:  # active node might be client entity
-            - design: attached.acitve.element = 'entity'
-            - design: attached.acitve.type = 'client'
+            - design: attached.acitve.metadata.element = 'entity'
+            - design: attached.acitve.metadata.type = 'client'
           - either:   # active node might be server entity or datastore
             - designs:
-              - design: attached.passive.element = 'entity'
-              - design: attached.passive.type = 'server'
-            - design: attached.passive.element = 'datastore'
+              - design: attached.passive.metadata.element = 'entity'
+              - design: attached.passive.metadata.type = 'server'
+            - design: attached.passive.metadata.element = 'datastore'
 
     - id: e1dd72fd-7702-437a-83d6-6b35d905666f
       threat: 70b7fffb-05e3-4981-8dd2-21e8093f0e58
@@ -35,10 +35,10 @@ module:
         - design: attached.active.attached.zone.trust > attached.passive.attached.zone.trust
         - either:
             - designs: # active node might be client entity
-                - design: attached.acitve.element = 'entity'
-                - design: attached.acitve.type = 'client'
+                - design: attached.acitve.metadata.element = 'entity'
+                - design: attached.acitve.metadata.type = 'client'
             - either: # active node might be server entity or datastore
                 - designs:
-                    - design: attached.passive.element = 'entity'
-                    - design: attached.passive.type = 'server'
-                - design: attached.passive.element = 'datastore'
+                    - design: attached.passive.metadata.element = 'entity'
+                    - design: attached.passive.metadata.type = 'server'
+                - design: attached.passive.metadata.element = 'datastore'
