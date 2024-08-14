@@ -19,8 +19,8 @@ module:
         - design: attached.active.attached.zone.trust < attached.passive.attached.zone.trust
         - either:
           - designs:  # active node might be client entity
-            - design: attached.acitve.metadata.element = 'entity'
-            - design: attached.acitve.metadata.type = 'client'
+            - design: attached.active.metadata.element = 'entity'
+            - design: attached.active.metadata.type = 'client'
           - either:   # active node might be server entity or datastore
             - designs:
               - design: attached.passive.metadata.element = 'entity'
@@ -35,8 +35,8 @@ module:
         - design: attached.active.attached.zone.trust > attached.passive.attached.zone.trust
         - either:
             - designs: # active node might be client entity
-                - design: attached.acitve.metadata.element = 'entity'
-                - design: attached.acitve.metadata.type = 'client'
+                - design: attached.active.metadata.element = 'entity'
+                - design: attached.active.metadata.type = 'client'
             - either: # active node might be server entity or datastore
                 - designs:
                     - design: attached.passive.metadata.element = 'entity'

@@ -22,6 +22,7 @@ export type Element = {
     icon?: string;
     element: ElementType;
     type: string;   // "public" zone, "client" entity, "mysql" datastore, 'http' protocol
+    shape?: string;  // shape id shows on canvas
 }
 
 export type AttachedFlow = {
@@ -150,6 +151,7 @@ export function buildElement<T extends ElementType>(
     element: T,
     type: string,
     id?: UUID | undefined,
+    shape?: string,
     description?: string,
     icon?: string): Element & { element: T } {
     return {
@@ -159,6 +161,7 @@ export function buildElement<T extends ElementType>(
         icon,
         element,
         type,
+        shape,
     };
 }
 
@@ -168,13 +171,14 @@ export function buildZone(
     type: string,
     trust: 0 | 1 | 2 | 3,
     id?: UUID | undefined,
+    shape?: string,
     description?: string,
     icon?: string,
     groups?: string[],
     additions?: Record<string, unknown>): Zone {
     return {
         metadata: {
-            ...buildElement(name, 'zone', type, id, description, icon),
+            ...buildElement(name, 'zone', type, id, shape, description, icon),
         },
         groups,
         trust,
@@ -188,13 +192,14 @@ export function buildEntity(
     type: string,
     object: string,
     id?: UUID | undefined,
+    shape?: string,
     description?: string,
     icon?: string,
     groups?: string[],
     additions?: Record<string, unknown>): Entity {
     return {
         metadata: {
-            ...buildElement(name, 'entity', type, id, description, icon),
+            ...buildElement(name, 'entity', type, id, shape, description, icon),
         },
         groups,
         object,
@@ -209,13 +214,14 @@ export function buildDataStore(
     type: string,
     object: string,
     id?: UUID | undefined,
+    shape?: string,
     description?: string,
     icon?: string,
     groups?: string[],
     additions?: Record<string, unknown>): DataStore {
     return {
         metadata: {
-            ...buildElement(name, 'datastore', type, id, description, icon),
+            ...buildElement(name, 'datastore', type, id, shape, description, icon),
         },
         groups,
         object,
@@ -233,12 +239,13 @@ export function buildProcess(
     isAuthn: boolean,
     operation: 'r' | 'w' | 'rw',
     id?: UUID | undefined,
+    shape?: string,
     description?: string,
     icon?: string,
     additions?: Record<string, unknown>): Process {
     return {
         metadata: {
-            ...buildElement(name, 'process', type, id, description, icon),
+            ...buildElement(name, 'process', type, id, shape, description, icon),
         },
         attributes: {
             critical,
@@ -260,11 +267,12 @@ export function buildDataFlow(
     sensitive: 0 | 1 | 2 | 3 = 0,
     content: 'normal' | 'secret' | 'PII' | 'credit card' | 'code' | any,
     id?: UUID | undefined,
+    shape?: string,
     description?: string,
     additions?: Record<string, unknown>): DataFlow {
     return {
         metadata: {
-            ...buildElement(name, 'dataflow', type, id, description),
+            ...buildElement(name, 'dataflow', type, id, shape, description),
             type: type,
         },
         ssl: {

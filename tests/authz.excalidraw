@@ -1,7 +1,7 @@
 {
   "type": "excalidraw",
   "version": 2,
-  "source": "https://marketplace.visualstudio.com/items?itemName=pomdtr.excalidraw-editor",
+  "source": "https://excalidraw-jetbrains-plugin",
   "elements": [
     {
       "model": {
@@ -255,12 +255,26 @@
           "description": "Authentication uses password as credential",
           "type": "authentication"
         },
-        "groups": ["authentication"],
+        "groups": [
+          "authentication"
+        ],
         "attributes": {
           "critical": 3,
           "isSanitizer": true,
           "isAuthn": false,
           "operation": "w"
+        },
+        "additions": {
+          "password": {
+            "minLength": 6,
+            "requireUppercase": false,
+            "requireLowercase": false,
+            "requireNumbers": true,
+            "requireSpecialChars": true,
+            "expiration": false
+          },
+          "requireCaptcha": false,
+          "hasRetryLimitation": false
         }
       },
       "id": "SPE1xaFFIHhXb1KfU1HfJ",
@@ -345,7 +359,10 @@
           "type": "private",
           "element": "zone"
         },
-        "groups": ["corporate", "private"],
+        "groups": [
+          "corporate",
+          "private"
+        ],
         "trust": 3
       },
       "type": "frame",
@@ -374,6 +391,42 @@
       "link": null,
       "locked": false,
       "name": "private"
+    },
+    {
+      "id": "IumEfon8228zFrL2FkjnB",
+      "type": "text",
+      "x": 407.73953320504063,
+      "y": -817.3691050341708,
+      "width": 10,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": null,
+      "seed": 692641429,
+      "version": 1,
+      "versionNonce": 0,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1723673889813,
+      "link": null,
+      "locked": false,
+      "text": "",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "baseline": 18,
+      "containerId": null,
+      "originalText": "",
+      "lineHeight": 1.25
     }
   ],
   "appState": {

@@ -3,7 +3,7 @@ import { create, all, MathJsInstance } from "mathjs";
 type KnownObj = Record<string, any>;
 type Operator = '=' | '!=' | '<' | '<=' | '>' | '>=';
 
-export class EvaluationError extends Error {
+class EvaluationError extends Error {
     constructor(message: string) {
         super(message);
         this.name = "EvaluationError";
@@ -11,21 +11,21 @@ export class EvaluationError extends Error {
 }
 
 export default class Evaluator {
-    private math: MathJsInstance;
+    #math: MathJsInstance;
 
     constructor() {
-        this.math = create(all, {});
-        this.initializeMath();
+        this.#math = create(all, {});
+        this.#initializeMath();
     }
 
-    private initializeMath(): void {
-        this.math.import({
+    #initializeMath(): void {
+        this.#math.import({
             createUnit: () => { throw new EvaluationError('Function createUnit is disabled'); },
             simplify: () => { throw new EvaluationError('Function simplify is disabled'); },
             derivative: () => { throw new EvaluationError('Function derivative is disabled'); }
         }, { override: true });
 
-        this.math.import({
+        this.#math.import({
             equal: (a: any, b: any): boolean => a === b,
             unequal: (a: any, b: any): boolean => a !== b,
             smaller: (a: any, b: any): boolean => {
@@ -55,7 +55,7 @@ export default class Evaluator {
         }, { override: true });
     }
 
-    private parseRule(rule: string): [string, Operator, string] | null {
+    #parseRule(rule: string): [string, Operator, string] | null {
         const match = rule.match(/^(.+?)\s*(=|!=|<=|>=|<|>)\s*(.+)$/);
         if (!match) {
             throw new EvaluationError('Invalid rule format');
@@ -63,7 +63,7 @@ export default class Evaluator {
         return [match[1], match[2] as Operator, match[3]];
     }
 
-    private createSafeExpression(left: string, operator: Operator, right: string): string {
+    #createSafeExpression(left: string, operator: Operator, right: string): string {
         switch (operator) {
             case '=': return `equal(${left}, ${right})`;
             case '!=': return `unequal(${left}, ${right})`;
@@ -77,12 +77,12 @@ export default class Evaluator {
 
     public analyze(rule: string, knownObj: KnownObj): boolean {
         try {
-            const parsedRule = this.parseRule(rule);
+            const parsedRule = this.#parseRule(rule);
             if (!parsedRule) return false;
 
             const [left, operator, right] = parsedRule;
-            const safeExpression = this.createSafeExpression(left, operator, right);
-            const result = this.math.evaluate(safeExpression, knownObj);
+            const safeExpression = this.#createSafeExpression(left, operator, right);
+            const result = this.#math.evaluate(safeExpression, knownObj);
             return Boolean(result);
         } catch (error) {
             if (error instanceof EvaluationError) {
@@ -96,7 +96,7 @@ export default class Evaluator {
 
     public validateRule(rule: string): boolean {
         try {
-            return this.parseRule(rule) !== null;
+            return this.#parseRule(rule) !== null;
         } catch {
             return false;
         }
@@ -104,7 +104,7 @@ export default class Evaluator {
 
     public getAccessedProperties(rule: string): string[] | null {
         try {
-            const parsedRule = this.parseRule(rule);
+            const parsedRule = this.#parseRule(rule);
             if (!parsedRule) return null;
             const [left] = parsedRule;
             return left.split('.');

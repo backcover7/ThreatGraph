@@ -43,8 +43,8 @@ module:
             type: boolean
             description: Whether special characters are required
           expiration:
-            type: number
-            description: Number of days before password expiration
+            type: boolean
+            description: Whether password has expiration
         requireCaptcha:
           type: boolean
           description: Whether CAPTCHA is required during authentication
