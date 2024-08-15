@@ -10,7 +10,7 @@ export default class Diagram {
         this.#shapes = excalidraw.elements;
     }
 
-    processShapes(): any[] {
+    processCanvas(): any[] {
         try {
             this.#shapes.forEach((shape: any) => {
                 if (shape.model && this.#parseShapeToElement(shape)) {
@@ -39,14 +39,16 @@ export default class Diagram {
     }
 
     #buildAttachedProperty(shape: any): any {
-        switch (shape.type) {
-            case basicShapes.shapes.FRAME:
+        switch (shape.model.metadata.element) {
+            case model.ModelElements.ZONE:
                 return this.#buildFrameAttached(shape);
-            case basicShapes.shapes.RECTANGLE:
+            case model.ModelElements.ENTITY:
                 return this.#buildRectangleAttached(shape);
-            case basicShapes.shapes.TEXT:
+            case model.ModelElements.DATASTORE:
+                return this.#buildRectangleAttached(shape);
+            case model.ModelElements.PROCESS:
                 return this.#buildTextAttached(shape);
-            case basicShapes.shapes.ARROW:
+            case model.ModelElements.DATAFLOW:
                 return this.#buildArrowAttached(shape);
             default:
                 return {};
@@ -54,11 +56,12 @@ export default class Diagram {
     }
 
     #parseShapeToElement(shape: any): boolean {
-        switch (shape.type) {
-            case basicShapes.shapes.FRAME:
-            case basicShapes.shapes.RECTANGLE:
-            case basicShapes.shapes.TEXT:
-            case basicShapes.shapes.ARROW:
+        switch (shape.model.metadata.element) {
+            case model.ModelElements.ZONE:
+            case model.ModelElements.ENTITY:
+            case model.ModelElements.DATASTORE:
+            case model.ModelElements.PROCESS:
+            case model.ModelElements.DATAFLOW:
                 return true;
             default:
                 return false;
@@ -66,20 +69,17 @@ export default class Diagram {
     }
 
     #buildFrameAttached(frameShape: any) {
-        const entities = this.#shapes
-            .filter((s: any) => s.frameId === frameShape.id && s.type === basicShapes.shapes.RECTANGLE && s.model.metadata.element === model.ModelElements.ENTITY)
-            .map((s: any) => this.#processedElements.get(s.id));
-        const datastores = this.#shapes
-            .filter((s: any) => s.frameId === frameShape.id && s.type === basicShapes.shapes.RECTANGLE && s.model.metadata.element === model.ModelElements.DATASTORE)
-            .map((s: any) => this.#processedElements.get(s.id));
-        const children = this.#shapes
-            .filter((s: any) => s.frameId === frameShape.id && s.type === basicShapes.shapes.FRAME)
-            .map((s: any) => this.#processedElements.get(s.id));
         return {
             parent: frameShape.frameId ? this.#processedElements.get(frameShape.frameId) : null,
-            children,
-            entities,
-            datastores,
+            children: this.#shapes
+                .filter((s: any) => s.frameId === frameShape.id && s.type === basicShapes.shapes.FRAME)
+                .map((s: any) => this.#processedElements.get(s.id)),
+            entities: this.#shapes
+                .filter((s: any) => s.frameId === frameShape.id && s.type === basicShapes.shapes.RECTANGLE && s.model.metadata.element === model.ModelElements.ENTITY)
+                .map((s: any) => this.#processedElements.get(s.id)),
+            datastores: this.#shapes
+                .filter((s: any) => s.frameId === frameShape.id && s.type === basicShapes.shapes.RECTANGLE && s.model.metadata.element === model.ModelElements.DATASTORE)
+                .map((s: any) => this.#processedElements.get(s.id)),
         };
     }
 

@@ -149,7 +149,6 @@ function build(
         model.buildDataStore(
             item.metadata?.name,
             item.metadata?.type,
-            item.object,
             item.metadata?.id,
             item.metadata?.description,
             item.metadata?.icon,

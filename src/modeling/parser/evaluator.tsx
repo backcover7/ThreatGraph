@@ -56,7 +56,7 @@ export default class Evaluator {
     }
 
     #parseRule(rule: string): [string, Operator, string] | null {
-        const match = rule.match(/^(.+?)\s*(=|!=|<=|>=|<|>)\s*(.+)$/);
+        const match = rule.match(/^(.+?)\s*(=|!=|<=|>=|<|>)\s*(.+)\s*$/);
         if (!match) {
             throw new EvaluationError('Invalid rule format');
         }

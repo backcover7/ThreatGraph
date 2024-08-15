@@ -266,7 +266,7 @@
         },
         "additions": {
           "password": {
-            "minLength": 6,
+            "minLength": 10,
             "requireUppercase": false,
             "requireLowercase": false,
             "requireNumbers": true,

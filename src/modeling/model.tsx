@@ -51,7 +51,6 @@ export type Zone = {
 // Node Type: Entity Type and DataStore Type all extends from Node Type
 export type Node = {
     groups?: string[];
-    object: string;
     attached?: {
         zone: Zone;
         flows: AttachedFlow[];
@@ -65,6 +64,7 @@ export type Entity = Node & {
     metadata: {
         element: 'entity';
     } & Element;
+    object: string;
 }
 
 // DataStore Type
@@ -109,8 +109,8 @@ export type DataFlow = {
     };
     attached?: {
         process: Process;
-        active: Node;
-        passive: Node;
+        active: Entity | DataStore;
+        passive: Entity | DataStore;
     };
     additions?: Record<string, unknown>;
     threats?: Threat[];
@@ -143,6 +143,13 @@ export type Rule = {
     threat: Threat;
     element: ElementType | Element;
     designs: any;
+}
+
+export type Result = {
+    element: UUID;
+    shape: string;
+    rule: UUID;
+    threat: UUID;
 }
 
 // Helper function to create Element
@@ -212,7 +219,6 @@ export function buildEntity(
 export function buildDataStore(
     name: string,
     type: string,
-    object: string,
     id?: UUID | undefined,
     shape?: string,
     description?: string,
@@ -224,7 +230,6 @@ export function buildDataStore(
             ...buildElement(name, 'datastore', type, id, shape, description, icon),
         },
         groups,
-        object,
         additions,
         threats: []
     };

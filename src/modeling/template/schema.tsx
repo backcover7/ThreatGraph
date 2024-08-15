@@ -43,8 +43,7 @@ const zoneSchema = {
     },
 };
 
-// Entity schema is as same as Datastore schema
-const nodeSchema = {
+const entitySchema = {
     type: 'object',
     additionalProperties: false,
     required: ['metadata', 'object'],
@@ -52,6 +51,17 @@ const nodeSchema = {
         metadata: elementSchema,
         groups: { type: 'array', items: { type: 'string' } },
         object: { type: 'string' },
+        additions: { $ref: '#/definitions/recursiveAdditions' }
+    }
+};
+
+const datastoreSchema = {
+    type: 'object',
+    additionalProperties: false,
+    required: ['metadata'],
+    properties: {
+        metadata: elementSchema,
+        groups: { type: 'array', items: { type: 'string' } },
         additions: { $ref: '#/definitions/recursiveAdditions' }
     }
 };
@@ -140,8 +150,8 @@ const moduleSchema = {
             type: 'object',
             properties: {
                 zone: { type: 'array', items: zoneSchema },
-                entity: { type: 'array', items: nodeSchema },
-                datastore: { type: 'array', items: nodeSchema },
+                entity: { type: 'array', items: entitySchema },
+                datastore: { type: 'array', items: datastoreSchema },
                 process: { type: 'array', items: processSchema },
                 threat: { type: 'array', items: threatSchema },
                 rule: { type: 'array', items: ruleSchema },

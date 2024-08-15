@@ -1,4 +1,5 @@
 import Evaluator from './evaluator';
+import * as model from '../model';
 
 export default class RuleEngine {
     #MAX_DEPTH = 10;
@@ -6,7 +7,6 @@ export default class RuleEngine {
     #rule: any;
     #relatedThreat: any;
     #relatedElements: any;
-    #flaggedElements: any[] = [];
 
     #evaluator: Evaluator | undefined;
 
@@ -27,14 +27,17 @@ export default class RuleEngine {
         }
     }
 
-    get flaggedElements() {
-        return this.#flaggedElements;
-    }
-
-    startEvaluation() {
+    startEvaluation(results: model.Result[]) {
         this.#relatedElements.forEach((relatedElement: any) => {
             if (this.#evaluateDesigns(this.#rule.designs, relatedElement, 0)) {
-                this.#flaggedElements.push(relatedElement);
+                results.push(
+                    {
+                        element: relatedElement.metadata.id,
+                        shape: relatedElement.metadata.shape,
+                        rule: this.#rule.id,
+                        threat: this.#relatedThreat.id,
+                    }
+                );
             }
         })
     }
@@ -100,7 +103,6 @@ export default class RuleEngine {
         if (!this.#evaluator?.validateRule(design)) {
             throw new Error('Invalid rule format');
         }
-        console.log(this.#evaluator.analyze(design, element));
         return this.#evaluator.analyze(design, element);
     }
 }

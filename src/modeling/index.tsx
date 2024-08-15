@@ -14,6 +14,7 @@ import * as template from './template/loader';
 import RuleEngine from "./parser/rule-engine";
 import Diagram from "./parser/diagram";
 import fs from 'fs/promises';
+import * as model from "@/modeling/model";
 
 async function main() {
     // Load built in elements
@@ -26,14 +27,15 @@ async function main() {
 
     // Threat Modeling
     const diagram = new Diagram(await fs.readFile('../../tests/authz.json', 'utf-8'));
-    const illustratedElements = diagram.processShapes();
+    const canvas = diagram.processCanvas();
 
     const threats = await template.loadBuiltinTemplates(template.THREAT_TEMPLATE).then(templates => { return templates.threat });
     const rules = await template.loadBuiltinTemplates(template.RULE_TEMPLATE).then(templates => { return templates.rule });
 
+    const results: model.Result[] = [];
     rules.forEach((rule) => {
-        const ruleEngine = new RuleEngine(rule, illustratedElements, threats);
-        ruleEngine.startEvaluation();
+        const ruleEngine = new RuleEngine(rule, canvas, threats);
+        ruleEngine.startEvaluation(results);
     })
 
     console.log('Finished');
