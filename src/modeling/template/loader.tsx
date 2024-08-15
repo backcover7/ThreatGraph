@@ -56,7 +56,7 @@ export async function loadBulkTemplates(dir: string, type: TEMPLATE_GROUP): Prom
                 if (entry.isDirectory()) {
                     queue.push(fullPath);
                 } else if (entry.isFile() &&
-                    (entry.name.endsWith(`.${type}.yaml`) || entry.name.endsWith(`.${type}.yml`))) {
+                    (entry.name.endsWith(`.yaml`) || entry.name.endsWith(`.yml`))) {
                     try {
                         const content = await fs.readFile(fullPath, 'utf-8');
                         loadTemplate(content, templates);
