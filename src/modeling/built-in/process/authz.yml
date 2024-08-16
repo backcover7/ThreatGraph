@@ -128,11 +128,11 @@ module:
         id: b21dc275-a75f-45fc-9522-b7fb439efeee
       designs:
         - either:
-            - design: additions.password.minLength <= 8
-            - design: additions.password.requireUppercase = false
-            - design: additions.password.requireLowercase = false
-            - design: additions.password.requireNumbers = false
-            - design: additions.password.requireSpecialChars = false
+          - design: additions.password.minLength <= 8
+          - design: additions.password.requireUppercase = false
+          - design: additions.password.requireLowercase = false
+          - design: additions.password.requireNumbers = false
+          - design: additions.password.requireSpecialChars = false
 
     - id: 7ea81d28-e509-4f6b-8f24-b2bddad9f15e
       threat: e1f06cab-4818-4c49-ace3-00a46f9e0e91
@@ -149,5 +149,5 @@ module:
         id: b21dc275-a75f-45fc-9522-b7fb439efeee
       designs:
         - either:
-            - design: additions.requireCaptcha = false
-            - design: additions.hasRetryLimitation = false
+          - design: additions.requireCaptcha = false
+          - design: additions.hasRetryLimitation = false

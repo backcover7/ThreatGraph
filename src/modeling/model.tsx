@@ -90,7 +90,7 @@ export type Process = {
     };
     calls?: string[];
     additions?: Record<string, unknown>;
-    threats?: Threat[];
+    threats?: Threat[];  // TODO
 }
 
 // DataFlow Type
