@@ -96,6 +96,13 @@ function validateYaml(yml: unknown): boolean {
     }
 }
 
+/**
+ * Builds the templates based on the provided YAML content.
+ *
+ * @param {any} yml - The YAML content to build the templates from.
+ * @param {templateType} templates - The object containing the templates to populate.
+ * @return {void} This function does not return anything.
+ */
 function build(
     yml: any,
     templates: templateType): void {

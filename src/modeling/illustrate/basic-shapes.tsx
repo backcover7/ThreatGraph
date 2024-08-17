@@ -5,9 +5,16 @@ export const shapes = {
     ARROW: 'arrow',
 }
 
-// TODO on create a new frame
-// TODO if https://github.com/excalidraw/excalidraw/issues/8359 fixed, then remove this function and its references
+/**
+ * This function is a workaround for Excalidraw's bug https://github.com/excalidraw/excalidraw/issues/8359.
+ * It is used to detect the nested frames and inject frame id to make it work on Excalidraw UI canvas.
+ * @param frameShape The frame shape to detect its parent and child frames.
+ * @param allShapes The array of all shapes in the Excalidraw canvas.
+ */
 export function hackHierarchicalFrames(frameShape: any, allShapes:any) {
+    // TODO on create a new frame
+    // TODO if https://github.com/excalidraw/excalidraw/issues/8359 fixed, then remove this function and its references
+
     let smallestParentFrame: any, biggestChildFrame: any;
     let smallestParentArea: number = Infinity;
     let biggestChildArea: number = 0;
@@ -54,6 +61,15 @@ export function hackHierarchicalFrames(frameShape: any, allShapes:any) {
     })
 }
 
+/**
+ * If a dataflow is connected from one shape in a zone to another shape in another zone
+ * The dataflow will be displayed in a weird way. 
+ * Try to remove the frameId of the inter-connected dataflow will make it looks normal.
+ *
+ * @param {any} arrowShape - The arrow shape that represents the dataflow.
+ * @param {any} allShapes - A collection of all shapes in the diagram.
+ * @throws {Error} If the dataflow cannot be created due to invalid shape types or placement.
+ */
 function checkNewDataflows(arrowShape: any, allShapes:any) {
     const start = allShapes.find((nodeElement: any) => nodeElement.id === arrowShape.startBinding.elementId);
     const end = allShapes.find((nodeElement: any) => nodeElement.id === arrowShape.endBinding.elementId);
@@ -72,6 +88,12 @@ function checkNewDataflows(arrowShape: any, allShapes:any) {
     }
 }
 
+/**
+ * Checks if a given node shape (entity or datastore) is within a zone.
+ *
+ * @param {any} nodeShape - The node shape to check.
+ * @return {boolean} True if the node shape is in a zone, false otherwise.
+ */
 function isNodeInZone(nodeShape: any): boolean {
     return nodeShape.frameId !== null;
 }
