@@ -56,7 +56,6 @@ export type Node = {
         flows: AttachedFlow[];
     };
     additions?: Record<string, unknown>;
-    threats?: Threat[];
 }
 
 // Entity Type
@@ -90,7 +89,6 @@ export type Process = {
     };
     calls?: string[];
     additions?: Record<string, unknown>;
-    threats?: Threat[];  // TODO
 }
 
 // DataFlow Type
@@ -113,7 +111,6 @@ export type DataFlow = {
         passive: Entity | DataStore;
     };
     additions?: Record<string, unknown>;
-    threats?: Threat[];
 }
 
 
@@ -211,7 +208,6 @@ export function buildEntity(
         groups,
         object,
         additions,
-        threats: []
     };
 }
 
@@ -231,7 +227,6 @@ export function buildDataStore(
         },
         groups,
         additions,
-        threats: []
     };
 }
 
@@ -260,7 +255,6 @@ export function buildProcess(
         },
         additions,
         calls: [],
-        threats: []
     };
 }
 
@@ -289,7 +283,6 @@ export function buildDataFlow(
             content,
         },
         additions,
-        threats: []
     };
 }
 

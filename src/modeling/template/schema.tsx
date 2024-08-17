@@ -1,4 +1,5 @@
-// Create a new schema that includes custom types
+// This is schema for json schema for all yaml templates.
+
 const elementSchema = {
     type: 'object',
     additionalProperties: false,

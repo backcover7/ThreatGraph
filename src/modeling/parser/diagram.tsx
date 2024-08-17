@@ -1,6 +1,16 @@
+/**
+ *
+ * This Diagram class is used to parse canvas to insert `attached` property in the `model` property object in every
+ * element. The `attached` property is used to analyze connected element when scanning rules.
+ *
+ * The schema of `attached` property object will be as described in model.ts
+ *
+ */
+
 import * as basicShapes from '../illustrate/basic-shapes';
 import * as model from '../model';
 
+// TODO the parser is only recognize element by shape type. But this is not valid, because user might use image or other shapes to be an unexpected element.
 export default class Diagram {
     #shapes: any = {};
     #processedElements: Map<string, any> = new Map();

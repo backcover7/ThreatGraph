@@ -1,3 +1,37 @@
+/**
+ * This Evaluator class is used to parse one single design pattern and evaluate whether the result of the expression
+ * of this design pattern. This class might introduce some security issues. There should be enough PoC tests in the design pattern to make
+ * sure no threat was introduced here.
+ *
+ * The design pattern should look like `$1 Operator $2`
+ *
+ * The type of $1 and $2 could be string or number or boolean or property of elements.
+ * For example, the analyzed element is a dataflow arrow element as follows:
+ *
+ * "model": {
+ *   "metadata": {
+ *     "element": "dataflow",
+ *     "id": "847e90d9-bb58-41fb-8aac-e5a1ab26dcbd",
+ *     "name": "http",
+ *     "type": "http"
+ *   },
+ *   "ssl": {
+ *     "isSSL": false,
+ *     "mTLS": false
+ *   },
+ *   "data": {
+ *     "sensitive": 3,
+ *     "content": "secret"
+ *   }
+ * }
+ *
+ * `ssl.isSSL = false` is to check whether the isSSL property of ssl property object of the dataflow element
+ * is false. If it is false, then the dataflow is not encrypted.
+ *
+ * ` attached.active.attached.zone.trust != 3` is to check whether the node which actively initiate the dataflow
+ * is in a zone whose truse level is not 3 (totally trusted).
+ */
+
 import { create, all, MathJsInstance } from "mathjs";
 
 type KnownObj = Record<string, any>;

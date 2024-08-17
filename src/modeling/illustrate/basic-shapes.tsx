@@ -5,26 +5,6 @@ export const shapes = {
     ARROW: 'arrow',
 }
 
-function getAElement(type: string, x: number, y: number): {type: string; x: number; y: number} {
-    return { type, x, y }
-}
-
-export function getAZone(x: number, y: number): {type: string; x: number; y: number} {
-    return { type: shapes.FRAME, x, y }
-}
-
-export function getANode(x: number, y: number): {type: string; x: number; y: number} {
-    return { type: shapes.RECTANGLE, x, y }
-}
-
-export function getAProcess(x: number, y: number): {type: string; x: number; y: number} {
-    return { type: shapes.TEXT, x, y }
-}
-
-export function getADataflow(x: number, y: number): {type: string; x: number; y: number} {
-    return { type: shapes.ARROW, x, y }
-}
-
 // TODO on create a new frame
 // TODO if https://github.com/excalidraw/excalidraw/issues/8359 fixed, then remove this function and its references
 export function hackHierarchicalFrames(frameShape: any, allShapes:any) {
@@ -73,7 +53,6 @@ export function hackHierarchicalFrames(frameShape: any, allShapes:any) {
         }
     })
 }
-
 
 function checkNewDataflows(arrowShape: any, allShapes:any) {
     const start = allShapes.find((nodeElement: any) => nodeElement.id === arrowShape.startBinding.elementId);
