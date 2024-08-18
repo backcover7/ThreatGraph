@@ -11,7 +11,7 @@ module:
         critical: 3
         isSanitizer: true
         isAuthn: false
-        operation: 'w'
+        operation: w
 
     - metadata:
         id: b21dc275-a75f-45fc-9522-b7fb439efeee
@@ -24,7 +24,7 @@ module:
         critical: 3
         isSanitizer: true
         isAuthn: false
-        operation: 'w'
+        operation: w
       additions:
         password:
           minLength:
@@ -63,7 +63,7 @@ module:
         critical: 3
         isSanitizer: true
         isAuthn: false
-        operation: 'w'
+        operation: w
 
     - metadata:
         id: 22134942-2735-4cf8-8586-72d28846d725
@@ -76,7 +76,7 @@ module:
         critical: 3
         isSanitizer: true
         isAuthn: false
-        operation: 'w'
+        operation: w
   threat:
     - id: 461c0696-9811-413b-98ff-f5073f7b88a3
       name: Weak password policy

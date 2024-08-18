@@ -176,7 +176,7 @@
         "metadata": {
           "element": "dataflow",
           "id": "847e90d9-bb58-41fb-8aac-e5a1ab26dcbd",
-          "name": "http",
+          "name": "http traffic",
           "type": "http"
         },
         "ssl": {
