@@ -102,7 +102,7 @@ export type DataFlow = {
         mTLS: boolean;
     }
     data?: {
-        sensitive: 0 | 1 | 2 | 3;
+        sensitive: 0 | 1 | 2 | 3;   // 0 is totally insensitive, 3 is totally sensitive
         content: 'normal' | 'secret' | 'PII' | 'credit card' | 'code' | any;
     };
     attached?: {
