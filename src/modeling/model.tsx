@@ -25,12 +25,6 @@ export type Element = {
     shape?: string;  // shape id shows on canvas
 }
 
-export type AttachedFlow = {
-    flow: DataFlow;
-    type: 'active' | 'passive';
-    data: 'plain' | 'xml' | 'json' | 'binary';
-}
-
 // Zone Type
 export type Zone = {
     metadata: {
@@ -38,24 +32,26 @@ export type Zone = {
     } & Element;
     groups?: string[];
     trust: 0 | 1 | 2 | 3;  // 0 is totally untrusted, 3 is totally trusted.
-    // Trust of parent zone <= current zone. If not, override trust of current zone with trust of parent zone.
-    attached?: {
-        parent?: Zone;    // parent zone
-        children?: Zone[];     // children zones
-        entities?: Entity[];
-        datastores?: DataStore[];
-    };
     additions?: Record<string, unknown>;
+}
+
+export type ZoneAttached = {
+    // Trust of parent zone <= current zone. If not, override trust of current zone with trust of parent zone.
+    parent?: Zone;    // parent zone
+    children?: Zone[];     // children zones
+    entities?: Entity[];
+    datastores?: DataStore[];
 }
 
 // Node Type: Entity Type and DataStore Type all extends from Node Type
 export type Node = {
     groups?: string[];
-    attached?: {
-        zone: Zone;
-        flows: AttachedFlow[];
-    };
     additions?: Record<string, unknown>;
+}
+
+export type NodeAttached = {
+    zone: Zone;
+    flows: DataFlow[];
 }
 
 // Entity Type
@@ -84,11 +80,12 @@ export type Process = {
         isAuthn: boolean;
         operation: 'r' | 'w' | 'rw';  // GET is read, POST is w, GET & POST is rw
     };
-    attached?: {
-        flow: DataFlow
-    };
     calls?: string[];
     additions?: Record<string, unknown>;
+}
+
+export type ProcessAttached = {
+    flow: DataFlow
 }
 
 // DataFlow Type
@@ -104,15 +101,16 @@ export type DataFlow = {
     data?: {
         sensitive: 0 | 1 | 2 | 3;   // 0 is totally insensitive, 3 is totally sensitive
         content: 'normal' | 'secret' | 'PII' | 'credit card' | 'code' | any;
-    };
-    attached?: {
-        process: Process;
-        active: Entity | DataStore;
-        passive: Entity | DataStore;
+        format: 'text' | 'xml' | 'json' | 'binary' | any;
     };
     additions?: Record<string, unknown>;
 }
 
+export type DataflowAttached = {
+    process: Process;
+    active: Entity | DataStore;
+    passive: Entity | DataStore;
+}
 
 // Threat Type
 export type Threat = {
@@ -265,6 +263,7 @@ export function buildDataFlow(
     mTLS: boolean = false,
     sensitive: 0 | 1 | 2 | 3 = 0,
     content: 'normal' | 'secret' | 'PII' | 'credit card' | 'code' | any,
+    format: 'text' | 'xml' | 'json' | 'binary' | any,
     id?: UUID | undefined,
     shape?: string,
     description?: string,
@@ -281,6 +280,7 @@ export function buildDataFlow(
         data: {
             sensitive,
             content,
+            format
         },
         additions,
     };

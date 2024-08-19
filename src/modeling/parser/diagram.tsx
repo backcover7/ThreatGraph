@@ -10,7 +10,6 @@
 import * as basicShapes from '../illustrate/basic-shapes';
 import * as model from '../model';
 
-// TODO the parser is only recognize element by shape type. But this is not valid, because user might use image or other shapes to be an unexpected element.
 export default class Diagram {
     #shapes: any = {};
     #processedElements: Map<string, any> = new Map();
@@ -53,9 +52,9 @@ export default class Diagram {
             case model.ModelElements.ZONE:
                 return this.#buildFrameAttached(shape);
             case model.ModelElements.ENTITY:
-                return this.#buildRectangleAttached(shape);
+                return this.#buildNodeShapeAttached(shape);
             case model.ModelElements.DATASTORE:
-                return this.#buildRectangleAttached(shape);
+                return this.#buildNodeShapeAttached(shape);
             case model.ModelElements.PROCESS:
                 return this.#buildTextAttached(shape);
             case model.ModelElements.DATAFLOW:
@@ -78,7 +77,8 @@ export default class Diagram {
         }
     }
 
-    #buildFrameAttached(frameShape: any) {
+    // Zone has to be frame shape.
+    #buildFrameAttached(frameShape: any): model.ZoneAttached {
         return {
             parent: frameShape.frameId ? this.#processedElements.get(frameShape.frameId) : null,
             children: this.#shapes
@@ -93,17 +93,19 @@ export default class Diagram {
         };
     }
 
-    #buildRectangleAttached(rectangleShape: any) {
-        const boundedArrowShapes = rectangleShape.boundElements
+    // Entity and Datastore could be any kind of shape, like rectangle, circle, diamond or image. But rectangle will be a default shape for Node.
+    #buildNodeShapeAttached(nodeShape: any): model.NodeAttached {
+        const boundedArrowShapes = nodeShape.boundElements
             .filter((b: any) => b.type === 'arrow')
             .map((b: any) => b.id);
         return {
-            zone: this.#processedElements.get(rectangleShape.frameId),
-            flow: boundedArrowShapes.map((id: string) => this.#processedElements.get(id))
+            zone: this.#processedElements.get(nodeShape.frameId),
+            flows: boundedArrowShapes.map((id: string) => this.#processedElements.get(id))
         };
     }
 
-    #buildArrowAttached(arrowShape: any) {
+    // Dataflow has to be arrow shape. Cannot be line shape.
+    #buildArrowAttached(arrowShape: any): model.DataflowAttached {
         let startId: string, endId: string;
         if (arrowShape.startArrowhead) {
             startId = arrowShape.startBinding.elementId;
@@ -124,8 +126,9 @@ export default class Diagram {
         };
     }
 
-    #buildTextAttached(textShape: any) {
+    // Process has to be label text of arrow shape.
+    #buildTextAttached(textShape: any): model.ProcessAttached {
         const arrowShape = this.#shapes.find((s: any) => s.id === textShape.containerId && s.type === 'arrow');
-        return arrowShape ? { flow: this.#processedElements.get(arrowShape.id) } : null;
+        return { flow: this.#processedElements.get(arrowShape.id) };
     }
 }

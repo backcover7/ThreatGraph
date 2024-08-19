@@ -113,6 +113,7 @@ module:
       data:
         sensitive: <0 | 1 | 2 | 3>
         content: <normal | secret | PII | credit card | code | any other content>
+        format: <text | xml | json | binary | any other format>
       additions:
         <additional attributes>
 ```
@@ -122,6 +123,7 @@ module:
 - dataflow.data is a property object to describe data transmitted in the flow.
   - dataflow.data.sensitive is privacy level of data transmitted in the flow. `0` is totally insensitive, `3` is totally sensitive.
   - dataflow.data.content is to describe exact type of transmitted data, like `secret token` or `code`.
+  - dataflow.data.format is to describe the format of transmitted data, like `xml` or `json`.
 
 ## Additions
 `addtions` is a customizing property in every element. This is used to add some extra attributes of every element to describe this element more sepcifically. For example, a authentication process element might need some more items like `requireCaptcha` to tell engine whether this process is able to prevent brute force attacking by captcha validation. Any one of extra items should be constructed with two basic properties, `type` and `description`.
