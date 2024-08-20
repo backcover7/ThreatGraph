@@ -90,6 +90,7 @@ function checkNewDataflows(arrowShape: any, allShapes:any) {
 
 /**
  * Checks if a given node shape (entity or datastore) is within a zone.
+ * TODO: If it is not a zone, it is in an untrusted zone by default.
  *
  * @param {any} nodeShape - The node shape to check.
  * @return {boolean} True if the node shape is in a zone, false otherwise.
