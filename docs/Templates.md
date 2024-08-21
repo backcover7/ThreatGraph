@@ -106,7 +106,7 @@ module:
         id: <UUID>
         name: <datastore name>
         description: <description>
-        type: <http | websocket | ssh | rpc | sql | dns | rmi | other kind of dataflow>
+        type: <http | websocket | ssh | grpc | mqtt | sql | dns | rmi | other kind of dataflow>
       ssl:
         isSSL: <true | false>
         mTLS: <true | false>
