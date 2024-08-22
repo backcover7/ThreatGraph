@@ -62,9 +62,10 @@ tests -> excalidraw file for testingd
     - Adjust classification in a model like STRIDE based on description
 - Issue / vulnerability tracker
 - questionnaire？
-- allow create new elements for community but not including compliance which is only customized for pro
+- allow to create new elements for community but not including compliance which is only customized for pro
 - CI/CD plugin like Jira, OA, …
 - UI progress for loading templates
+- In Scope and out of scope
 
 - Plus Features
   - Collaboration

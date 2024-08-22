@@ -77,6 +77,7 @@ module:
         isSanitizer: true
         isAuthn: false
         operation: w
+
   threat:
     - id: 461c0696-9811-413b-98ff-f5073f7b88a3
       name: Weak password policy
