@@ -13,7 +13,7 @@
 ## Entity
 - people
   - user
-  - hacker
+  - attacker
 - client
   - protocol client
   - browser
