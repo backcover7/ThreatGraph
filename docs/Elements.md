@@ -11,6 +11,7 @@
 - trusted
 
 ## Entity
+- cache
 - people
   - user
   - attacker
