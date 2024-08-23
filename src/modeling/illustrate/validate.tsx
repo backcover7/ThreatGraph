@@ -98,3 +98,17 @@ function checkNewDataflows(arrowShape: any, allShapes:any) {
 function isNodeInZone(nodeShape: any): boolean {
     return nodeShape.frameId !== null;
 }
+
+/**
+ *
+ * Every node should be connected
+ *
+ */
+function isAllConnected(canvasElements: any[]): boolean {
+    return canvasElements.every(element => {
+        if (['entity', 'datastore'].includes(element.model.element)) {
+            const flows = element.attached.flows;
+            return flows && Array.isArray(flows) && flows.length > 0;
+        }
+    });
+}
