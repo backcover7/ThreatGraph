@@ -26,15 +26,19 @@ async function main() {
     // Users add customized templates
 
     // Threat Modeling
+    const outOfScope: string[] = [];  // shape id collection
     const diagram = new Diagram(await fs.readFile('../../tests/authz.json', 'utf-8'));
-    const canvas = diagram.processCanvas();
+    const canvasElements = diagram.processCanvas();
+
+
+    const inScopeElements = canvasElements.filter(element => !outOfScope.includes(element.id));
 
     const threats = await template.loadBuiltinTemplates(template.THREAT_TEMPLATE).then(templates => { return templates.threat });
     const rules = await template.loadBuiltinTemplates(template.RULE_TEMPLATE).then(templates => { return templates.rule });
 
     const results: model.Result[] = [];
     rules.forEach((rule) => {
-        const ruleEngine = new RuleEngine(rule, canvas, threats);
+        const ruleEngine = new RuleEngine(rule, inScopeElements, threats);
         ruleEngine.startEvaluation(results);
     })
 
