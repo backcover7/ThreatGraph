@@ -7,7 +7,7 @@
  *
  */
 
-import * as basicShapes from '../illustrate/basic-shapes';
+import * as basicShapes from '../illustrate/validate';
 import * as model from '../model';
 
 export default class Diagram {
