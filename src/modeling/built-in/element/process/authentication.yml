@@ -4,7 +4,7 @@ module:
         id: b21dc275-a75f-45fc-9522-b7fb439efeee
         name: Password Authentication
         description: Authentication uses password as credential
-        icon: data:image/png;base64,...
+        icon: data:image/svg+xml;base64,0==
         type: authentication
       groups: [ authentication ]
       attributes:
@@ -28,7 +28,7 @@ module:
         id: de98418e-f62b-4ff6-baa9-5f8301eb50b9
         name: OAuth2 Authentication
         description: OAuth2 Authentication
-        icon: data:image/png;base64,...
+        icon: data:image/svg+xml;base64,0==
         type: authentication
       groups: [ authentication ]
       attributes:
@@ -40,8 +40,8 @@ module:
     - metadata:
         id: 22134942-2735-4cf8-8586-72d28846d725
         name: SSO Authentication
-        description: OAuth2 Authentication
-        icon: data:image/png;base64,...
+        description: SSO Authentication
+        icon: data:image/svg+xml;base64,0==
         type: authentication
       groups: [ authentication ]
       attributes:
@@ -53,25 +53,25 @@ module:
     # TODO oauth threat for de98418e-f62b-4ff6-baa9-5f8301eb50b9 process element
   rule:
     - id: 4f81f0a6-b47a-433e-961f-df917a992a72
-      threat: 461c0696-9811-413b-98ff-f5073f7b88a3
+      threat: 461c0696-9811-413b-98ff-f5073f7b88a3  # Weak credential policy
       element:
         type: process
-        id: b21dc275-a75f-45fc-9522-b7fb439efeee
+        id: b21dc275-a75f-45fc-9522-b7fb439efeee  # Password Authentication
       designs:
         - design: additions.password.strong = false
 
     - id: 7ea81d28-e509-4f6b-8f24-b2bddad9f15e
-      threat: e1f06cab-4818-4c49-ace3-00a46f9e0e91
+      threat: e1f06cab-4818-4c49-ace3-00a46f9e0e91  # Never expired credential
       element:
         type: process
-        id: b21dc275-a75f-45fc-9522-b7fb439efeee
+        id: b21dc275-a75f-45fc-9522-b7fb439efeee  # Password Authentication
       designs:
         - design: additions.password.expiration = false
 
     - id: 87505539-92c6-4ab1-b045-c16aa432e37c
-      threat: 9e85bda8-1858-407c-8c2a-67a2496b3c9a
+      threat: 9e85bda8-1858-407c-8c2a-67a2496b3c9a  # Brute force attack
       element:
         type: process
-        id: b21dc275-a75f-45fc-9522-b7fb439efeee
+        id: b21dc275-a75f-45fc-9522-b7fb439efeee  # Password Authentication
       designs:
         - design: additions.antiAbuse = false

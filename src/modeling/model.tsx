@@ -69,13 +69,14 @@ export type DataStore = Node & {
     metadata: {
         element: 'datastore';
     } & Element;
-    authentication: {
-        credential: {
-            required: boolean;
-            strong: boolean;
-            expiration: boolean;
+    category: 'relational' | 'non-relational' | 'filesystem';
+    authentication?: {
+        credential?: {
+            required?: boolean;
+            strong?: boolean;
+            expiration?: boolean;
         };
-        antiAbuse: boolean;
+        antiAbuse?: boolean;
     }
 }
 
@@ -109,7 +110,7 @@ export type DataFlow = {
         isSSL: boolean;
         mTLS: boolean;
     }
-    data?: {
+    data: {
         sensitive: 0 | 1 | 2 | 3;   // 0 is totally insensitive, 3 is totally sensitive
         content: 'normal' | 'secret' | 'PII' | 'credit card' | 'code' | any;
         format: 'text' | 'xml' | 'json' | 'binary' | any;
@@ -183,15 +184,14 @@ export function buildZone(
     name: string,
     type: string,
     trust: 0 | 1 | 2 | 3,
+    groups: string[] = [],
     id?: UUID | undefined,
-    shape?: string,
     description?: string,
     icon?: string,
-    groups?: string[],
     additions?: Record<string, unknown>): Zone {
     return {
         metadata: {
-            ...buildElement(name, 'zone', type, id, shape, description, icon),
+            ...buildElement(name, 'zone', type.toLowerCase(), id, description, icon),
         },
         groups,
         trust,
@@ -204,15 +204,14 @@ export function buildEntity(
     name: string,
     type: string,
     object: string,
+    groups: string[] = [],
     id?: UUID | undefined,
-    shape?: string,
     description?: string,
     icon?: string,
-    groups?: string[],
     additions?: Record<string, unknown>): Entity {
     return {
         metadata: {
-            ...buildElement(name, 'entity', type, id, shape, description, icon),
+            ...buildElement(name, 'entity', type, id, description, icon),
         },
         groups,
         object,
@@ -224,21 +223,22 @@ export function buildEntity(
 export function buildDataStore(
     name: string,
     type: string,
+    category: 'relational' | 'non-relational' | 'filesystem',
+    groups: string[] = [],
     required: boolean = false,
     strong: boolean = false,
     expiration: boolean = false,
     antiAbuse: boolean = false,
     id?: UUID | undefined,
-    shape?: string,
     description?: string,
     icon?: string,
-    groups?: string[],
     additions?: Record<string, unknown>): DataStore {
     return {
         metadata: {
-            ...buildElement(name, 'datastore', type, id, shape, description, icon),
+            ...buildElement(name, 'datastore', type, id, description, icon),
         },
         groups,
+        category,
         authentication: {
             credential: {
                 required,
@@ -261,13 +261,12 @@ export function buildProcess(
     isAuthn: boolean = false,
     operation: 'r' | 'w' | 'rw',
     id?: UUID | undefined,
-    shape?: string,
     description?: string,
     icon?: string,
     additions?: Record<string, unknown>): Process {
     return {
         metadata: {
-            ...buildElement(name, 'process', type, id, shape, description, icon),
+            ...buildElement(name, 'process', type, id, description, icon),
         },
         attributes: {
             critical,
@@ -286,16 +285,15 @@ export function buildDataFlow(
     type: 'http' | 'websocket' | 'ssh' | 'grpc' | 'mqtt' | 'sql' | 'dns' | 'rmi' | 'ftp' | any,
     isSSL: boolean = false,
     mTLS: boolean = false,
-    sensitive: 0 | 1 | 2 | 3 = 0,
+    sensitive: 0 | 1 | 2 | 3,
     content: 'normal' | 'secret' | 'PII' | 'credit card' | 'code' | any,
     format: 'text' | 'xml' | 'json' | 'binary' | any,
     id?: UUID | undefined,
-    shape?: string,
     description?: string,
     additions?: Record<string, unknown>): DataFlow {
     return {
         metadata: {
-            ...buildElement(name, 'dataflow', type, id, shape, description),
+            ...buildElement(name, 'dataflow', type, id, description),
             type: type,
         },
         ssl: {

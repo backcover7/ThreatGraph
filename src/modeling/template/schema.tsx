@@ -59,10 +59,11 @@ const entitySchema = {
 const datastoreSchema = {
     type: 'object',
     additionalProperties: false,
-    required: ['metadata'],
+    required: ['metadata', 'category'],
     properties: {
         metadata: elementSchema,
         groups: { type: 'array', items: { type: 'string' } },
+        category: { type: 'string', enum: [ 'relational', 'non-relational', 'filesystem' ] },
         authentication: {
             type: 'object',
             additionalProperties: false,

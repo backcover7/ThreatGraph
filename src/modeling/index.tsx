@@ -15,7 +15,6 @@ import RuleEngine from "./parser/rule-engine";
 import Diagram from "./parser/diagram";
 import fs from 'fs/promises';
 import * as model from "@/modeling/model";
-import elements from "ajv/lib/vocabularies/jtd/elements";
 
 async function main() {
     // Load built in elements
