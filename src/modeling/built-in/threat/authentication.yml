@@ -1,0 +1,75 @@
+module:
+  threat:
+    - id: 4d573e49-5fa1-4404-be3c-d48b355980ba
+      name: Weak Cryptographic Algorithms
+      severity: high
+      description: The use of weak cryptographic algorithms poses a significant security risk. These algorithms, which may be outdated, broken, or implemented incorrectly, can be exploited to decrypt sensitive data, forge signatures, or bypass security controls. This vulnerability can lead to confidentiality breaches, data integrity issues, and authentication failures.
+      mitigation: Use strong, up-to-date cryptographic algorithms recommended by security experts. Implement proper key management practices. Regularly update cryptographic libraries and frameworks. Use sufficiently long key sizes. Avoid implementing custom cryptographic algorithms. Conduct regular security audits and penetration testing to identify and replace weak algorithms.
+      compliance:
+        cwe:
+          - 'CWE-327: Use of a Broken or Risky Cryptographic Algorithm'
+          - 'CWE-326: Inadequate Encryption Strength'
+        owasp:
+          - 'A02:2021 - Cryptographic Failures'
+        stride:
+          - Information Disclosure
+          - Tampering
+          - Spoofing
+
+    - id: 1baed8fd-d0b1-4c7b-89df-262694e6e823
+      name: Default Credentials or Empty Password
+      severity: critical
+      description: The use of default credentials or empty passwords is a critical security vulnerability. Many systems, devices, and applications come with preset default credentials that are publicly known or documented. Similarly, some systems may allow the creation of accounts with empty passwords. Attackers often target these weak points as an easy entry into systems. This vulnerability can lead to unauthorized access, data breaches, system compromise, and potentially serve as a starting point for more extensive attacks on the network.
+      mitigation: Change all default passwords immediately upon system setup. Implement and enforce a strong password policy that prohibits empty passwords. Use multi-factor authentication where possible. Regularly audit systems for default or weak credentials. Implement account lockout policies after multiple failed login attempts. Consider using a password manager for generating and storing strong, unique passwords. Educate users about the dangers of using default or weak credentials.
+      compliance:
+        cwe:
+          - 'CWE-521: Weak Password Requirements'
+          - 'CWE-259: Use of Hard-coded Password'
+          - 'CWE-258: Empty Password in Configuration File'
+        owasp:
+          - 'A07:2021 - Identification and Authentication Failures'
+        stride:
+          - Spoofing
+          - Elevation of Privilege
+          - Information Disclosure
+
+    - id: 461c0696-9811-413b-98ff-f5073f7b88a3
+      name: Weak credential policy
+      severity: low
+      description: Weak credential is more vulnerable to brute force attack
+      mitigation: Password authentication requires user to create a robust complex password.
+      compliance:
+        cwe:
+          - 'CWE-521: Weak Password Requirements'
+        owasp:
+          - 'A07:2021 - Identification and Authentication Failures'
+        stride:
+          - Information Disclosure
+          - Elevation of Privilege
+
+    - id: e1f06cab-4818-4c49-ace3-00a46f9e0e91
+      name: Never expired credential
+      severity: low
+      description: credential never expires.
+      mitigation: User should be asked to update their password in a period.
+      compliance:
+        cwe:
+          - 'CWE-263: Password Aging with Long Expiration'
+        owasp:
+          - 'A07:2021 Identification and Authentication Failures'
+        stride:
+          - Information Disclosure
+
+    - id: 9e85bda8-1858-407c-8c2a-67a2496b3c9a
+      name: Brute force attack
+      severity: low
+      description: Credential authentication is vulnerable to brute force attack.
+      mitigation: Captcha challenge or retry restriction will mitigate brute force attack.
+      compliance:
+        cwe:
+          - 'CWE-307: Improper Restriction of Excessive Authentication Attempts'
+        owasp:
+          - 'A07:2021 Identification and Authentication Failures'
+        stride:
+          - Spoofing
+          - Information Disclosure

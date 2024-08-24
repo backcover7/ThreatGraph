@@ -1,0 +1,171 @@
+module:
+  threat:
+    - id: 61966755-7c78-4ce4-8a89-2690520e474c
+      name: Cross-Site Request Forgery (CSRF)
+      severity: medium
+      description: CSRF attacks exploit the trust that a web application has in an authenticated user's browser, allowing an attacker to trick the user into performing unintended actions on the trusted site.
+      mitigation: Implement anti-CSRF tokens, use SameSite cookie attribute, validate Origin/Referer headers, and use custom request headers for sensitive operations.
+      compliance:
+        cwe:
+          - 'CWE-352: Cross-Site Request Forgery (CSRF)'
+        owasp:
+          - 'A05:2021 - Security Misconfiguration'
+        stride:
+          - Spoofing
+          - Tampering
+          - Elevation of Privilege
+
+    - id: 6226b7f1-b2c7-4c93-9afe-4ec35e93bae6
+      name: Cross-Site Scripting (XSS)
+      severity: high
+      description: XSS attacks occur when an attacker injects malicious scripts into content from trusted websites. These scripts can steal user data, perform actions on behalf of the user, or deface websites.
+      mitigation: Implement proper input validation and output encoding. Use Content Security Policy (CSP) headers, sanitize user inputs, and employ secure coding practices to prevent script injection.
+      compliance:
+        cwe:
+          - 'CWE-79: Improper Neutralization of Input During Web Page Generation ("Cross-site Scripting")'
+        owasp:
+          - 'A03:2021 - Injection'
+        stride:
+          - Tampering
+          - Information Disclosure
+          - Elevation of Privilege
+
+    - id: 7b1f3a9c-8e5d-4c2a-b0f5-9e8f7a1d6b3e
+      name: SQL Injection (SQLi)
+      severity: critical
+      description: SQL injection occurs when untrusted data is inserted into SQL queries, allowing attackers to manipulate or retrieve data from the database. This can lead to unauthorized access, data theft, or data manipulation.
+      mitigation: Use parameterized queries or prepared statements, implement input validation and sanitization, employ least privilege principle for database accounts, and regularly update and patch database systems.
+      compliance:
+        cwe:
+          - 'CWE-89: Improper Neutralization of Special Elements used in an SQL Command ("SQL Injection")'
+        owasp:
+          - 'A03:2021 - Injection'
+        stride:
+          - Tampering
+          - Information Disclosure
+          - Elevation of Privilege
+          - Spoofing
+
+    - id: 7a3c81f9-b9d2-4e27-9c32-dc0c8a7f48e9
+      name: NoSQL Injection
+      severity: high
+      description: NoSQL injection is a security vulnerability that occurs when untrusted data is sent to a NoSQL database as part of a query, allowing an attacker to manipulate the query structure and potentially access, modify, or delete unauthorized data.
+      mitigation: Use parameterized queries or query builders, implement proper input validation and sanitization, apply the principle of least privilege for database access, and use strong authentication and access controls.
+      compliance:
+        cwe:
+          - 'CWE-943: Improper Neutralization of Special Elements in Data Query Logic'
+        owasp:
+          - 'A03:2021 - Injection'
+        stride:
+          - Tampering
+          - Information Disclosure
+          - Elevation of Privilege
+
+    - id: 8f41cd3e-b31d-4f48-a9be-b6cbad937226
+      name: Server-Side Template Injection
+      severity: high
+      description: Server-Side Template Injection (SSTI) occurs when user input is embedded in a template in an unsafe manner, allowing an attacker to inject malicious payload that can result in Remote Code Execution (RCE) or other serious vulnerabilities.
+      mitigation: Implement proper input validation, use a template engine that has built-in protections against SSTI, avoid using user-supplied input directly in templates, and employ the principle of least privilege for template rendering contexts.
+      compliance:
+        cwe:
+          - 'CWE-1336: Improper Neutralization of Special Elements Used in a Template Engine'
+        owasp:
+          - 'A03:2021 - Injection'
+        stride:
+          - Tampering
+          - Information Disclosure
+          - Elevation of Privilege
+
+    - id: 5e9f8b2a-7c1d-4a3b-9d8e-3f6a7b5c4d2e
+      name: Client-Side Template Injection
+      severity: medium
+      description: Client-Side Template Injection (CSTI) occurs when an attacker is able to inject malicious code into a template that is then rendered and executed on the client-side. This can lead to cross-site scripting (XSS) attacks, data theft, and other client-side vulnerabilities.
+      mitigation: Sanitize and validate all user inputs before inserting them into templates, use Content Security Policy (CSP) headers, avoid using dynamic template generation with user-supplied data, and consider using safe templating libraries that automatically escape output.
+      compliance:
+        cwe:
+          - 'CWE-79: Improper Neutralization of Input During Web Page Generation ("Cross-site Scripting")'
+        owasp:
+          - 'A03:2021 - Injection'
+          - 'A05:2021 - Security Misconfiguration'
+        stride:
+          - Tampering
+          - Information Disclosure
+          - Elevation of Privilege
+
+    - id: 3a2b1c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d
+      name: LDAP Injection
+      severity: high
+      description: LDAP Injection occurs when an application fails to properly sanitize user input before using it to construct LDAP statements. This vulnerability allows attackers to modify LDAP queries to bypass authentication, access unauthorized information, or execute arbitrary LDAP statements, potentially compromising the entire directory service.
+      mitigation: Use parameterized LDAP queries, implement proper input validation and sanitization, apply the principle of least privilege for LDAP access, use strong authentication mechanisms, and regularly update and patch LDAP servers and client libraries.
+      compliance:
+        cwe:
+          - 'CWE-90: Improper Neutralization of Special Elements used in an LDAP Query ("LDAP Injection")'
+        owasp:
+          - 'A03:2021 - Injection'
+        stride:
+          - Spoofing
+          - Tampering
+          - Information Disclosure
+          - Elevation of Privilege
+
+    - id: 9d8c7b6a-5f4e-3d2c-1b0a-9e8d7f6a5b4c
+      name: Open Redirection
+      severity: medium
+      description: Open Redirection occurs when a web application accepts user-controlled input that specifies a link to an external site, and uses that link in a Redirect. This can be used to facilitate phishing attacks by redirecting users to malicious sites, potentially leading to credential theft or malware infection.
+      mitigation: Implement a whitelist of allowed redirect destinations, avoid using user input directly in redirect functions, use indirect reference maps, implement proper input validation, and consider using absolute URLs within your own domain for redirects.
+      compliance:
+        cwe:
+          - 'CWE-601: URL Redirection to Untrusted Site ("Open Redirect")'
+        owasp:
+          - 'A01:2021 - Broken Access Control'
+          - 'A03:2021 - Injection'
+        stride:
+          - Spoofing
+          - Information Disclosure
+
+    - id: 2f1e3d4c-5b6a-7c8d-9e0f-1a2b3c4d5e6f
+      name: Server-Side Request Forgery
+      severity: high
+      description: Server-Side Request Forgery (SSRF) is a vulnerability that allows an attacker to induce the server-side application to make HTTP requests to an arbitrary domain of the attacker's choosing. This can lead to unauthorized actions or access to data within the organization, either in the vulnerable application itself or on other back-end systems that the application can communicate with.
+      mitigation: Implement strict input validation, use allowlists for permitted destinations, disable unused URL schemes, use a separate service for making external requests, implement network segmentation, and use the latest versions of libraries and frameworks with SSRF protections.
+      compliance:
+        cwe:
+          - 'CWE-918: Server-Side Request Forgery (SSRF)'
+        owasp:
+          - 'A10:2021 - Server-Side Request Forgery (SSRF)'
+        stride:
+          - Spoofing
+          - Tampering
+          - Information Disclosure
+          - Denial of Service
+          - Elevation of Privilege
+
+    - id: d5cbb70a-8de8-4958-8af3-e7fdcf8cabdc
+      name: Unsafe Block Size in Cryptographic Operations
+      severity: medium
+      description: Using an unsafe (typically too small) block size in cryptographic operations can weaken the security of the encryption. Small block sizes are more vulnerable to various attacks, including birthday attacks and padding oracle attacks. This can lead to information leakage, making it easier for attackers to decrypt or manipulate encrypted data.
+      mitigation: Use recommended block sizes for chosen algorithms (e.g., 128 bits for AES). Implement secure modes of operation like GCM with proper padding. Avoid ECB mode. Regularly update cryptographic libraries. Use authenticated encryption. Consider using stream ciphers or modern authenticated encryption with associated data (AEAD) algorithms when appropriate.
+      compliance:
+        cwe:
+          - 'CWE-326: Inadequate Encryption Strength'
+          - 'CWE-327: Use of a Broken or Risky Cryptographic Algorithm'
+        owasp:
+          - 'A02:2021 - Cryptographic Failures'
+        stride:
+          - Information Disclosure
+          - Tampering
+
+    - id: 2a22743f-6657-4ffa-b9d9-c62196b79b20
+      name: Unsafe Padding Mode in Cryptographic Operations
+      severity: high
+      description: Using an unsafe padding mode in cryptographic operations can severely compromise the security of encrypted data. Vulnerable padding schemes, such as PKCS#7 without proper implementation, can lead to padding oracle attacks. These attacks allow an attacker to decrypt ciphertext without knowing the encryption key, potentially exposing sensitive information. Moreover, some padding modes can be exploited to perform malleability attacks, allowing an attacker to modify the ciphertext in meaningful ways without detection.
+      mitigation: Use authenticated encryption modes like GCM (Galois/Counter Mode) which don't require padding. If using modes that require padding, implement secure padding schemes correctly and use them with message authentication codes (MACs). Avoid using ECB mode. Implement proper error handling to prevent padding oracle attacks. Use well-vetted cryptographic libraries and keep them updated. Consider using AEAD (Authenticated Encryption with Associated Data) algorithms when possible.
+      compliance:
+        cwe:
+          - 'CWE-326: Inadequate Encryption Strength'
+          - 'CWE-327: Use of a Broken or Risky Cryptographic Algorithm'
+        owasp:
+          - 'A02:2021 - Cryptographic Failures'
+        stride:
+          - Information Disclosure
+          - Tampering
