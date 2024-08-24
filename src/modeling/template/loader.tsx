@@ -128,55 +128,59 @@ function build(
 
     safeBuildAndPush(templates.zone, module.zone, item =>
         model.buildZone(
-            item.metadata?.name,
-            item.metadata?.type,
+            item.metadata.name,
+            item.metadata.type,
             item.trust,
-            item.metadata?.id,
-            item.metadata?.description,
-            item.metadata?.icon,
-            item.groups,
-            item.additions
+            item?.groups,
+            item.metadata.id,
+            item.metadata.description,
+            item.metadata.icon,
+            item?.additions
         )
     );
 
     safeBuildAndPush(templates.entity, module.entity, item =>
         model.buildEntity(
-            item.metadata?.name,
-            item.metadata?.type,
+            item.metadata.name,
+            item.metadata.type,
             item.object,
-            item.metadata?.id,
-            item.metadata?.description,
-            item.metadata?.icon,
-            item.groups,
-            item.additions
+            item?.groups,
+            item.metadata.id,
+            item.metadata.description,
+            item.metadata.icon,
+            item?.additions
         )
     );
 
     safeBuildAndPush(templates.datastore, module.datastore, item =>
         model.buildDataStore(
-            item.metadata?.name,
-            item.metadata?.type,
-            item.metadata?.credential.required,
-            item.metadata?.credential.strong,
-            item.metadata?.description,
-            item.metadata?.icon,
-            item.groups,
+            item.metadata.name,
+            item.metadata.type,
+            item.category,
+            item?.groups,
+            item?.credential?.required,
+            item?.credential?.strong,
+            item?.credential?.expiration,
+            item?.antiAbuse,
+            item.metadata.id,
+            item.metadata.description,
+            item.metadata.icon,
             item.additions
         )
     );
 
     safeBuildAndPush(templates.process, module.process, item =>
         model.buildProcess(
-            item.metadata?.name,
-            item.metadata?.type,
-            item.attributes?.critical,
+            item.metadata.name,
+            item.metadata.type,
+            item.attributes.critical,
             item.attributes?.isSanitizer,
             item.attributes?.isCsrfProtected,
             item.attributes?.isAuthn,
-            item.attributes?.operation,
-            item.metadata?.id,
-            item.metadata?.description,
-            item.metadata?.icon,
+            item.attributes.operation,
+            item.metadata.id,
+            item.metadata.description,
+            item.metadata.icon,
             item.additions
         )
     );
@@ -187,9 +191,9 @@ function build(
             item.severity,
             item.description,
             item.mitigation,
-            item.compliance?.stride,
-            item.compliance?.cwe,
-            item.compliance?.owasp,
+            item.compliance.stride,
+            item.compliance.cwe,
+            item.compliance.owasp,
             item.references || [],
             item.id
         )
