@@ -251,7 +251,7 @@
         "metadata": {
           "element": "process",
           "id": "b21dc275-a75f-45fc-9522-b7fb439efeee",
-          "name": "Password Authentication Process",
+          "name": "Password Authentication",
           "description": "Authentication uses password as credential",
           "type": "authentication"
         },
@@ -266,15 +266,10 @@
         },
         "additions": {
           "password": {
-            "minLength": 10,
-            "requireUppercase": false,
-            "requireLowercase": false,
-            "requireNumbers": true,
-            "requireSpecialChars": true,
+            "strong": false,
             "expiration": false
           },
-          "requireCaptcha": false,
-          "hasRetryLimitation": false
+          "antiAbuse": false
         }
       },
       "id": "SPE1xaFFIHhXb1KfU1HfJ",

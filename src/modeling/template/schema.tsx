@@ -63,6 +63,24 @@ const datastoreSchema = {
     properties: {
         metadata: elementSchema,
         groups: { type: 'array', items: { type: 'string' } },
+        authentication: {
+            type: 'object',
+            additionalProperties: false,
+            required: ['credential', 'antiAbuse'],
+            properties: {
+                credential: {
+                    type: 'object',
+                    additionalProperties: false,
+                    required: ['required', 'strong', 'expiration'],
+                    properties: {
+                        required: { type: 'boolean' },
+                        strong: { type: 'boolean' },
+                        expiration: { type: 'boolean' },
+                    }
+                },
+                antiAbuse: { type: 'boolean' },
+            }
+        },
         additions: { $ref: '#/definitions/recursiveAdditions' }
     }
 };
@@ -81,6 +99,7 @@ const processSchema = {
             properties: {
                 critical: { type: 'number', enum: [0, 1, 2, 3] },
                 isSanitizer: { type: 'boolean' },
+                isCsrfProtected: { type: 'boolean' },
                 isAuthn: { type: 'boolean' },
                 operation: { type: 'string', enum: ['r', 'w', 'rw'] },
             },

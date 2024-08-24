@@ -28,12 +28,12 @@ const ajv = new Ajv({
 });
 addFormats(ajv);
 
-export async function loadBuiltinTemplates(type: TEMPLATE_GROUP): Promise<templateType> {
+export async function loadBuiltinTemplates(): Promise<templateType> {
     const builtin = './built-in';
-    return await loadBulkTemplates(builtin, type);
+    return await loadBulkTemplates(builtin);
 }
 
-export async function loadBulkTemplates(dir: string, type: TEMPLATE_GROUP): Promise<templateType> {
+export async function loadBulkTemplates(dir: string): Promise<templateType> {
     let templates = {
         zone: [],
         entity: [],
@@ -67,7 +67,7 @@ export async function loadBulkTemplates(dir: string, type: TEMPLATE_GROUP): Prom
             }
         }
 
-        console.log(`Finished loading ${type} templates...`);
+        console.log(`Finished loading templates...`);
     } catch (error) {
         console.error('Failed to load templates:', error);
     }
@@ -156,7 +156,8 @@ function build(
         model.buildDataStore(
             item.metadata?.name,
             item.metadata?.type,
-            item.metadata?.id,
+            item.metadata?.credential.required,
+            item.metadata?.credential.strong,
             item.metadata?.description,
             item.metadata?.icon,
             item.groups,
@@ -170,6 +171,7 @@ function build(
             item.metadata?.type,
             item.attributes?.critical,
             item.attributes?.isSanitizer,
+            item.attributes?.isCsrfProtected,
             item.attributes?.isAuthn,
             item.attributes?.operation,
             item.metadata?.id,

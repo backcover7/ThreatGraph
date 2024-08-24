@@ -59,6 +59,8 @@ export type Entity = Node & {
     metadata: {
         element: 'entity';
     } & Element;
+    // The only property to identify the entity, like 'ftp', 'http'
+    // if its metadata.type is server. it is ftp server. If type is client, it is ftp client.
     object: string;
 }
 
@@ -67,6 +69,14 @@ export type DataStore = Node & {
     metadata: {
         element: 'datastore';
     } & Element;
+    authentication: {
+        credential: {
+            required: boolean;
+            strong: boolean;
+            expiration: boolean;
+        };
+        antiAbuse: boolean;
+    }
 }
 
 // Process Type
@@ -77,6 +87,7 @@ export type Process = {
     attributes: {
         critical: 0 | 1 | 2 | 3;   // 0 is totally uncritical, 3 is totally critical
         isSanitizer: boolean;
+        isCsrfProtected: boolean;
         isAuthn: boolean;
         operation: 'r' | 'w' | 'rw';  // GET is read, POST is w, GET & POST is rw
     };
@@ -92,7 +103,7 @@ export type ProcessAttached = {
 export type DataFlow = {
     metadata: {
         element: 'dataflow';
-        type: 'http' | 'websocket' | 'ssh' | 'grpc' | 'mqtt' | 'sql' | 'dns' | 'rmi' | 'ftp' | 'telnet' | any;
+        type: 'http' | 'websocket' | 'ssh' | 'grpc' | 'mqtt' | 'sql' | 'dns' | 'rmi' | 'ftp' | any;
     } & Omit<Element, 'icon'>;  // Remove 'icon' from Element for DataFlow
     ssl: {
         isSSL: boolean;
@@ -213,6 +224,10 @@ export function buildEntity(
 export function buildDataStore(
     name: string,
     type: string,
+    required: boolean = false,
+    strong: boolean = false,
+    expiration: boolean = false,
+    antiAbuse: boolean = false,
     id?: UUID | undefined,
     shape?: string,
     description?: string,
@@ -224,6 +239,14 @@ export function buildDataStore(
             ...buildElement(name, 'datastore', type, id, shape, description, icon),
         },
         groups,
+        authentication: {
+            credential: {
+                required,
+                strong,
+                expiration,
+            },
+            antiAbuse,
+        },
         additions,
     };
 }
@@ -233,8 +256,9 @@ export function buildProcess(
     name: string,
     type: string,
     critical: 0 | 1 | 2 | 3,
-    isSanitizer: boolean,
-    isAuthn: boolean,
+    isSanitizer: boolean = false,
+    isCsrfProtected: boolean = false,
+    isAuthn: boolean = false,
     operation: 'r' | 'w' | 'rw',
     id?: UUID | undefined,
     shape?: string,
@@ -248,6 +272,7 @@ export function buildProcess(
         attributes: {
             critical,
             isSanitizer,
+            isCsrfProtected,
             isAuthn,
             operation
         },
@@ -258,7 +283,7 @@ export function buildProcess(
 
 export function buildDataFlow(
     name: string,
-    type: 'http' | 'websocket' | 'ssh' | 'grpc' | 'mqtt' | 'sql' | 'dns' | 'rmi' | 'ftp' | 'telnet' | any,
+    type: 'http' | 'websocket' | 'ssh' | 'grpc' | 'mqtt' | 'sql' | 'dns' | 'rmi' | 'ftp' | any,
     isSSL: boolean = false,
     mTLS: boolean = false,
     sensitive: 0 | 1 | 2 | 3 = 0,

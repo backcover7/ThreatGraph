@@ -15,11 +15,15 @@ import RuleEngine from "./parser/rule-engine";
 import Diagram from "./parser/diagram";
 import fs from 'fs/promises';
 import * as model from "@/modeling/model";
+import elements from "ajv/lib/vocabularies/jtd/elements";
 
 async function main() {
     // Load built in elements
     // TODO refactor elements variable name to elementsTemplates, these are not real constructed elements. They are only for user building.
-    const elements: template.templateType = await template.loadBuiltinTemplates(template.ELEMENT_TEMPLATE);
+
+    const templates = await template.loadBuiltinTemplates();
+    const allThreats = templates.threat;
+    const allRules = templates.rule;
 
     // drawing
 
@@ -28,20 +32,23 @@ async function main() {
     // Threat Modeling
     const outOfScope: string[] = [];  // shape id collection
     const diagram = new Diagram(await fs.readFile('../../tests/authz.json', 'utf-8'));
-    const canvasElements = diagram.processCanvas();
+    const canvasElems = diagram.processCanvas();
 
-
-    const inScopeElements = canvasElements.filter(element => !outOfScope.includes(element.id));
-
-    const threats = await template.loadBuiltinTemplates(template.THREAT_TEMPLATE).then(templates => { return templates.threat });
-    const rules = await template.loadBuiltinTemplates(template.RULE_TEMPLATE).then(templates => { return templates.rule });
+    const inScopeElems = canvasElems.filter(elem => !outOfScope.includes(elem.id));
 
     const results: model.Result[] = [];
-    rules.forEach((rule) => {
-        const ruleEngine = new RuleEngine(rule, inScopeElements, threats);
+
+    console.log('Start Scanning ...')
+    allRules.forEach((rule) => {
+        const ruleEngine = new RuleEngine(rule, inScopeElems, allThreats);
         ruleEngine.startEvaluation(results);
     })
 
+    results.forEach((result: model.Result) => {
+        const threat = allThreats.find(threat => threat.id === result.threat);
+        const element = inScopeElems.find(elem => elem.metadata.shape === result.shape);
+        console.log('[+] Found threat "' + threat.name + '" > ' + element.metadata.name);
+    })
     console.log('Finished');
 }
 
