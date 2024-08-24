@@ -157,6 +157,10 @@ export type Result = {
     shape: string;
     rule: UUID;
     threat: UUID;
+    // TODO
+    // status: 'new' | 'accepted' | 'resolved' | 'rejected';
+    // created: number;  // date
+    // sla: number;      // days
 }
 
 // Helper function to create Element
