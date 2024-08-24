@@ -34,3 +34,12 @@ module:
         type: dataflow
       designs:
         - design: attached.passive.metadata.element = 'datastore'
+        - design: attached.passive.category = 'relational'
+
+    - id: 30b67989-a35e-4a32-bcf1-bf6abfa03302
+      threat: 7a3c81f9-b9d2-4e27-9c32-dc0c8a7f48e9  # NoSQL Injection
+      element:
+        type: dataflow
+      designs:
+        - design: attached.passive.metadata.element = 'datastore'
+        - design: attached.passive.category = 'non-relational'
