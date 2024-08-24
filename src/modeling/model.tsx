@@ -118,7 +118,7 @@ export type DataFlow = {
 }
 
 export type DataflowAttached = {
-    processes: Process[];
+    process: Process;   // TODO might support multi processes somehow
     active: Entity | DataStore;
     passive: Entity | DataStore;
 }
