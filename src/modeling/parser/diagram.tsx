@@ -117,6 +117,7 @@ export default class Diagram {
             throw new Error('Dataflow ' + arrowShape.id + ' is not connected correctly with nodes.');
         }
 
+        // TODO might support multi processes somehow
         const processId = arrowShape.boundElements.find((textShape: any) => textShape.type === 'text').id;
 
         return {
