@@ -118,7 +118,7 @@ export type DataFlow = {
 }
 
 export type DataflowAttached = {
-    process: Process;
+    processes: Process[];
     active: Entity | DataStore;
     passive: Entity | DataStore;
 }
