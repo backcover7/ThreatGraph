@@ -6,11 +6,6 @@ import path from 'path';
 import * as model from '../model';
 import schema from './schema';
 
-export const ELEMENT_TEMPLATE: string = 'element';
-export const THREAT_TEMPLATE: string = 'threat';
-export const RULE_TEMPLATE: string = 'rule';
-type TEMPLATE_GROUP = typeof ELEMENT_TEMPLATE | typeof THREAT_TEMPLATE | typeof RULE_TEMPLATE;
-
 export type templateType = {
     zone: any[],
     entity: any[],
@@ -131,7 +126,7 @@ function build(
             item.metadata.name,
             item.metadata.type,
             item.trust,
-            item?.groups,
+            item?.tags,
             item.metadata.id,
             item.metadata.description,
             item.metadata.icon,
@@ -143,8 +138,8 @@ function build(
         model.buildEntity(
             item.metadata.name,
             item.metadata.type,
+            item?.tags,
             item.object,
-            item?.groups,
             item.metadata.id,
             item.metadata.description,
             item.metadata.icon,
@@ -156,12 +151,12 @@ function build(
         model.buildDataStore(
             item.metadata.name,
             item.metadata.type,
-            item.category,
-            item?.groups,
-            item?.credential?.required,
-            item?.credential?.strong,
-            item?.credential?.expiration,
-            item?.antiAbuse,
+            item.tags,
+            item.object,
+            item?.authentication?.credential.required,
+            item?.authentication?.credential.strong,
+            item?.authentication?.credential.expiration,
+            item?.authentication?.antiAbuse,
             item.metadata.id,
             item.metadata.description,
             item.metadata.icon,
@@ -173,6 +168,7 @@ function build(
         model.buildProcess(
             item.metadata.name,
             item.metadata.type,
+            item.tags,
             item.attributes.critical,
             item.attributes?.isSanitizer,
             item.attributes?.isCsrfProtected,
