@@ -142,7 +142,7 @@ export default class {
             return true;
         }
 
-        safeBuildAndPush(templates.zone, module.zone, item => {
+        safeBuildAndPush(templates.zone, module.zone, item =>
             checkUUIDExistence(item.metadata.id, this.#uuidSet) ?
                 model.buildZone(
                     item.metadata.name,
@@ -153,8 +153,8 @@ export default class {
                     item.metadata.description,
                     item.metadata.icon,
                     item?.additions
-                ) : {};
-        });
+                ) : null
+        );
 
         safeBuildAndPush(templates.entity, module.entity, item =>
             checkUUIDExistence(item.metadata.id, this.#uuidSet) ?
@@ -167,7 +167,7 @@ export default class {
                     item.metadata.description,
                     item.metadata.icon,
                     item?.additions
-                ) : {}
+                ) : null
         );
 
         safeBuildAndPush(templates.datastore, module.datastore, item =>
@@ -185,7 +185,7 @@ export default class {
                     item.metadata.description,
                     item.metadata.icon,
                     item.additions
-                ) : {}
+                ) : null
         );
 
         safeBuildAndPush(templates.process, module.process, item =>
@@ -202,7 +202,7 @@ export default class {
                     item.metadata.description,
                     item.metadata.icon,
                     item.additions
-                ) : {}
+                ) : null
         );
 
         safeBuildAndPush(templates.threat, module.threat, item =>
@@ -217,7 +217,7 @@ export default class {
                     item.compliance.owasp,
                     item.references || [],
                     item.id
-                ) : {}
+                ) : null
         );
 
         safeBuildAndPush(templates.rule, module.rule, item =>
@@ -227,7 +227,7 @@ export default class {
                     item.element,
                     item.designs,
                     item.id
-                ) : {}
+                ) : null
         );
     }
 }
