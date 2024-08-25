@@ -170,7 +170,6 @@ function build(
             item.metadata.type,
             item.tags,
             item.attributes.critical,
-            item.attributes?.isSanitizer,
             item.attributes?.isCsrfProtected,
             item.attributes?.isAuthn,
             item.attributes.operation,

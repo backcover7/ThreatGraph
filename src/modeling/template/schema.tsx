@@ -96,10 +96,9 @@ const processSchema = {
         attributes: {
             type: 'object',
             additionalProperties: false,
-            required: ['critical', 'isSanitizer', 'isAuthn', 'operation'],
+            required: ['critical', 'isAuthn', 'operation'],
             properties: {
                 critical: { type: 'number', enum: [0, 1, 2, 3] },
-                isSanitizer: { type: 'boolean' },
                 isCsrfProtected: { type: 'boolean' },
                 isAuthn: { type: 'boolean' },
                 operation: { type: 'string', enum: ['r', 'w', 'rw'] },

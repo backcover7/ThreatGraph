@@ -85,7 +85,6 @@ export type Process = {
     tags?: string[];
     attributes: {
         critical: 0 | 1 | 2 | 3;   // 0 is totally uncritical, 3 is totally critical
-        isSanitizer: boolean;
         isCsrfProtected: boolean;
         isAuthn: boolean;
         operation: 'r' | 'w' | 'rw';  // GET is read, POST is w, GET & POST is rw
@@ -255,7 +254,6 @@ export function buildProcess(
     type: string,
     tags: string[] = [],
     critical: 0 | 1 | 2 | 3,
-    isSanitizer: boolean = false,
     isCsrfProtected: boolean = false,
     isAuthn: boolean = false,
     operation: 'r' | 'w' | 'rw',
@@ -270,7 +268,6 @@ export function buildProcess(
         tags,
         attributes: {
             critical,
-            isSanitizer,
             isCsrfProtected,
             isAuthn,
             operation
