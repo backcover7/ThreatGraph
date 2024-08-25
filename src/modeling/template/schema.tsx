@@ -12,7 +12,7 @@ const elementSchema = {
         description: { type: 'string' },
         icon: {
             type: 'string',
-            pattern: '^data:image\/svg\+xml;base64,(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/'
+            pattern: '^data:image/svg(\\+xml)?;base64,(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$'
         },
         type: {
             type: 'string',

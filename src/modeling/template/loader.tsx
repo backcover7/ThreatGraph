@@ -30,8 +30,7 @@ export default class {
     }
 
     async loadBuiltinTemplates(): Promise<templateType> {
-        // const builtin = './built-in';
-        const builtin = '../../tests/templates';
+        const builtin = './built-in';
         return await this.loadBulkTemplates(builtin);
     }
 
