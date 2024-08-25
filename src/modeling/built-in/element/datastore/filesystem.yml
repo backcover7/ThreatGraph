@@ -6,14 +6,20 @@ module:
         description: Local disk file system
         icon: data:image/svg+xml;base64,0==
         type: filesystem
-      groups: [ filesystem ]
-      category: filesystem
+      tags: [ filesystem ]
 
     - metadata:
         id: 0612c424-86bc-4a5b-ac64-c34944fbf866
         name: FTP server
         description: FTP server
         icon: data:image/svg+xml;base64,0==
-        type: ftp
-      groups: [ filesystem ]
-      category: filesystem
+        type: filesystem
+      tags: [ filesystem ]
+
+    - metadata:
+        id: fd495e9a-debf-47c1-b379-1280b3d006c5
+        name: LDAP
+        description: LDAP
+        icon: data:image/svg+xml;base64,0==
+        type: others
+      tags: [ others ]
