@@ -11,7 +11,7 @@
           "name": "browser",
           "id": "f1e3fe98-0b66-417a-b6e4-ad9d88cfab86"
         },
-        "groups": [],
+        "tags": [],
         "object": "browser"
       },
       "type": "rectangle",
@@ -95,7 +95,7 @@
           "name": "server",
           "id": "801f1ba8-e69d-43c3-a7d2-abaa6869bea7"
         },
-        "groups": [],
+        "tags": [],
         "object": "apache"
       },
       "type": "rectangle",
@@ -255,7 +255,7 @@
           "description": "Authentication uses password as credential",
           "type": "authentication"
         },
-        "groups": [
+        "tags": [
           "authentication"
         ],
         "attributes": {
@@ -354,7 +354,7 @@
           "type": "private",
           "element": "zone"
         },
-        "groups": [
+        "tags": [
           "corporate",
           "private"
         ],
