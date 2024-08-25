@@ -1,5 +1,7 @@
 // This is schema for json schema for all yaml templates.
 
+const typeOrObjectPattern = '^[a-z]+(-[a-z]+)*$'
+
 const elementSchema = {
     type: 'object',
     additionalProperties: false,
@@ -9,7 +11,10 @@ const elementSchema = {
         name: { type: 'string' },
         description: { type: 'string' },
         icon: { type: 'string' },
-        type: { type: 'string' },
+        type: {
+            type: 'string',
+            pattern: typeOrObjectPattern
+        },
     },
 };
 
@@ -51,7 +56,10 @@ const entitySchema = {
     properties: {
         metadata: elementSchema,
         tags: { type: 'array', items: { type: 'string' } },
-        object: { type: 'string' },
+        object: {
+            type: 'string',
+            pattern: typeOrObjectPattern
+        },
         additions: { $ref: '#/definitions/recursiveAdditions' }
     }
 };
@@ -63,7 +71,10 @@ const datastoreSchema = {
     properties: {
         metadata: elementSchema,
         tags: { type: 'array', items: { type: 'string' } },
-        object: { type: 'string' },
+        object: {
+            type: 'string',
+            pattern: typeOrObjectPattern
+        },
         authentication: {
             type: 'object',
             additionalProperties: false,

@@ -54,7 +54,7 @@ export async function loadBulkTemplates(dir: string): Promise<templateType> {
                     (entry.name.endsWith(`.yaml`) || entry.name.endsWith(`.yml`))) {
                     try {
                         const content = await fs.readFile(fullPath, 'utf-8');
-                        loadTemplate(content, templates);
+                        loadTemplate(content, templates, fullPath);
                     } catch (error) {
                         console.error(`Error processing file ${entry.name}:`, error);
                     }
@@ -72,17 +72,22 @@ export async function loadBulkTemplates(dir: string): Promise<templateType> {
 
 export function loadTemplate(
     content: string,
-    templates: templateType) {
+    templates: templateType,
+    fullPath: string) {
     const yml = yaml.load(content);
-    if (validateYaml(yml)) {
+    if (validateYaml(yml, fullPath)) {
         build(yml, templates);
     }
 }
 
-function validateYaml(yml: unknown): boolean {
+function validateYaml(yml: unknown, fullPath: string): boolean {
     try {
         const validate = ajv.compile(schema.moduleSchema);
-        return validate(yml);
+        const flag =  validate(yml);
+        if (!flag) {
+            console.log('[!] Format wrong in ' + fullPath);
+        }
+        return flag;
     } catch (error) {
         console.error('Error validating YAML:', error);
         return false;
