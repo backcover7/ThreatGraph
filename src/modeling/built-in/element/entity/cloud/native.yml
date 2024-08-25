@@ -1,0 +1,82 @@
+module:
+  entity:
+    - metadata:
+        id: c40bb0be-3ccc-4fd6-896f-923cc8f3136a
+        name: Docker client
+        description: Docker client
+        icon: data:image/svg+xml;base64,0==
+        type: container
+      tags: [ cloud-native, docker ]
+      object: docker-client
+
+    - metadata:
+        id: 9db56999-cf06-46fb-9763-efcd63db67a2
+        name: Docker host
+        description: Docker host
+        icon: data:image/svg+xml;base64,0==
+        type: container
+      tags: [ cloud-native, docker ]
+      object: docker-host
+
+    - metadata:
+        id: 8b65cd5d-77d3-4234-a673-f9db997dd6d6
+        name: Docker registry
+        description: Docker registry
+        icon: data:image/svg+xml;base64,0==
+        type: container
+      tags: [ cloud-native, docker ]
+      object: docker-registry
+
+    - metadata:
+        id: 0598613a-ccdc-42e4-bda2-ad7aef624fd1
+        name: Docker container
+        description: Docker container
+        icon: data:image/svg+xml;base64,0==
+        type: container
+      tags: [ cloud-native, docker ]
+      object: docker-container
+
+    - metadata:
+        id: ab39d32f-c7ae-4cb9-8350-4502756325db
+        name: Docker image
+        description: Docker image
+        icon: data:image/svg+xml;base64,0==
+        type: container
+      tags: [ cloud-native, docker ]
+      object: docker-image
+
+    - metadata:
+        id: b96e18f9-9677-4487-be01-4223de9cbbf7
+        name: Kubernetes cluster
+        description: Kubernetes cluster
+        icon: data:image/svg+xml;base64,0==
+        type: k8s
+      tags: [ cloud-native, kubernetes ]
+      object: k8s-cluster
+
+    - metadata:
+        id: b4aa545d-7506-4dcc-bd4c-777e1a886246
+        name: Kubernetes Control plane
+        description: Kubernetes cluster
+        icon: data:image/svg+xml;base64,0==
+        type: k8s
+      tags: [ cloud-native, kubernetes ]
+      object: k8s-control-plane
+
+    - metadata:
+        id: d0d36e1c-715c-411e-a0ed-e2bdc58e8284
+        name: Kubernetes pod
+        description: Kubernetes pod
+        icon: data:image/svg+xml;base64,0==
+        type: k8s
+      tags: [ cloud-native, kubernetes ]
+      object: k8s-pod
+
+    - metadata:
+        id: d0d36e1c-715c-411e-a0ed-e2bdc58e8284
+        name: Kubernetes worker node
+        description: Kubernetes worker node
+        icon: data:image/svg+xml;base64,0==
+        type: k8s
+      tags: [ cloud-native, kubernetes ]
+      object: k8s-worker-node

@@ -6,7 +6,7 @@ module:
         description: Authentication uses password as credential
         icon: data:image/svg+xml;base64,0==
         type: authentication
-      groups: [ authentication ]
+      tags: [ authentication ]
       attributes:
         critical: 3
         isSanitizer: true
@@ -30,7 +30,7 @@ module:
         description: OAuth2 Authentication
         icon: data:image/svg+xml;base64,0==
         type: authentication
-      groups: [ authentication ]
+      tags: [ authentication ]
       attributes:
         critical: 3
         isSanitizer: true
@@ -43,7 +43,7 @@ module:
         description: SSO Authentication
         icon: data:image/svg+xml;base64,0==
         type: authentication
-      groups: [ authentication ]
+      tags: [ authentication ]
       attributes:
         critical: 3
         isSanitizer: true

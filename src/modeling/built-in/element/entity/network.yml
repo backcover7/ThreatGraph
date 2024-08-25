@@ -1,0 +1,28 @@
+module:
+  entity:
+    - metadata:
+        id: 43fdc904-3f8d-45b3-8a81-65514403fab4
+        name: OpenVPN
+        description: OpenVPN
+        icon: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgNDggNDgiPjxwYXRoIGZpbGw9IiNmZjkxMDAiIGQ9Ik0yNCA0QzEyLjk1MyA0IDQgMTIuOTUzIDQgMjRjMCA3LjM5NSA0LjAyMyAxMy44MzIgOS45ODggMTcuMjk3bDQuNTA0LTcuNzg1QzE1LjIxMSAzMS42MDkgMTMgMjguMDY2IDEzIDI0YzAtNi4wNzQgNC45MjYtMTEgMTEtMTFzMTEgNC45MjYgMTEgMTFjMCA0LjA2Ni0yLjIxIDcuNjEtNS40OTIgOS41MTJsNC41MDQgNy43ODVDMzkuOTc3IDM3LjgzMiA0NCAzMS4zOTUgNDQgMjRjMC0xMS4wNDctOC45NTMtMjAtMjAtMjAiLz48cGF0aCBmaWxsPSIjMWEyMzdlIiBkPSJNMzAgMjRjMC0zLjMxMi0yLjY4Ny02LTYtNmMtMy4zMTIgMC02IDIuNjg4LTYgNmE2IDYgMCAwIDAgMy44NTIgNS41OThsLTIuNTU5IDEzLjgyQTIwIDIwIDAgMCAwIDI0IDQ0YzEuNjI1IDAgMy4xOTUtLjIxNSA0LjcwNy0uNTc4bC0yLjU1OS0xMy44MjRBNiA2IDAgMCAwIDMwIDI0Ii8+PC9zdmc+
+        type: vpn
+      tags: [ network ]
+      object: openvpn
+
+    - metadata:
+        id: 6fdede54-77e8-459e-9b26-9ccf00c005e6
+        name: Load Balancer
+        description: Load Balancer
+        icon: data:image/svg+xml;base64,0==
+        type: load-balancer
+      tags: [ network ]
+      object: load-balancer
+
+    - metadata:
+        id: 7b1565bd-c518-4f08-94fa-f66474d54986
+        name: DNS
+        description: DNS
+        icon: data:image/svg+xml;base64,0==
+        type: dns
+      tags: [ network ]
+      object: dns

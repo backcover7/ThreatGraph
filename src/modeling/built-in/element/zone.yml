@@ -6,7 +6,7 @@ module:
         description: Totally untrusted zone
         icon: data:image/png;base64,TODO
         type: untrusted
-      groups: [ untrusted ]
+      tags: [ untrusted ]
       trust: 0
 
     - metadata:
@@ -15,6 +15,7 @@ module:
         description: Internet zone
         icon: data:image/png;base64,TODO
         type: internet
+      tags: [ public ]
       trust: 1
 
     - metadata:
@@ -23,6 +24,7 @@ module:
         description: Public-facing zone
         icon: data:image/png;base64,TODO
         type: public
+      tags: [ public ]
       trust: 1
 
     - metadata:
@@ -31,7 +33,7 @@ module:
         description: Entire corporate zone
         icon: data:image/png;base64,TODO
         type: corporate
-      groups: [ corporate ]
+      tags: [ corporate ]
       trust: 2
 
     - metadata:
@@ -40,7 +42,7 @@ module:
         description: Corporate Office zone
         icon: data:image/png;base64,TODO
         type: corporate
-      groups: [ corporate ]
+      tags: [ corporate ]
       trust: 2
 
     - metadata:
@@ -49,7 +51,7 @@ module:
         description: Cloud service zone
         icon: data:image/png;base64,TODO
         type: cloud
-      groups: [ cloud ]
+      tags: [ cloud ]
       trust: 2
 
     - metadata:
@@ -58,7 +60,7 @@ module:
         description: Partner zone
         icon: data:image/png;base64,TODO
         type: partner
-      groups: [ partner ]
+      tags: [ partner ]
       trust: 2
 
     - metadata:
@@ -67,7 +69,7 @@ module:
         description: Private zone
         icon: data:image/png;base64,TODO
         type: private
-      groups: [ corporate, private ]
+      tags: [ corporate, private ]
       trust: 3
 
     - metadata:
@@ -76,7 +78,7 @@ module:
         description: Private zone
         icon: data:image/png;base64,TODO
         type: private
-      groups: [ corporate, private ]
+      tags: [ corporate, private ]
       trust: 3
 
     - metadata:
@@ -85,5 +87,5 @@ module:
         description: Totally trusted zone
         icon: data:image/png;base64,TODO
         type: trusted
-      groups: [ trusted ]
+      tags: [ trusted ]
       trust: 3

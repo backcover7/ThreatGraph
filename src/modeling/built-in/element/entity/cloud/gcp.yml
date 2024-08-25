@@ -1,0 +1,10 @@
+module:
+  entity:
+    - metadata:
+        id:
+        name:
+        description: GCP
+        icon:
+        type: vendor
+      tags: [ vendor, cloud-compute, gcp ]
+      object:
