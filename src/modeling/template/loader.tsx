@@ -30,7 +30,8 @@ export default class {
     }
 
     async loadBuiltinTemplates(): Promise<templateType> {
-        const builtin = './built-in';
+        // const builtin = './built-in';
+        const builtin = '../../tests/templates';
         return await this.loadBulkTemplates(builtin);
     }
 
@@ -136,6 +137,8 @@ export default class {
             if (uuidSet.has(uuid)) {
                 console.error(`UUID already exists: ${uuid}`);
                 return false;
+            } else {
+                uuidSet.add(uuid);
             }
             return true;
         }
