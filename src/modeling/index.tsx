@@ -10,7 +10,7 @@
 // import _ from 'lodash';
 // const lodashCloned = _.cloneDeep(objA);
 
-import * as template from './template/loader';
+import Loader from './template/loader';
 import RuleEngine from "./parser/rule-engine";
 import Diagram from "./parser/diagram";
 import fs from 'fs/promises';
@@ -20,7 +20,8 @@ async function main() {
     // Load built in elements
     // TODO refactor elements variable name to elementsTemplates, these are not real constructed elements. They are only for user building.
 
-    const templates = await template.loadBuiltinTemplates();
+    const loader = new Loader();
+    const templates = await loader.loadBuiltinTemplates();
     const allThreats = templates.threat;
     const allRules = templates.rule;
 
