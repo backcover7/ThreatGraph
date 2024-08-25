@@ -1,3 +1,11 @@
+/**
+ *
+ * icon has to be data url with svg image. The shorter edge of the image is 100px
+ * https://icon-sets.iconify.design/?query=java
+ * https://www.svgviewer.dev/svg-to-data-uri
+ *
+ */
+
 import crypto from 'crypto';
 
 declare const __brand: unique symbol;
@@ -21,7 +29,7 @@ export type Element = {
     description?: string;
     icon?: string;
     element: ElementType;
-    type: string;   // "public" zone, "client" entity, "mysql" datastore, 'http' protocol
+    type: string;   // "public" zone, "client" entity, "relational" datastore, 'http' protocol
     shape?: string;  // shape id shows on canvas
 }
 
@@ -46,6 +54,7 @@ export type ZoneAttached = {
 // Node Type: Entity Type and DataStore Type all extends from Node Type
 export type Node = {
     groups?: string[];
+    object: string;     // The only property to identify the entity, like 'ftp', 'mysql'
     additions?: Record<string, unknown>;
 }
 
@@ -59,9 +68,6 @@ export type Entity = Node & {
     metadata: {
         element: 'entity';
     } & Element;
-    // The only property to identify the entity, like 'ftp', 'http'
-    // if its metadata.type is server. it is ftp server. If type is client, it is ftp client.
-    object: string;
 }
 
 // DataStore Type
@@ -69,7 +75,6 @@ export type DataStore = Node & {
     metadata: {
         element: 'datastore';
     } & Element;
-    category: 'relational' | 'non-relational' | 'filesystem';
     authentication?: {
         credential?: {
             required?: boolean;
@@ -227,7 +232,7 @@ export function buildEntity(
 export function buildDataStore(
     name: string,
     type: string,
-    category: 'relational' | 'non-relational' | 'filesystem',
+    object: string,
     groups: string[] = [],
     required: boolean = false,
     strong: boolean = false,
@@ -242,7 +247,7 @@ export function buildDataStore(
             ...buildElement(name, 'datastore', type, id, description, icon),
         },
         groups,
-        category,
+        object,
         authentication: {
             credential: {
                 required,

@@ -6,11 +6,6 @@ import path from 'path';
 import * as model from '../model';
 import schema from './schema';
 
-export const ELEMENT_TEMPLATE: string = 'element';
-export const THREAT_TEMPLATE: string = 'threat';
-export const RULE_TEMPLATE: string = 'rule';
-type TEMPLATE_GROUP = typeof ELEMENT_TEMPLATE | typeof THREAT_TEMPLATE | typeof RULE_TEMPLATE;
-
 export type templateType = {
     zone: any[],
     entity: any[],
@@ -156,7 +151,7 @@ function build(
         model.buildDataStore(
             item.metadata.name,
             item.metadata.type,
-            item.category,
+            item.object,
             item?.groups,
             item?.credential?.required,
             item?.credential?.strong,

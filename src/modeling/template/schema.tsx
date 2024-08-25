@@ -63,7 +63,7 @@ const datastoreSchema = {
     properties: {
         metadata: elementSchema,
         groups: { type: 'array', items: { type: 'string' } },
-        category: { type: 'string', enum: [ 'relational', 'non-relational', 'filesystem' ] },
+        object: { type: 'string' },
         authentication: {
             type: 'object',
             additionalProperties: false,
