@@ -38,7 +38,7 @@ const zoneSchema = {
     required: ['metadata', 'trust'],
     properties: {
         metadata: elementSchema,
-        groups: { type: 'array', items: { type: 'string' } },
+        tags: { type: 'array', items: { type: 'string' } },
         trust: { type: 'number', enum: [0, 1, 2, 3] },
         additions: { $ref: '#/definitions/recursiveAdditions' }
     },
@@ -50,7 +50,7 @@ const entitySchema = {
     required: ['metadata', 'object'],
     properties: {
         metadata: elementSchema,
-        groups: { type: 'array', items: { type: 'string' } },
+        tags: { type: 'array', items: { type: 'string' } },
         object: { type: 'string' },
         additions: { $ref: '#/definitions/recursiveAdditions' }
     }
@@ -59,10 +59,10 @@ const entitySchema = {
 const datastoreSchema = {
     type: 'object',
     additionalProperties: false,
-    required: ['metadata', 'category'],
+    required: ['metadata'],
     properties: {
         metadata: elementSchema,
-        groups: { type: 'array', items: { type: 'string' } },
+        tags: { type: 'array', items: { type: 'string' } },
         object: { type: 'string' },
         authentication: {
             type: 'object',
@@ -92,7 +92,7 @@ const processSchema = {
     required: ['metadata', 'attributes'],
     properties: {
         metadata: elementSchema,
-        groups: { type: 'array', items: { type: 'string' } },
+        tags: { type: 'array', items: { type: 'string' } },
         attributes: {
             type: 'object',
             additionalProperties: false,

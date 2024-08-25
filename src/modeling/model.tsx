@@ -1,11 +1,3 @@
-/**
- *
- * icon has to be data url with svg image. The shorter edge of the image is 100px
- * https://icon-sets.iconify.design/?query=java
- * https://www.svgviewer.dev/svg-to-data-uri
- *
- */
-
 import crypto from 'crypto';
 
 declare const __brand: unique symbol;
@@ -29,7 +21,7 @@ export type Element = {
     description?: string;
     icon?: string;
     element: ElementType;
-    type: string;   // "public" zone, "client" entity, "relational" datastore, 'http' protocol
+    type: string;   // "public" zone, "load-balancer" entity, "mysql" datastore, 'http' protocol, this is the real thing it is.
     shape?: string;  // shape id shows on canvas
 }
 
@@ -38,7 +30,7 @@ export type Zone = {
     metadata: {
         element: 'zone';
     } & Element;
-    groups?: string[];
+    tags?: string[];
     trust: 0 | 1 | 2 | 3;  // 0 is totally untrusted, 3 is totally trusted.
     additions?: Record<string, unknown>;
 }
@@ -53,8 +45,8 @@ export type ZoneAttached = {
 
 // Node Type: Entity Type and DataStore Type all extends from Node Type
 export type Node = {
-    groups?: string[];
-    object: string;     // The only property to identify the entity, like 'ftp', 'mysql'
+    tags?: string[];
+    object: string;  // official name. metadata.name is customized name
     additions?: Record<string, unknown>;
 }
 
@@ -90,6 +82,7 @@ export type Process = {
     metadata: {
         element: 'process';
     } & Element;
+    tags?: string[];
     attributes: {
         critical: 0 | 1 | 2 | 3;   // 0 is totally uncritical, 3 is totally critical
         isSanitizer: boolean;
@@ -162,10 +155,6 @@ export type Result = {
     shape: string;
     rule: UUID;
     threat: UUID;
-    // TODO
-    // status: 'new' | 'accepted' | 'resolved' | 'rejected';
-    // created: number;  // date
-    // sla: number;      // days
 }
 
 // Helper function to create Element
@@ -193,7 +182,7 @@ export function buildZone(
     name: string,
     type: string,
     trust: 0 | 1 | 2 | 3,
-    groups: string[] = [],
+    tags: string[] = [],
     id?: UUID | undefined,
     description?: string,
     icon?: string,
@@ -202,7 +191,7 @@ export function buildZone(
         metadata: {
             ...buildElement(name, 'zone', type.toLowerCase(), id, description, icon),
         },
-        groups,
+        tags,
         trust,
         additions
     };
@@ -212,8 +201,8 @@ export function buildZone(
 export function buildEntity(
     name: string,
     type: string,
+    tags: string[] = [],
     object: string,
-    groups: string[] = [],
     id?: UUID | undefined,
     description?: string,
     icon?: string,
@@ -222,7 +211,7 @@ export function buildEntity(
         metadata: {
             ...buildElement(name, 'entity', type, id, description, icon),
         },
-        groups,
+        tags,
         object,
         additions,
     };
@@ -232,8 +221,8 @@ export function buildEntity(
 export function buildDataStore(
     name: string,
     type: string,
+    tags: string[] = [],
     object: string,
-    groups: string[] = [],
     required: boolean = false,
     strong: boolean = false,
     expiration: boolean = false,
@@ -246,7 +235,7 @@ export function buildDataStore(
         metadata: {
             ...buildElement(name, 'datastore', type, id, description, icon),
         },
-        groups,
+        tags,
         object,
         authentication: {
             credential: {
@@ -264,6 +253,7 @@ export function buildDataStore(
 export function buildProcess(
     name: string,
     type: string,
+    tags: string[] = [],
     critical: 0 | 1 | 2 | 3,
     isSanitizer: boolean = false,
     isCsrfProtected: boolean = false,
@@ -277,6 +267,7 @@ export function buildProcess(
         metadata: {
             ...buildElement(name, 'process', type, id, description, icon),
         },
+        tags,
         attributes: {
             critical,
             isSanitizer,
