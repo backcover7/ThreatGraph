@@ -8,7 +8,10 @@ const elementSchema = {
     required: ['id', 'name', 'type'],
     properties: {
         id: {  type: 'string', format: 'uuid' },
-        name: { type: 'string' },
+        name: {
+            type: 'string',
+            maxLength: 20
+        },
         description: { type: 'string' },
         icon: {
             type: 'string',
