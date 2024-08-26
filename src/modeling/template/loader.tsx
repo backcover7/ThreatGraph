@@ -81,7 +81,7 @@ export default class {
         templates: templateType,
         fullPath: string) {
         const yml = yaml.load(content);
-        if (this.#validateYaml(yml, fullPath)) {
+        if (yml && this.#validateYaml(yml, fullPath)) {
             this.#build(yml, templates);
         }
     }
