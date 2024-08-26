@@ -4,12 +4,11 @@ module:
         id: b21dc275-a75f-45fc-9522-b7fb439efeee
         name: Password Authentication
         description: Authentication uses password as credential
-        icon: data:image/svg+xml;base64,0==
+        icon: data:image/svg+xml;base64,YQ==
         type: authentication
       tags: [ authentication ]
       attributes:
         critical: 3
-        isSanitizer: true
         isAuthn: false
         operation: w
       additions:
@@ -28,12 +27,11 @@ module:
         id: de98418e-f62b-4ff6-baa9-5f8301eb50b9
         name: OAuth2 Authentication
         description: OAuth2 Authentication
-        icon: data:image/svg+xml;base64,0==
+        icon: data:image/svg+xml;base64,YQ==
         type: authentication
       tags: [ authentication ]
       attributes:
         critical: 3
-        isSanitizer: true
         isAuthn: false
         operation: w
 
@@ -41,12 +39,11 @@ module:
         id: 22134942-2735-4cf8-8586-72d28846d725
         name: SSO Authentication
         description: SSO Authentication
-        icon: data:image/svg+xml;base64,0==
+        icon: data:image/svg+xml;base64,YQ==
         type: authentication
       tags: [ authentication ]
       attributes:
         critical: 3
-        isSanitizer: true
         isAuthn: false
         operation: w
 

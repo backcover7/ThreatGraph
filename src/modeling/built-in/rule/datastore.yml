@@ -14,7 +14,7 @@ module:
       designs:
         - design: authentication.credential.strong = false
 
-    - id: e26730c8-dda3-4455-91ec-8cef65d4614a
+    - id: 0810aee9-7ccb-4967-9bfc-33c8edbd9d8a
       threat: e1f06cab-4818-4c49-ace3-00a46f9e0e91  # Never expired credential
       element:
         type: datastore
@@ -28,7 +28,7 @@ module:
       designs:
         - design: authentication.antiAbuse = false
 
-    - id: 30b67989-a35e-4a32-bcf1-bf6abfa03302
+    - id: 0fa94631-934b-4b24-b1b2-259e978b30a8
       threat: 7b1f3a9c-8e5d-4c2a-b0f5-9e8f7a1d6b3e  # SQL Injection
       element:
         type: dataflow
