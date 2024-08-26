@@ -91,7 +91,12 @@ export default class {
             const validate = this.#ajv.compile(schema.moduleSchema);
             const flag =  validate(yml);
             if (!flag) {
-                console.log('[!] Format wrong in ' + fullPath);
+                if (validate.errors) {
+                    validate.errors.forEach((error) => {
+                        let errorMessage = `Error in ${fullPath} -> ${error.instancePath}: ${error.message}`;
+                        console.log(errorMessage);
+                    });
+                }
             }
             return flag;
         } catch (error) {
