@@ -2,7 +2,7 @@ module:
   process:
     - metadata:
         id: b21dc275-a75f-45fc-9522-b7fb439efeee
-        name: Password Authentication
+        name: Password Authz
         description: Authentication uses password as credential
         icon: data:image/svg+xml;base64,YQ==
         type: authentication
@@ -25,7 +25,7 @@ module:
 
     - metadata:
         id: de98418e-f62b-4ff6-baa9-5f8301eb50b9
-        name: OAuth2 Authentication
+        name: OAuth2
         description: OAuth2 Authentication
         icon: data:image/svg+xml;base64,YQ==
         type: authentication
@@ -37,7 +37,7 @@ module:
 
     - metadata:
         id: 22134942-2735-4cf8-8586-72d28846d725
-        name: SSO Authentication
+        name: SSO
         description: SSO Authentication
         icon: data:image/svg+xml;base64,YQ==
         type: authentication

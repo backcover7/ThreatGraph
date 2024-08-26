@@ -47,7 +47,7 @@ module:
 
     - metadata:
         id: b96e18f9-9677-4487-be01-4223de9cbbf7
-        name: Kubernetes cluster
+        name: k8s cluster
         description: Kubernetes cluster
         icon: data:image/svg+xml;base64,YQ==
         type: k8s
@@ -56,7 +56,7 @@ module:
 
     - metadata:
         id: b4aa545d-7506-4dcc-bd4c-777e1a886246
-        name: Kubernetes Control plane
+        name: k8s Control plane
         description: Kubernetes cluster
         icon: data:image/svg+xml;base64,YQ==
         type: k8s
@@ -65,7 +65,7 @@ module:
 
     - metadata:
         id: 9543ca6f-ac95-437e-8388-5d697741e785
-        name: Kubernetes pod
+        name: k8s pod
         description: Kubernetes pod
         icon: data:image/svg+xml;base64,YQ==
         type: k8s
@@ -74,7 +74,7 @@ module:
 
     - metadata:
         id: d0d36e1c-715c-411e-a0ed-e2bdc58e8284
-        name: Kubernetes worker node
+        name: k8s worker node
         description: Kubernetes worker node
         icon: data:image/svg+xml;base64,YQ==
         type: k8s
