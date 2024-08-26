@@ -1,6 +1,6 @@
 // This is schema for json schema for all yaml templates.
 
-const typeOrObjectPattern = '^[a-z]+(-[a-z]+)*$'
+const typeOrObjectPattern = '^[a-z0-9]+(-[a-z0-9]+)*$'
 
 const elementSchema = {
     type: 'object',
