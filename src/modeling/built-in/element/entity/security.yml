@@ -31,10 +31,10 @@ module:
         id: 4bc942e3-04a2-406c-bba3-cace9a5413cc
         name: Snyk
         description: Snyk
-        icon: data:image/svg+xml;base64,0==
+        icon: data:image/svg+xml;base64,YQ==
         type: scanner
       tags: [ vendor, company, security, sast ]
-      object: Snyk
+      object: snyk
 
     - metadata:
         id: 12f8dbb5-d40c-4a90-bd2c-42d9a793ef37
@@ -49,16 +49,16 @@ module:
         id: 4cfc0e8b-4bba-40bf-9340-2717549aea82
         name: Invicti
         description: Invicti, formerly Netsparker
-        icon: data:image/svg+xml;base64,0==
+        icon: data:image/svg+xml;base64,YQ==
         type: scanner
       tags: [ vendor, company, security, dast ]
-      object: Invicti
+      object: invicti
 
     - metadata:
         id: 1d07ae9f-72d3-45c0-9fdf-24f9a6e66686
         name: Acunetix
         description: Acunetix, AWVS
-        icon: data:image/svg+xml;base64,0==
+        icon: data:image/svg+xml;base64,YQ==
         type: scanner
       tags: [ vendor, security, dast ]
-      object: Acunetix
+      object: acunetix

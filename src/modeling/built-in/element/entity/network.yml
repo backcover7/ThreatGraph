@@ -13,7 +13,7 @@ module:
         id: 6fdede54-77e8-459e-9b26-9ccf00c005e6
         name: Load Balancer
         description: Load Balancer
-        icon: data:image/svg+xml;base64,0==
+        icon: data:image/svg+xml;base64,YQ==
         type: load-balancer
       tags: [ network ]
       object: load-balancer
@@ -22,7 +22,43 @@ module:
         id: 7b1565bd-c518-4f08-94fa-f66474d54986
         name: DNS
         description: DNS
-        icon: data:image/svg+xml;base64,0==
+        icon: data:image/svg+xml;base64,YQ==
         type: dns
       tags: [ network ]
       object: dns
+
+    - metadata:
+        id: 3c09fdf5-6a77-405c-bb4a-5197205573c2
+        name: Firewall
+        description: Firewall
+        icon: data:image/svg+xml;base64,YQ==
+        type: firewall
+      tags: [ network, firewall, security ]
+      object: firewall
+
+    - metadata:
+        id: cf564e02-79c2-4c1c-ae74-ecb85aa9af09
+        name: WAF
+        description: WAF
+        icon: data:image/svg+xml;base64,YQ==
+        type: firewall
+      tags: [ network, waf, firewall, security ]
+      object: waf
+
+    - metadata:
+        id: b74485aa-3451-4055-97f1-839ed463f223
+        name: IPS
+        description: IPS
+        icon: data:image/svg+xml;base64,YQ==
+        type: ips
+      tags: [ network, ips, firewall, security ]
+      object: ips
+
+    - metadata:
+        id: 46a0d1e0-4a6b-48da-824f-17d7aa0106e3
+        name: IDS
+        description: IDS
+        icon: data:image/svg+xml;base64,YQ==
+        type: ids
+      tags: [ network, ids, monitor, security ]
+      object: ids

@@ -13,7 +13,7 @@ module:
         id: dc72a0b8-45f8-43b4-ade1-88fdb3d05416
         name: SSH
         description: SSH client
-        icon: data:image/svg+xml;base64,0==
+        icon: data:image/svg+xml;base64,YQ==
         type: client
       tags: [ client, ssh ]
       object: protocol

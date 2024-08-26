@@ -1,10 +1,10 @@
-module:
-  entity:
-    - metadata:
-        id:
-        name:
-        description: Azure
-        icon:
-        type: vendor
-      tags: [ vendor, cloud-compute, azure ]
-      object:
+#module:
+#  entity:
+#    - metadata:
+#        id:
+#        name:
+#        description: Azure
+#        icon:
+#        type: vendor
+#      tags: [ vendor, cloud-compute, azure ]
+#      object:
