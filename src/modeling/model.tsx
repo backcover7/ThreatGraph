@@ -219,7 +219,6 @@ export function buildEntity(
 // Build DataStore
 export function buildDataStore(
     name: string,
-    type: string,
     tags: string[] = [],
     object: string,
     required: boolean = false,
@@ -232,7 +231,7 @@ export function buildDataStore(
     additions?: Record<string, unknown>): DataStore {
     return {
         metadata: {
-            ...buildElement(name, 'datastore', type, id, description, icon),
+            ...buildElement(name, 'datastore', 'datastore', id, description, icon),
         },
         tags,
         object,

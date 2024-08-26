@@ -179,7 +179,6 @@ export default class {
             checkUUIDExistence(item.metadata.id, this.#uuidSet) ?
                 model.buildDataStore(
                     item.metadata.name,
-                    item.metadata.type,
                     item.tags,
                     item.object,
                     item?.authentication?.credential.required,
