@@ -303,6 +303,21 @@ module:
           - Elevation of Privilege
           - Information Disclosure
 
+    - id: b3e8ccf0-a973-449a-bd9c-a7d5e0a5edfd
+      name: JWT Never Expires
+      severity: high
+      description: JWT Never Expires is a vulnerability where JSON Web Tokens are issued without an expiration time or with an extremely long expiration period. This can lead to tokens remaining valid indefinitely, potentially allowing unauthorized access if a token is compromised. Long-lived tokens increase the attack surface and make it difficult to revoke access when needed.
+      mitigation: Always include an expiration time (exp claim) in JWTs. Use short-lived tokens and implement a secure refresh token mechanism. Implement server-side token validation and revocation capabilities. Use a allowlist of allowed algorithms for token signing. Implement proper key management and rotation practices. Consider using stateful session management for highly sensitive operations. Regularly audit and update JWT handling code and libraries.
+      compliance:
+        cwe:
+          - 'CWE-613: Insufficient Session Expiration'
+        owasp:
+          - 'A07:2021 - Identification and Authentication Failures'
+        stride:
+          - Spoofing
+          - Elevation of Privilege
+          - Information Disclosure
+
     - id: d9df0f27-5d87-4249-a424-4524ac2c404b
       name: Email Injection
       severity: high
