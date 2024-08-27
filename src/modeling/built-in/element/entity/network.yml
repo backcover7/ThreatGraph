@@ -62,3 +62,12 @@ module:
         type: ids
       tags: [ network, ids, monitor, security ]
       object: ids
+
+    - metadata:
+        id: b434c430-f729-454a-97ac-756dc45f3b1d
+        name: Cache
+        description: Cache
+        icon: data:image/svg+xml;base64,YQ==
+        type: cache
+      tags: [ network, cache ]
+      object: cache

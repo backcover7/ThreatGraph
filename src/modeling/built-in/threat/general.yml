@@ -169,3 +169,277 @@ module:
         stride:
           - Information Disclosure
           - Tampering
+
+    - id: f1e2d3c4-b5a6-7c8d-9e0f-1a2b3c4d5e6f
+      name: Inconsistent Parsing
+      severity: medium
+      description: Inconsistent parsing occurs when different components or systems interpret the same input data in different ways, potentially leading to security vulnerabilities. This can happen in various contexts such as parsing of file formats, network protocols, or user inputs.
+      mitigation: Implement consistent parsing mechanisms across all components. Use well-tested and secure parsing libraries. Validate and sanitize inputs before parsing. Implement strict error handling and reject ambiguous inputs. Regularly test parsing consistency across different components and environments.
+      compliance:
+        cwe:
+          - 'CWE-116: Improper Encoding or Escaping of Output'
+        owasp:
+          - 'A03:2021 - Injection'
+        stride:
+          - Tampering
+          - Information Disclosure
+          - Elevation of Privilege
+
+    - id: abc4163a-bfcc-4e28-b4bc-0ddd215f33db
+      name: XML Injection
+      severity: high
+      description: XML Injection occurs when untrusted user input is inserted into XML documents or queries without proper validation or escaping. This can lead to various attacks, including data manipulation, unauthorized access, and XML eXternal Entity (XXE) attacks. XXE is a specific type of XML Injection that can result in sensitive data disclosure, denial of service, server-side request forgery, and other server-side attacks.
+      mitigation: Use XML parsing libraries that disable external entity processing by default. Implement strict input validation and sanitization. Use allowlists for acceptable XML content. Employ XML Schema Definition (XSD) to validate XML structure. Disable DTD processing in XML parsers. Use SOAP in combination with WS-Security. Regularly update and patch XML processing libraries.
+      compliance:
+        cwe:
+          - 'CWE-91: XML Injection (aka Blind XPath Injection)'
+          - 'CWE-611: Improper Restriction of XML External Entity Reference'
+        owasp:
+          - 'A03:2021 - Injection'
+          - 'A05:2021 - Security Misconfiguration'
+        stride:
+          - Tampering
+          - Information Disclosure
+          - Denial of Service
+          - Elevation of Privilege
+
+    - id: ff9ef029-4354-46f4-8414-56cf339bdec0
+      name: Remote Code Execution (RCE)
+      severity: critical
+      description: Remote Code Execution (RCE) is a critical vulnerability that allows an attacker to execute arbitrary code on a target system remotely. This can lead to complete system compromise, data theft, and unauthorized access to sensitive resources.
+      mitigation: Implement strict input validation and sanitization. Use parameterized queries for database operations. Disable unnecessary system functions and services. Keep all software and libraries up-to-date. Implement least privilege principles. Use Web Application Firewalls (WAF). Regularly perform security audits and penetration testing.
+      compliance:
+        cwe:
+          - 'CWE-94: Improper Control of Generation of Code ("Code Injection")'
+          - 'CWE-78: Improper Neutralization of Special Elements used in an OS Command ("OS Command Injection")'
+        owasp:
+          - 'A03:2021 - Injection'
+          - 'A08:2021 - Software and Data Integrity Failures'
+        stride:
+          - Tampering
+          - Information Disclosure
+          - Elevation of Privilege
+          - Spoofing
+
+    - id: c4c70157-8731-48d5-8d5d-b63693080102
+      name: Path Traversal
+      severity: high
+      description: Path traversal (also known as directory traversal) is a vulnerability that allows an attacker to access files and directories stored outside the intended directory. By manipulating variables that reference files with "../" sequences and its variations, an attacker can access arbitrary files and directories on the server, including application source code, configuration files, and critical system files.
+      mitigation: Validate and sanitize user input. Use proper file path canonicalization. Implement strict access controls and use chroot jails. Avoid passing user-supplied input to filesystem APIs. Use allowlists for permitted files and directories. Implement least privilege principles for application processes.
+      compliance:
+        cwe:
+          - 'CWE-22: Improper Limitation of a Pathname to a Restricted Directory ("Path Traversal")'
+        owasp:
+          - 'A01:2021 - Broken Access Control'
+        stride:
+          - Information Disclosure
+          - Tampering
+          - Elevation of Privilege
+
+    - id: f33b9412-5984-4abb-a608-5edc0b059c39
+      name: Out of Band Exfiltration
+      severity: high
+      description: Out of Band (OOB) Exfiltration is a technique where attackers extract data from a system using a different communication channel than the one used for the primary attack. This method can bypass traditional security controls and allow for stealthy data theft. OOB exfiltration often leverages DNS queries, HTTP requests, or other protocols that are typically allowed through firewalls.
+      mitigation: Implement robust network segmentation. Monitor and analyze outbound traffic for anomalies. Use data loss prevention (DLP) solutions. Encrypt sensitive data at rest and in transit. Implement strict egress filtering. Use DNS sinkholes and monitor for unusual DNS activity. Regularly audit and update access controls.
+      compliance:
+        cwe:
+          - 'CWE-200: Exposure of Sensitive Information to an Unauthorized Actor'
+          - 'CWE-201: Exposure of Sensitive Information Through Sent Data'
+        owasp:
+          - 'A04:2021 - Insecure Design'
+          - 'A09:2021 - Security Logging and Monitoring Failures'
+        stride:
+          - Information Disclosure
+          - Tampering
+
+    - id: bb369a42-5a3a-468e-8156-8f027540d4a6
+      name: GraphQL Introspection
+      severity: medium
+      description: GraphQL introspection allows clients to query a GraphQL server for information about its schema. While useful for development, it can expose sensitive information about the API structure, field names, and data types to potential attackers. This information can be leveraged to construct more targeted attacks or to identify and exploit vulnerabilities in the GraphQL implementation.
+      mitigation: Disable introspection in production environments. Implement proper authentication and authorization for GraphQL endpoints. Use allowlists to restrict queries. Implement query depth and complexity limitations. Employ field-level access controls. Use GraphQL-specific security tools and libraries. Regularly audit and update GraphQL schemas.
+      compliance:
+        cwe:
+          - 'CWE-200: Exposure of Sensitive Information to an Unauthorized Actor'
+        owasp:
+          - 'A05:2021 - Security Misconfiguration'
+          - 'A01:2021 - Broken Access Control'
+        stride:
+          - Information Disclosure
+          - Elevation of Privilege
+
+    - id: 24084f3b-cebe-4049-9991-5b10d05a758e
+      name: JWT Signature Not Verified
+      severity: critical
+      description: When JWT signatures are not verified, an attacker can modify the contents of the token or create entirely new tokens with arbitrary claims. This can lead to unauthorized access, privilege escalation, and impersonation of other users. The integrity and authenticity of the token's claims are compromised, potentially allowing attackers to bypass authentication and authorization mechanisms.
+      mitigation: Always verify JWT signatures using the appropriate algorithm. Use strong, securely stored secret keys for HMAC algorithms or robust public/private key pairs for RSA or ECDSA. Implement token expiration and rotation. Validate all claims in the token. Use libraries that perform signature verification by default. Avoid using the 'none' algorithm. Implement additional server-side checks for critical operations.
+      compliance:
+        cwe:
+          - 'CWE-347: Improper Verification of Cryptographic Signature'
+          - 'CWE-345: Insufficient Verification of Data Authenticity'
+        owasp:
+          - 'A02:2021 - Cryptographic Failures'
+          - 'A07:2021 - Identification and Authentication Failures'
+        stride:
+          - Spoofing
+          - Tampering
+          - Elevation of Privilege
+          - Information Disclosure
+
+    - id: 7d873f68-17c5-4916-8e8e-068f839d8f94
+      name: JWT None Algorithm Supported
+      severity: critical
+      description: Supporting the 'none' algorithm in JWT validation is a critical security vulnerability. It allows an attacker to bypass signature verification entirely by altering the algorithm field to 'none'. This can lead to forged tokens being accepted as valid, potentially resulting in unauthorized access, privilege escalation, and complete compromise of the authentication system.
+      mitigation: Explicitly disallow the 'none' algorithm in JWT libraries and implementations. Always specify the expected algorithm when verifying tokens. Use a allowlist of allowed algorithms rather than a blocklist. Implement additional server-side validation of token claims. Use up-to-date JWT libraries with secure defaults. Regularly audit and test JWT implementation for vulnerabilities.
+      compliance:
+        cwe:
+          - 'CWE-327: Use of a Broken or Risky Cryptographic Algorithm'
+          - 'CWE-345: Insufficient Verification of Data Authenticity'
+        owasp:
+          - 'A02:2021 - Cryptographic Failures'
+          - 'A07:2021 - Identification and Authentication Failures'
+        stride:
+          - Spoofing
+          - Tampering
+          - Elevation of Privilege
+          - Information Disclosure
+
+    - id: d9df0f27-5d87-4249-a424-4524ac2c404b
+      name: Email Injection
+      severity: high
+      description: Email injection is a security vulnerability that occurs when an attacker is able to inject malicious content or commands into email headers or body, potentially manipulating the email's content or behavior. This can lead to phishing attacks, spam distribution, or unauthorized access to sensitive information. The vulnerability often arises from insufficient input validation in email composition or sending processes.
+      mitigation: Implement strict input validation and sanitization for all user-supplied data used in email composition. Use email libraries with built-in protections against injection. Avoid using user input directly in email headers. Implement proper escaping of special characters in email content. Use allowlists for permitted email addresses and domains. Regularly update and patch email-related software and libraries.
+      compliance:
+        cwe:
+          - 'CWE-93: Improper Neutralization of CRLF Sequences ("CRLF Injection")'
+          - 'CWE-88: Improper Neutralization of Argument Delimiters in a Command ("Argument Injection")'
+        owasp:
+          - 'A03:2021 - Injection'
+        stride:
+          - Tampering
+          - Information Disclosure
+          - Spoofing
+
+    - id: p6q7r8s9-t0u1-v2w3-x4y5-z6a7b8c9d0e1
+      name: SMS Injection
+      severity: high
+      description: SMS Injection is an attack where malicious content is injected into SMS messages sent by an application. This can lead to various issues such as phishing attacks, unauthorized actions performed on behalf of the user, or the spread of malware through malicious links. The vulnerability often arises from insufficient input validation in SMS composition or sending processes.
+      mitigation: Implement strict input validation and sanitization for all user-supplied data used in SMS composition. Use SMS gateway APIs that have built-in security features. Avoid using user input directly in SMS commands or special fields. Implement proper escaping of special characters in SMS content. Use allowlists for permitted phone numbers and message templates. Regularly audit and update SMS-related code and third-party services. Implement rate limiting and monitoring for unusual SMS activity.
+      compliance:
+        cwe:
+          - 'CWE-74: Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection')'
+          - 'CWE-75: Failure to Sanitize Special Elements into a Different Plane (Special Element Injection)'
+        owasp:
+          - 'A03:2021 - Injection'
+        stride:
+          - Tampering
+          - Spoofing
+          - Information Disclosure
+
+    - id: 8cc46bc8-abbb-4bdd-8124-05c33491d0d5
+      name: Cache Poisoning
+      severity: high
+      description: Cache poisoning is an attack where malicious data is injected into a web cache, causing the server to serve poisoned content to users. This can lead to various issues such as delivering malicious scripts, defacement, or misinformation to users. The vulnerability often arises from improper caching mechanisms or insufficient input validation in systems that use caching.
+      mitigation: Implement proper cache key generation. Use cache-specific headers like Cache-Control and Vary correctly. Validate and sanitize all user inputs before caching. Implement HTTPS to prevent man-in-the-middle cache poisoning. Regularly purge and update caches. Use secure configurations for CDNs and caching proxies. Implement cache busting techniques for dynamic content.
+      compliance:
+        cwe:
+          - 'CWE-444: Inconsistent Interpretation of HTTP Requests ('HTTP Request Smuggling')'
+        owasp:
+          - 'A05:2021 - Security Misconfiguration'
+        stride:
+          - Tampering
+          - Information Disclosure
+          - Spoofing
+
+    - id: 04a352ec-18a7-4b61-936c-6cd7cd505516
+      name: Cache Deception
+      severity: high
+      description: Cache Deception is an attack where an attacker tricks a web application into storing sensitive, user-specific content in a shared cache, making it accessible to other users. This can lead to information disclosure, including exposure of personal data, authentication tokens, or other sensitive information. The vulnerability often stems from improper cache configuration and inadequate URL-based access controls.
+      mitigation: Implement proper cache configuration, especially for user-specific content. Use cache control headers effectively to prevent caching of sensitive data. Implement URL-based access controls. Avoid using predictable URL patterns for user-specific resources. Use per-user caching mechanisms where appropriate. Regularly audit and test caching behaviors. Implement proper session management and authentication checks for all sensitive resources.
+      compliance:
+        cwe:
+          - 'CWE-524: Use of Cache Containing Sensitive Information'
+          - 'CWE-525: Use of Web Browser Cache Containing Sensitive Information'
+        owasp:
+          - 'A01:2021 - Broken Access Control'
+          - 'A05:2021 - Security Misconfiguration'
+        stride:
+          - Information Disclosure
+          - Spoofing
+
+    - id: aaca973a-b144-4eaf-9d21-fbfe99a97123
+      name: Sensitive Information Disclosed
+      severity: high
+      description: Sensitive Information Disclosure occurs when an application unintentionally reveals sensitive data, such as personal information, financial details, or system internals. This can happen through various means including error messages, logs, or improper access controls. Such disclosures can lead to privacy violations, facilitate further attacks, or cause compliance issues.
+      mitigation: Implement proper error handling to avoid revealing system details. Use strong access controls and encryption for sensitive data. Conduct regular security audits and code reviews. Implement data classification and handling policies. Use secure logging practices. Properly configure servers and applications to avoid information leakage. Train developers on secure coding practices to prevent accidental information disclosure.
+      compliance:
+        cwe:
+          - 'CWE-200: Exposure of Sensitive Information to an Unauthorized Actor'
+          - 'CWE-209: Generation of Error Message Containing Sensitive Information'
+        owasp:
+          - 'A04:2021 - Insecure Design'
+          - 'A05:2021 - Security Misconfiguration'
+        stride:
+          - Information Disclosure
+
+    - id: 9163dcdb-cc77-4b4c-80f8-448ff0e0a5b9
+      name: WebSocket Hijacking
+      severity: high
+      description: WebSocket Hijacking is an attack where an attacker takes control of a WebSocket connection, potentially intercepting, modifying, or injecting malicious data into the communication stream. This can lead to unauthorized access, data theft, or manipulation of the application's behavior. The vulnerability often arises from inadequate authentication and authorization mechanisms for WebSocket connections.
+      mitigation: Implement strong authentication and session management for WebSocket connections. Use secure WebSocket protocols (wss://). Validate and sanitize all data sent over WebSockets. Implement proper origin checking and CORS policies. Use tokens or signatures to verify message integrity. Regularly audit WebSocket usage and implement proper error handling. Consider using libraries with built-in security features for WebSocket implementation.
+      compliance:
+        cwe:
+          - 'CWE-287: Improper Authentication'
+          - 'CWE-346: Origin Validation Error'
+        owasp:
+          - 'A07:2021 - Identification and Authentication Failures'
+          - 'A05:2021 - Security Misconfiguration'
+        stride:
+          - Spoofing
+          - Tampering
+          - Information Disclosure
+          - Elevation of Privilege
+
+    - id: 1e14b028-4bf9-4e40-a75f-af30646644b4
+      name: Prompt Injection
+      severity: high
+      description: Prompt Injection is an attack where malicious input is crafted to manipulate the behavior of AI language models or chatbots. This can lead to the AI system producing unintended responses, revealing sensitive information, or executing harmful actions. The vulnerability stems from the AI's inability to distinguish between legitimate instructions and malicious inputs within its prompt context.
+      mitigation: Implement strict input validation and sanitization for user inputs to AI systems. Use allowlists for permitted instructions or commands. Implement context boundaries and clear delineation between system instructions and user inputs. Regularly update and fine-tune AI models to improve resilience against injection attacks. Use multi-step verification for critical actions suggested by AI. Implement monitoring and logging of AI interactions to detect anomalies.
+      compliance:
+        cwe:
+          - 'CWE-74: Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection')'
+        owasp:
+          - 'A03:2021 - Injection'
+        stride:
+          - Tampering
+          - Information Disclosure
+          - Elevation of Privilege
+
+    - id: 7d215a3d-9aba-4ebd-b7de-afa3d6ba8f01
+      name: Model Poisoning
+      severity: high
+      description: Model Poisoning is an attack where an adversary manipulates a machine learning model's training data or the model itself to introduce vulnerabilities or backdoors. This can lead to incorrect predictions, biased outputs, or covert malicious behavior in the deployed model. The attack can occur during the training phase or through subsequent fine-tuning of the model.
+      mitigation: Implement secure data collection and validation processes for training data. Use robust data preprocessing and cleaning techniques. Employ anomaly detection in training data and model behavior. Implement integrity checks for models and training data. Use ensemble methods and cross-validation to increase resilience. Regularly audit and test models for unexpected behaviors. Implement access controls and monitoring for model training and deployment environments.
+      compliance:
+        cwe:
+          - 'CWE-1041: Use of Redundant Code'
+        owasp:
+          - 'A08:2021 - Software and Data Integrity Failures'
+        stride:
+          - Tampering
+          - Information Disclosure
+          - Denial of Service
+
+    - id: 18fd5f57-8bf9-49a0-9cfa-d8c028a49e8b
+      name: Data Poisoning
+      severity: high
+      description: Data Poisoning is an attack where an adversary manipulates the training data used in machine learning models or data-driven systems. By introducing carefully crafted malicious data points, the attacker can influence the model's behavior, leading to incorrect predictions, biased decisions, or security vulnerabilities. This can affect the integrity and reliability of AI/ML systems across various applications.
+      mitigation: Implement robust data validation and sanitization processes. Use anomaly detection techniques to identify suspicious data points. Employ data provenance tracking to ensure data integrity. Implement secure data collection and storage practices. Use ensemble learning and cross-validation techniques. Regularly audit and clean datasets. Implement access controls and monitoring for data manipulation. Consider using federated learning or differential privacy techniques to enhance data security.
+      compliance:
+        cwe:
+          - 'CWE-915: Improperly Controlled Modification of Dynamically-Determined Object Attributes'
+        owasp:
+          - 'A08:2021 - Software and Data Integrity Failures'
+        stride:
+          - Tampering
+          - Information Disclosure
+          - Denial of Service
