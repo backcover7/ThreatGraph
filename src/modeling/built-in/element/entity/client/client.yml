@@ -17,3 +17,68 @@ module:
         type: client
       tags: [ client, ssh ]
       object: protocol
+
+    - metadata:
+        id: 3ac393c4-f054-44c2-a106-a551671313f7
+        name: HTTP
+        description: HTTP client
+        icon: data:image/svg+xml;base64,YQ==
+        type: client
+      tags: [ client, http ]
+      object: protocol
+
+    - metadata:
+        id: 47bac66d-d419-4226-aabd-326c6d84c826
+        name: gRPC
+        description: gRPC client
+        icon: data:image/svg+xml;base64,YQ==
+        type: client
+      tags: [ client, grpc ]
+      object: protocol
+
+    - metadata:
+        id: d430b2bc-e38f-4cbd-8206-d385fefc2a73
+        name: FTP
+        description: FTP client
+        icon: data:image/svg+xml;base64,YQ==
+        type: client
+      tags: [ client, ftp ]
+      object: protocol
+
+    - metadata:
+        id: 9448b3dc-4c69-4f50-87ff-93a630e0138b
+        name: SFTP
+        description: SFTP client
+        icon: data:image/svg+xml;base64,YQ==
+        type: client
+      tags: [ client, sftp ]
+      object: protocol
+
+    - metadata:
+        id: f13e0ff2-36f3-444f-995b-8c5443972f93
+        name: DNS
+        description: DNS client
+        icon: data:image/svg+xml;base64,YQ==
+        type: client
+      tags: [ client, dns ]
+      object: protocol
+
+    # not sure if needed
+    - metadata:
+        id: e69da8cc-8ab1-448f-bc0a-8b22c017cd72
+        name: POP3
+        description: POP3 client
+        icon: data:image/svg+xml;base64,YQ==
+        type: client
+      tags: [ client, pop3 ]
+      object: protocol
+
+    # not sure if needed
+    - metadata:
+        id: 71b57f0c-d2da-45d5-8c39-807280d63575
+        name: IMAP
+        description: IMAP client
+        icon: data:image/svg+xml;base64,YQ==
+        type: client
+      tags: [ client, imap ]
+      object: protocol

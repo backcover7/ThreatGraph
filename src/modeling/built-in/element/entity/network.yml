@@ -71,3 +71,57 @@ module:
         type: cache
       tags: [ network, cache ]
       object: cache
+
+    - metadata:
+        id: 3f8e56d3-db4d-44d3-9a0c-18e05ebbf7d0
+        name: Internet Gateway
+        description: Internet Gateway
+        icon: data:image/svg+xml;base64,YQ==
+        type: internet-gateway
+      tags: [ network ]
+      object: internet-gateway
+
+    - metadata:
+        id: 19dddf4a-60de-4ff5-83b9-be12400c8ad7
+        name: VPN Gateway
+        description: VPN Gateway
+        icon: data:image/svg+xml;base64,YQ==
+        type: vpn-gateway
+      tags: [ network ]
+      object: vpn-gateway
+
+  - metadata:
+      id: adcb860a-8146-46db-b1a7-7b9a7b225cc9
+      name: Reverse Proxy
+      description: Reverse Proxy
+      icon: data:image/svg+xml;base64,YQ==
+      type: reverse-proxy
+    tags: [ network, proxy ]
+    object: reverse-proxy
+
+  - metadata:
+      id: 9de23c69-3c16-4100-bf4c-fbe600036d69
+      name: Proxy
+      description: Proxy
+      icon: data:image/svg+xml;base64,YQ==
+      type: forward-proxy
+    tags: [ network, proxy ]
+    object: forward-proxy
+
+    - metadata:
+        id: 91dcf0e9-de76-4664-8dd8-2c27ff9117f9
+        name: Subnet
+        description: Subnet
+        icon: data:image/svg+xml;base64,YQ==
+        type: subnet
+      tags: [ network ]
+      object: subnet
+
+    - metadata:
+        id: 8f2ab54b-f095-4637-bc00-4d300dda5fa3
+        name: Network Access Control List
+        description: Network Access Control List
+        icon: data:image/svg+xml;base64,YQ==
+        type: nacl
+      tags: [ network ]
+      object: nacl
