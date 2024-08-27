@@ -94,6 +94,10 @@ export default class Evaluator {
         if (!match) {
             throw new EvaluationError('Invalid rule format');
         }
+        if (match[1].includes('__proto__') || match[1].includes('prototype') ||
+            match[3].includes('__proto__') || match[3].includes('prototype')) {
+            throw new EvaluationError('Invalid rule format');
+        }
         return [match[1], match[2] as Operator, match[3]];
     }
 
