@@ -47,7 +47,6 @@ module:
         isAuthn: false
         operation: w
 
-    # TODO oauth threat for de98418e-f62b-4ff6-baa9-5f8301eb50b9 process element
   rule:
     - id: 4f81f0a6-b47a-433e-961f-df917a992a72
       threat: 461c0696-9811-413b-98ff-f5073f7b88a3  # Weak credential policy
