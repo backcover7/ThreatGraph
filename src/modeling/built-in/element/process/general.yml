@@ -142,3 +142,25 @@ module:
       attributes:
         critical: 2
         operation: r
+
+    - metadata:
+        id: 38524764-4321-459e-a292-38646739d556
+        name: Serialize Data
+        description: Process for serializing data structures into a format for storage or transmission
+        icon: data:image/svg+xml;base64,YQ==
+        type: process
+      tags: [ data-processing ]
+      attributes:
+        critical: 1
+        operation: w
+
+    - metadata:
+        id: 711790f7-05ef-45be-adfb-9f8a1883321a
+        name: Deserialize Data
+        description: Process for deserializing data from a storage or transmission format into data structures
+        icon: data:image/svg+xml;base64,YQ==
+        type: process
+      tags: [ data-processing ]
+      attributes:
+        critical: 1
+        operation: r
