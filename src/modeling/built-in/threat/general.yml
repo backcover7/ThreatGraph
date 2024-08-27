@@ -326,7 +326,7 @@ module:
       mitigation: Implement strict input validation and sanitization for all user-supplied data used in SMS composition. Use SMS gateway APIs that have built-in security features. Avoid using user input directly in SMS commands or special fields. Implement proper escaping of special characters in SMS content. Use allowlists for permitted phone numbers and message templates. Regularly audit and update SMS-related code and third-party services. Implement rate limiting and monitoring for unusual SMS activity.
       compliance:
         cwe:
-          - 'CWE-74: Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection')'
+          - 'CWE-74: Improper Neutralization of Special Elements in Output Used by a Downstream Component ("Injection")'
           - 'CWE-75: Failure to Sanitize Special Elements into a Different Plane (Special Element Injection)'
         owasp:
           - 'A03:2021 - Injection'
@@ -342,7 +342,7 @@ module:
       mitigation: Implement proper cache key generation. Use cache-specific headers like Cache-Control and Vary correctly. Validate and sanitize all user inputs before caching. Implement HTTPS to prevent man-in-the-middle cache poisoning. Regularly purge and update caches. Use secure configurations for CDNs and caching proxies. Implement cache busting techniques for dynamic content.
       compliance:
         cwe:
-          - 'CWE-444: Inconsistent Interpretation of HTTP Requests ('HTTP Request Smuggling')'
+          - 'CWE-444: Inconsistent Interpretation of HTTP Requests ("HTTP Request Smuggling")'
         owasp:
           - 'A05:2021 - Security Misconfiguration'
         stride:
@@ -406,7 +406,7 @@ module:
       mitigation: Implement strict input validation and sanitization for user inputs to AI systems. Use allowlists for permitted instructions or commands. Implement context boundaries and clear delineation between system instructions and user inputs. Regularly update and fine-tune AI models to improve resilience against injection attacks. Use multi-step verification for critical actions suggested by AI. Implement monitoring and logging of AI interactions to detect anomalies.
       compliance:
         cwe:
-          - 'CWE-74: Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection')'
+          - 'CWE-74: Improper Neutralization of Special Elements in Output Used by a Downstream Component ("Injection")'
         owasp:
           - 'A03:2021 - Injection'
         stride:

@@ -31,7 +31,7 @@ module:
     - id: 0fa94631-934b-4b24-b1b2-259e978b30a8
       threat: 7b1f3a9c-8e5d-4c2a-b0f5-9e8f7a1d6b3e  # SQL Injection
       element:
-        type: dataflow
+        type: datastore
       designs:
         - design: attached.passive.metadata.element = 'datastore'
         - design: attached.passive.category = 'relational'
@@ -39,7 +39,7 @@ module:
     - id: 30b67989-a35e-4a32-bcf1-bf6abfa03302
       threat: 7a3c81f9-b9d2-4e27-9c32-dc0c8a7f48e9  # NoSQL Injection
       element:
-        type: dataflow
+        type: datastore
       designs:
         - design: attached.passive.metadata.element = 'datastore'
         - design: attached.passive.category = 'non-relational'

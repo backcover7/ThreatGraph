@@ -17,9 +17,6 @@ import fs from 'fs/promises';
 import * as model from "@/modeling/model";
 
 async function main() {
-    // Load built in elements
-    // TODO refactor elements variable name to elementsTemplates, these are not real constructed elements. They are only for user building.
-
     const loader = new Loader();
     const templates = await loader.loadBuiltinTemplates();
     const allThreats = templates.threat;
@@ -31,7 +28,7 @@ async function main() {
 
     // Threat Modeling
     const outOfScope: string[] = [];  // shape id collection
-    const diagram = new Diagram(await fs.readFile('../../tests/authz.json', 'utf-8'));
+    const diagram = new Diagram(await fs.readFile('../../tests/authz.json', 'utf-8')); // TODO
     const canvasElems = diagram.processCanvas();
 
     const inScopeElems = canvasElems.filter(elem => !outOfScope.includes(elem.id));
