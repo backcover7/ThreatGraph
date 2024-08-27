@@ -86,7 +86,7 @@ export type Process = {
     attributes: {
         critical: 0 | 1 | 2 | 3;   // 0 is totally uncritical, 3 is totally critical
         isCsrfProtected: boolean;
-        isAuthn: boolean;
+        isAuthn: boolean;   // TODO
         operation: 'r' | 'w' | 'rw';  // GET is read, POST is w, GET & POST is rw
     };
     calls?: string[];
