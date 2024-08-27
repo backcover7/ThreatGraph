@@ -86,7 +86,6 @@ export type Process = {
     attributes: {
         critical: 0 | 1 | 2 | 3;   // 0 is totally uncritical, 3 is totally critical
         isCsrfProtected: boolean;
-        isAuthn: boolean;   // TODO
         operation: 'r' | 'w' | 'rw';  // GET is read, POST is w, GET & POST is rw
     };
     calls?: string[];
@@ -106,7 +105,7 @@ export type DataFlow = {
     ssl: {
         isSSL: boolean;
         mTLS: boolean;
-    }
+    };
     data: {
         sensitive: 0 | 1 | 2 | 3;   // 0 is totally insensitive, 3 is totally sensitive
         content: 'normal' | 'secret' | 'PII' | 'credit card' | 'code' | any;
@@ -254,7 +253,6 @@ export function buildProcess(
     tags: string[] = [],
     critical: 0 | 1 | 2 | 3,
     isCsrfProtected: boolean = false,
-    isAuthn: boolean = false,
     operation: 'r' | 'w' | 'rw',
     id?: UUID | undefined,
     description?: string,
@@ -268,7 +266,6 @@ export function buildProcess(
         attributes: {
             critical,
             isCsrfProtected,
-            isAuthn,
             operation
         },
         additions,

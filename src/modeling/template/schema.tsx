@@ -117,7 +117,6 @@ const processSchema = {
             properties: {
                 critical: { type: 'number', enum: [0, 1, 2, 3] },
                 isCsrfProtected: { type: 'boolean' },
-                isAuthn: { type: 'boolean' },
                 operation: { type: 'string', enum: ['r', 'w', 'rw'] },
             },
         },

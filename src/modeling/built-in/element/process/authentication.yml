@@ -2,14 +2,13 @@ module:
   process:
     - metadata:
         id: b21dc275-a75f-45fc-9522-b7fb439efeee
-        name: Password Authz
+        name: Password Authn
         description: Authentication uses password as credential
         icon: data:image/svg+xml;base64,YQ==
         type: authentication
       tags: [ authentication ]
       attributes:
         critical: 3
-        isAuthn: false
         operation: w
       additions:
         password:
@@ -32,7 +31,6 @@ module:
       tags: [ authentication ]
       attributes:
         critical: 3
-        isAuthn: false
         operation: w
 
     - metadata:
@@ -44,7 +42,6 @@ module:
       tags: [ authentication ]
       attributes:
         critical: 3
-        isAuthn: false
         operation: w
 
   rule:

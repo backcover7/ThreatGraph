@@ -200,7 +200,6 @@ export default class {
                     item.tags,
                     item.attributes.critical,
                     item.attributes?.isCsrfProtected,
-                    item.attributes?.isAuthn,
                     item.attributes.operation,
                     item.metadata.id,
                     item.metadata.description,

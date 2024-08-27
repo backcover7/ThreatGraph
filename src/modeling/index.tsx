@@ -28,7 +28,7 @@ async function main() {
 
     // Threat Modeling
     const outOfScope: string[] = [];  // shape id collection
-    const diagram = new Diagram(await fs.readFile('../../tests/authz.json', 'utf-8')); // TODO
+    const diagram = new Diagram(await fs.readFile('../../tests/authn.json', 'utf-8')); // TODO
     const canvasElems = diagram.processCanvas();
 
     const inScopeElems = canvasElems.filter(elem => !outOfScope.includes(elem.id));

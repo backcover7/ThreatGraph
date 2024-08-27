@@ -261,7 +261,6 @@
         "attributes": {
           "critical": 3,
           "isSanitizer": true,
-          "isAuthn": false,
           "operation": "w"
         },
         "additions": {
@@ -422,6 +421,39 @@
       "containerId": null,
       "originalText": "",
       "lineHeight": 1.25
+    },
+    {
+      "id": "V6dfGmk9msad2RC4uJzZm",
+      "type": "image",
+      "x": 232.93601164845336,
+      "y": -922.6285655183849,
+      "width": 100,
+      "height": 100,
+      "angle": 0,
+      "strokeColor": "transparent",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": null,
+      "seed": 1903294365,
+      "version": 3,
+      "versionNonce": 1803842653,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1724740073603,
+      "link": null,
+      "locked": false,
+      "status": "pending",
+      "fileId": "a3b2311766469391b7105c80484a84b7f067ed5d",
+      "scale": [
+        1,
+        1
+      ]
     }
   ],
   "appState": {
