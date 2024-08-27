@@ -319,7 +319,7 @@ module:
           - Information Disclosure
           - Spoofing
 
-    - id: p6q7r8s9-t0u1-v2w3-x4y5-z6a7b8c9d0e1
+    - id: 8950f281-97a5-4f07-8176-be9e4247eb72
       name: SMS Injection
       severity: high
       description: SMS Injection is an attack where malicious content is injected into SMS messages sent by an application. This can lead to various issues such as phishing attacks, unauthorized actions performed on behalf of the user, or the spread of malware through malicious links. The vulnerability often arises from insufficient input validation in SMS composition or sending processes.
