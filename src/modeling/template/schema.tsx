@@ -120,6 +120,28 @@ const processSchema = {
                 operation: { type: 'string', enum: ['r', 'w', 'rw'] },
             },
         },
+        data: {
+            type: 'object',
+            additionalProperties: false,
+            required: ['sensitive', 'content', 'format'],
+            properties: {
+                sensitive: { type: 'number', enum: [0, 1, 2, 3] },
+                content: {
+                    type: 'string',
+                    anyOf: [
+                        { enum: ['normal', 'secret', 'PII', 'credit card', 'code'] },
+                        { type: 'string' }
+                    ]
+                },
+                format: {
+                    type: 'string',
+                    anyof: [
+                        { enum: ['text', 'xml', 'json', 'binary' ]  },
+                        { type: 'string' }
+                    ]
+                },
+            },
+        },
         calls: { type: 'array', items: { type: 'string' } },
         additions: { $ref: '#/definitions/recursiveAdditions' }
     },

@@ -88,6 +88,11 @@ export type Process = {
         isCsrfProtected: boolean;
         operation: 'r' | 'w' | 'rw';  // GET is read, POST is w, GET & POST is rw
     };
+    data: {
+        sensitive: 0 | 1 | 2 | 3;   // 0 is totally insensitive, 3 is totally sensitive
+        content: 'normal' | 'secret' | 'PII' | 'credit card' | 'code' | any;
+        format: 'text' | 'xml' | 'json' | 'binary' | any;
+    };
     calls?: string[];
     additions?: Record<string, unknown>;
 }
@@ -105,11 +110,6 @@ export type DataFlow = {
     ssl: {
         isSSL: boolean;
         mTLS: boolean;
-    };
-    data: {
-        sensitive: 0 | 1 | 2 | 3;   // 0 is totally insensitive, 3 is totally sensitive
-        content: 'normal' | 'secret' | 'PII' | 'credit card' | 'code' | any;
-        format: 'text' | 'xml' | 'json' | 'binary' | any;
     };
     additions?: Record<string, unknown>;
 }
@@ -254,6 +254,9 @@ export function buildProcess(
     critical: 0 | 1 | 2 | 3,
     isCsrfProtected: boolean = false,
     operation: 'r' | 'w' | 'rw',
+    sensitive: 0 | 1 | 2 | 3,
+    content: 'normal' | 'secret' | 'PII' | 'credit card' | 'code' | any,
+    format: 'text' | 'xml' | 'json' | 'binary' | any,
     id?: UUID | undefined,
     description?: string,
     icon?: string,
@@ -268,6 +271,11 @@ export function buildProcess(
             isCsrfProtected,
             operation
         },
+        data: {
+            sensitive,
+            content,
+            format
+        },
         additions,
         calls: [],
     };
@@ -278,9 +286,6 @@ export function buildDataFlow(
     type: 'http' | 'websocket' | 'ssh' | 'grpc' | 'mqtt' | 'dns' | 'rmi' | 'ftp' | any,
     isSSL: boolean = false,
     mTLS: boolean = false,
-    sensitive: 0 | 1 | 2 | 3,
-    content: 'normal' | 'secret' | 'PII' | 'credit card' | 'code' | any,
-    format: 'text' | 'xml' | 'json' | 'binary' | any,
     id?: UUID | undefined,
     description?: string,
     additions?: Record<string, unknown>): DataFlow {
@@ -292,11 +297,6 @@ export function buildDataFlow(
         ssl: {
             isSSL,
             mTLS,
-        },
-        data: {
-            sensitive,
-            content,
-            format
         },
         additions,
     };
