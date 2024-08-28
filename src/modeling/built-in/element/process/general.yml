@@ -164,3 +164,25 @@ module:
       attributes:
         critical: 1
         operation: r
+
+    - metadata:
+        id: b38e64ca-1458-48c4-89b8-7d1be71c8e9d
+        name: Audit Logging
+        description: Process for logging and monitoring system activities
+        icon: data:image/svg+xml;base64,YQ==
+        type: security
+      tags: [ logging, monitoring, security ]
+      attributes:
+        critical: 2
+        operation: w
+
+    - metadata:
+        id: 35efdfc1-55ca-4d36-9b40-a4dc8b3524df
+        name: Error Handling
+        description: Process for handling and logging errors and exceptions
+        icon: data:image/svg+xml;base64,YQ==
+        type: error
+      tags: [ error-handling, logging ]
+      attributes:
+        critical: 2
+        operation: w
