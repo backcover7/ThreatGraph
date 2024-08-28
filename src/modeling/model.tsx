@@ -105,7 +105,7 @@ export type ProcessAttached = {
 export type DataFlow = {
     metadata: {
         element: 'dataflow';
-        type: 'http' | 'websocket' | 'ssh' | 'grpc' | 'mqtt' | 'dns' | 'rmi' | 'ftp' | any;
+        type: 'http' | 'websocket' | 'ssh' | 'grpc' | 'mqtt' | 'dns' | 'rmi' | 'ftp' | 'io' | any;
     } & Omit<Element, 'icon'>;  // Remove 'icon' from Element for DataFlow
     ssl: {
         isSSL: boolean;
@@ -283,7 +283,7 @@ export function buildProcess(
 
 export function buildDataFlow(
     name: string,
-    type: 'http' | 'websocket' | 'ssh' | 'grpc' | 'mqtt' | 'dns' | 'rmi' | 'ftp' | any,
+    type: 'http' | 'websocket' | 'ssh' | 'grpc' | 'mqtt' | 'dns' | 'rmi' | 'ftp' | 'io' | any,
     isSSL: boolean = false,
     mTLS: boolean = false,
     id?: UUID | undefined,
