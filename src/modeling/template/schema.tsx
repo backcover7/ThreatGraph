@@ -127,18 +127,10 @@ const processSchema = {
             properties: {
                 sensitive: { type: 'number', enum: [0, 1, 2, 3] },
                 content: {
-                    type: 'string',
-                    anyOf: [
-                        { enum: ['normal', 'secret', 'PII', 'credit card', 'code'] },
-                        { type: 'string' }
-                    ]
+                    type: 'string', enum: [ 'normal', 'secret', 'PII', 'credit card', 'code', 'customer data']
                 },
                 format: {
-                    type: 'string',
-                    anyof: [
-                        { enum: ['text', 'xml', 'json', 'binary' ]  },
-                        { type: 'string' }
-                    ]
+                    type: 'string', enum: [ 'text', 'xml', 'json', 'binary' ]
                 },
             },
         },

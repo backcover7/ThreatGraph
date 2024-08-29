@@ -90,7 +90,7 @@ export type Process = {
     };
     data: {
         sensitive: 0 | 1 | 2 | 3;   // 0 is totally insensitive, 3 is totally sensitive
-        content: 'normal' | 'secret' | 'PII' | 'credit card' | 'code' | any;
+        content: 'normal' | 'secret' | 'PII' | 'credit card' | 'code' | 'customer data' | any;
         format: 'text' | 'xml' | 'json' | 'binary' | any;
     };
     calls?: string[];
@@ -161,7 +161,6 @@ export function buildElement<T extends ElementType>(
     element: T,
     type: string,
     id?: UUID | undefined,
-    shape?: string,
     description?: string,
     icon?: string): Element & { element: T } {
     return {
@@ -171,7 +170,6 @@ export function buildElement<T extends ElementType>(
         icon,
         element,
         type,
-        shape,
     };
 }
 
@@ -255,7 +253,7 @@ export function buildProcess(
     isCsrfProtected: boolean = false,
     operation: 'r' | 'w' | 'rw',
     sensitive: 0 | 1 | 2 | 3,
-    content: 'normal' | 'secret' | 'PII' | 'credit card' | 'code' | any,
+    content: 'normal' | 'secret' | 'PII' | 'credit card' | 'code' | 'customer data' | any,
     format: 'text' | 'xml' | 'json' | 'binary' | any,
     id?: UUID | undefined,
     description?: string,
