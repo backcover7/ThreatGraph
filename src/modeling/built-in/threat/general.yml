@@ -458,3 +458,37 @@ module:
           - Tampering
           - Information Disclosure
           - Denial of Service
+
+    - id: f8e7d9c1-b6a3-4f2e-9d5c-3a2b1c0d6e8f
+      name: Outdated Software or Libraries
+      severity: high
+      description: Using outdated software, libraries, or devices can expose systems to known vulnerabilities that have been patched in newer versions. Attackers can exploit these known vulnerabilities to gain unauthorized access, execute malicious code, or cause system instability. Outdated components may also lack important security features or improvements, making the system more susceptible to various types of attacks.
+      mitigation: Implement a robust software update and patch management process. Regularly audit and inventory all software, libraries, and devices in use. Subscribe to security advisories for all components. Use automated tools to detect and report outdated components. Implement a clear policy for end-of-life software replacement. Test updates in a staging environment before deploying to production. Consider using containerization to ease the update process. Implement compensating controls when immediate updates are not possible.
+      compliance:
+        cwe:
+          - 'CWE-1104: Use of Unmaintained Third Party Components'
+          - 'CWE-1026: Weaknesses in OWASP Top Ten (2017)'
+        owasp:
+          - 'A06:2021 - Vulnerable and Outdated Components'
+          - 'A05:2021 - Security Misconfiguration'
+        stride:
+          - Tampering
+          - Information Disclosure
+          - Elevation of Privilege
+          - Denial of Service
+
+    - id: f8e7d9c1-b6a3-4f2e-9d5c-12e3a4b5c6d7
+      name: Improper Access Control
+      severity: high
+      description: Improper access control occurs when an application fails to properly restrict access to resources or functionalities based on user privileges. This vulnerability allows unauthorized users to view, modify, or perform actions they should not have permission for. It can lead to data breaches, unauthorized data manipulation, and compromise of system integrity.
+      mitigation: Implement robust authentication mechanisms. Use role-based access control (RBAC). Apply the principle of least privilege. Consistently enforce access controls on all pages and API endpoints. Use secure session management. Implement proper authorization checks for all sensitive operations. Regularly audit and test access control mechanisms. Use security frameworks that provide built-in access control features.
+      compliance:
+        cwe:
+          - 'CWE-284: Improper Access Control'
+          - 'CWE-285: Improper Authorization'
+        owasp:
+          - 'A01:2021 - Broken Access Control'
+        stride:
+          - Elevation of Privilege
+          - Information Disclosure
+          - Tampering
