@@ -3,8 +3,11 @@ import addFormats from 'ajv-formats';
 import * as yaml from 'js-yaml';
 import fs from 'fs/promises';
 import path from 'path';
-import * as model from '../model';
-import schema from './schema';
+import {
+    UUID, moduleSchema,
+    zoneBuilder, ruleBuilder, threatBuilder, processBuilder, datastoreBuilder, entityBuilder
+} from '../DFD/base';
+
 
 type templateType = {
     zone: any[],
@@ -88,7 +91,7 @@ export default class {
 
     #validateYaml(yml: unknown, fullPath: string): boolean {
         try {
-            const validate = this.#ajv.compile(schema.moduleSchema);
+            const validate = this.#ajv.compile(moduleSchema);
             const flag =  validate(yml);
             if (!flag) {
                 if (validate.errors) {
@@ -137,7 +140,7 @@ export default class {
             targetArray.push(...builtItems);
         }
 
-        function checkUUIDExistence(uuid: model.UUID, uuidSet: Set<string>) {
+        function checkUUIDExistence(uuid: UUID, uuidSet: Set<string>) {
             if (uuidSet.has(uuid)) {
                 console.error(`UUID already exists: ${uuid}`);
                 return false;
@@ -149,91 +152,32 @@ export default class {
 
         safeBuildAndPush(templates.zone, module.zone, item =>
             checkUUIDExistence(item.metadata.id, this.#uuidSet) ?
-                model.buildZone(
-                    item.metadata.name,
-                    item.metadata.type,
-                    item.trust,
-                    item?.tags,
-                    item.metadata.id,
-                    item.metadata.description,
-                    item.metadata.icon,
-                    item?.additions
-                ) : null
+                zoneBuilder(item) : null
         );
 
         safeBuildAndPush(templates.entity, module.entity, item =>
             checkUUIDExistence(item.metadata.id, this.#uuidSet) ?
-                model.buildEntity(
-                    item.metadata.name,
-                    item.metadata.type,
-                    item?.tags,
-                    item.object,
-                    item.metadata.id,
-                    item.metadata.description,
-                    item.metadata.icon,
-                    item?.additions
-                ) : null
+                entityBuilder(item) : null
         );
 
         safeBuildAndPush(templates.datastore, module.datastore, item =>
             checkUUIDExistence(item.metadata.id, this.#uuidSet) ?
-                model.buildDataStore(
-                    item.metadata.name,
-                    item.tags,
-                    item.object,
-                    item?.authentication?.credential.required,
-                    item?.authentication?.credential.strong,
-                    item?.authentication?.credential.expiration,
-                    item?.authentication?.antiAbuse,
-                    item.metadata.id,
-                    item.metadata.description,
-                    item.metadata.icon,
-                    item.additions
-                ) : null
+                datastoreBuilder(item) : null
         );
 
         safeBuildAndPush(templates.process, module.process, item =>
             checkUUIDExistence(item.metadata.id, this.#uuidSet) ?
-                model.buildProcess(
-                    item.metadata.name,
-                    item.metadata.type,
-                    item.tags,
-                    item.attributes.critical,
-                    item.attributes?.isCsrfProtected,
-                    item.attributes.operation,
-                    item.data?.sensitive,
-                    item.data?.content,
-                    item.data?.format,
-                    item.metadata.id,
-                    item.metadata.description,
-                    item.metadata.icon,
-                    item.additions
-                ) : null
+                processBuilder(item) : null
         );
 
         safeBuildAndPush(templates.threat, module.threat, item =>
             checkUUIDExistence(item.id, this.#uuidSet) ?
-                model.buildThreat(
-                    item.name,
-                    item.severity,
-                    item.description,
-                    item.mitigation,
-                    item.compliance.stride,
-                    item.compliance.cwe,
-                    item.compliance.owasp,
-                    item.references || [],
-                    item.id
-                ) : null
+                threatBuilder(item) : null
         );
 
         safeBuildAndPush(templates.rule, module.rule, item =>
             checkUUIDExistence(item.id, this.#uuidSet) ?
-                model.buildRule(
-                    item.threat,
-                    item.element,
-                    item.designs,
-                    item.id
-                ) : null
+                ruleBuilder(item) : null
         );
     }
 }

@@ -21,7 +21,7 @@
  */
 
 import Evaluator from './evaluator';
-import * as model from '../model';
+import { Result } from '../DFD/result'
 
 export default class RuleEngine {
     #MAX_DEPTH = 10;
@@ -49,7 +49,7 @@ export default class RuleEngine {
         }
     }
 
-    startEvaluation(results: model.Result[]) {
+    startEvaluation(results: Result[]) {
         this.#relatedElements.forEach((relatedElement: any) => {
             if (this.#evaluateDesigns(this.#rule.designs, relatedElement, 0)) {
                 results.push(

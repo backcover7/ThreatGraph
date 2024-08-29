@@ -14,7 +14,7 @@ import Loader from './template/loader';
 import RuleEngine from "./parser/rule-engine";
 import Diagram from "./parser/diagram";
 import fs from 'fs/promises';
-import * as model from "@/modeling/model";
+import { Result } from "./DFD/result";
 
 async function main() {
     const loader = new Loader();
@@ -33,7 +33,7 @@ async function main() {
 
     const inScopeElems = canvasElems.filter(elem => !outOfScope.includes(elem.id));
 
-    const results: model.Result[] = [];
+    const results: [] = [];
 
     console.log('Start Scanning ...')
     allRules.forEach((rule) => {
@@ -41,7 +41,7 @@ async function main() {
         ruleEngine.startEvaluation(results);
     })
 
-    results.forEach((result: model.Result) => {
+    results.forEach((result: Result) => {
         const threat = allThreats.find(threat => threat.id === result.threat);
         const element = inScopeElems.find(elem => elem.metadata.shape === result.shape);
         console.log('[+] Found threat "' + threat.name + '" > ' + element.metadata.name);

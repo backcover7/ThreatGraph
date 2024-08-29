@@ -8,7 +8,11 @@
  */
 
 import * as basicShapes from '../illustrate/validate';
-import * as model from '../model';
+import { ModelElements } from "../DFD/element";
+import { ZoneAttached } from "../DFD/zone";
+import { NodeAttached } from "../DFD/node/node";
+import { ProcessAttached } from "../DFD/process";
+import { DataflowAttached } from "../DFD/dataflow";
 
 export default class Diagram {
     #shapes: any = {};
@@ -49,15 +53,15 @@ export default class Diagram {
 
     #buildAttachedProperty(shape: any): any {
         switch (shape.model.metadata.element) {
-            case model.ModelElements.ZONE:
+            case ModelElements.ZONE:
                 return this.#buildFrameAttached(shape);
-            case model.ModelElements.ENTITY:
+            case ModelElements.ENTITY:
                 return this.#buildNodeShapeAttached(shape);
-            case model.ModelElements.DATASTORE:
+            case ModelElements.DATASTORE:
                 return this.#buildNodeShapeAttached(shape);
-            case model.ModelElements.PROCESS:
+            case ModelElements.PROCESS:
                 return this.#buildTextAttached(shape);
-            case model.ModelElements.DATAFLOW:
+            case ModelElements.DATAFLOW:
                 return this.#buildArrowAttached(shape);
             default:
                 return {};
@@ -66,11 +70,11 @@ export default class Diagram {
 
     #parseShapeToElement(shape: any): boolean {
         switch (shape.model.metadata.element) {
-            case model.ModelElements.ZONE:
-            case model.ModelElements.ENTITY:
-            case model.ModelElements.DATASTORE:
-            case model.ModelElements.PROCESS:
-            case model.ModelElements.DATAFLOW:
+            case ModelElements.ZONE:
+            case ModelElements.ENTITY:
+            case ModelElements.DATASTORE:
+            case ModelElements.PROCESS:
+            case ModelElements.DATAFLOW:
                 return true;
             default:
                 return false;
@@ -78,23 +82,23 @@ export default class Diagram {
     }
 
     // Zone has to be frame shape.
-    #buildFrameAttached(frameShape: any): model.ZoneAttached {
+    #buildFrameAttached(frameShape: any): ZoneAttached {
         return {
             parent: frameShape.frameId ? this.#processedElements.get(frameShape.frameId) : null,
             children: this.#shapes
                 .filter((s: any) => s.frameId === frameShape.id && s.type === basicShapes.shapes.FRAME)
                 .map((s: any) => this.#processedElements.get(s.id)),
             entities: this.#shapes
-                .filter((s: any) => s.frameId === frameShape.id && s.type === basicShapes.shapes.RECTANGLE && s.model.metadata.element === model.ModelElements.ENTITY)
+                .filter((s: any) => s.frameId === frameShape.id && s.type === basicShapes.shapes.RECTANGLE && s.model.metadata.element === ModelElements.ENTITY)
                 .map((s: any) => this.#processedElements.get(s.id)),
             datastores: this.#shapes
-                .filter((s: any) => s.frameId === frameShape.id && s.type === basicShapes.shapes.RECTANGLE && s.model.metadata.element === model.ModelElements.DATASTORE)
+                .filter((s: any) => s.frameId === frameShape.id && s.type === basicShapes.shapes.RECTANGLE && s.model.metadata.element === ModelElements.DATASTORE)
                 .map((s: any) => this.#processedElements.get(s.id)),
         };
     }
 
     // Entity and Datastore could be any kind of shape, like rectangle, circle, diamond or image. But rectangle will be a default shape for Node.
-    #buildNodeShapeAttached(nodeShape: any): model.NodeAttached {
+    #buildNodeShapeAttached(nodeShape: any): NodeAttached {
         const boundedArrowShapes = nodeShape.boundElements
             .filter((b: any) => b.type === 'arrow')
             .map((b: any) => b.id);
@@ -105,7 +109,7 @@ export default class Diagram {
     }
 
     // Dataflow has to be arrow shape. Cannot be line shape.
-    #buildArrowAttached(arrowShape: any): model.DataflowAttached {
+    #buildArrowAttached(arrowShape: any): DataflowAttached {
         let startId: string, endId: string;
         if (arrowShape.startArrowhead) {
             startId = arrowShape.startBinding.elementId;
@@ -128,7 +132,7 @@ export default class Diagram {
     }
 
     // Process has to be label text of arrow shape.
-    #buildTextAttached(textShape: any): model.ProcessAttached {
+    #buildTextAttached(textShape: any): ProcessAttached {
         const arrowShape = this.#shapes.find((s: any) => s.id === textShape.containerId && s.type === 'arrow');
         return { flow: this.#processedElements.get(arrowShape.id) };
     }
