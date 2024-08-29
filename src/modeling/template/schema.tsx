@@ -50,7 +50,7 @@ const zoneSchema = {
     properties: {
         metadata: elementSchema,
         tags: { type: 'array', items: { type: 'string' } },
-        trust: { type: 'number', enum: [0, 1, 2, 3] },
+        trust: { type: 'number', enum: [0, 1, 2, 3, 4, 5] },
         additions: { $ref: '#/definitions/recursiveAdditions' }
     },
 };

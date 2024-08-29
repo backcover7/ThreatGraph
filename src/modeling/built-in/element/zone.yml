@@ -4,7 +4,7 @@ module:
         id: 13ec83ff-787e-4895-8f10-602e6b3c459c
         name: Untrusted zone
         description: Totally untrusted zone
-#        icon: data:image/png;base64,TODO
+        icon: data:image/png;base64,YQ==
         type: untrusted
       tags: [ untrusted ]
       trust: 0
@@ -13,7 +13,7 @@ module:
         id: efc85481-ec2f-4f1c-b78f-df7c087ec424
         name: Internet Zone
         description: Internet zone
-#        icon: data:image/png;base64,TODO
+        icon: data:image/png;base64,YQ==
         type: internet
       tags: [ public ]
       trust: 1
@@ -22,7 +22,7 @@ module:
         id: 07eab610-cbd0-4867-a147-fb680bedd132
         name: Public Zone
         description: Public-facing zone
-#        icon: data:image/png;base64,TODO
+        icon: data:image/png;base64,YQ==
         type: public
       tags: [ public ]
       trust: 1
@@ -31,7 +31,7 @@ module:
         id: b418c827-f244-4211-8015-bce739bc2b1b
         name: corporate Zone
         description: Entire corporate zone
-#        icon: data:image/png;base64,TODO
+        icon: data:image/png;base64,YQ==
         type: corporate
       tags: [ corporate ]
       trust: 2
@@ -40,7 +40,7 @@ module:
         id: 78710299-ce02-4602-b99d-79e31bf0566c
         name: office Zone
         description: Corporate Office zone
-#        icon: data:image/png;base64,TODO
+        icon: data:image/png;base64,YQ==
         type: corporate
       tags: [ corporate ]
       trust: 2
@@ -49,7 +49,7 @@ module:
         id: 4d591fbf-ba1d-457a-a8a4-5156ff40379e
         name: Cloud Zone
         description: Cloud service zone
-#        icon: data:image/png;base64,TODO
+        icon: data:image/png;base64,YQ==
         type: cloud
       tags: [ cloud ]
       trust: 2
@@ -58,7 +58,7 @@ module:
         id: 67722168-cbea-4603-bd9b-b696244ccc75
         name: Partner Zone
         description: Partner zone
-#        icon: data:image/png;base64,TODO
+        icon: data:image/png;base64,YQ==
         type: partner
       tags: [ partner ]
       trust: 2
@@ -67,25 +67,26 @@ module:
         id: c54dc2c9-ffde-410e-b808-5d0ed4fcfaca
         name: Local Zone
         description: Private zone
-#        icon: data:image/png;base64,TODO
+        icon: data:image/png;base64,YQ==
         type: private
       tags: [ corporate, private ]
-      trust: 3
+      trust: 4
 
     - metadata:
         id: db9d4c5a-5f20-481a-a928-4ca4bf7d3a35
         name: Private Zone
         description: Private zone
-#        icon: data:image/png;base64,TODO
+        icon: data:image/png;base64,YQ==
         type: private
       tags: [ corporate, private ]
       trust: 3
 
     - metadata:
+        # Any node not in a zone will be considered to be in a totally untrusted zone.
         id: a5efb4ae-f1dd-4ce4-a285-eb74aa5b3fd3
         name: Trusted Zone
         description: Totally trusted zone
-#        icon: data:image/png;base64,TODO
+        icon: data:image/png;base64,YQ==
         type: trusted
       tags: [ trusted ]
-      trust: 3
+      trust: 5

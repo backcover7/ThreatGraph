@@ -31,7 +31,7 @@ export type Zone = {
         element: 'zone';
     } & Element;
     tags?: string[];
-    trust: 0 | 1 | 2 | 3;  // 0 is totally untrusted, 3 is totally trusted.
+    trust: 0 | 1 | 2 | 3 | 4 | 5;  // 0 is totally untrusted, 5 is totally trusted. If it is over 5 then this threat model is too huge.
     additions?: Record<string, unknown>;
 }
 
@@ -179,7 +179,7 @@ export function buildElement<T extends ElementType>(
 export function buildZone(
     name: string,
     type: string,
-    trust: 0 | 1 | 2 | 3,
+    trust: 0 | 1 | 2 | 3 | 4 | 5,
     tags: string[] = [],
     id?: UUID | undefined,
     description?: string,
