@@ -2,6 +2,7 @@ module:
   zone:
     - metadata:
         id: 13ec83ff-787e-4895-8f10-602e6b3c459c
+        # Any node not in a zone will be considered to be in a totally untrusted zone.
         name: Untrusted zone
         description: Totally untrusted zone
         icon: data:image/png;base64,YQ==
@@ -82,7 +83,6 @@ module:
       trust: 3
 
     - metadata:
-        # Any node not in a zone will be considered to be in a totally untrusted zone.
         id: a5efb4ae-f1dd-4ce4-a285-eb74aa5b3fd3
         name: Trusted Zone
         description: Totally trusted zone
