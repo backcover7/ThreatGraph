@@ -1,4 +1,4 @@
-import { generateUUID, UUID, typeOrObjectPattern } from "../DFD/base";
+import { generateUUID, UUID, typeOrObjectPattern } from "./base";
 
 export const ModelElements = {
     ZONE: 'zone',

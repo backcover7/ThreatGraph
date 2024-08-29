@@ -1,10 +1,10 @@
 import crypto from 'crypto';
-import { zoneSchema, zoneBuilder } from "../DFD/zone";
-import { entitySchema, entityBuilder } from "../DFD/node/entity";
-import { datastoreSchema, datastoreBuilder } from "../DFD/node/datastore";
-import { processSchema, processBuilder } from "../DFD/process";
-import { threatSchema, threatBuilder } from "../DFD/threat";
-import { ruleSchema, ruleBuilder } from "../DFD/rule";
+import { zoneSchema, zoneBuilder } from "./zone";
+import { entitySchema, entityBuilder } from "./node/entity";
+import { datastoreSchema, datastoreBuilder } from "./node/datastore";
+import { processSchema, processBuilder } from "./process";
+import { threatSchema, threatBuilder } from "./threat";
+import { ruleSchema, ruleBuilder } from "./rule";
 
 declare const __brand: unique symbol;
 export type UUID = string & { readonly [__brand]: 'UUID' };

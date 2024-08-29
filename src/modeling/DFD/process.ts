@@ -1,6 +1,6 @@
-import { UUID } from "../DFD/base";
-import { Element, elementSchema, buildElement } from '../DFD/element';
-import { DataFlow } from "../DFD/dataflow";
+import { UUID } from "./base";
+import { Element, elementSchema, buildElement } from './element';
+import { DataFlow } from "./dataflow";
 
 // Process Type
 export type Process = {

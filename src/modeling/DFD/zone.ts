@@ -1,7 +1,7 @@
-import { UUID } from "../DFD/base";
-import { Element, elementSchema, buildElement } from '../DFD/element';
-import { Entity } from "../DFD/node/entity";
-import { DataStore } from "../DFD/node/datastore";
+import { UUID } from "./base";
+import { Element, elementSchema, buildElement } from './element';
+import { Entity } from "./node/entity";
+import { DataStore } from "./node/datastore";
 
 // Zone Type
 export type Zone = {

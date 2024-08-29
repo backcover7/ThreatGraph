@@ -1,9 +1,9 @@
 // DataFlow Type
-import { UUID } from "../DFD/base";
-import { Element, buildElement } from '../DFD/element';
-import { Entity } from "../DFD/node/entity";
-import { DataStore } from "../DFD/node/datastore";
-import { Process } from "../DFD/process";
+import { UUID } from "./base";
+import { Element, buildElement } from './element';
+import { Entity } from "./node/entity";
+import { DataStore } from "./node/datastore";
+import { Process } from "./process";
 
 export type DataFlow = {
     metadata: {

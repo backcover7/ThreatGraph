@@ -1,8 +1,8 @@
-import { UUID, generateUUID } from "../DFD/base";
-import { Entity } from "../DFD/node/entity";
-import { DataStore } from "../DFD/node/datastore";
-import { Process } from "../DFD/process";
-import { DataFlow } from "../DFD/dataflow";
+import { UUID, generateUUID } from "./base";
+import { Entity } from "./node/entity";
+import { DataStore } from "./node/datastore";
+import { Process } from "./process";
+import { DataFlow } from "./dataflow";
 
 // Threat Type
 export type Threat = {

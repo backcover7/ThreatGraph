@@ -1,6 +1,6 @@
-import { UUID, generateUUID } from "../DFD/base";
-import { Element, ElementType } from '../DFD/element';
-import { Threat } from "../DFD/threat";
+import { UUID, generateUUID } from "./base";
+import { Element, ElementType } from './element';
+import { Threat } from "./threat";
 
 // Rule Type
 export type Rule = {

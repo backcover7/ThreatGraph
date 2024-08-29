@@ -1,6 +1,6 @@
-import { UUID, typeOrObjectPattern } from "../../DFD/base";
-import {Element, elementSchema, buildElement } from '../../DFD/element';
-import { Node } from '../../DFD/node/node';
+import { UUID, typeOrObjectPattern } from "../base";
+import {Element, elementSchema, buildElement } from '../element';
+import { Node } from './node';
 
 // DataStore Type
 export type DataStore = Node & {
