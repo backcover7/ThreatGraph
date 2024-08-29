@@ -8,7 +8,6 @@ import {
     zoneBuilder, ruleBuilder, threatBuilder, processBuilder, datastoreBuilder, entityBuilder
 } from '../DFD/base';
 
-
 type templateType = {
     zone: any[],
     entity: any[],
@@ -18,7 +17,7 @@ type templateType = {
     rule: any[]
 }
 
-export default class {
+export default class Template {
     #ajv = new Ajv({
         allErrors: true,
         strict: true,

@@ -10,14 +10,14 @@
 // import _ from 'lodash';
 // const lodashCloned = _.cloneDeep(objA);
 
-import Loader from './parser/template';
+import Template from './parser/template';
 import RuleEngine from "./parser/rule-engine";
 import Canvas from "./draw/canvas";
 import fs from 'fs/promises';
 import { Result } from "./DFD/result";
 
 async function main() {
-    const loader = new Loader();
+    const loader = new Template();
     const templates = await loader.loadBuiltinTemplates();
     const allThreats = templates.threat;
     const allRules = templates.rule;
