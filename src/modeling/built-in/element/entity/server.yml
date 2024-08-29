@@ -44,3 +44,21 @@ module:
         type: server
       tags: [ server ]
       object: weblogic
+
+    - metadata:
+        id: 7730e679-d0b2-47b6-bd89-51167e2485f8
+        name: IIS
+        description: Microsoft IIS server
+        icon: data:image/svg+xml;base64,YQ==
+        type: server
+      tags: [ server ]
+      object: iis
+
+    - metadata:
+        id: 1b0f61ad-819c-47f7-a356-3c7578456c8c
+        name: Node.js
+        description: Node.js server
+        icon: data:image/svg+xml;base64,YQ==
+        type: server
+      tags: [ server ]
+      object: nodejs

@@ -44,6 +44,71 @@ module:
         critical: 3
         operation: w
 
+    - metadata:
+        id: 143c4392-321a-4def-827f-98fe7fd07f2d
+        name: SAML
+        description: Security Assertion Markup Language (SAML) Authentication
+        icon: data:image/svg+xml;base64,YQ==
+        type: authentication
+      tags: [ authentication ]
+      attributes:
+        critical: 3
+        operation: w
+      additions:
+        metadataValidation:
+          type: boolean
+          description: Whether SAML metadata is properly validated
+        assertionEncryption:
+          type: boolean
+          description: Whether SAML assertions are encrypted
+
+    - metadata:
+        id: 95700ed9-b97c-446c-860b-19ed35432ea8
+        name: JWT Authentication
+        description: JSON Web Token based authentication
+        icon: data:image/svg+xml;base64,YQ==
+        type: authentication
+      tags: [ authentication ]
+      attributes:
+        critical: 3
+        operation: w
+      additions:
+        tokenSigning:
+          type: string
+          description: Algorithm used for token signing (e.g., HS256, RS256)
+        tokenExpiration:
+          type: boolean
+          description: Whether tokens have an expiration time
+
+    - metadata:
+        id: 5f769f53-bdcd-4b12-b903-29d63309f420
+        name: LDAP Authentication
+        description: Lightweight Directory Access Protocol Authentication
+        icon: data:image/svg+xml;base64,YQ==
+        type: authentication
+      tags: [ authentication ]
+      attributes:
+        critical: 3
+        operation: w
+      additions:
+        secureConnection:
+          type: boolean
+          description: Whether LDAP connection is secured (e.g., using LDAPS)
+        groupBasedAccess:
+          type: boolean
+          description: Whether access control is based on LDAP groups
+
+    - metadata:
+        id: 5691064b-29d6-42e0-8548-c970417e6073
+        name: MFA
+        description: Multi-Factor Authentication
+        icon: data:image/svg+xml;base64,YQ==
+        type: authentication
+      tags: [ authentication ]
+      attributes:
+        critical: 2
+        operation: w
+
   rule:
     - id: 4f81f0a6-b47a-433e-961f-df917a992a72
       threat: 461c0696-9811-413b-98ff-f5073f7b88a3  # Weak credential policy

@@ -123,7 +123,7 @@ module:
         description: Amazon WAF
         icon: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMjU2IDI1NiI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJsb2dvc0F3c1dhZjAiIHgxPSIwJSIgeDI9IjEwMCUiIHkxPSIxMDAlIiB5Mj0iMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNiZDA4MTYiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZjUyNTIiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cGF0aCBmaWxsPSJ1cmwoI2xvZ29zQXdzV2FmMCkiIGQ9Ik0wIDBoMjU2djI1NkgweiIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik00Ni4wNjYgMTMxLjJoLTcuNjY4di02LjRoNy42NzdjLjY0LTE2LjE4OSA1Ljg4OC0zMS41OSAxNS4zODktNDQuNzJsNS4xODcgMy43NTRDNTcuOTQ0IDk1Ljg2MiA1My4xMTIgMTA5Ljk3IDUyLjQ3NSAxMjQuOGg4LjMyM3Y2LjRoLTguMzMyYy41OTUgMTQuOTE4IDUuNDMgMjkuMTEgMTQuMTg1IDQxLjIwM2wtNS4xODcgMy43NTRjLTkuNTQ5LTEzLjE5NC0xNC44LTI4LjY4NS0xNS4zOTgtNDQuOTU3bTEyOS45NjQgNjMuNDVjLTEzLjE1OCA5LjUyNi0yOC42MDEgMTQuNzc0LTQ0LjgzMiAxNS4zOTV2Ny41NTVoLTYuNHYtNy41NTVjLTE2LjIzLS42MjEtMzEuNjgtNS44NjktNDQuODM4LTE1LjM5NWwzLjc1LTUuMTg0YzEyLjA2NCA4LjczMiAyNi4yMTUgMTMuNTY0IDQxLjA4OCAxNC4xNzlWMTk1LjJoNi40djguNDQ1YzE0Ljg3NC0uNjE4IDI5LjAyMS01LjQ1IDQxLjA4Mi0xNC4xOHpNNzkuOTYgNjEuNTg3YzEzLjE1OC05LjUyNiAyOC42MDgtMTQuNzc0IDQ0LjgzOC0xNS4zOTJWMzguNGg2LjR2Ny43OTVjMTYuMjMuNjE4IDMxLjY3NCA1Ljg2OSA0NC44MzIgMTUuMzkybC0zLjc1IDUuMTg0Yy0xMi4wNi04LjczLTI2LjIwOC0xMy41NjEtNDEuMDgyLTE0LjE3NlY2MC44aC02LjR2LTguMjA1Yy0xNC44NzMuNjExLTI5LjAyNCA1LjQ0Ny00MS4wODggMTQuMTc2ek0yMTcuNTk4IDEyNC44djYuNGgtNy42NzNjLS41OTUgMTYuMjcyLTUuODUgMzEuNzYzLTE1LjM5NSA0NC45NTdsLTUuMTktMy43NTRjOC43NTQtMTIuMDkzIDEzLjU5My0yNi4yODUgMTQuMTg1LTQxLjIwM2gtOC4zMjd2LTYuNGg4LjMxN2MtLjYzNy0xNC44MjktNS40NjktMjguOTM4LTE0LjE3Ni00MC45NjZsNS4xOS0zLjc1NGM5LjQ5OCAxMy4xMyAxNC43NDYgMjguNTMxIDE1LjM4NiA0NC43MnptLTQxLjY5LTQ5LjEybDI1LjA4OS0yNS4wODhsNC41MjUgNC41MjVsLTI1LjA4OCAyNS4wODh6TTgwLjA4MyAxODAuNTU3bC0yNS4wODggMjUuMDg4bC00LjUyNS00LjUyNWwyNS4wODgtMjUuMDg4em03LjEyMy04OC44MjNMMzkuNzE3IDQ0LjI0Nmw0LjUyNS00LjUyNGw0Ny40OSA0Ny40ODh6bTgxLjQ1NiA3Mi40MDRsNDcuNjEzIDQ3LjYxNmwtNC41MjUgNC41MjRsLTQ3LjYxNi00Ny42MTJ6bS02Ny4zMzgtMzMuNzg2Yy4yNC0uNDI2LjUtLjg1NC43NzEtMS4yODNjNS4zOC04LjQ1MSAzLjgzNy0xOS45ODQgMi4xMjgtMjYuOTVjNC42MTIgMy4wMyA4Ljc2OCA5LjI5MiAxMC4xODYgMTEuOTIzYy42MDUgMS4xMTMgMS43OCAxLjc4OCAzLjA2OSAxLjY3M2EzLjIgMy4yIDAgMCAwIDIuNzcxLTIuMTI1YzQuNzY1LTEzLjUzNiAyLjM0Mi0yMy43MTItMS4wMTgtMzAuMzA3YzQuMDc0IDIuMzcxIDcuMjMgNS43ODMgOS4zMTkgMTAuMTMxYzQuNTMxIDkuNDE1IDMuNTIzIDIyLjMwMS0yLjYzNyAzMy42MjZjLTguNDEzIDE1LjQ3NS02LjcyNiAzMS43LTQuODEzIDQwLjQyOWMtNC44MDMtMi4wNy05LjA3OC00LjQxLTEyLjc2OC02Ljk4M2MtOS42ODYtNi43NTItMTIuNzY4LTE5Ljk4NC03LjAwOC0zMC4xMzRtNDIuOTc2LTEuMDc4YTMuMjA1IDMuMjA1IDAgMCAwIDEuNTUyIDMuMjc2YTMuMjEgMy4yMSAwIDAgMCAzLjYxNi0uMjc1Yy4yNi0uMjA4IDUuNTA3LTQuNTQgOC4wNDgtMTUuMDJjMy4wNjMgNC40NTQgNi4yNjYgMTMuNDQzIDIuMDAzIDI5Ljk1NWMtNC4yMTcgMTYuMzM2LTI0LjIyNCAyMC45My0zMS4zNjMgMjIuMDZjLTEuNzI1LTYuMTg1LTUuMjIyLTIzLjM1MyAzLjM4My0zOS4xNzRjNi4xMDUtMTEuMjMyIDcuNzI0LTIzLjkzMyA0LjY2NS0zNC40MTNjNS43OTIgNi44MDMgMTAuNjc5IDE3LjUxIDguMDk2IDMzLjU5TTk1Ljc1IDEyNy4yYy03LjM2NyAxMi45OTItMy40NSAyOS45MTcgOC45MjEgMzguNTM4YzUuNiAzLjkwNCAxMi4zODQgNy4yOTIgMjAuMTYgMTAuMDczcS41MzUuMTkgMS4wNzkuMTg5Yy4wNjcgMCAuMTI1LS4wMzUuMTg5LS4wMzhsLjAwMy4wMjhjMS4zNi0uMTA1IDMzLjM0LTIuODgzIDM5LjYxMy0yNy4xOGM4LjA3LTMxLjI1Mi04LjA5My00MC41MjItOC43ODQtNDAuOTAzYTMuMTk4IDMuMTk4IDAgMCAwLTQuNzIgMi40NzdhNDEgNDEgMCAwIDEtMS4wMTIgNS43ODJjLTIuMjE0LTI0LjUzNy0yMS42NjctMzQuNTIxLTI1LjYtMzYuMjk3Yy00LjAzMi0zLjA4OC04LjkzNC01LjIxLTE0LjYxNy02LjIxOGEzLjE4IDMuMTggMCAwIDAtMy40NSAxLjc5OWEzLjIxIDMuMjEgMCAwIDAgLjg0MiAzLjgwOGMuNDguNDA2IDEwLjQ1MSA5LjA1MiA3LjYwNiAyNS41MDdjLTMuNzE1LTQuODc0LTkuNjI5LTEwLjc0OS0xNi41ODUtMTAuNzQ5YTMuMjA1IDMuMjA1IDAgMCAwLTIuOTg2IDQuMzU1Yy4wNy4xNzMgNi41OTIgMTcuMzYuMjg1IDI3LjI2NGE0MCA0MCAwIDAgMC0uOTQ0IDEuNTY1Ii8+PC9zdmc+
         type: firewall
-      tags: [ vendor, aws, cloud-compute, security, waf, firewall]
+      tags: [ vendor, aws, cloud-compute, security, waf, firewall ]
       object: aws-waf
 
     - metadata:
@@ -486,3 +486,39 @@ module:
         type: datastore
       tags: [ vendor, aws, cloud-compute, serverless ]
       object: aws-timestream
+
+    - metadata:
+        id: b73dd62e-662e-4fa5-a42a-4aa6cbcf2a16
+        name: Amazon SageMaker
+        description: Amazon SageMaker
+        icon: data:image/svg+xml;base64,YQ==
+        type: datastore
+      tags: [ vendor, aws, cloud-compute, machine-learning ]
+      object: aws-sagemaker
+
+    - metadata:
+        id: fe0860e6-7820-484f-881c-d53dfdc19093
+        name: Amazon Deep Learning AMIs
+        description: Amazon Deep Learning AMIs
+        icon: data:image/svg+xml;base64,YQ==
+        type: datastore
+      tags: [ vendor, aws, cloud-compute, machine-learning ]
+      object: aws-dlmai
+
+    - metadata:
+        id: 61516d0a-f54c-45a3-8478-ccce23d4eaae
+        name: Amazon Deep Learning Containers
+        description: Amazon Deep Learning Containers
+        icon: data:image/svg+xml;base64,YQ==
+        type: container
+      tags: [ vendor, aws, cloud-compute, machine-learning, container ]
+      object: aws-dl-container
+
+    - metadata:
+        id: 2f9a08d3-c51b-49dc-acfd-9b3ea6ae8dba
+        name: Amazon Comprehend
+        description: Amazon Comprehend
+        icon: data:image/svg+xml;base64,YQ==
+        type: datastore
+      tags: [ vendor, aws, cloud-compute, machine-learning ]
+      object: aws-comprehend
