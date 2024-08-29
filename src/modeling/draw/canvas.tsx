@@ -1,20 +1,20 @@
 /**
  *
- * This Diagram class is used to parse canvas to insert `attached` property in the `model` property object in every
+ * This Canvas class is used to parse canvas to insert `attached` property in the `model` property object in every
  * element. The `attached` property is used to analyze connected element when scanning rules.
  *
  * The schema of `attached` property object will be as described in model.ts
  *
  */
 
-import * as basicShapes from '../illustrate/validate';
+import * as basicShapes from './validate';
 import { ModelElements } from "../DFD/element";
 import { ZoneAttached } from "../DFD/zone";
 import { NodeAttached } from "../DFD/node/node";
 import { ProcessAttached } from "../DFD/process";
 import { DataflowAttached } from "../DFD/dataflow";
 
-export default class Diagram {
+export default class Canvas {
     #shapes: any = {};
     #processedElements: Map<string, any> = new Map();
 
@@ -23,7 +23,7 @@ export default class Diagram {
         this.#shapes = excalidraw.elements;
     }
 
-    processCanvas(): any[] {
+    process(): any[] {
         try {
             this.#shapes.forEach((shape: any) => {
                 if (shape.model && this.#parseShapeToElement(shape)) {

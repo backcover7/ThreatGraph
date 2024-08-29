@@ -10,9 +10,9 @@
 // import _ from 'lodash';
 // const lodashCloned = _.cloneDeep(objA);
 
-import Loader from './template/loader';
+import Loader from './parser/template';
 import RuleEngine from "./parser/rule-engine";
-import Diagram from "./parser/diagram";
+import Canvas from "./draw/canvas";
 import fs from 'fs/promises';
 import { Result } from "./DFD/result";
 
@@ -28,8 +28,8 @@ async function main() {
 
     // Threat Modeling
     const outOfScope: string[] = [];  // shape id collection
-    const diagram = new Diagram(await fs.readFile('../../tests/authn.json', 'utf-8')); // TODO
-    const canvasElems = diagram.processCanvas();
+    const canvas = new Canvas(await fs.readFile('../../tests/authn.json', 'utf-8')); // TODO
+    const canvasElems = canvas.process();
 
     const inScopeElems = canvasElems.filter(elem => !outOfScope.includes(elem.id));
 
