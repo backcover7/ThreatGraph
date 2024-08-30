@@ -7,7 +7,7 @@ import { DataStore } from "./node/datastore";
 export type Zone = {
     metadata: {
         element: 'zone';
-    } & Element;
+    } & Omit<Element, 'icon'>;
     tags?: string[];
     trust: 0 | 1 | 2 | 3 | 4 | 5;  // 0 is totally untrusted, 5 is totally trusted. If it is over 5 then this threat model is too huge.
     additions?: Record<string, unknown>;
