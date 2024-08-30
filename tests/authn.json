@@ -97,8 +97,8 @@
         "object": "apache"
       },
       "type": "rectangle",
-      "version": 182,
-      "versionNonce": 1767668502,
+      "version": 183,
+      "versionNonce": 939188479,
       "isDeleted": false,
       "id": "tAZ0izOh_CegMqMyoBdpg",
       "fillStyle": "cross-hatch",
@@ -127,9 +127,13 @@
         {
           "type": "text",
           "id": "n1Qlbxzr2x3_ttTcDK_LU"
+        },
+        {
+          "id": "IWowUmL9VpxMmkd-5HS9r",
+          "type": "arrow"
         }
       ],
-      "updated": 1723531969872,
+      "updated": 1725051422872,
       "link": null,
       "locked": false
     },
@@ -341,6 +345,62 @@
       "name": "public"
     },
     {
+      "id": "IWowUmL9VpxMmkd-5HS9r",
+      "type": "arrow",
+      "x": 1316.4360116484534,
+      "y": -695.8785655183849,
+      "width": 370,
+      "height": 195,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": {
+        "type": 2
+      },
+      "seed": 1297731121,
+      "version": 111,
+      "versionNonce": 211905297,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1725051440437,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          295,
+          -148.75
+        ],
+        [
+          370,
+          -195
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "tAZ0izOh_CegMqMyoBdpg",
+        "focus": -0.11676718496903765,
+        "gap": 16.369208574546747
+      },
+      "endBinding": {
+        "elementId": "O8eZB4Um3DoDgwtYZ6hct",
+        "focus": 0.46264975334742786,
+        "gap": 12.5
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow"
+    },
+    {
       "model": {
         "metadata": {
           "name": "Private Zone",
@@ -355,8 +415,8 @@
         "trust": 3
       },
       "type": "frame",
-      "version": 42,
-      "versionNonce": 2028733206,
+      "version": 43,
+      "versionNonce": 197838591,
       "isDeleted": false,
       "id": "8aafvfGS--KAl5YkFpGgQ",
       "fillStyle": "solid",
@@ -375,8 +435,13 @@
       "groupIds": [],
       "frameId": null,
       "roundness": null,
-      "boundElements": [],
-      "updated": 1723531959114,
+      "boundElements": [
+        {
+          "id": "IWowUmL9VpxMmkd-5HS9r",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1725051431483,
       "link": null,
       "locked": false,
       "name": "private"
@@ -415,6 +480,94 @@
       "baseline": 18,
       "containerId": null,
       "originalText": "",
+      "lineHeight": 1.25
+    },
+    {
+      "model": {
+        "metadata": {
+          "name": "OpenAI",
+          "description": "OpenAI",
+          "type": "vendor",
+          "element": "entity"
+        },
+        "tags": [
+          "vendor",
+          "company",
+          "AI"
+        ],
+        "object": "openai"
+      },
+      "id": "O8eZB4Um3DoDgwtYZ6hct",
+      "type": "rectangle",
+      "x": 1698.9360116484534,
+      "y": -962.1285655183849,
+      "width": 195,
+      "height": 116.25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": {
+        "type": 3
+      },
+      "seed": 243391487,
+      "version": 52,
+      "versionNonce": 1467912959,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "id": "IWowUmL9VpxMmkd-5HS9r",
+          "type": "arrow"
+        },
+        {
+          "type": "text",
+          "id": "oQoy82uUbhdtgVpo3ct-4"
+        }
+      ],
+      "updated": 1725051442652,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "oQoy82uUbhdtgVpo3ct-4",
+      "type": "text",
+      "x": 1762.0960381987463,
+      "y": -916.5035655183849,
+      "width": 68.67994689941406,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": null,
+      "seed": 1717492369,
+      "version": 11,
+      "versionNonce": 1341280351,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1725051447445,
+      "link": null,
+      "locked": false,
+      "text": "OpenAI",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "baseline": 18,
+      "containerId": "O8eZB4Um3DoDgwtYZ6hct",
+      "originalText": "OpenAI",
       "lineHeight": 1.25
     }
   ],

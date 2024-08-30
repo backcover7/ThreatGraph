@@ -11,7 +11,7 @@
 // const lodashCloned = _.cloneDeep(objA);
 
 import Template from './parser/template';
-import RuleEngine from "./parser/rule-engine";
+import Analyzer from "./parser/analyzer";
 import Canvas from "./draw/canvas";
 import fs from 'fs/promises';
 import { Result } from "./DFD/result";
@@ -37,8 +37,8 @@ async function main() {
 
     console.log('Start Scanning ...')
     allRules.forEach((rule) => {
-        const ruleEngine = new RuleEngine(rule, inScopeElems, allThreats);
-        ruleEngine.startEvaluation(results);
+        const analyzer = new Analyzer(rule, inScopeElems, allThreats);
+        analyzer.startEvaluation(results);
     })
 
     results.forEach((result: Result) => {

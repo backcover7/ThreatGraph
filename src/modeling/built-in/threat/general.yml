@@ -527,3 +527,20 @@ module:
           - Information Disclosure
           - Tampering
           - Elevation of Privilege
+
+    - id: a1b2c3d4-e5f6-7890-1234-567890abcdef
+      name: Sensitive Information Leakage
+      severity: high
+      description: Sensitive Information Leakage occurs when an application or system inadvertently discloses confidential data. This can include personal information, financial details, authentication credentials, or proprietary business data. Such leaks can happen through various channels like error messages, logs, or insecure data transmission, potentially leading to privacy violations, identity theft, or competitive disadvantages.
+      mitigation: Implement proper data classification and handling procedures. Use encryption for sensitive data in transit and at rest. Implement robust access controls and authentication mechanisms. Sanitize error messages and logs to remove sensitive information. Conduct regular security audits and penetration testing. Use data loss prevention (DLP) tools. Train developers and staff on secure coding practices and data handling procedures. Implement secure session management and proper logout mechanisms.
+      compliance:
+        cwe:
+          - 'CWE-200: Exposure of Sensitive Information to an Unauthorized Actor'
+          - 'CWE-359: Exposure of Private Personal Information to an Unauthorized Actor'
+        owasp:
+          - 'A02:2021 - Cryptographic Failures'
+          - 'A04:2021 - Insecure Design'
+        stride:
+          - Information Disclosure
+          - Spoofing
+          - Elevation of Privilege

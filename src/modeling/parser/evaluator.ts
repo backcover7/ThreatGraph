@@ -25,17 +25,17 @@
  *   }
  * }
  *
- * `ssl.isSSL = false` is to check whether the isSSL property of ssl property object of the dataflow element
+ * `ssl.isSSL == false` is to check whether the isSSL property of ssl property object of the dataflow element
  * is false. If it is false, then the dataflow is not encrypted.
  *
  * ` attached.active.attached.zone.trust != 3` is to check whether the node which actively initiate the dataflow
- * is in a zone whose truse level is not 3 (totally trusted).
+ * is in a zone whose trust level is not 3 (totally trusted).
  */
 
-import { create, all, MathJsInstance } from "mathjs";
+import { create, all, MathJsInstance } from 'mathjs';
 
 type KnownObj = Record<string, any>;
-type Operator = '=' | '!=' | '<' | '<=' | '>' | '>=';
+type Operator = '==' | '!=' | '<' | '<=' | '>' | '>=' | '=';
 
 class EvaluationError extends Error {
     constructor(message: string) {
@@ -46,9 +46,11 @@ class EvaluationError extends Error {
 
 export default class Evaluator {
     #math: MathJsInstance;
+    #tempVariables: Map<string, any>;
 
     constructor() {
         this.#math = create(all, {});
+        this.#tempVariables = new Map();
         this.#initializeMath();
     }
 
@@ -90,27 +92,40 @@ export default class Evaluator {
     }
 
     #parseRule(rule: string): [string, Operator, string] | null {
-        const match = rule.match(/^(.+?)\s*(=|!=|<=|>=|<|>)\s*(.+)\s*$/);
+        const match = rule.match(/^(.+?)\s*(==|!=|<=|>=|<|>|=)\s*(.+)\s*$/);
         if (!match) {
-            throw new EvaluationError('Invalid rule format');
+            throw new EvaluationError('Did not find a operator in the rule: ' + rule);
         }
-        if (match[1].includes('__proto__') || match[1].includes('prototype') ||
-            match[3].includes('__proto__') || match[3].includes('prototype')) {
-            throw new EvaluationError('Invalid rule format');
-        }
-        return [match[1], match[2] as Operator, match[3]];
+        return [match[1].trim(), match[2] as Operator, match[3].trim()];
     }
 
     #createSafeExpression(left: string, operator: Operator, right: string): string {
         switch (operator) {
-            case '=': return `equal(${left}, ${right})`;
+            case '==': return `equal(${left}, ${right})`;
             case '!=': return `unequal(${left}, ${right})`;
             case '<': return `smaller(${left}, ${right})`;
             case '<=': return `smallerEq(${left}, ${right})`;
             case '>': return `larger(${left}, ${right})`;
             case '>=': return `largerEq(${left}, ${right})`;
+            case '=': return `${left} = ${right}`;
             default: throw new EvaluationError('Unknown operator');
         }
+    }
+
+    #isTempVariable(value: string): boolean {
+        return /^\$[A-Z]+\$$/.test(value);
+    }
+
+    #evaluateExpression(expression: string, knownObj: KnownObj): any {
+        const context = { ...knownObj };
+        for (const [key, value] of this.#tempVariables) {
+            context[key] = value;
+        }
+        return this.#math.evaluate(expression, context);
+    }
+
+    #handleArrayOperation(array: any[], operation: (item: any) => boolean): boolean {
+        return array.some(operation);
     }
 
     public analyze(rule: string, knownObj: KnownObj): boolean {
@@ -118,10 +133,62 @@ export default class Evaluator {
             const parsedRule = this.#parseRule(rule);
             if (!parsedRule) return false;
 
-            const [left, operator, right] = parsedRule;
-            const safeExpression = this.#createSafeExpression(left, operator, right);
-            const result = this.#math.evaluate(safeExpression, knownObj);
-            return Boolean(result);
+            let [left, operator, right] = parsedRule;
+
+            // Handle temporary variable assignment
+            if (operator === '=') {
+                const leftIsTemp = this.#isTempVariable(left);
+                const rightIsTemp = this.#isTempVariable(right);
+
+                let value;
+                if (leftIsTemp && !rightIsTemp) {
+                    value = this.#evaluateExpression(right, knownObj);
+                    this.#tempVariables.set(left, value);
+                    return true;
+                } else if (!leftIsTemp && rightIsTemp) {
+                    value = this.#evaluateExpression(left, knownObj);
+                    this.#tempVariables.set(right, value);
+                    return true;
+                } else {
+                    throw new EvaluationError('Invalid assignment: one side must be a temporary variable');
+                }
+            }
+
+            // Handle comparison with temporary variables
+            let leftValue: any;
+            let rightValue: any;
+
+            if (this.#isTempVariable(left)) {
+                leftValue = this.#tempVariables.get(left);
+                if (leftValue === undefined) {
+                    throw new EvaluationError('Temporary variable not initialized');
+                }
+            } else {
+                leftValue = this.#evaluateExpression(left, knownObj);
+            }
+
+            if (this.#isTempVariable(right)) {
+                rightValue = this.#tempVariables.get(right);
+                if (rightValue === undefined) {
+                    throw new EvaluationError('Temporary variable not initialized');
+                }
+            } else {
+                rightValue = this.#evaluateExpression(right, knownObj);
+            }
+
+            // Handle array operations
+            if (Array.isArray(leftValue)) {
+                return this.#handleArrayOperation(leftValue, (item) =>
+                    this.#evaluateExpression(this.#createSafeExpression(JSON.stringify(item), operator, JSON.stringify(rightValue)), knownObj)
+                );
+            } else if (Array.isArray(rightValue)) {
+                return this.#handleArrayOperation(rightValue, (item) =>
+                    this.#evaluateExpression(this.#createSafeExpression(JSON.stringify(leftValue), operator, JSON.stringify(item)), knownObj)
+                );
+            } else {
+                const safeExpression = this.#createSafeExpression(JSON.stringify(leftValue), operator, JSON.stringify(rightValue));
+                return this.#evaluateExpression(safeExpression, knownObj);
+            }
         } catch (error) {
             if (error instanceof EvaluationError) {
                 console.error('Evaluation error:', error.message);
@@ -134,20 +201,29 @@ export default class Evaluator {
 
     public validateRule(rule: string): boolean {
         try {
-            return this.#parseRule(rule) !== null;
+            const parsedRule = this.#parseRule(rule);
+            if (!parsedRule) return false;
+
+            const [left, operator, right] = parsedRule;
+
+            if (operator === '=') {
+                const leftIsTemp = this.#isTempVariable(left);
+                const rightIsTemp = this.#isTempVariable(right);
+
+                // It is not allowed that both sides are temp variable
+                if (leftIsTemp === rightIsTemp) {
+                    return false;
+                }
+            }
+
+            return true;
         } catch {
             return false;
         }
     }
 
-    public getAccessedProperties(rule: string): string[] | null {
-        try {
-            const parsedRule = this.#parseRule(rule);
-            if (!parsedRule) return null;
-            const [left] = parsedRule;
-            return left.split('.');
-        } catch {
-            return null;
-        }
+
+    public clearTempVariables(): void {
+        this.#tempVariables.clear();
     }
 }
