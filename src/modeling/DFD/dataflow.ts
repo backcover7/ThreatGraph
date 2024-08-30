@@ -1,5 +1,4 @@
 // DataFlow Type
-import { UUID } from "./base";
 import { Element, buildElement } from './element';
 import { Entity } from "./node/entity";
 import { DataStore } from "./node/datastore";
@@ -30,12 +29,11 @@ export function buildDataFlow(
     type: protocol,
     isSSL: boolean = false,
     mTLS: boolean = false,
-    id?: UUID | undefined,
     description?: string,
     additions?: Record<string, unknown>): DataFlow {
     return {
         metadata: {
-            ...buildElement(name, 'dataflow', type, id, description),
+            ...buildElement(name, 'dataflow', type, description),
             type: type,
         },
         ssl: {

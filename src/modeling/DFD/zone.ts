@@ -1,4 +1,3 @@
-import { UUID } from "./base";
 import { Element, elementSchema, buildElement } from './element';
 import { Entity } from "./node/entity";
 import { DataStore } from "./node/datastore";
@@ -39,13 +38,12 @@ function buildZone(
     type: string,
     trust: 0 | 1 | 2 | 3 | 4 | 5,
     tags: string[] = [],
-    id?: UUID | undefined,
     description?: string,
     icon?: string,
     additions?: Record<string, unknown>): Zone {
     return {
         metadata: {
-            ...buildElement(name, 'zone', type.toLowerCase(), id, description, icon),
+            ...buildElement(name, 'zone', type.toLowerCase(), description, icon),
         },
         tags,
         trust,
@@ -59,7 +57,6 @@ export function zoneBuilder(item: any) {
         item.metadata.type,
         item.trust,
         item?.tags,
-        item.metadata.id,
         item.metadata.description,
         item.metadata.icon,
         item?.additions

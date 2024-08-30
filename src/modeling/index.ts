@@ -43,7 +43,7 @@ async function main() {
 
     results.forEach((result: Result) => {
         const threat = allThreats.find(threat => threat.id === result.threat);
-        const element = inScopeElems.find(elem => elem.metadata.shape === result.shape);
+        const element = canvasElems.find(elem => elem.metadata.shape === result.shape);
         console.log('[+] Found threat "' + threat.name + '" > ' + element.metadata.name);
     })
     console.log('Finished');

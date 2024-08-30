@@ -2,28 +2,24 @@ module:
   rule:
     - id: 324773a2-ec18-4d46-a321-850c0f3d9fe6
       threat: 1baed8fd-d0b1-4c7b-89df-262694e6e823  # Default Credentials or Empty Password
-      element:
-        type: datastore
-      designs:
+      element: datastore
+      analyze:
         - design: authentication.credential.required = false
 
     - id: e26730c8-dda3-4455-91ec-8cef65d4614a
       threat: 461c0696-9811-413b-98ff-f5073f7b88a3  # Weak credential policy
-      element:
-        type: datastore
-      designs:
+      element: datastore
+      analyze:
         - design: authentication.credential.strong = false
 
     - id: 0810aee9-7ccb-4967-9bfc-33c8edbd9d8a
       threat: e1f06cab-4818-4c49-ace3-00a46f9e0e91  # Never expired credential
-      element:
-        type: datastore
-      designs:
+      element: datastore
+      analyze:
         - design: authentication.credential.expiration = false
 
     - id: a911993b-f497-4b28-8239-dbb72f9269ee
       threat: 9e85bda8-1858-407c-8c2a-67a2496b3c9a  # Brute force attack
-      element:
-        type: datastore
-      designs:
+      element: datastore
+      analyze:
         - design: authentication.antiAbuse = false

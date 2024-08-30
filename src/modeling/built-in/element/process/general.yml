@@ -1,7 +1,6 @@
 module:
   process:
     - metadata:
-        id: 8f7e9d6c-b5a3-4f2e-9d1c-7b8e3a2f1e0d
         name: File Upload
         description: Process for uploading files to the system
         icon: data:image/svg+xml;base64,YQ==
@@ -12,7 +11,6 @@ module:
         operation: w
 
     - metadata:
-        id: 7a9b8c6d-5e4f-3d2e-1a0b-9c8d7e6f5a4b
         name: File Download
         description: Process for downloading files from the system
         icon: data:image/svg+xml;base64,YQ==
@@ -23,7 +21,6 @@ module:
         operation: r
 
     - metadata:
-        id: 5ee88607-e99c-41f1-a809-240334e9b561
         name: Logout
         description: Process for user logout and session termination
         icon: data:image/svg+xml;base64,YQ==
@@ -34,7 +31,6 @@ module:
         operation: w
 
     - metadata:
-        id: e2e9acc4-5df4-4358-a2e1-e5f95250aa0f
         name: Registration
         description: Process for new user account creation
         icon: data:image/svg+xml;base64,YQ==
@@ -45,7 +41,6 @@ module:
         operation: w
 
     - metadata:
-        id: c7c11f56-28a1-4caa-80a1-ee3fe394d1a0
         name: Send Email
         description: Process for sending emails to users
         icon: data:image/svg+xml;base64,YQ==
@@ -56,7 +51,6 @@ module:
         operation: w
 
     - metadata:
-        id: 3c051e03-6612-4f56-b6b5-0dca70a3cfea
         name: Send SMS
         description: Process for sending SMS messages to users
         icon: data:image/svg+xml;base64,YQ==
@@ -67,7 +61,6 @@ module:
         operation: w
 
     - metadata:
-        id: c45e3965-cd03-453c-aac5-dfa2acb6d754
         name: Render HTML
         description: Process for rendering HTML content
         icon: data:image/svg+xml;base64,YQ==
@@ -78,7 +71,6 @@ module:
         operation: r
 
     - metadata:
-        id: bc80659f-b414-47be-be33-fdeffccea8c7
         name: Render PDF
         description: Process for generating and rendering PDF documents
         icon: data:image/svg+xml;base64,YQ==
@@ -89,7 +81,6 @@ module:
         operation: w
 
     - metadata:
-        id: adb84e71-df07-4002-bc0b-ada615e41379
         name: Encryption
         description: Process for encrypting data
         icon: data:image/svg+xml;base64,YQ==
@@ -100,7 +91,6 @@ module:
         operation: w
 
     - metadata:
-        id: 5b4ae0f5-fb91-4ff8-8739-e127b82f2697
         name: Decryption
         description: Process for decrypting encrypted data
         icon: data:image/svg+xml;base64,YQ==
@@ -111,7 +101,6 @@ module:
         operation: r
 
     - metadata:
-        id: f6142925-8e84-4a5e-94c2-c8d4232ae209
         name: Share Resource
         description: Process for sharing resources with other users or systems
         icon: data:image/svg+xml;base64,YQ==
@@ -122,7 +111,6 @@ module:
         operation: w
 
     - metadata:
-        id: 602cd29d-e006-444b-90e9-7112edc450ea
         name: Load Resource
         description: Process for loading and initializing resources
         icon: data:image/svg+xml;base64,YQ==
@@ -133,7 +121,6 @@ module:
         operation: r
 
     - metadata:
-        id: 38524764-4321-459e-a292-38646739d556
         name: Serialize
         description: Process for serializing data structures into a format for storage or transmission
         icon: data:image/svg+xml;base64,YQ==
@@ -145,7 +132,6 @@ module:
 
     - metadata:
         # TODO -> xml/json/yaml marshalsec deser, native deser, python pickle deser, php deser, .net deser <- passive entity is Java/? object
-        id: 711790f7-05ef-45be-adfb-9f8a1883321a
         name: Deserialize
         description: Process for deserializing data from a storage or transmission format into data structures
         icon: data:image/svg+xml;base64,YQ==

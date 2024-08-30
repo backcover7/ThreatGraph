@@ -7,26 +7,18 @@ export type Rule = {
     id: UUID;
     threat: Threat;
     element: ElementType | Element;
-    designs: any;
+    analyze: any;
 }
 
 export const ruleSchema = {
     type: 'object',
     additionalProperties: false,
-    required: ['id', 'threat', 'element', 'designs'],
+    required: ['id', 'threat', 'element', 'analyze'],
     properties: {
         id: { type: 'string', format: 'uuid' },
         threat: { type: 'string', format: 'uuid' },
-        element: {
-            type: 'object',
-            additionalProperties: false,
-            required: ['type'],
-            properties: {
-                type: { type: 'string' },
-                id: { type: 'string', format: 'uuid' }
-            }
-        },
-        designs: { type: 'array', items: { type: 'object' } }
+        element: { type: 'string', enum: [ 'zone', 'entity', 'datastore', 'process', 'dataflow' ] },
+        analyze: { type: 'array', items: { type: 'object' } }
     }
 };
 
@@ -34,13 +26,13 @@ export const ruleSchema = {
 function buildRule(
     threat: Threat,
     element: Element | ElementType,
-    designs: any,
+    analyze: any,
     id?: UUID | undefined): Rule {
     return {
         id: id !== undefined ? id : generateUUID(),
         threat,
         element,
-        designs
+        analyze
     };
 }
 
@@ -48,7 +40,7 @@ export function ruleBuilder(item: any) {
     return buildRule(
         item.threat,
         item.element,
-        item.designs,
+        item.analyze,
         item.id
     );
 }

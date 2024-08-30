@@ -1,4 +1,4 @@
-import { generateUUID, UUID, typeOrObjectPattern } from "./base";
+import { typeOrObjectPattern } from "./base";
 
 export const ModelElements = {
     ZONE: 'zone',
@@ -11,7 +11,6 @@ export const ModelElements = {
 export type ElementType = 'zone' | 'entity' | 'datastore' | 'process' | 'dataflow';
 
 export type Element = {
-    id: UUID;
     name: string;   // user customized name
     description?: string;
     icon?: string;
@@ -23,9 +22,8 @@ export type Element = {
 export const elementSchema = {
     type: 'object',
     additionalProperties: false,
-    required: ['id', 'name', 'type'],
+    required: [ 'name', 'type' ],
     properties: {
-        id: {  type: 'string', format: 'uuid' },
         name: {
             type: 'string',
             maxLength: 20
@@ -47,11 +45,9 @@ export function buildElement<T extends ElementType>(
     name: string,
     element: T,
     type: string,
-    id?: UUID | undefined,
     description?: string,
     icon?: string): Element & { element: T } {
     return {
-        id: id !== undefined ? id : generateUUID(),
         name,
         description,
         icon,

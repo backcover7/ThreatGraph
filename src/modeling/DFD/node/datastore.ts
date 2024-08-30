@@ -1,4 +1,4 @@
-import { UUID, typeOrObjectPattern } from "../base";
+import { typeOrObjectPattern } from "../base";
 import {Element, elementSchema, buildElement } from '../element';
 import { Node } from './node';
 
@@ -59,14 +59,13 @@ function buildDataStore(
     strong: boolean = false,
     expiration: boolean = false,
     antiAbuse: boolean = false,
-    id?: UUID | undefined,
 
     description?: string,
     icon?: string,
     additions?: Record<string, unknown>): DataStore {
     return {
         metadata: {
-            ...buildElement(name, 'datastore', 'datastore', id, description, icon),
+            ...buildElement(name, 'datastore', 'datastore', description, icon),
         },
         tags,
         object,
@@ -91,7 +90,6 @@ export function datastoreBuilder(item: any) {
         item?.authentication?.credential.strong,
         item?.authentication?.credential.expiration,
         item?.authentication?.antiAbuse,
-        item.metadata.id,
         item.metadata.description,
         item.metadata.icon,
         item.additions

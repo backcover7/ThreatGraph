@@ -1,5 +1,5 @@
 // Entity Type
-import { UUID, typeOrObjectPattern } from "../base";
+import { typeOrObjectPattern } from "../base";
 import { Element, elementSchema, buildElement } from '../element';
 import { Node } from './node';
 
@@ -30,13 +30,12 @@ function buildEntity(
     type: string,
     tags: string[] = [],
     object: string,
-    id?: UUID | undefined,
     description?: string,
     icon?: string,
     additions?: Record<string, unknown>): Entity {
     return {
         metadata: {
-            ...buildElement(name, 'entity', type, id, description, icon),
+            ...buildElement(name, 'entity', type, description, icon),
         },
         tags,
         object,
@@ -50,7 +49,6 @@ export function entityBuilder(item: any) {
         item.metadata.type,
         item?.tags,
         item.object,
-        item.metadata.id,
         item.metadata.description,
         item.metadata.icon,
         item?.additions

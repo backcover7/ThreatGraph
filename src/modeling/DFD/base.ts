@@ -17,11 +17,6 @@ export const typeOrObjectPattern = '^[a-z0-9]+(-[a-z0-9]+)*$'
 // Define a recursive schema for additions
 const recursiveAdditionsSchema = {
     type: 'object',
-    // propertyNames: {
-    //     not: {
-    //         enum: ["any", "contains"]
-    //     }
-    // },
     additionalProperties: {
         oneOf: [
             {

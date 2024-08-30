@@ -8,8 +8,7 @@
         "metadata": {
           "element": "entity",
           "type": "client",
-          "name": "browser",
-          "id": "f1e3fe98-0b66-417a-b6e4-ad9d88cfab86"
+          "name": "browser"
         },
         "tags": [],
         "object": "browser"
@@ -92,8 +91,7 @@
         "metadata": {
           "element": "entity",
           "type": "server",
-          "name": "server",
-          "id": "801f1ba8-e69d-43c3-a7d2-abaa6869bea7"
+          "name": "server"
         },
         "tags": [],
         "object": "apache"
@@ -175,7 +173,6 @@
       "model": {
         "metadata": {
           "element": "dataflow",
-          "id": "847e90d9-bb58-41fb-8aac-e5a1ab26dcbd",
           "name": "http traffic",
           "type": "http"
         },
@@ -246,10 +243,9 @@
       "model": {
         "metadata": {
           "element": "process",
-          "id": "b21dc275-a75f-45fc-9522-b7fb439efeee",
           "name": "Password Authentication",
           "description": "Authentication uses password as credential",
-          "type": "authentication"
+          "type": "password"
         },
         "tags": [
           "authentication"
@@ -310,7 +306,6 @@
     {
       "model": {
         "metadata": {
-          "id": "07eab610-cbd0-4867-a147-fb680bedd132",
           "name": "Public Zone",
           "description": "Public-facing zone",
           "type": "public",
@@ -348,7 +343,6 @@
     {
       "model": {
         "metadata": {
-          "id": "db9d4c5a-5f20-481a-a928-4ca4bf7d3a35",
           "name": "Private Zone",
           "description": "Private zone",
           "type": "private",

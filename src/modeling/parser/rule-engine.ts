@@ -8,7 +8,7 @@
  *
  * For Example:
  *
- * designs:
+ * analyze:
  *   - designs:
  *      - design: a <= 8
  *      - design: a > 5
@@ -37,7 +37,7 @@ export default class RuleEngine {
         this.#rule = rule;
 
         // Find the related element
-        this.#relatedElements = allElements.filter((element: any) => element.metadata.element === rule.element.type || element.metadata.id === rule.element.id);
+        this.#relatedElements = allElements.filter((element: any) => element.metadata.element === this.#rule.element);
 
         // Find matched elements in the canvas
         if (this.#relatedElements) {
@@ -51,10 +51,10 @@ export default class RuleEngine {
 
     startEvaluation(results: Result[]) {
         this.#relatedElements.forEach((relatedElement: any) => {
-            if (this.#evaluateDesigns(this.#rule.designs, relatedElement, 0)) {
+            if (this.#evaluateDesigns(this.#rule.analyze, relatedElement, 0)) {
                 results.push(
                     {
-                        element: relatedElement.metadata.id,
+                        element: relatedElement.metadata.type,
                         shape: relatedElement.metadata.shape,
                         rule: this.#rule.id,
                         threat: this.#relatedThreat.id,
