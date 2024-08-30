@@ -221,6 +221,24 @@ module:
           - Elevation of Privilege
           - Spoofing
 
+    - id: e1821123-a49a-4658-a0b4-4b94b9ef7554
+      name: Unsafe Deserialization
+      severity: high
+      description: Unsafe deserialization is a vulnerability that occurs when untrusted data is used to abuse the logic of an application, inflict a denial of service (DoS) attack, or execute arbitrary code upon it being deserialized. This can lead to remote code execution, data tampering, and privilege escalation.
+      mitigation: Avoid deserializing untrusted data. Implement integrity checks or encryption on serialized objects. Use safe deserialization libraries or APIs. Validate and sanitize all input before deserialization. Restrict deserialization to only necessary classes. Implement and maintain allow-lists of classes that can be deserialized. Use monitoring and alerting to detect deserialization attacks.
+      compliance:
+        cwe:
+          - 'CWE-502: Deserialization of Untrusted Data'
+          - 'CWE-915: Improperly Controlled Modification of Dynamically-Determined Object Attributes'
+        owasp:
+          - 'A08:2021 - Software and Data Integrity Failures'
+          - 'A05:2021 - Security Misconfiguration'
+        stride:
+          - Tampering
+          - Information Disclosure
+          - Elevation of Privilege
+          - Denial of Service
+
     - id: c4c70157-8731-48d5-8d5d-b63693080102
       name: Path Traversal
       severity: high
@@ -492,3 +510,20 @@ module:
           - Elevation of Privilege
           - Information Disclosure
           - Tampering
+
+    - id: 7c088fec-df24-4dd0-ab0a-e3674dc9baeb
+      name: Abusing LOCAL INFILE to Arbitrarily Read Client Resources
+      severity: high
+      description: This vulnerability exploits the MySQL LOCAL INFILE feature, which allows an attacker to read arbitrary files from the client system. When exploited, it can lead to unauthorized access to sensitive information, data theft, and potential system compromise.
+      mitigation: Disable the LOCAL INFILE feature if not required. Use prepared statements and parameterized queries. Implement strict input validation and sanitization. Limit database user privileges. Use secure connection protocols (SSL/TLS) for database connections. Regularly audit and monitor database access and operations. Keep the database server and all related software up-to-date.
+      compliance:
+        cwe:
+          - 'CWE-200: Exposure of Sensitive Information to an Unauthorized Actor'
+          - 'CWE-73: External Control of File Name or Path'
+        owasp:
+          - 'A03:2021 - Injection'
+          - 'A01:2021 - Broken Access Control'
+        stride:
+          - Information Disclosure
+          - Tampering
+          - Elevation of Privilege

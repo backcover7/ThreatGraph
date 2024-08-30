@@ -6,39 +6,86 @@ module:
         type: dataflow
       designs:
         - design: ssl.isSSL = false
-        #        - design: attached.active.trust != attached.passive.trust   # indicate this dataflow connects two nodes in different zones
+        #        - design: attached.source.trust != attached.destination.trust   # indicate this dataflow connects two nodes in different zones
         - either:  # Even though they are in the same zone, not enough trust might also introduce problems
-            - design: attached.active.attached.zone.trust != 3
-            - design: attached.passive.attached.zone.trust != 3
+            - design: attached.source.attached.zone.trust != 3
+            - design: attached.destination.attached.zone.trust != 3
 
     - id: afe52040-7029-4c04-acb8-609dc9bb71b6
       threat: d06b6da5-1214-4068-9a01-b96572716c02  # Rogue client
       element:
         type: dataflow
       designs:
-        - design: attached.active.attached.zone.trust < attached.passive.attached.zone.trust
+        - design: attached.source.attached.zone.trust < attached.destination.attached.zone.trust
         - either:
-            - designs:  # active node might be client entity
-                - design: attached.active.metadata.element = 'entity'
-                - design: attached.active.metadata.type = 'client'
-            - either:   # active node might be server entity or datastore
+            - designs:  # source node might be client entity
+                - design: attached.source.metadata.element = 'entity'
+                - design: attached.source.metadata.type = 'client'
+            - either:   # source node might be server entity or datastore
                 - designs:
-                    - design: attached.passive.metadata.element = 'entity'
-                    - design: attached.passive.metadata.type = 'server'
-                - design: attached.passive.metadata.element = 'datastore'
+                    - design: attached.destination.metadata.element = 'entity'
+                    - design: attached.destination.metadata.type = 'server'
+                - design: attached.destination.metadata.element = 'datastore'
 
-    - id: e1dd72fd-7702-437a-83d6-6b35d905666f
+    - id: 656a29e0-16ed-4430-a28e-b5a74b5765c0
       threat: 70b7fffb-05e3-4981-8dd2-21e8093f0e58  # Rogue server
       element:
         type: dataflow
       designs:
-        - design: attached.active.attached.zone.trust > attached.passive.attached.zone.trust
+        - design: attached.source.attached.zone.trust > attached.destination.attached.zone.trust
         - either:
-            - designs: # active node might be client entity
-                - design: attached.active.metadata.element = 'entity'
-                - design: attached.active.metadata.type = 'client'
-            - either: # active node might be server entity or datastore
+            - designs: # source node might be client entity
+                - design: attached.source.metadata.element = 'entity'
+                - design: attached.source.metadata.type = 'client'
+            - either: # source node might be server entity or datastore
                 - designs:
-                    - design: attached.passive.metadata.element = 'entity'
-                    - design: attached.passive.metadata.type = 'server'
-                - design: attached.passive.metadata.element = 'datastore'
+                    - design: attached.destination.metadata.element = 'entity'
+                    - design: attached.destination.metadata.type = 'server'
+                - design: attached.destination.metadata.element = 'datastore'
+
+    - id: 429ac204-3fc8-4634-9953-95b767ea9934
+      threat: f8e7d9c1-b6a3-4f2e-9d5c-12e3a4b5c6d7  # Improper Access Control
+      element:
+        type: dataflow
+      designs:
+        - design: attached.source.attached.zone.metadata.shape != attached.destination.attached.zone.metadata.shape # Across zones
+
+    - id: 80537eda-62e7-4044-9b2f-619dd9edef3b
+      threat: 3a2b1c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d  # LDAP Injection
+      element:
+        type: dataflow
+      designs:
+        - either:
+          - design: metadata.type = 'ldap'
+          - designs:
+            - design: attached.destination.metadata.element = 'datastore'
+            - design: attached.destination.object = 'ldap'
+
+    - id: 0fa94631-934b-4b24-b1b2-259e978b30a8
+      threat: 7b1f3a9c-8e5d-4c2a-b0f5-9e8f7a1d6b3e  # SQL Injection
+      element:
+        type: dataflow
+      designs:
+        - design: attached.destination.metadata.element = 'datastore'
+        - design: attached.destination.metadata.type = 'sql-datastore'
+
+    - id: 30b67989-a35e-4a32-bcf1-bf6abfa03302
+      threat: 7a3c81f9-b9d2-4e27-9c32-dc0c8a7f48e9  # NoSQL Injection
+      element:
+        type: dataflow
+      designs:
+        - design: attached.destination.metadata.element = 'datastore'
+        - design: attached.destination.metadata.type = 'nosql-datastore'
+
+    - id: e1dd72fd-7702-437a-83d6-6b35d905666f
+      threat: 7c088fec-df24-4dd0-ab0a-e3674dc9baeb  # Abusing LOCAL INFILE to Arbitrarily Read Client Resources
+      element:
+        type: dataflow
+      designs:
+        - design: attached.source.attached.zone.trust > attached.destination.attached.zone.trust
+        - design: attached.source.metadata.element = 'entity'
+        - either:
+            - design: attached.source.metadata.object = 'mysql-client'
+            - design: attached.source.metadata.object = 'mariadb-client'
+        - design: attached.destination.metadata.element = 'datastore'
+        - design: attached.destination.metadata.object = 'mysql'

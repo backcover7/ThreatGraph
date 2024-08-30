@@ -2,18 +2,45 @@ module:
   entity:
     - metadata:
         id: c7313879-dbfa-4305-9a9c-66ed4d19ba0a
-        name: WebSocket
-        description: websocket client
+        name: WebSocket Client
+        description: WebSocket client
         icon: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMzIuNjUiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMjU2IDE5MyI+PHBhdGggZmlsbD0iIzIzMWYyMCIgZD0iTTE5Mi40NCAxNDQuNjQ1aDMxLjc4VjY4LjMzOWwtMzUuODA1LTM1LjgwNGwtMjIuNDcyIDIyLjQ3MmwyNi40OTcgMjYuNDk3em0zMS44NjQgMTUuOTMxSDExMy40NTJMODYuOTU0IDEzNC4wOGwxMS4yMzctMTEuMjM2bDIxLjg4NSAyMS44ODVoNDUuMDI4bC00NC4zNTctNDQuNDQxbDExLjMyLTExLjMybDQ0LjM1NyA0NC4zNTh2LTQ1LjAzbC0yMS44MDEtMjEuODAxbDExLjE1Mi0xMS4xNTNMMTEwLjY4NSAwSDBsMzEuNjk2IDMxLjY5NnYuMDg0aDY1Ljc0bDIzLjIyNyAyMy4yMjdsLTMzLjk2IDMzLjk2TDYzLjQ3NiA2NS43NFY0Ny43MTJoLTMxLjc4djMxLjE5M2w1NS4wMDcgNTUuMDA3TDY0LjMxNCAxNTYuM2wzNS44MDUgMzUuODA1SDI1NnoiLz48L3N2Zz4=
-        type: client
+        type: ws-client
       tags: [ client, websocket ]
-      object: protocol
+      object: websocket-client
 
     - metadata:
         id: dc72a0b8-45f8-43b4-ade1-88fdb3d05416
-        name: SSH
+        name: SSH Client
         description: SSH client
         icon: data:image/svg+xml;base64,YQ==
-        type: client
+        type: remote-client
       tags: [ client, ssh ]
-      object: protocol
+      object: ssh-client
+
+    - metadata:
+        id: f7092a78-ddae-4a94-9075-efb0a4b290bd
+        name: MySQL Client
+        description: MySQL client
+        icon: data:image/svg+xml;base64,YQ==
+        type: sql-client
+      tags: [ client, datastore ]
+      object: mysql-client
+
+    - metadata:
+        id: 66b34049-4f59-4ee3-9646-b6ecd0288bf2
+        name: MariaDB Client
+        description: MariaDB client
+        icon: data:image/svg+xml;base64,YQ==
+        type: sql-client
+      tags: [ client, datastore ]
+      object: mariadb-client
+
+    - metadata:
+        id: 23287e39-b072-4156-9e98-2353d27c9857
+        name: Postgresql Client
+        description: Postgresql client
+        icon: data:image/svg+xml;base64,YQ==
+        type: sql-client
+      tags: [ client, datastore ]
+      object: pg-client

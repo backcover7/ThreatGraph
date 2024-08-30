@@ -1,0 +1,26 @@
+module:
+  rule:
+    - id: d299a26d-5035-40c8-8113-c613fd7910ab
+      threat: abc4163a-bfcc-4e28-b4bc-0ddd215f33db  # XML Injection
+      element:
+        type: process
+      designs:
+        - design: data.format = 'xml'
+
+    - id: 58369257-0e8c-4277-88d9-650933f45e03
+      threat: e1821123-a49a-4658-a0b4-4b94b9ef7554  # Unsafe Deserialization
+      element:
+        type: process
+      designs:
+        - either:
+          - design: attached.dataflow.metadata.type = 'rmi'
+          - design: attached.dataflow.metadata.type = 'jndi'
+          - design: metadata.type = 'deserialize'
+
+    - id: 5cfe873d-9533-4ccd-9a72-e9cc2974cc8a
+      threat: 61966755-7c78-4ce4-8a89-2690520e474c  # Cross-Site Request Forgery (CSRF)
+      element:
+        type: process
+      designs:
+        - design: attributes.critical >= 2
+        - design: attributes.isCsrfProtected = false

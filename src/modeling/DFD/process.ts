@@ -23,7 +23,7 @@ export type Process = {
 }
 
 export type ProcessAttached = {
-    flow: DataFlow
+    dataflow: DataFlow
 }
 
 export const processSchema = {

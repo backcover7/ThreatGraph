@@ -104,7 +104,7 @@ export default class Canvas {
             .map((b: any) => b.id);
         return {
             zone: this.#processedElements.get(nodeShape.frameId),
-            flows: boundedArrowShapes.map((id: string) => this.#processedElements.get(id))
+            dataflows: boundedArrowShapes.map((id: string) => this.#processedElements.get(id))
         };
     }
 
@@ -126,14 +126,14 @@ export default class Canvas {
 
         return {
             process: this.#processedElements.get(processId),
-            active: this.#processedElements.get(startId),
-            passive: this.#processedElements.get(endId),
+            source: this.#processedElements.get(startId),
+            destination: this.#processedElements.get(endId),
         };
     }
 
     // Process has to be label text of arrow shape.
     #buildTextAttached(textShape: any): ProcessAttached {
         const arrowShape = this.#shapes.find((s: any) => s.id === textShape.containerId && s.type === 'arrow');
-        return { flow: this.#processedElements.get(arrowShape.id) };
+        return { dataflow: this.#processedElements.get(arrowShape.id) };
     }
 }

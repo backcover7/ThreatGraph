@@ -122,17 +122,6 @@ module:
         operation: w
 
     - metadata:
-        id: 2b0866d9-99df-4ebe-9172-88cc31fc096e
-        name: URL Redirection
-        description: Process for handling URL redirections
-        icon: data:image/svg+xml;base64,YQ==
-        type: browse
-      tags: [ navigation ]
-      attributes:
-        critical: 1
-        operation: r
-
-    - metadata:
         id: 602cd29d-e006-444b-90e9-7112edc450ea
         name: Load Resource
         description: Process for loading and initializing resources
@@ -145,22 +134,23 @@ module:
 
     - metadata:
         id: 38524764-4321-459e-a292-38646739d556
-        name: Serialize Data
+        name: Serialize
         description: Process for serializing data structures into a format for storage or transmission
         icon: data:image/svg+xml;base64,YQ==
-        type: process
-      tags: [ data-processing ]
+        type: serialize
+      tags: [ conversion ]
       attributes:
         critical: 1
         operation: w
 
     - metadata:
+        # TODO -> xml/json/yaml marshalsec deser, native deser, python pickle deser, php deser, .net deser <- passive entity is Java/? object
         id: 711790f7-05ef-45be-adfb-9f8a1883321a
-        name: Deserialize Data
+        name: Deserialize
         description: Process for deserializing data from a storage or transmission format into data structures
         icon: data:image/svg+xml;base64,YQ==
-        type: process
-      tags: [ data-processing ]
+        type: deserialize
+      tags: [ conversion ]
       attributes:
         critical: 1
         operation: r

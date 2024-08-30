@@ -5,10 +5,12 @@ import { Entity } from "./node/entity";
 import { DataStore } from "./node/datastore";
 import { Process } from "./process";
 
+type protocol = 'http' | 'websocket' | 'ssh' | 'grpc' | 'mqtt' | 'dns' | 'rmi' | 'jndi' | 'ftp' | 'io' | any;
+
 export type DataFlow = {
     metadata: {
         element: 'dataflow';
-        type: 'http' | 'websocket' | 'ssh' | 'grpc' | 'mqtt' | 'dns' | 'rmi' | 'ftp' | 'io' | any;
+        type: protocol;
     } & Omit<Element, 'icon'>;  // Remove 'icon' from Element for DataFlow
     ssl: {
         isSSL: boolean;
@@ -19,13 +21,13 @@ export type DataFlow = {
 
 export type DataflowAttached = {
     process: Process;   // TODO might support multi processes somehow
-    active: Entity | DataStore;
-    passive: Entity | DataStore;
+    source: Entity | DataStore;
+    destination: Entity | DataStore;
 }
 
 export function buildDataFlow(
     name: string,
-    type: 'http' | 'websocket' | 'ssh' | 'grpc' | 'mqtt' | 'dns' | 'rmi' | 'ftp' | 'io' | any,
+    type: protocol,
     isSSL: boolean = false,
     mTLS: boolean = false,
     id?: UUID | undefined,

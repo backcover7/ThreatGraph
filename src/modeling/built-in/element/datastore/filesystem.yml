@@ -5,8 +5,7 @@ module:
         name: filesystem
         description: Local disk file system
         icon: data:image/svg+xml;base64,YQ==
-        type: datastore
-      tags: [ filesystem ]
+        type: fs-datastore
       object: filesystem
 
     - metadata:
@@ -14,8 +13,7 @@ module:
         name: FTP server
         description: FTP server
         icon: data:image/svg+xml;base64,YQ==
-        type: datastore
-      tags: [ filesystem ]
+        type: fs-datastore
       object: ftp
 
     - metadata:
@@ -23,6 +21,5 @@ module:
         name: LDAP
         description: LDAP
         icon: data:image/svg+xml;base64,YQ==
-        type: datastore
-      tags: [ others ]
+        type: other-datastore
       object: ldap

@@ -10,5 +10,5 @@ export type Node = {
 
 export type NodeAttached = {
     zone: Zone;
-    flows: DataFlow[];
+    dataflows: DataFlow[];
 }
