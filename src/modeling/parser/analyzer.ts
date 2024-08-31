@@ -68,15 +68,16 @@ export default class Analyzer {
 
     startEvaluation(results: Result[]) {
         this.#relatedElements.forEach((relatedElement: any) => {
-            if (this.#evaluateDesigns(this.#rule.designs, relatedElement, 0)) {
-                results.push(
-                    {
-                        element: relatedElement.metadata.type,
-                        shape: relatedElement.metadata.shape,
-                        rule: this.#rule.id,
-                        threat: this.#relatedThreat.id,
-                    }
-                );
+            const result = {
+                element: relatedElement.metadata.type,
+                shape: relatedElement.metadata.shape,
+                rule: this.#rule.id,
+                threat: this.#relatedThreat.id,
+            }
+            if (this.#rule.designs && this.#evaluateDesigns(this.#rule.designs, relatedElement, 0) ||
+                this.#rule.either && this.#evaluateEitherDesign(this.#rule.either, relatedElement, 0) ||
+                this.#rule.design && this.#evaluateDesign(this.#rule.design, relatedElement)) {
+                results.push(result)
             }
         })
     }
