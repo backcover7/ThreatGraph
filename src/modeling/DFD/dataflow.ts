@@ -1,8 +1,8 @@
 // DataFlow Type
 import { Element, buildElement } from './element';
-import { Entity } from "./node/entity";
-import { DataStore } from "./node/datastore";
-import { Process } from "./process";
+import { Entity } from './node/entity';
+import { DataStore } from './node/datastore';
+import { Process } from './process';
 
 type protocol = 'http' | 'websocket' | 'ssh' | 'grpc' | 'mqtt' | 'dns' | 'rmi' | 'jndi' | 'ftp' | 'io' | any;
 

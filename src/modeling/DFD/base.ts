@@ -1,10 +1,10 @@
 import crypto from 'crypto';
-import { zoneSchema, zoneBuilder } from "./zone";
-import { entitySchema, entityBuilder } from "./node/entity";
-import { datastoreSchema, datastoreBuilder } from "./node/datastore";
-import { processSchema, processBuilder } from "./process";
-import { threatSchema, threatBuilder } from "./threat";
-import { ruleSchema, ruleBuilder } from "./rule";
+import { zoneSchema, zoneBuilder } from './zone';
+import { entitySchema, entityBuilder } from './node/entity';
+import { datastoreSchema, datastoreBuilder } from './node/datastore';
+import { processSchema, processBuilder } from './process';
+import { threatSchema, threatBuilder } from './threat';
+import { ruleSchema, ruleBuilder } from './rule';
 
 declare const __brand: unique symbol;
 export type UUID = string & { readonly [__brand]: 'UUID' };

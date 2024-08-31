@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { FONT_FAMILY, Excalidraw, WelcomeScreen } from "@excalidraw/excalidraw";
+import { FONT_FAMILY, Excalidraw, WelcomeScreen } from '@excalidraw/excalidraw';
 
 const ExcalidrawWrapperClient: React.FC = () => {
     const excalidrawRef: React.RefObject<HTMLDivElement> = React.useRef<HTMLDivElement>(null);

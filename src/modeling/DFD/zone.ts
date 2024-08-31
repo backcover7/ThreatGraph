@@ -1,6 +1,6 @@
 import { Element, elementSchema, buildElement } from './element';
-import { Entity } from "./node/entity";
-import { DataStore } from "./node/datastore";
+import { Entity } from './node/entity';
+import { DataStore } from './node/datastore';
 
 // Zone Type
 export type Zone = {

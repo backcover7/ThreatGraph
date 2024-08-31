@@ -8,11 +8,11 @@
  */
 
 import * as basicShapes from './validate';
-import { ModelElements } from "../DFD/element";
-import { ZoneAttached } from "../DFD/zone";
-import { NodeAttached } from "../DFD/node/node";
-import { ProcessAttached } from "../DFD/process";
-import { DataflowAttached } from "../DFD/dataflow";
+import { ModelElements } from '../DFD/element';
+import { ZoneAttached } from '../DFD/zone';
+import { NodeAttached } from '../DFD/node/node';
+import { ProcessAttached } from '../DFD/process';
+import { DataflowAttached } from '../DFD/dataflow';
 
 export default class Canvas {
     #shapes: any = {};

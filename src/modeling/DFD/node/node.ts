@@ -1,5 +1,5 @@
-import { Zone } from "../zone";
-import { DataFlow } from "../dataflow";
+import { Zone } from '../zone';
+import { DataFlow } from '../dataflow';
 
 // Node Type: Entity Type and DataStore Type all extends from Node Type
 export type Node = {

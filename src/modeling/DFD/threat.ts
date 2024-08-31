@@ -1,8 +1,8 @@
-import { UUID, generateUUID } from "./base";
-import { Entity } from "./node/entity";
-import { DataStore } from "./node/datastore";
-import { Process } from "./process";
-import { DataFlow } from "./dataflow";
+import { UUID, generateUUID } from './base';
+import { Entity } from './node/entity';
+import { DataStore } from './node/datastore';
+import { Process } from './process';
+import { DataFlow } from './dataflow';
 
 // Threat Type
 export type Threat = {

@@ -39,7 +39,6 @@
 
 import Evaluator from './evaluator';
 import { Result } from '../DFD/result'
-import {expression} from "mathjs";
 
 export default class Analyzer {
     #MAX_DEPTH = 10;

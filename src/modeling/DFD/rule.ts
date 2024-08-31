@@ -1,6 +1,6 @@
-import { UUID, generateUUID } from "./base";
+import { UUID, generateUUID } from './base';
 import { Element, ElementType } from './element';
-import { Threat } from "./threat";
+import { Threat } from './threat';
 
 // Rule Type
 export type Rule = {

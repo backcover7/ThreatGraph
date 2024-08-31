@@ -11,10 +11,10 @@
 // const lodashCloned = _.cloneDeep(objA);
 
 import Template from './parser/template';
-import Analyzer from "./parser/analyzer";
-import Canvas from "./draw/canvas";
+import Analyzer from './parser/analyzer';
+import Canvas from './draw/canvas';
 import fs from 'fs/promises';
-import { Result } from "./DFD/result";
+import { Result } from './DFD/result';
 
 async function main() {
     const loader = new Template();
@@ -44,7 +44,7 @@ async function main() {
     results.forEach((result: Result) => {
         const threat = allThreats.find(threat => threat.id === result.threat);
         const element = canvasElems.find(elem => elem.metadata.shape === result.shape);
-        console.log('[+] Found threat "' + threat.name + '" > ' + element.metadata.name);
+        console.log('[+] Found threat ' + threat.name + ' > ' + element.metadata.name);
     })
     console.log('Finished');
 }

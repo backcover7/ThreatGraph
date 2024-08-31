@@ -1,4 +1,4 @@
-import { typeOrObjectPattern } from "./base";
+import { typeOrObjectPattern } from './base';
 
 export const ModelElements = {
     ZONE: 'zone',
@@ -15,7 +15,7 @@ export type Element = {
     description?: string;
     icon?: string;
     element: ElementType;
-    type: string;   // "public" zone, "load-balancer" entity, "mysql" datastore, 'http' protocol, this is the real thing it is.
+    type: string;   // 'public' zone, 'load-balancer' entity, 'mysql' datastore, 'http' protocol, this is the real thing it is.
     shape?: string;  // shape id shows on canvas
 }
 

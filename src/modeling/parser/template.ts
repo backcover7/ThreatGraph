@@ -101,8 +101,8 @@ export default class Template {
                 }
             }
             return flag;
-        } catch (error) {
-            console.error('Error validating YAML:', error);
+        } catch (error: any) {
+            console.error('Error validating YAML: ' + fullPath + ' ' + error.message);
             return false;
         }
     }

@@ -1,6 +1,5 @@
 import { Element, elementSchema, buildElement } from './element';
-import { DataFlow } from "./dataflow";
-import { typeOrObjectPattern } from "./base";
+import { DataFlow } from './dataflow';
 
 // Process Type
 export type Process = {

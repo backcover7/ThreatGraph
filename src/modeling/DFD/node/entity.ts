@@ -1,5 +1,5 @@
 // Entity Type
-import { typeOrObjectPattern } from "../base";
+import { typeOrObjectPattern } from '../base';
 import { Element, elementSchema, buildElement } from '../element';
 import { Node } from './node';
 
