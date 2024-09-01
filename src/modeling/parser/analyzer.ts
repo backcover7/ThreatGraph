@@ -99,7 +99,7 @@ export default class Analyzer {
     #evaluateDesigns(expressions: any[], element: any, depth: number): boolean {
         if (this.#depthCheck(depth += 1)) {
             const variableExpr = expressions.find(expression => expression.variable);
-            if (variableExpr) this.#evaluateDesign(variableExpr.variable, element);  // register temp variable
+            if (variableExpr) this.#registerVariable(variableExpr.variable, element);  // register temp variable
 
             let flag = true;
             for (const expression of expressions) {
@@ -122,7 +122,8 @@ export default class Analyzer {
     #evaluateEitherDesign(expressions: any[], element: any, depth: number): boolean {
         if (this.#depthCheck(depth += 1)) {
             const variableExpr = expressions.find(expression => expression.variable);
-            if (variableExpr) this.#evaluateDesign(variableExpr.variable, element);  // register temp variable
+            if (variableExpr) this.#registerVariable(variableExpr.variable, element);  // register temp variable
+            
             let flag = false;
             for (const expression of expressions) {
                 if (expression.designs) flag ||= this.#evaluateDesigns(expression.designs, element, depth);
@@ -145,5 +146,12 @@ export default class Analyzer {
             throw new Error('Invalid rule format: ' + design);
         }
         return this.#evaluator.analyze(design, element);
+    }
+
+    #registerVariable(design: string, element: any): void {
+        if (!this.#evaluator?.validateRule(design)) {
+            throw new Error('Invalid rule format: ' + design);
+        }
+        this.#evaluator?.registerTempVariable(design, element);
     }
 }

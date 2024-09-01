@@ -128,14 +128,14 @@ export default class Evaluator {
         return array.some(operation);
     }
 
-    public analyze(rule: string, knownObj: KnownObj): boolean {
+    public registerTempVariable(rule: string, knownObj: KnownObj): void {
+        // Handle temporary variable assignment
         try {
             const parsedRule = this.#parseRule(rule);
-            if (!parsedRule) return false;
+            if (!parsedRule) return;
 
             let [left, operator, right] = parsedRule;
 
-            // Handle temporary variable assignment
             if (operator === '=') {
                 const leftIsTemp = this.#isTempVariable(left);
                 const rightIsTemp = this.#isTempVariable(right);
@@ -144,15 +144,28 @@ export default class Evaluator {
                 if (leftIsTemp && !rightIsTemp) {
                     value = this.#evaluateExpression(right, knownObj);
                     this.#tempVariables.set(left, value);
-                    return true;
                 } else if (!leftIsTemp && rightIsTemp) {
                     value = this.#evaluateExpression(left, knownObj);
                     this.#tempVariables.set(right, value);
-                    return true;
                 } else {
                     throw new EvaluationError('Invalid assignment: one side must be a temporary variable');
                 }
             }
+        } catch (error) {
+            if (error instanceof EvaluationError) {
+                console.error('Evaluation error:', error.message);
+            } else {
+                console.error('Unexpected error:', error);
+            }
+        }
+    }
+
+    public analyze(rule: string, knownObj: KnownObj): boolean {
+        try {
+            const parsedRule = this.#parseRule(rule);
+            if (!parsedRule) return false;
+
+            let [left, operator, right] = parsedRule;
 
             // Handle comparison with temporary variables
             let leftValue: any;
