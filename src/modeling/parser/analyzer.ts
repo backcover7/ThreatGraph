@@ -69,16 +69,16 @@ export default class Analyzer {
     }
 
     startEvaluation(results: Result[]) {
-        this.#relatedElements.forEach((relatedElement: any) => {
+        this.#relatedElements.forEach((ruleContext: any) => {
             const result = {
-                element: relatedElement.metadata.type,
-                shape: relatedElement.metadata.shape,
+                element: ruleContext.metadata.type,
+                shape: ruleContext.metadata.shape,
                 rule: this.#rule.id,
                 threat: this.#relatedThreat.id,
             }
-            if (this.#rule.designs && this.#evaluateDesigns(this.#rule.designs, relatedElement, 0) ||
-                this.#rule.either && this.#evaluateEitherDesign(this.#rule.either, relatedElement, 0) ||
-                this.#rule.design && this.#evaluateDesign(this.#rule.design, relatedElement)) {
+            if (this.#rule.designs && this.#evaluateDesigns(this.#rule.designs, ruleContext, 0) ||
+                this.#rule.either && this.#evaluateEitherDesign(this.#rule.either, ruleContext, 0) ||
+                this.#rule.design && this.#evaluateDesign(this.#rule.design, ruleContext)) {
                 results.push(result)
             }
         })
@@ -95,18 +95,18 @@ export default class Analyzer {
     /**
      * if (design && design && ...) {...}
      * @param expressions
-     * @param element
+     * @param ruleContextObject
      * @param depth
      */
-    #evaluateDesigns(expressions: any[], element: any, depth: number): boolean {
+    #evaluateDesigns(expressions: any[], ruleContextObject: any, depth: number): boolean {
         if (this.#depthCheck(depth += 1)) {
-            this.#registerVariables(expressions, element);
+            this.#registerVariables(expressions, ruleContextObject);
 
             let flag = true;
             for (const expression of expressions) {
-                if (expression.designs) flag &&= this.#evaluateDesigns(expression.designs, element, depth);
-                else if (expression.either) flag &&= this.#evaluateEitherDesign(expression.either, element, depth);
-                else if (expression.design) flag &&= this.#evaluateDesign(expression.design, element);
+                if (expression.designs) flag &&= this.#evaluateDesigns(expression.designs, ruleContextObject, depth);
+                else if (expression.either) flag &&= this.#evaluateEitherDesign(expression.either, ruleContextObject, depth);
+                else if (expression.design) flag &&= this.#evaluateDesign(expression.design, ruleContextObject);
             }
             this.#evaluator?.clearTempVariables();
             return flag;
@@ -117,18 +117,18 @@ export default class Analyzer {
     /**
      * if (design || design || ...) {...}
      * @param expressions
-     * @param element
+     * @param ruleContextObject
      * @param depth
      */
-    #evaluateEitherDesign(expressions: any[], element: any, depth: number): boolean {
+    #evaluateEitherDesign(expressions: any[], ruleContextObject: any, depth: number): boolean {
         if (this.#depthCheck(depth += 1)) {
-            this.#registerVariables(expressions, element);
+            this.#registerVariables(expressions, ruleContextObject);
 
             let flag = false;
             for (const expression of expressions) {
-                if (expression.designs) flag ||= this.#evaluateDesigns(expression.designs, element, depth);
-                else if (expression.either) flag ||= this.#evaluateEitherDesign(expression.either, element, depth);
-                else if (expression.design) flag ||= this.#evaluateDesign(expression.design, element);
+                if (expression.designs) flag ||= this.#evaluateDesigns(expression.designs, ruleContextObject, depth);
+                else if (expression.either) flag ||= this.#evaluateEitherDesign(expression.either, ruleContextObject, depth);
+                else if (expression.design) flag ||= this.#evaluateDesign(expression.design, ruleContextObject);
             }
             this.#evaluator?.clearTempVariables();
             return flag;
@@ -139,19 +139,19 @@ export default class Analyzer {
     /**
      * if (design) {...}
      * @param design
-     * @param element
+     * @param ruleContextObject
      */
-    #evaluateDesign(design: string, element: any): boolean {
+    #evaluateDesign(design: string, ruleContextObject: any): boolean {
         if (!this.#evaluator?.validateRule(design)) {
             throw new Error('Invalid rule format: ' + design);
         }
-        return this.#evaluator.analyze(design, element);
+        return this.#evaluator.analyze(design, ruleContextObject);
     }
 
-    #registerVariables(expressions: any[], element: any): void {
+    #registerVariables(expressions: any[], ruleContextObject: any): void {
         const variableExprs = expressions.filter(expression => expression.variable).map(expression => expression.variable);
         variableExprs.forEach((variableExpr: any) => {
-            this.#evaluator?.registerTempVariable(variableExpr, element);
+            this.#evaluator?.registerTempVariable(variableExpr, ruleContextObject);
         });
     }
 }

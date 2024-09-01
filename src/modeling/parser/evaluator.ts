@@ -34,7 +34,7 @@
 
 import { create, all, MathJsInstance } from 'mathjs';
 
-type KnownObj = Record<string, any>;
+type RuleContext = Record<string, any>;
 type Operator = '==' | '!=' | '<' | '<=' | '>' | '>=' | '=';
 
 class EvaluationError extends Error {
@@ -116,8 +116,8 @@ export default class Evaluator {
         return /^\$[A-Z]+$/.test(value);
     }
 
-    #evaluateExpression(expression: string, knownObj: KnownObj): any {
-        const context = { ...knownObj };
+    #evaluateExpression(expression: string, ruleContextObject: RuleContext): any {
+        const context = { ...ruleContextObject };
         for (const [key, value] of this.#tempVariables) {
             context[key] = value;
         }
@@ -128,7 +128,7 @@ export default class Evaluator {
         return array.some(operation);
     }
 
-    public registerTempVariable(rule: string, knownObj: KnownObj): void {
+    public registerTempVariable(rule: string, ruleContextObject: RuleContext): void {
         // Handle temporary variable assignment
         try {
             const parsedRule = this.#parseRule(rule);
@@ -142,10 +142,10 @@ export default class Evaluator {
 
                 let value;
                 if (leftIsTemp && !rightIsTemp) {
-                    value = this.#evaluateExpression(right, knownObj);
+                    value = this.#evaluateExpression(right, ruleContextObject);
                     this.#tempVariables.set(left, value);
                 } else if (!leftIsTemp && rightIsTemp) {
-                    value = this.#evaluateExpression(left, knownObj);
+                    value = this.#evaluateExpression(left, ruleContextObject);
                     this.#tempVariables.set(right, value);
                 } else {
                     throw new EvaluationError('Invalid assignment: one side must be a temporary variable');
@@ -160,7 +160,7 @@ export default class Evaluator {
         }
     }
 
-    public analyze(rule: string, knownObj: KnownObj): boolean {
+    public analyze(rule: string, ruleContextObject: RuleContext): boolean {
         try {
             const parsedRule = this.#parseRule(rule);
             if (!parsedRule) return false;
@@ -177,7 +177,7 @@ export default class Evaluator {
                     throw new EvaluationError('Temporary variable not initialized');
                 }
             } else {
-                leftValue = this.#evaluateExpression(left, knownObj);
+                leftValue = this.#evaluateExpression(left, ruleContextObject);
             }
 
             if (this.#isTempVariable(right)) {
@@ -186,21 +186,21 @@ export default class Evaluator {
                     throw new EvaluationError('Temporary variable not initialized');
                 }
             } else {
-                rightValue = this.#evaluateExpression(right, knownObj);
+                rightValue = this.#evaluateExpression(right, ruleContextObject);
             }
 
             // Handle array operations
             if (Array.isArray(leftValue)) {
                 return this.#handleArrayOperation(leftValue, (item) =>
-                    this.#evaluateExpression(this.#createSafeExpression(JSON.stringify(item), operator, JSON.stringify(rightValue)), knownObj)
+                    this.#evaluateExpression(this.#createSafeExpression(JSON.stringify(item), operator, JSON.stringify(rightValue)), ruleContextObject)
                 );
             } else if (Array.isArray(rightValue)) {
                 return this.#handleArrayOperation(rightValue, (item) =>
-                    this.#evaluateExpression(this.#createSafeExpression(JSON.stringify(leftValue), operator, JSON.stringify(item)), knownObj)
+                    this.#evaluateExpression(this.#createSafeExpression(JSON.stringify(leftValue), operator, JSON.stringify(item)), ruleContextObject)
                 );
             } else {
                 const safeExpression = this.#createSafeExpression(JSON.stringify(leftValue), operator, JSON.stringify(rightValue));
-                return this.#evaluateExpression(safeExpression, knownObj);
+                return this.#evaluateExpression(safeExpression, ruleContextObject);
             }
         } catch (error) {
             if (error instanceof EvaluationError) {
