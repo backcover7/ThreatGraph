@@ -112,8 +112,18 @@ export default class Evaluator {
         }
     }
 
-    #isTempVariable(value: string): boolean {
-        return /^\$[A-Z]+$/.test(value);
+    #isTempVariableExpr(value: string): boolean {
+        if (/^\$[A-Z]+$/.test(value)) {  // $TAG = $.tags
+            return true;
+        } else if (/^\$[A-Z]+\./.test(value)) {  // $SOURCE.metadata.element == 'entity'
+            const parts = value.split('.');
+            const varName = parts[0];
+            return this.#tempVariables.has(varName) &&
+                parts.length > 1 &&
+                parts.slice(1).every(part => /^[a-zA-Z0-9_]+$/.test(part));
+        } else {
+            return false;
+        }
     }
 
     #evaluateExpression(expression: string, ruleContextObject: RuleContext): any {
@@ -122,6 +132,24 @@ export default class Evaluator {
             context[key] = value;
         }
         return this.#math.evaluate(expression, context);
+    }
+
+    #resolvePath(obj: any, path: string): any {
+        return path.split('.').reduce((prev, curr) => prev && prev[curr], obj);
+    }
+
+    #isValidExpression(value: string): boolean {
+        // Check if it's a property path expression starting with $.
+        if (value.startsWith('$.')) {
+            const parts = value.split('.');
+            return parts.length > 1 && parts.slice(1).every(part => /^[a-zA-Z0-9_]+$/.test(part));
+        }
+        // Check if it's a temporary variable with optional property path
+        if (this.#isTempVariableExpr(value)) {
+            return true;
+        }
+        // Check if it's a literal
+        return this.#isLiteral(value);
     }
 
     #isLiteral(value: string): boolean {
@@ -137,22 +165,23 @@ export default class Evaluator {
     }
 
     #resolveValue(value: string, ruleContextObject: RuleContext): any {
-        if (this.#isTempVariable(value)) {
-            const tempValue = this.#tempVariables.get(value);
+        if (this.#isTempVariableExpr(value)) {
+            const [varName, ...pathParts] = value.split('.');
+            const tempValue = this.#tempVariables.get(varName);
             if (tempValue === undefined) {
-                throw new EvaluationError('Temporary variable not initialized: ' + value);
+                throw new EvaluationError('Temporary variable not initialized: ' + varName);
+            }
+            if (pathParts.length > 0) {
+                return this.#resolvePath(tempValue, pathParts.join('.'));
             }
             return tempValue;
         } else if (value.startsWith('$.')) {
             return this.#evaluateExpression(value, ruleContextObject);
         } else if (value.startsWith("'") && value.endsWith("'")) {
-            // Handle string literals
             return value.slice(1, -1);
         } else if (!isNaN(Number(value))) {
-            // Handle number literals
             return Number(value);
         } else if (value === 'true' || value === 'false') {
-            // Handle boolean literals
             return value === 'true';
         } else {
             throw new EvaluationError('Invalid expression: ' + value + '. Must start with $, be a temporary variable, or a literal value.');
@@ -168,16 +197,16 @@ export default class Evaluator {
             let [left, operator, right] = parsedRule;
 
             if (operator === '=') {
-                const leftIsTemp = this.#isTempVariable(left);
-                const rightIsTemp = this.#isTempVariable(right);
+                const leftIsTemp = this.#isTempVariableExpr(left);
+                const rightIsTemp = this.#isTempVariableExpr(right);
 
                 let value;
                 if (leftIsTemp && !rightIsTemp) {
                     value = this.#resolveValue(right, ruleContextObject);
-                    this.#tempVariables.set(left, value);
+                    this.#tempVariables.set(left.split('.')[0], value);
                 } else if (!leftIsTemp && rightIsTemp) {
                     value = this.#resolveValue(left, ruleContextObject);
-                    this.#tempVariables.set(right, value);
+                    this.#tempVariables.set(right.split('.')[0], value);
                 } else {
                     throw new EvaluationError('Invalid assignment: one side must be a temporary variable');
                 }
@@ -234,15 +263,15 @@ export default class Evaluator {
             const [left, operator, right] = parsedRule;
 
             if (operator === '=') {
-                const leftIsTemp = this.#isTempVariable(left);
-                const rightIsTemp = this.#isTempVariable(right);
+                const leftIsTemp = this.#isTempVariableExpr(left);
+                const rightIsTemp = this.#isTempVariableExpr(right);
 
                 if (leftIsTemp === rightIsTemp) return false;
-                if (!leftIsTemp && !right.startsWith('$.') && !this.#isTempVariable(right)) return false;
-                if (!rightIsTemp && !left.startsWith('$.') && !this.#isTempVariable(left)) return false;
+                if (!leftIsTemp && !this.#isValidExpression(right)) return false;
+                if (!rightIsTemp && !this.#isValidExpression(left)) return false;
             } else {
-                if (!left.startsWith('$.') && !this.#isTempVariable(left) && !this.#isLiteral(left)) return false;
-                if (!right.startsWith('$.') && !this.#isTempVariable(right) && !this.#isLiteral(right)) return false;
+                if (!this.#isValidExpression(left)) return false;
+                if (!this.#isValidExpression(right)) return false;
             }
 
             return true;

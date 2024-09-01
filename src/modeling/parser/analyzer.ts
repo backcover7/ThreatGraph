@@ -41,6 +41,8 @@
 import Evaluator from './evaluator';
 import { Result } from '../DFD/result'
 import {expression} from "mathjs";
+import crypto from "crypto";
+import {UUID} from "node:crypto";
 
 export default class Analyzer {
     #MAX_DEPTH = 10;
@@ -150,6 +152,7 @@ export default class Analyzer {
 
     #registerVariables(expressions: any[], ruleContextObject: any): void {
         const variableExprs = expressions.filter(expression => expression.variable).map(expression => expression.variable);
+        const blockId: UUID = crypto.randomUUID();
         variableExprs.forEach((variableExpr: any) => {
             this.#evaluator?.registerTempVariable(variableExpr, ruleContextObject);
         });

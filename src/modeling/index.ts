@@ -46,6 +46,7 @@ async function main() {
         const element = canvasElems.find(elem => elem.metadata.shape === result.shape);
         console.log('[+] Found threat ' + threat.name + ' > ' + element.metadata.name);
     })
+    console.log('[!] ' + results.length + ' threats found!')
     console.log('Finished');
 }
 

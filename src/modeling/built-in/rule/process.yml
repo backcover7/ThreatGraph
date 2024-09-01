@@ -19,12 +19,12 @@ module:
       designs:
         - design: $.attributes.critical >= 2
         - design: $.attributes.isCsrfProtected == false
-#        - designs:
-#          - variable: $.attached.dataflow.attached.source = $SOURCE
-#          - design: $SOURCE.metadata.element == 'entity'
-#          - either:
-#            - design: $SOURCE.metadata.type == 'browser'
-#            - design: $SOURCE.metadata.type == 'user'
+        - designs:
+          - variable: $.attached.dataflow.attached.source = $SOURCE
+          - design: $SOURCE.metadata.element == 'entity'
+          - either:
+            - design: $SOURCE.metadata.type == 'browser'
+            - design: $SOURCE.metadata.type == 'user'
 
     - id: cea31642-4c4a-48e0-802a-fe8304cd9974
       threat: a1b2c3d4-e5f6-7890-1234-567890abcdef  # Sensitive Information Leakage
