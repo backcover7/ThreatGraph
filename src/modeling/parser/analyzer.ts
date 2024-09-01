@@ -78,12 +78,16 @@ export default class Analyzer {
                 rule: this.#rule.id,
                 threat: this.#relatedThreat.id,
             }
+            const blockId: UUID = crypto.randomUUID();
+            this.#evaluator?.enterBlock(blockId);
             if (this.#rule.designs && this.#evaluateDesigns(this.#rule.designs, ruleContext, 0) ||
                 this.#rule.either && this.#evaluateEitherDesign(this.#rule.either, ruleContext, 0) ||
-                this.#rule.design && this.#evaluateDesign(this.#rule.design, ruleContext)) {
+                this.#rule.design && this.#evaluateDesign(this.#rule.design, ruleContext, blockId)) {
                 results.push(result)
             }
+            this.#evaluator?.exitBlock();
         })
+        this.#evaluator?.clearTempVariables();
     }
 
     #depthCheck(depth: number): boolean {
@@ -102,15 +106,17 @@ export default class Analyzer {
      */
     #evaluateDesigns(expressions: any[], ruleContextObject: any, depth: number): boolean {
         if (this.#depthCheck(depth += 1)) {
-            this.#registerVariables(expressions, ruleContextObject);
+            const blockId: UUID = crypto.randomUUID();
+            this.#evaluator?.enterBlock(blockId);
+            this.#registerVariables(expressions, ruleContextObject, blockId);
 
             let flag = true;
             for (const expression of expressions) {
                 if (expression.designs) flag &&= this.#evaluateDesigns(expression.designs, ruleContextObject, depth);
                 else if (expression.either) flag &&= this.#evaluateEitherDesign(expression.either, ruleContextObject, depth);
-                else if (expression.design) flag &&= this.#evaluateDesign(expression.design, ruleContextObject);
+                else if (expression.design) flag &&= this.#evaluateDesign(expression.design, ruleContextObject, blockId);
             }
-            this.#evaluator?.clearTempVariables();
+            this.#evaluator?.exitBlock();
             return flag;
         }
         return false
@@ -124,15 +130,17 @@ export default class Analyzer {
      */
     #evaluateEitherDesign(expressions: any[], ruleContextObject: any, depth: number): boolean {
         if (this.#depthCheck(depth += 1)) {
-            this.#registerVariables(expressions, ruleContextObject);
+            const blockId: UUID = crypto.randomUUID();
+            this.#evaluator?.enterBlock(blockId);
+            this.#registerVariables(expressions, ruleContextObject, blockId);
 
             let flag = false;
             for (const expression of expressions) {
                 if (expression.designs) flag ||= this.#evaluateDesigns(expression.designs, ruleContextObject, depth);
                 else if (expression.either) flag ||= this.#evaluateEitherDesign(expression.either, ruleContextObject, depth);
-                else if (expression.design) flag ||= this.#evaluateDesign(expression.design, ruleContextObject);
+                else if (expression.design) flag ||= this.#evaluateDesign(expression.design, ruleContextObject, blockId);
             }
-            this.#evaluator?.clearTempVariables();
+            this.#evaluator?.exitBlock();
             return flag;
         }
         return false;
@@ -142,19 +150,19 @@ export default class Analyzer {
      * if (design) {...}
      * @param design
      * @param ruleContextObject
+     * @param parentBlockId
      */
-    #evaluateDesign(design: string, ruleContextObject: any): boolean {
-        if (!this.#evaluator?.validateRule(design)) {
+    #evaluateDesign(design: string, ruleContextObject: any, parentBlockId: UUID): boolean {
+        if (!this.#evaluator?.validateRule(design, parentBlockId)) {
             throw new Error('Invalid rule format: ' + design);
         }
-        return this.#evaluator.analyze(design, ruleContextObject);
+        return this.#evaluator.analyze(design, ruleContextObject, parentBlockId);
     }
 
-    #registerVariables(expressions: any[], ruleContextObject: any): void {
+    #registerVariables(expressions: any[], ruleContextObject: any, blockId: UUID): void {
         const variableExprs = expressions.filter(expression => expression.variable).map(expression => expression.variable);
-        const blockId: UUID = crypto.randomUUID();
         variableExprs.forEach((variableExpr: any) => {
-            this.#evaluator?.registerTempVariable(variableExpr, ruleContextObject);
+            this.#evaluator?.registerTempVariable(variableExpr, ruleContextObject, blockId);
         });
     }
 }
