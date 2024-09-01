@@ -112,11 +112,11 @@ export default class Canvas {
     #buildArrowAttached(arrowShape: any): DataflowAttached {
         let startId: string, endId: string;
         if (arrowShape.startArrowhead) {
-            startId = arrowShape.startBinding.elementId;
-            endId = arrowShape.endBinding.elementId;
-        } else if (arrowShape.endArrowhead) {
             startId = arrowShape.endBinding.elementId;
             endId = arrowShape.startBinding.elementId;
+        } else if (arrowShape.endArrowhead) {
+            startId = arrowShape.startBinding.elementId;
+            endId = arrowShape.endBinding.elementId;
         } else {
             throw new Error('Dataflow ' + arrowShape.id + ' is not connected correctly with nodes.');
         }
