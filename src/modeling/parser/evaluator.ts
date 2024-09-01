@@ -113,7 +113,7 @@ export default class Evaluator {
     }
 
     #isTempVariable(value: string): boolean {
-        return /^\$[A-Z]+\$$/.test(value);
+        return /^\$[A-Z]+$/.test(value);
     }
 
     #evaluateExpression(expression: string, knownObj: KnownObj): any {

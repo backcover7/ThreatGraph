@@ -18,15 +18,16 @@
  *      - design: b == 'sam'
  *      - design: b == 'john'
  *   - designs:
- *      - variable: c.friend = $FRIEND$
- *      - design: $FRIEND$ == 'user'
+ *      - variable: c.friend = $FRIEND
+ *      - design: $FRIEND == 'user'
  *      - either:
- *          - design: $FRIEND$.company == 'google'
- *          - design: $FRIEND$.company == 'microsoft'
+ *          - design: $FRIEND.company == 'google'
+ *          - design: $FRIEND.company == 'microsoft'
  *   - either:
- *      - variable: $TAG$ = d.tags
- *      - design: $TAG$.type == 'student'
- *      - design: $TAG$.gender == 'male'
+ *      - variable: $A = 'student'
+ *      - variable: $TAG = d.tags
+ *      - design: $TAG.type == $A
+ *      - design: $TAG.gender == 'male'
  *
  *
  * The above designs is like
@@ -39,6 +40,7 @@
 
 import Evaluator from './evaluator';
 import { Result } from '../DFD/result'
+import {expression} from "mathjs";
 
 export default class Analyzer {
     #MAX_DEPTH = 10;
@@ -98,8 +100,7 @@ export default class Analyzer {
      */
     #evaluateDesigns(expressions: any[], element: any, depth: number): boolean {
         if (this.#depthCheck(depth += 1)) {
-            const variableExpr = expressions.find(expression => expression.variable);
-            if (variableExpr) this.#registerVariable(variableExpr.variable, element);  // register temp variable
+            this.#registerVariables(expressions, element);
 
             let flag = true;
             for (const expression of expressions) {
@@ -121,9 +122,8 @@ export default class Analyzer {
      */
     #evaluateEitherDesign(expressions: any[], element: any, depth: number): boolean {
         if (this.#depthCheck(depth += 1)) {
-            const variableExpr = expressions.find(expression => expression.variable);
-            if (variableExpr) this.#registerVariable(variableExpr.variable, element);  // register temp variable
-            
+            this.#registerVariables(expressions, element);
+
             let flag = false;
             for (const expression of expressions) {
                 if (expression.designs) flag ||= this.#evaluateDesigns(expression.designs, element, depth);
@@ -148,10 +148,10 @@ export default class Analyzer {
         return this.#evaluator.analyze(design, element);
     }
 
-    #registerVariable(design: string, element: any): void {
-        if (!this.#evaluator?.validateRule(design)) {
-            throw new Error('Invalid rule format: ' + design);
-        }
-        this.#evaluator?.registerTempVariable(design, element);
+    #registerVariables(expressions: any[], element: any): void {
+        const variableExprs = expressions.filter(expression => expression.variable).map(expression => expression.variable);
+        variableExprs.forEach((variableExpr: any) => {
+            this.#evaluator?.registerTempVariable(variableExpr, element);
+        });
     }
 }
