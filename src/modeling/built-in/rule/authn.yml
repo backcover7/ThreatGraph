@@ -4,19 +4,19 @@ module:
       threat: 461c0696-9811-413b-98ff-f5073f7b88a3  # Weak credential policy
       element: process
       designs:
-        - design: metadata.type == 'password'
-        - design: additions.password.strong == false
+        - design: $.metadata.type == 'password'
+        - design: $.additions.password.strong == false
 
     - id: 3dd6d4bf-f281-47af-aa26-ce56e9a11957
       threat: e1f06cab-4818-4c49-ace3-00a46f9e0e91  # Never expired credential
       element: process
       designs:
-        - design: metadata.type == 'password'
-        - design: additions.password.expiration == false
+        - design: $.metadata.type == 'password'
+        - design: $.additions.password.expiration == false
 
     - id: 14b841f4-60ba-4682-99d3-6538fc06d5a2
       threat: 9e85bda8-1858-407c-8c2a-67a2496b3c9a  # Brute force attack
       element: process
       designs:
-        - design: metadata.type == 'password'
-        - design: additions.antiAbuse == false
+        - design: $.metadata.type == 'password'
+        - design: $.additions.antiAbuse == false

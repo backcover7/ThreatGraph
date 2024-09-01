@@ -117,15 +117,46 @@ export default class Evaluator {
     }
 
     #evaluateExpression(expression: string, ruleContextObject: RuleContext): any {
-        const context = { ...ruleContextObject };
+        const context: Record<string, any> = { $: ruleContextObject };
         for (const [key, value] of this.#tempVariables) {
             context[key] = value;
         }
         return this.#math.evaluate(expression, context);
     }
 
+    #isLiteral(value: string): boolean {
+        return (
+            (value.startsWith("'") && value.endsWith("'")) || // String literal
+            !isNaN(Number(value)) || // Number literal
+            value === 'true' || value === 'false' // Boolean literal
+        );
+    }
+
     #handleArrayOperation(array: any[], operation: (item: any) => boolean): boolean {
         return array.some(operation);
+    }
+
+    #resolveValue(value: string, ruleContextObject: RuleContext): any {
+        if (this.#isTempVariable(value)) {
+            const tempValue = this.#tempVariables.get(value);
+            if (tempValue === undefined) {
+                throw new EvaluationError('Temporary variable not initialized: ' + value);
+            }
+            return tempValue;
+        } else if (value.startsWith('$.')) {
+            return this.#evaluateExpression(value, ruleContextObject);
+        } else if (value.startsWith("'") && value.endsWith("'")) {
+            // Handle string literals
+            return value.slice(1, -1);
+        } else if (!isNaN(Number(value))) {
+            // Handle number literals
+            return Number(value);
+        } else if (value === 'true' || value === 'false') {
+            // Handle boolean literals
+            return value === 'true';
+        } else {
+            throw new EvaluationError('Invalid expression: ' + value + '. Must start with $, be a temporary variable, or a literal value.');
+        }
     }
 
     public registerTempVariable(rule: string, ruleContextObject: RuleContext): void {
@@ -142,14 +173,16 @@ export default class Evaluator {
 
                 let value;
                 if (leftIsTemp && !rightIsTemp) {
-                    value = this.#evaluateExpression(right, ruleContextObject);
+                    value = this.#resolveValue(right, ruleContextObject);
                     this.#tempVariables.set(left, value);
                 } else if (!leftIsTemp && rightIsTemp) {
-                    value = this.#evaluateExpression(left, ruleContextObject);
+                    value = this.#resolveValue(left, ruleContextObject);
                     this.#tempVariables.set(right, value);
                 } else {
                     throw new EvaluationError('Invalid assignment: one side must be a temporary variable');
                 }
+            } else {
+                throw new EvaluationError('Invalid operation for variable registration: ' + operator);
             }
         } catch (error) {
             if (error instanceof EvaluationError) {
@@ -167,27 +200,8 @@ export default class Evaluator {
 
             let [left, operator, right] = parsedRule;
 
-            // Handle comparison with temporary variables
-            let leftValue: any;
-            let rightValue: any;
-
-            if (this.#isTempVariable(left)) {
-                leftValue = this.#tempVariables.get(left);
-                if (leftValue === undefined) {
-                    throw new EvaluationError('Temporary variable not initialized');
-                }
-            } else {
-                leftValue = this.#evaluateExpression(left, ruleContextObject);
-            }
-
-            if (this.#isTempVariable(right)) {
-                rightValue = this.#tempVariables.get(right);
-                if (rightValue === undefined) {
-                    throw new EvaluationError('Temporary variable not initialized');
-                }
-            } else {
-                rightValue = this.#evaluateExpression(right, ruleContextObject);
-            }
+            let leftValue = this.#resolveValue(left, ruleContextObject);
+            let rightValue = this.#resolveValue(right, ruleContextObject);
 
             // Handle array operations
             if (Array.isArray(leftValue)) {
@@ -223,10 +237,12 @@ export default class Evaluator {
                 const leftIsTemp = this.#isTempVariable(left);
                 const rightIsTemp = this.#isTempVariable(right);
 
-                // It is not allowed that both sides are temp variable
-                if (leftIsTemp === rightIsTemp) {
-                    return false;
-                }
+                if (leftIsTemp === rightIsTemp) return false;
+                if (!leftIsTemp && !right.startsWith('$.') && !this.#isTempVariable(right)) return false;
+                if (!rightIsTemp && !left.startsWith('$.') && !this.#isTempVariable(left)) return false;
+            } else {
+                if (!left.startsWith('$.') && !this.#isTempVariable(left) && !this.#isLiteral(left)) return false;
+                if (!right.startsWith('$.') && !this.#isTempVariable(right) && !this.#isLiteral(right)) return false;
             }
 
             return true;
