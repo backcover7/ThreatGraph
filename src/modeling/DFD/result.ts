@@ -1,4 +1,4 @@
-import { UUID } from './base';
+import { UUID } from 'crypto';
 
 // Result Type
 export type Result = {

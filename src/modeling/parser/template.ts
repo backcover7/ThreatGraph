@@ -3,10 +3,8 @@ import addFormats from 'ajv-formats';
 import * as yaml from 'js-yaml';
 import fs from 'fs/promises';
 import path from 'path';
-import {
-    UUID, moduleSchema,
-    zoneBuilder, ruleBuilder, threatBuilder, processBuilder, datastoreBuilder, entityBuilder
-} from '../DFD/base';
+import { UUID } from 'crypto';
+import { moduleSchema, zoneBuilder, ruleBuilder, threatBuilder, processBuilder, datastoreBuilder, entityBuilder } from '../DFD/base';
 
 type templateType = {
     zone: any[],

@@ -1,4 +1,4 @@
-import { UUID, generateUUID } from './base';
+import { randomUUID, UUID } from 'crypto';
 import { Element, ElementType } from './element';
 import { Threat } from './threat';
 
@@ -46,7 +46,7 @@ function buildRule(
     element: Element | ElementType,
     options: BuildRuleOptions = {}
 ): Rule {
-    const { id = generateUUID() } = options;
+    const { id = randomUUID() } = options;
 
     const exclusiveProps: (keyof BuildRuleOptions)[] = ['designs', 'either', 'design'];
     const providedProps = exclusiveProps.filter(prop => options[prop] !== undefined);

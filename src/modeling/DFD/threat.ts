@@ -1,4 +1,4 @@
-import { UUID, generateUUID } from './base';
+import { randomUUID, UUID } from 'crypto';
 import { Entity } from './node/entity';
 import { DataStore } from './node/datastore';
 import { Process } from './process';
@@ -67,7 +67,7 @@ function buildThreat(
     references: string[],
     id?: UUID | undefined): Threat {
     return {
-        id: id !== undefined ? id : generateUUID(),
+        id: id !== undefined ? id : randomUUID(),
         name,
         severity,
         description,
