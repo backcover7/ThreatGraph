@@ -13,12 +13,15 @@ module:
       additions:
         password:
           strong:
+            name: Robust Password
             type: boolean
             description: Whether password is required to be strong enough
           expiration:
+            name: Expiration
             type: boolean
             description: Whether password has expiration
         anti-abuse:
+          name: Anti Abuse
           type: boolean
           description: Whether brute force attack is prevented
 
@@ -34,22 +37,23 @@ module:
         operation: w
       additions:
         grant-type:
+          name: Grant Type
           type: string
           description: "The grant type for the OAuth 2.0 flow."
           options:
-            - value: authorization-code
+            - value: Authorization Code
               description: "The Authorization Code grant type is used by confidential and public clients to exchange an authorization code for an access token."
-            - value: implicit-grant
+            - value: Implicit Grant
               description: "The Implicit grant type is used for mobile apps and web applications (i.e., applications that run in a web browser), where the client secret confidentiality is not guaranteed."
-            - value: client-credentials
+            - value: Client Credentials
               description: "The Client Credentials grant type is used by clients to obtain an access token outside of the context of a user. This is typically used for server-to-server authentication."
-            - value: password-grant
-              description: "The Password grant type is used by trusted applications to exchange the user's credentials for an access token. This grant type should only be used when there is a high degree of trust between the user and the client."
-            - value: pkce
+            - value: Resource Owner Password Credentials
+              description: "The Resource Owner Password Credentials grant type is used by trusted applications to exchange the user's credentials for an access token. This grant type should only be used when there is a high degree of trust between the user and the client."
+            - value: PKCE
               description: "The Proof Key for Code Exchange (PKCE) is an extension to the Authorization Code flow to prevent several attacks and to be able to securely perform the OAuth exchange from public clients."
-            - value: device-code
+            - value: Device Code
               description: "The Device Code grant type is used for devices that lack a browser or have limited input capabilities."
-            - value: refresh-token
+            - value: Refresh Token
               description: "The Refresh Token grant type is used to obtain a new access token without requiring the user to re-authenticate."
 
     - metadata:

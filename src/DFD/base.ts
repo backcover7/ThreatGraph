@@ -8,17 +8,17 @@ import { ruleSchema, ruleBuilder } from './rule';
 export const typeOrObjectPattern = '^[a-z0-9]+(-[a-z0-9]+)*$'
 
 /**
- * Define a recursive schema for additions property in element template
+ * JSON Schema for a recursive YAML structure
  *
  * This schema defines a recursive object structure where each property can be either:
- * 1. A leaf node with type, description, and optional options
+ * 1. A leaf node with name, type, description, and optional options
  * 2. Another nested object following the same structure
  *
  * Key features:
  * - Root is an object with any number of properties (additionalProperties)
  * - Each property is either a leaf node or another nested object
  * - Leaf nodes:
- *   - Required: type (string, boolean, or number) and description
+ *   - Required: name, type (string, boolean, or number), and description
  *   - Optional: options (only allowed and required for string type)
  * - Options:
  *   - An array of objects, each with a value and description
@@ -29,6 +29,7 @@ export const typeOrObjectPattern = '^[a-z0-9]+(-[a-z0-9]+)*$'
  * root_property:
  *   nested_object:
  *     string_prop:
+ *       name: String Property
  *       type: string
  *       description: A string property
  *       options:
@@ -37,9 +38,11 @@ export const typeOrObjectPattern = '^[a-z0-9]+(-[a-z0-9]+)*$'
  *         - value: option2
  *           description: Second option
  *     boolean_prop:
+ *       name: Boolean Property
  *       type: boolean
  *       description: A boolean property
  *   number_prop:
+ *     name: Number Property
  *     type: number
  *     description: A number property
  */
@@ -49,8 +52,9 @@ const recursiveAdditionsSchema = {
         oneOf: [
             {
                 type: 'object',
-                required: [ 'type', 'description' ],
+                required: [ 'name', 'type', 'description' ],
                 properties: {
+                    name: { type: 'string' },
                     type: { type: 'string', enum: [ 'string', 'boolean', 'number' ] },
                     description: { type: 'string' },
                     options: { $ref: '#/definitions/additionsOptionsSchema' }
