@@ -1,0 +1,31 @@
+module:
+  threat:
+    - id: f8e7d9c1-b6a3-4f2e-9d5c-12e3a4b5c6d7
+      name: Improper Access Control
+      severity: high
+      description: Improper access control occurs when an application fails to properly restrict access to resources or functionalities based on user privileges. This vulnerability allows unauthorized users to view, modify, or perform actions they should not have permission for. It can lead to data breaches, unauthorized data manipulation, and compromise of system integrity.
+      mitigation: Implement robust authentication mechanisms. Use role-based access control (RBAC). Apply the principle of least privilege. Consistently enforce access controls on all pages and API endpoints. Use secure session management. Implement proper authorization checks for all sensitive operations. Regularly audit and test access control mechanisms. Use security frameworks that provide built-in access control features.
+      compliance:
+        cwe:
+          - 'CWE-284: Improper Access Control'
+          - 'CWE-285: Improper Authorization'
+        owasp:
+          - 'A01:2021 - Broken Access Control'
+        stride:
+          - Elevation of Privilege
+          - Information Disclosure
+          - Tampering
+
+    - id: f6a9c3d2-7b1e-4e8f-9d5a-2c3b4e5f6a7b
+      name: Least Privilege Violation
+      severity: medium
+      description: The system grants more privileges to users than necessary for their roles.
+      mitigation: Implement the principle of least privilege by granting only the minimum required permissions to users.
+      compliance:
+        cwe:
+          - 'CWE-250: Execution with Unnecessary Privileges'
+        owasp:
+          - 'A01:2021 Broken Access Control'
+        stride:
+          - Elevation of Privilege
+          - Information Disclosure

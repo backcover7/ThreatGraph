@@ -1,6 +1,7 @@
 module:
   datastore:
     - metadata:
+        id: d4562da9-1e6d-4a3f-9646-5de8777963d8
         name: filesystem
         description: Local disk file system
         icon: data:image/svg+xml;base64,YQ==
@@ -8,6 +9,7 @@ module:
       object: filesystem
 
     - metadata:
+        id: 7347c01c-542c-407f-9e7e-f7f97185f1c1
         name: FTP server
         description: FTP server
         icon: data:image/svg+xml;base64,YQ==
@@ -15,6 +17,7 @@ module:
       object: ftp
 
     - metadata:
+        id: ea0905cc-41f4-49da-8ac1-4eeb352113fb
         name: LDAP
         description: LDAP
         icon: data:image/svg+xml;base64,YQ==

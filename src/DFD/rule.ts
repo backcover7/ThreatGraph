@@ -14,6 +14,8 @@ export type Rule = {
     id: UUID;
     threat: Threat;
     element: ElementType | Element;
+    description?: string;
+    references: string[];
     designs?: DesignItem[];
     either?: DesignItem[];
     design?: string;
@@ -27,6 +29,8 @@ export const ruleSchema = {
         id: { type: 'string', format: 'uuid' },
         threat: { type: 'string', format: 'uuid' },
         element: { type: 'string', enum: [ 'zone', 'entity', 'datastore', 'process', 'dataflow' ] },
+        description: { type: 'string' },
+        references: { type: 'array', items: { type: 'string' } },
         designs: { type: 'array', items: { type: 'object' } },
         either: { type: 'array', items: { type: 'object' } },
         design: { type: 'string' },
@@ -39,11 +43,13 @@ type BuildRuleOptions = {
     either?: DesignItem[];
     design?: string;
     id?: UUID;
+    description?: string;
 };
 
 function buildRule(
     threat: Threat,
     element: Element | ElementType,
+    references: string[],
     options: BuildRuleOptions = {}
 ): Rule {
     const { id = randomUUID() } = options;
@@ -58,8 +64,11 @@ function buildRule(
     const rule: Rule = {
         id,
         threat,
-        element
+        element,
+        references
     };
+
+    if (options.description !== undefined) rule.description = options.description;
 
     if (options.designs !== undefined) rule.designs = options.designs;
     else if (options.either !== undefined) rule.either = options.either;
@@ -76,11 +85,13 @@ export function ruleBuilder(item: Partial<Rule>): Rule {
     return buildRule(
         item.threat,
         item.element,
+        item.references || [],
         {
             designs: item.designs,
             either: item.either,
             design: item.design,
-            id: item.id
+            id: item.id,
+            description: item.description
         }
     );
 }

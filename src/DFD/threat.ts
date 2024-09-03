@@ -11,7 +11,6 @@ export type Threat = {
     severity: 'informative' | 'low' | 'medium' | 'high' | 'critical';
     description: string;
     mitigation: string;
-    references?: string[];
     compliance: {
         cwe: number[];
         owasp: string[];
@@ -35,7 +34,6 @@ export const threatSchema = {
         severity: { type: 'string', enum: ['informative', 'low', 'medium', 'high', 'critical'] },
         description: { type: 'string' },
         mitigation: { type: 'string' },
-        references: { type: 'array', items: { type: 'string' } },
         compliance: {
             type: 'object',
             additionalProperties: false,
@@ -64,7 +62,6 @@ function buildThreat(
     stride: ('Spoofing' | 'Tampering' | 'Repudiation' | 'Information disclosure' | 'Denial of service' | 'Elevation of privilege')[],
     cwe: number[],
     owasp: string[],
-    references: string[],
     id?: UUID | undefined): Threat {
     return {
         id: id !== undefined ? id : randomUUID(),
@@ -72,7 +69,6 @@ function buildThreat(
         severity,
         description,
         mitigation,
-        references,
         compliance: {
             cwe,
             owasp,
@@ -90,7 +86,6 @@ export function threatBuilder(item: any) {
         item.compliance.stride,
         item.compliance.cwe,
         item.compliance.owasp,
-        item.references || [],
         item.id
     );
 }

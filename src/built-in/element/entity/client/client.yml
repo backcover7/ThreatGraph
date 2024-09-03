@@ -1,6 +1,7 @@
 module:
   entity:
     - metadata:
+        id: eb6a5b07-a540-4566-a179-eb97d3d1f677
         name: WebSocket Client
         description: WebSocket client
         icon: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMzIuNjUiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMjU2IDE5MyI+PHBhdGggZmlsbD0iIzIzMWYyMCIgZD0iTTE5Mi40NCAxNDQuNjQ1aDMxLjc4VjY4LjMzOWwtMzUuODA1LTM1LjgwNGwtMjIuNDcyIDIyLjQ3MmwyNi40OTcgMjYuNDk3em0zMS44NjQgMTUuOTMxSDExMy40NTJMODYuOTU0IDEzNC4wOGwxMS4yMzctMTEuMjM2bDIxLjg4NSAyMS44ODVoNDUuMDI4bC00NC4zNTctNDQuNDQxbDExLjMyLTExLjMybDQ0LjM1NyA0NC4zNTh2LTQ1LjAzbC0yMS44MDEtMjEuODAxbDExLjE1Mi0xMS4xNTNMMTEwLjY4NSAwSDBsMzEuNjk2IDMxLjY5NnYuMDg0aDY1Ljc0bDIzLjIyNyAyMy4yMjdsLTMzLjk2IDMzLjk2TDYzLjQ3NiA2NS43NFY0Ny43MTJoLTMxLjc4djMxLjE5M2w1NS4wMDcgNTUuMDA3TDY0LjMxNCAxNTYuM2wzNS44MDUgMzUuODA1SDI1NnoiLz48L3N2Zz4=
@@ -9,6 +10,7 @@ module:
       object: websocket-client
 
     - metadata:
+        id: 9d00b1d8-54ab-4089-947f-36ab538fc63e
         name: SSH Client
         description: SSH client
         icon: data:image/svg+xml;base64,YQ==
@@ -17,6 +19,7 @@ module:
       object: ssh-client
 
     - metadata:
+        id: 9fa57b5b-7fda-4d28-ba00-9ba698773b87
         name: MySQL Client
         description: MySQL client
         icon: data:image/svg+xml;base64,YQ==
@@ -25,6 +28,7 @@ module:
       object: mysql-client
 
     - metadata:
+        id: f70eed8a-75f7-40cc-9355-f338bb4648cc
         name: MariaDB Client
         description: MariaDB client
         icon: data:image/svg+xml;base64,YQ==
@@ -33,6 +37,7 @@ module:
       object: mariadb-client
 
     - metadata:
+        id: 3c23d259-33b3-4eb1-a8a7-fc17a76ee2c5
         name: Postgresql Client
         description: Postgresql client
         icon: data:image/svg+xml;base64,YQ==

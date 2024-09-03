@@ -1,6 +1,7 @@
 module:
   process:
     - metadata:
+        id: a255208c-3e5c-4bcf-8dc5-49b7d17bd927
         name: Password Authn
         description: Authentication uses password as credential
         icon: data:image/svg+xml;base64,YQ==
@@ -17,11 +18,12 @@ module:
           expiration:
             type: boolean
             description: Whether password has expiration
-        antiAbuse:
+        anti-abuse:
           type: boolean
           description: Whether brute force attack is prevented
 
     - metadata:
+        id: 28f0d2c8-d4a0-4452-81ac-dc142c8ef239
         name: OAuth2
         description: OAuth2 Authentication
         icon: data:image/svg+xml;base64,YQ==
@@ -30,8 +32,32 @@ module:
       attributes:
         critical: 3
         operation: w
+      additions:
+        grant-type:
+          authorization-code:
+            type: boolean
+            description: The Authorization Code grant type is used by confidential and public clients to exchange an authorization code for an access token.
+          implicit-grant:
+            type: boolean
+            description: The Implicit grant type is used for mobile apps and web applications (i.e., applications that run in a web browser), where the client secret confidentiality is not guaranteed.
+          client-credentials:
+            type: boolean
+            description: The Client Credentials grant type is used by clients to obtain an access token outside of the context of a user. This is typically used for server-to-server authentication.
+          password-grant:
+            type: boolean
+            description: The Password grant type is used by trusted applications to exchange the user's credentials for an access token. This grant type should only be used when there is a high degree of trust between the user and the client.
+          pkce:
+            type: boolean
+            description: The Proof Key for Code Exchange (PKCE) is an extension to the Authorization Code flow to prevent several attacks and to be able to securely perform the OAuth exchange from public clients.
+          device-code:
+            type: boolean
+            description: The Device Code grant type is used for devices that have limited input capabilities or lack a suitable browser. It enables OAuth clients on such devices to obtain user authorization.
+          refresh-token:
+            type: boolean
+            description: The Refresh Token grant type is used to refresh an access token that might have expired. This allows clients to obtain a new access token without requiring the user to re-authorize the application.
 
     - metadata:
+        id: a2570ac5-05fd-4ddb-a806-f797e05cab28
         name: SSO
         description: SSO Authentication
         icon: data:image/svg+xml;base64,YQ==

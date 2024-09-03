@@ -495,22 +495,6 @@ module:
           - Elevation of Privilege
           - Denial of Service
 
-    - id: f8e7d9c1-b6a3-4f2e-9d5c-12e3a4b5c6d7
-      name: Improper Access Control
-      severity: high
-      description: Improper access control occurs when an application fails to properly restrict access to resources or functionalities based on user privileges. This vulnerability allows unauthorized users to view, modify, or perform actions they should not have permission for. It can lead to data breaches, unauthorized data manipulation, and compromise of system integrity.
-      mitigation: Implement robust authentication mechanisms. Use role-based access control (RBAC). Apply the principle of least privilege. Consistently enforce access controls on all pages and API endpoints. Use secure session management. Implement proper authorization checks for all sensitive operations. Regularly audit and test access control mechanisms. Use security frameworks that provide built-in access control features.
-      compliance:
-        cwe:
-          - 'CWE-284: Improper Access Control'
-          - 'CWE-285: Improper Authorization'
-        owasp:
-          - 'A01:2021 - Broken Access Control'
-        stride:
-          - Elevation of Privilege
-          - Information Disclosure
-          - Tampering
-
     - id: 7c088fec-df24-4dd0-ab0a-e3674dc9baeb
       name: Abusing LOCAL INFILE to Arbitrarily Read Client Resources
       severity: high
@@ -544,3 +528,45 @@ module:
           - Information Disclosure
           - Spoofing
           - Elevation of Privilege
+
+    - id: b7c8d9e0-1f2a-3b4c-5d6e-7f8a9b0c1d2e
+      name: Weak Secret Generation
+      severity: high
+      description: The system uses easily guessable secrets, tokens, or random values, compromising security.
+      mitigation: Implement strong cryptographic methods to generate secrets, tokens, and random values. Use sufficient entropy and avoid predictable patterns.
+      compliance:
+        cwe:
+          - 'CWE-330: Use of Insufficiently Random Values'
+        owasp:
+          - 'A02:2021 Cryptographic Failures'
+        stride:
+          - Spoofing
+          - Information Disclosure
+          - Tampering
+
+    - id: a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d
+      name: Clickjacking
+      severity: medium
+      description: The application is vulnerable to clickjacking attacks, allowing malicious websites to trick users into unintended actions.
+      mitigation: Implement proper X-Frame-Options headers or Content Security Policy (CSP) frame-ancestors directive to prevent the page from being embedded in iframes.
+      compliance:
+        cwe:
+          - 'CWE-1021: Improper Restriction of Rendered UI Layers or Frames'
+        owasp:
+          - 'A05:2021 Security Misconfiguration'
+        stride:
+          - Spoofing
+          - Tampering
+
+    - id: e4f5a6b7-c8d9-4e3f-2a1b-0c1d2e3f4a5b
+      name: Denial of Service
+      severity: high
+      description: The system is vulnerable to Denial of Service (DoS) attacks, potentially causing service disruption for legitimate users.
+      mitigation: Implement rate limiting, traffic filtering, resource allocation limits, and use content delivery networks (CDNs) to mitigate DoS attacks.
+      compliance:
+        cwe:
+          - 'CWE-400: Uncontrolled Resource Consumption'
+        owasp:
+          - 'A05:2021 Security Misconfiguration'
+        stride:
+          - Denial of Service

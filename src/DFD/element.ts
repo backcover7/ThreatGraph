@@ -1,4 +1,5 @@
 import { typeOrObjectPattern } from './base';
+import { UUID, randomUUID } from "crypto";
 
 export const ModelElements = {
     ZONE: 'zone',
@@ -11,6 +12,7 @@ export const ModelElements = {
 export type ElementType = 'zone' | 'entity' | 'datastore' | 'process' | 'dataflow';
 
 export type Element = {
+    id: UUID;
     name: string;   // user customized name
     description?: string;
     icon?: string;
@@ -22,21 +24,13 @@ export type Element = {
 export const elementSchema = {
     type: 'object',
     additionalProperties: false,
-    required: [ 'name', 'type' ],
+    required: [ 'id', 'name', 'type' ],
     properties: {
-        name: {
-            type: 'string',
-            maxLength: 20
-        },
+        id: { type: 'string', format: 'uuid' },
+        name: { type: 'string', maxLength: 20 },
         description: { type: 'string' },
-        icon: {
-            type: 'string',
-            pattern: '^data:image/svg(\\+xml)?;base64,(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$'
-        },
-        type: {
-            type: 'string',
-            pattern: typeOrObjectPattern
-        },
+        icon: { type: 'string', pattern: '^data:image/svg(\\+xml)?;base64,(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$' },
+        type: { type: 'string',  pattern: typeOrObjectPattern },
     },
 };
 
@@ -45,9 +39,11 @@ export function buildElement<T extends ElementType>(
     name: string,
     element: T,
     type: string,
+    id?: UUID | undefined,
     description?: string,
     icon?: string): Element & { element: T } {
     return {
+        id: id !== undefined ? id : randomUUID(),
         name,
         description,
         icon,

@@ -1,6 +1,7 @@
 #module:
 #  entity:
 #    - metadata:
+#        id:
 #        name:
 #        description: GCP
 #        icon:

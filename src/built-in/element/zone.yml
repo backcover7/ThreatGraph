@@ -1,6 +1,7 @@
 module:
   zone:
     - metadata:
+        id: 933566ae-d1f1-4f7f-8d3f-47630c778490
         # Any node not in a zone will be considered to be in a totally untrusted zone.
         name: Untrusted zone
         description: Totally untrusted zone
@@ -9,6 +10,7 @@ module:
       trust: 0
 
     - metadata:
+        id: 658812a3-592d-4e71-91f1-e4cdef53e968
         name: Internet Zone
         description: Internet zone
         type: internet
@@ -16,6 +18,7 @@ module:
       trust: 1
 
     - metadata:
+        id: 2a56fb41-5105-47cd-944e-935be17e77b7
         name: Public Zone
         description: Public-facing zone
         type: public
@@ -23,6 +26,7 @@ module:
       trust: 1
 
     - metadata:
+        id: 5830de1e-59ce-46a2-8157-efdfd6624ba4
         name: corporate Zone
         description: Entire corporate zone
         type: corporate
@@ -30,6 +34,7 @@ module:
       trust: 2
 
     - metadata:
+        id: f83f645b-f0f9-4c77-8127-bfab7f9316fb
         name: office Zone
         description: Corporate Office zone
         type: corporate
@@ -37,6 +42,7 @@ module:
       trust: 2
 
     - metadata:
+        id: 7d64ad65-7f4a-4bdc-9624-777633c885b1
         name: Cloud Zone
         description: Cloud service zone
         type: cloud
@@ -44,6 +50,7 @@ module:
       trust: 2
 
     - metadata:
+        id: f53e4481-51af-43a8-b095-2810f89a1bb6
         name: Partner Zone
         description: Partner zone
         type: partner
@@ -51,6 +58,7 @@ module:
       trust: 2
 
     - metadata:
+        id: f37c140c-a265-4f96-ada3-8fc47b0b5d42
         name: Local Zone
         description: Private zone
         type: private
@@ -58,6 +66,7 @@ module:
       trust: 4
 
     - metadata:
+        id: 518003b6-1217-4637-b5b0-f326941fd9ed
         name: Private Zone
         description: Private zone
         type: private
@@ -65,6 +74,7 @@ module:
       trust: 3
 
     - metadata:
+        id: ac848bf5-b1e7-419a-aa68-a00f9c377179
         name: Trusted Zone
         description: Totally trusted zone
         type: trusted

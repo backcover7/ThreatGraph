@@ -1,0 +1,58 @@
+# [rfc6819](https://datatracker.ietf.org/doc/html/rfc6819)
+# OAuth 2.0 Threat Model and Security Considerations
+
+module:
+  rule:
+    - id: ab906142-3355-45ad-9157-75ae380880af
+      threat: f6a9c3d2-7b1e-4e8f-9d5a-2c3b4e5f6a7b  # Least Privilege Violation
+      element: process
+      design: $.metadata.type == 'oauth2'
+
+    - id: 6068b38d-c9a9-4051-b833-91cc31099e09
+      threat: 9d8c7b6a-5f4e-3d2c-1b0a-9e8d7f6a5b4c  # Open Redirection
+      element: process
+      designs:
+        - design: $.metadata.type == 'oauth2'
+        - either:
+          - design: $.additions.grant-type.authorization-code == true
+          - design: $.additions.grant-type.implicit-grant == true
+
+    - id: df7f76d2-ed3c-4265-b2aa-0292df76e200
+      threat: b7c8d9e0-1f2a-3b4c-5d6e-7f8a9b0c1d2e  # Weak Secret Generation
+      element: process
+      designs:
+        - design: $.metadata.type == 'oauth2'
+        - either:
+          - variable: $GRANT = $.additions.grant-type
+          - design: $GRANT.authorization-code == true
+          - design: $GRANT.client-credentials == true
+          - design: $GRANT.password-grant == true
+          - design: $GRANT.refresh-token == true
+
+    - id: d6033d61-5c57-45db-b958-9a8a51696b2d
+      threat: a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d  # Clickjacking
+      element: process
+      references:
+        - https://datatracker.ietf.org/doc/html/rfc6819#autoid-52
+      designs:
+        - design: $.metadata.type == 'oauth2'
+        - design: $.additions.grant-type.authorization-code == true
+
+    - id: 935861da-f1d2-4b70-b925-67479ac1419d
+      threat: e4f5a6b7-c8d9-4e3f-2a1b-0c1d2e3f4a5b  # Denial of Service
+      element: process
+      references:
+        - https://datatracker.ietf.org/doc/html/rfc6819#autoid-54
+        - https://datatracker.ietf.org/doc/html/rfc6819#autoid-55
+      designs:
+        - design: $.metadata.type == 'oauth2'
+        - design: $.additions.grant-type.authorization-code == true
+
+    - id: d50ce073-0a83-4704-8d96-4139ac2dc12d
+      threat: 61966755-7c78-4ce4-8a89-2690520e474c  # Cross-Site Request Forgery (CSRF)
+      element: process
+      designs:
+        - design: $.metadata.type == 'oauth2'
+        - either:
+          - design: $.additions.grant-type.authorization-code == true
+          - design: $.additions.grant-type.implicit-grant == true

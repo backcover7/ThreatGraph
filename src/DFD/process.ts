@@ -1,5 +1,6 @@
 import { Element, elementSchema, buildElement } from './element';
 import { DataFlow } from './dataflow';
+import {UUID} from "crypto";
 
 // Process Type
 export type Process = {
@@ -72,12 +73,13 @@ function buildProcess(
     sensitive: 0 | 1 | 2 | 3,
     content: 'normal' | 'secret' | 'PII' | 'credit card' | 'code' | 'customer data' | any,
     format: 'text' | 'xml' | 'json' | 'binary' | any,
+    id?: UUID | undefined,
     description?: string,
     icon?: string,
     additions?: Record<string, unknown>): Process {
     return {
         metadata: {
-            ...buildElement(name, 'process', type, description, icon),
+            ...buildElement(name, 'process', type, id, description, icon),
         },
         tags,
         attributes: {
@@ -106,6 +108,7 @@ export function processBuilder(item: any) {
         item.data?.sensitive,
         item.data?.content,
         item.data?.format,
+        item.metadata.id,
         item.metadata.description,
         item.metadata.icon,
         item.additions

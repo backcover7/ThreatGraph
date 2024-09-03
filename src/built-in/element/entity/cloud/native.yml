@@ -1,6 +1,7 @@
 module:
   entity:
     - metadata:
+        id: 256e2a11-afaa-48fe-93f6-2162c0c3b667
         name: Docker client
         description: Docker client
         icon: data:image/svg+xml;base64,YQ==
@@ -9,6 +10,7 @@ module:
       object: docker-client
 
     - metadata:
+        id: 7238f475-7592-45a1-9ce7-dfa1f8cca0b6
         name: Docker host
         description: Docker host
         icon: data:image/svg+xml;base64,YQ==
@@ -17,6 +19,7 @@ module:
       object: docker-host
 
     - metadata:
+        id: a372d672-47d6-44b5-bbed-bad9cf4dacf1
         name: Docker registry
         description: Docker registry
         icon: data:image/svg+xml;base64,YQ==
@@ -25,6 +28,7 @@ module:
       object: docker-registry
 
     - metadata:
+        id: 65bf5cbb-fc31-4df0-ae48-8a2f37352849
         name: Docker container
         description: Docker container
         icon: data:image/svg+xml;base64,YQ==
@@ -33,6 +37,7 @@ module:
       object: docker-container
 
     - metadata:
+        id: 28eb3641-4967-4e38-b0fd-10af98318216
         name: Docker image
         description: Docker image
         icon: data:image/svg+xml;base64,YQ==
@@ -41,6 +46,7 @@ module:
       object: docker-image
 
     - metadata:
+        id: c365f6a3-cc7a-405a-a34e-363930dca7f2
         name: k8s cluster
         description: Kubernetes cluster
         icon: data:image/svg+xml;base64,YQ==
@@ -49,6 +55,7 @@ module:
       object: k8s-cluster
 
     - metadata:
+        id: 6a9ee0ad-13d2-4d05-8662-a06944c57ad1
         name: k8s Control plane
         description: Kubernetes cluster
         icon: data:image/svg+xml;base64,YQ==
@@ -57,6 +64,7 @@ module:
       object: k8s-control-plane
 
     - metadata:
+        id: d1521d34-6975-4394-8f4c-cf6d21a5f0ef
         name: k8s pod
         description: Kubernetes pod
         icon: data:image/svg+xml;base64,YQ==
@@ -65,6 +73,7 @@ module:
       object: k8s-pod
 
     - metadata:
+        id: 3f1b5c24-597a-4586-a566-6791faa9621f
         name: k8s worker node
         description: Kubernetes worker node
         icon: data:image/svg+xml;base64,YQ==

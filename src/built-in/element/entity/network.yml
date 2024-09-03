@@ -1,6 +1,7 @@
 module:
   entity:
     - metadata:
+        id: 085c3ec2-6df2-4cee-989e-e10d0163119a
         name: OpenVPN
         description: OpenVPN
         icon: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgNDggNDgiPjxwYXRoIGZpbGw9IiNmZjkxMDAiIGQ9Ik0yNCA0QzEyLjk1MyA0IDQgMTIuOTUzIDQgMjRjMCA3LjM5NSA0LjAyMyAxMy44MzIgOS45ODggMTcuMjk3bDQuNTA0LTcuNzg1QzE1LjIxMSAzMS42MDkgMTMgMjguMDY2IDEzIDI0YzAtNi4wNzQgNC45MjYtMTEgMTEtMTFzMTEgNC45MjYgMTEgMTFjMCA0LjA2Ni0yLjIxIDcuNjEtNS40OTIgOS41MTJsNC41MDQgNy43ODVDMzkuOTc3IDM3LjgzMiA0NCAzMS4zOTUgNDQgMjRjMC0xMS4wNDctOC45NTMtMjAtMjAtMjAiLz48cGF0aCBmaWxsPSIjMWEyMzdlIiBkPSJNMzAgMjRjMC0zLjMxMi0yLjY4Ny02LTYtNmMtMy4zMTIgMC02IDIuNjg4LTYgNmE2IDYgMCAwIDAgMy44NTIgNS41OThsLTIuNTU5IDEzLjgyQTIwIDIwIDAgMCAwIDI0IDQ0YzEuNjI1IDAgMy4xOTUtLjIxNSA0LjcwNy0uNTc4bC0yLjU1OS0xMy44MjRBNiA2IDAgMCAwIDMwIDI0Ii8+PC9zdmc+
@@ -9,6 +10,7 @@ module:
       object: openvpn
 
     - metadata:
+        id: ac773912-d60a-4cf5-b612-689dc8fc00d7
         name: Load Balancer
         description: Load Balancer
         icon: data:image/svg+xml;base64,YQ==
@@ -17,6 +19,7 @@ module:
       object: load-balancer
 
     - metadata:
+        id: 8b37a01a-ab79-4c4b-bb74-4032cddabbb6
         name: DNS
         description: DNS
         icon: data:image/svg+xml;base64,YQ==
@@ -25,6 +28,7 @@ module:
       object: dns
 
     - metadata:
+        id: eef14ae4-03ee-421d-82d6-40f71d2f143c
         name: Firewall
         description: Firewall
         icon: data:image/svg+xml;base64,YQ==
@@ -33,6 +37,7 @@ module:
       object: firewall
 
     - metadata:
+        id: 328bb4c5-8a64-468d-a57f-c4ccdf25490b
         name: WAF
         description: WAF
         icon: data:image/svg+xml;base64,YQ==
@@ -41,6 +46,7 @@ module:
       object: waf
 
     - metadata:
+        id: d07a3dfa-4f28-4714-ab78-e9ae3cf66a77
         name: IPS
         description: IPS
         icon: data:image/svg+xml;base64,YQ==
@@ -49,6 +55,7 @@ module:
       object: ips
 
     - metadata:
+        id: 0159a3ee-1d76-42bb-b215-0df40775e89b
         name: IDS
         description: IDS
         icon: data:image/svg+xml;base64,YQ==
@@ -57,6 +64,7 @@ module:
       object: ids
 
     - metadata:
+        id: da923176-cd84-436e-bd56-ad32186c5e4f
         name: Cache
         description: Cache
         icon: data:image/svg+xml;base64,YQ==
