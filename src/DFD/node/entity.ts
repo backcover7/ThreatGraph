@@ -1,8 +1,9 @@
 // Entity Type
 import { typeOrObjectPattern } from '../base';
 import { Element, elementSchema, buildElement } from '../element';
+import { Additions } from "../additions";
 import { Node } from './node';
-import {UUID} from "crypto";
+import { UUID } from 'crypto';
 
 export type Entity = Node & {
     metadata: {
@@ -21,7 +22,7 @@ export const entitySchema = {
             type: 'string',
             pattern: typeOrObjectPattern
         },
-        additions: { $ref: '#/definitions/recursiveAdditions' }
+        additions: { $ref: '#/definitions/additionsSchema' }
     }
 };
 
@@ -34,7 +35,7 @@ function buildEntity(
     id?: UUID | undefined,
     description?: string,
     icon?: string,
-    additions?: Record<string, unknown>): Entity {
+    additions?: Additions): Entity {
     return {
         metadata: {
             ...buildElement(name, 'entity', type, id, description, icon),

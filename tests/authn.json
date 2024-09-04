@@ -273,11 +273,9 @@
           "format": "xml"
         },
         "additions": {
-          "password": {
-            "strong": false,
-            "expiration": false
-          },
-          "antiAbuse": false
+          "strong_password": false,
+          "expired_password": false,
+          "anti_abuse": false
         }
       },
       "id": "SPE1xaFFIHhXb1KfU1HfJ",

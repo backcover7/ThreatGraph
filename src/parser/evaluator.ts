@@ -131,7 +131,7 @@ export default class Evaluator {
         // Check if it's a property path expression starting with $.
         if (value.startsWith('$.')) {
             const parts = value.split('.');
-            return parts.length > 1 && parts.slice(1).every(part => /^[a-zA-Z0-9_]+$/.test(part));
+            return parts.length > 1 && parts.slice(1).every(part => /^[a-z][a-zA-Z0-9_]+$/.test(part));
         }
         // Check if it's a temporary variable with optional property path
         if (this.#isTempVariableExpr(value, blockId)) {

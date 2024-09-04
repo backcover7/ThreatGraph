@@ -15,11 +15,8 @@ import Analyzer from './parser/analyzer';
 import Canvas from './draw/canvas';
 import fs from 'fs/promises';
 import { Result } from './DFD/result';
-import { getRawSchema } from "./DFD/base";
 
 async function main() {
-    console.log(getRawSchema());
-
     const loader = new Template();
     const templates = await loader.loadBuiltinTemplates();
     const allThreats = templates.threat;

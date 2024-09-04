@@ -1,7 +1,8 @@
 import { Element, elementSchema, buildElement } from './element';
 import { Entity } from './node/entity';
 import { DataStore } from './node/datastore';
-import {UUID} from "crypto";
+import { Additions } from "./additions";
+import { UUID } from 'crypto';
 
 // Zone Type
 export type Zone = {
@@ -10,7 +11,7 @@ export type Zone = {
     } & Omit<Element, 'icon'>;
     tags?: string[];
     trust: 0 | 1 | 2 | 3 | 4 | 5;  // 0 is totally untrusted, 5 is totally trusted. If it is over 5 then this threat model is too huge.
-    additions?: Record<string, unknown>;
+    additions?: Additions;
 }
 
 export type ZoneAttached = {
@@ -29,7 +30,7 @@ export const zoneSchema = {
         metadata: elementSchema,
         tags: { type: 'array', items: { type: 'string' } },
         trust: { type: 'number', enum: [0, 1, 2, 3, 4, 5] },
-        additions: { $ref: '#/definitions/recursiveAdditions' }
+        additions: { $ref: '#/definitions/additionsSchema' }
     },
 };
 
@@ -42,7 +43,7 @@ function buildZone(
     id?: UUID | undefined,
     description?: string,
     icon?: string,
-    additions?: Record<string, unknown>): Zone {
+    additions?: Additions): Zone {
     return {
         metadata: {
             ...buildElement(name, 'zone', type.toLowerCase(), id, description, icon),

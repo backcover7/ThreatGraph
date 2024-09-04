@@ -1,5 +1,5 @@
 import { typeOrObjectPattern } from './base';
-import { UUID, randomUUID } from "crypto";
+import { UUID, randomUUID } from 'crypto';
 
 export const ModelElements = {
     ZONE: 'zone',

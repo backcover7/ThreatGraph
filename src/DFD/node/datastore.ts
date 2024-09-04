@@ -1,7 +1,8 @@
 import { typeOrObjectPattern } from '../base';
 import {Element, elementSchema, buildElement } from '../element';
+import { Additions } from "../additions";
 import { Node } from './node';
-import {UUID} from "crypto";
+import { UUID } from 'crypto';
 
 // DataStore Type
 export type DataStore = Node & {
@@ -47,7 +48,7 @@ export const datastoreSchema = {
                 antiAbuse: { type: 'boolean' },
             }
         },
-        additions: { $ref: '#/definitions/recursiveAdditions' }
+        additions: { $ref: '#/definitions/additionsSchema' }
     }
 };
 
@@ -63,7 +64,7 @@ function buildDataStore(
     id?: UUID | undefined,
     description?: string,
     icon?: string,
-    additions?: Record<string, unknown>): DataStore {
+    additions?: Additions): DataStore {
     return {
         metadata: {
             ...buildElement(name, 'datastore', 'datastore', id, description, icon),

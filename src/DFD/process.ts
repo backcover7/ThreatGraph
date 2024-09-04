@@ -1,6 +1,7 @@
 import { Element, elementSchema, buildElement } from './element';
 import { DataFlow } from './dataflow';
-import {UUID} from "crypto";
+import { Additions } from "./additions";
+import { UUID } from 'crypto';
 
 // Process Type
 export type Process = {
@@ -19,7 +20,7 @@ export type Process = {
         format: 'text' | 'xml' | 'json' | 'binary' | any;
     };
     calls?: string[];
-    additions?: Record<string, unknown>;
+    additions?: Additions;
 }
 
 export type ProcessAttached = {
@@ -58,7 +59,7 @@ export const processSchema = {
             },
         },
         calls: { type: 'array', items: { type: 'string' } },
-        additions: { $ref: '#/definitions/recursiveAdditions' }
+        additions: { $ref: '#/definitions/additionsSchema' }
     },
 };
 
@@ -76,7 +77,7 @@ function buildProcess(
     id?: UUID | undefined,
     description?: string,
     icon?: string,
-    additions?: Record<string, unknown>): Process {
+    additions?: Additions): Process {
     return {
         metadata: {
             ...buildElement(name, 'process', type, id, description, icon),

@@ -154,7 +154,8 @@ export default class Analyzer {
      */
     #evaluateDesign(design: string, ruleContextObject: any, parentBlockId: UUID): boolean {
         if (!this.#evaluator?.validateRule(design, parentBlockId)) {
-            throw new Error('Invalid rule format: ' + design);
+            console.error('Invalid rule format: ' + design);
+            return false;
         }
         return this.#evaluator.analyze(design, ruleContextObject, parentBlockId);
     }

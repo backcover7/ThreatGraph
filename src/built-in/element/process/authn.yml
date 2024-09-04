@@ -11,19 +11,15 @@ module:
         critical: 3
         operation: w
       additions:
-        password:
-          strong:
-            name: Robust Password
-            type: boolean
-            description: Whether password is required to be strong enough
-          expiration:
-            name: Expiration
-            type: boolean
-            description: Whether password has expiration
-        anti-abuse:
-          name: Anti Abuse
+        strong_password:
+          question: Is robust password required?
           type: boolean
-          description: Whether brute force attack is prevented
+        expired_password:
+          question: Does password expire in a period of time?
+          type: boolean
+        anti_abuse:
+          question: Is this authentication able to anti abusing?
+          type: boolean
 
     - metadata:
         id: 28f0d2c8-d4a0-4452-81ac-dc142c8ef239
@@ -36,10 +32,9 @@ module:
         critical: 3
         operation: w
       additions:
-        grant-type:
-          name: Grant Type
+        grant_type:
+          question: What kind of grant type is used in this OAuth 2.0 flow?
           type: string
-          description: "The grant type for the OAuth 2.0 flow."
           options:
             - value: Authorization Code
               description: "The Authorization Code grant type is used by confidential and public clients to exchange an authorization code for an access token."
