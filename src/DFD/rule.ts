@@ -15,6 +15,7 @@ export type Rule = {
     threat: Threat;
     element: ElementType | Element;
     description?: string;
+    severity?: 'informative' | 'low' | 'medium' | 'high' | 'critical';  // Override severity of associated threat
     references: string[];
     designs?: DesignItem[];
     either?: DesignItem[];
@@ -30,6 +31,7 @@ export const ruleSchema = {
         threat: { type: 'string', format: 'uuid' },
         element: { type: 'string', enum: [ 'zone', 'entity', 'datastore', 'process', 'dataflow' ] },
         description: { type: 'string' },
+        severity: { type: 'string', enum: ['informative', 'low', 'medium', 'high', 'critical'] },
         references: { type: 'array', items: { type: 'string' } },
         designs: { type: 'array', items: { type: 'object' } },
         either: { type: 'array', items: { type: 'object' } },
@@ -44,6 +46,7 @@ type BuildRuleOptions = {
     design?: string;
     id?: UUID;
     description?: string;
+    severity?: 'informative' | 'low' | 'medium' | 'high' | 'critical';
 };
 
 function buildRule(
@@ -69,6 +72,7 @@ function buildRule(
     };
 
     if (options.description !== undefined) rule.description = options.description;
+    if (options.severity !== undefined) rule.severity = options.severity;
 
     if (options.designs !== undefined) rule.designs = options.designs;
     else if (options.either !== undefined) rule.either = options.either;
@@ -91,7 +95,8 @@ export function ruleBuilder(item: Partial<Rule>): Rule {
             either: item.either,
             design: item.design,
             id: item.id,
-            description: item.description
+            description: item.description,
+            severity: item.severity
         }
     );
 }
