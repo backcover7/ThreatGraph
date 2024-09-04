@@ -111,6 +111,10 @@ export const moduleSchema = {
     }
 };
 
+export function getRawSchema() {
+    return JSON.stringify(moduleSchema);
+}
+
 export {
     zoneBuilder, entityBuilder, datastoreBuilder, processBuilder, threatBuilder, ruleBuilder
 }

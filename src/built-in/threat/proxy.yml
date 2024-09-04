@@ -1,0 +1,30 @@
+module:
+  threat:
+    - id: 12bf302e-e30b-4b18-b732-69fffea9c4d7
+      name: HTTP Proxy Content Manipulation
+      severity: high
+      description: An attacker could manipulate the content of HTTP responses passing through the forward proxy, potentially injecting malicious code or altering sensitive information.
+      mitigation: Implement HTTPS everywhere, use robust encryption, and employ certificate pinning to prevent man-in-the-middle attacks. Regularly audit proxy logs for suspicious activities.
+      compliance:
+        cwe:
+          - 'CWE-441: Unintended Proxy or Intermediary'
+          - 'CWE-444: Inconsistent Interpretation of HTTP Requests'
+        owasp:
+          - 'A05:2021 - Security Misconfiguration'
+        stride:
+          - Tampering
+          - Information Disclosure
+
+    - id: 6ee0ca86-d605-440a-9357-6ade7ae93a29
+      name: Proxy-based IP Spoofing
+      severity: medium
+      description: Attackers could use the forward proxy to mask their true IP address, potentially bypassing IP-based access controls or hiding malicious activities.
+      mitigation: Implement strong authentication mechanisms for proxy usage, monitor proxy logs for unusual patterns, and use additional identity verification methods beyond IP-based controls.
+      compliance:
+        cwe:
+          - 'CWE-290: Authentication Bypass by Spoofing'
+        owasp:
+          - 'A07:2021 - Identification and Authentication Failures'
+        stride:
+          - Spoofing
+          - Repudiation

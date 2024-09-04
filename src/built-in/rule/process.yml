@@ -34,7 +34,7 @@ module:
           - designs:
             - design: $TAG == 'AI'
             - design: $TAG == 'vendor'
-          - variable: $.tags = $TAG
+          - variable: $.tags = $TAG   # TODO assign value to left
 #        - designs:
 #          - variable: $FLOW = attached.dataflows
 #          - design: $FLOW.attached.destination = entity  # TODO test

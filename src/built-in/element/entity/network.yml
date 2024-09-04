@@ -101,8 +101,8 @@ module:
 
     - metadata:
         id: 9de23c69-3c16-4100-bf4c-fbe600036d69
-        name: Proxy
-        description: Proxy
+        name: Forward Proxy
+        description: Forward Proxy
         icon: data:image/svg+xml;base64,YQ==
         type: proxy
       tags: [ network, proxy ]
