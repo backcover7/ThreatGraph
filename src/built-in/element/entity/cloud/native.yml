@@ -80,3 +80,30 @@ module:
         type: k8s
       tags: [ cloud-native, kubernetes ]
       object: k8s-worker-node
+
+    - metadata:
+        id: 1e105adb-94ea-4fa8-b6c7-f6069a9ba1d8
+        name: VMware ESXi host
+        description: VMware ESXi hypervisor host
+        icon: data:image/svg+xml;base64,YQ==
+        type: esxi
+      tags: [ cloud-native, virtual, vmware ]
+      object: esxi-host
+
+    - metadata:
+        id: 8a913313-1254-4abf-97c0-6fb88a7bce5f
+        name: VMware vCenter
+        description: VMware vCenter management server
+        icon: data:image/svg+xml;base64,YQ==
+        type: vcenter
+      tags: [ cloud-native, virtual, vmware ]
+      object: vcenter
+
+    - metadata:
+        id: a66ac478-8474-4c09-922a-8b7ca4bf18f7
+        name: VMware VM
+        description: Virtual machine managed by VMware
+        icon: data:image/svg+xml;base64,YQ==
+        type: vm
+      tags: [ cloud-native, virtual, vmware ]
+      object: vm

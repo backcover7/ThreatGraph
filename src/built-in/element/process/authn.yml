@@ -66,3 +66,14 @@ module:
       attributes:
         critical: 3
         operation: w
+
+    - metadata:
+        id: 5691064b-29d6-42e0-8548-c970417e6073
+        name: MFA
+        description: Multi-Factor Authentication
+        icon: data:image/svg+xml;base64,YQ==
+        type: authentication
+      tags: [ authentication ]
+      attributes:
+        critical: 2
+        operation: w
