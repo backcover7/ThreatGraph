@@ -157,7 +157,7 @@ export default class Analyzer {
             console.error('Invalid rule format: ' + design);
             return false;
         }
-        return this.#evaluator.analyze(design, ruleContextObject, parentBlockId);
+        return this.#evaluator?.analyze(design, ruleContextObject, parentBlockId);
     }
 
     #registerVariables(expressions: any[], ruleContextObject: any, blockId: UUID): void {

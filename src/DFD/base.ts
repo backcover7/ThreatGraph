@@ -30,8 +30,8 @@ export const moduleSchema = {
     }
 };
 
-export function getRawSchema() {
-    return JSON.stringify(moduleSchema);
+export function printRawSchema() {
+    console.log(JSON.stringify(moduleSchema));
 }
 
 export {
