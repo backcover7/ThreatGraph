@@ -1,12 +1,12 @@
 import { Zone } from '../zone';
 import { DataFlow } from '../dataflow';
-import { additions } from "../additions";
+import { Additions } from "../additions";
 
 // Node Type: Entity Type and DataStore Type all extends from Node Type
 export type Node = {
     tags?: string[];
     object: string;  // official name. metadata.name is customized name
-    additions?: additions;
+    additions?: Additions;
 }
 
 export type NodeAttached = {

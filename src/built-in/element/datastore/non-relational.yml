@@ -71,3 +71,12 @@ module:
         type: nosql-datastore
       tags: [ column ]
       object: hbase
+
+    - metadata:
+        id: 0ae536b5-d6e1-4bba-a8f5-de992f176678
+        name: Firestore
+        description: Firebase Firestore
+        icon: data:image/svg+xml;base64,YQ==
+        type: nosql-datastore
+      tags: [ document ]
+      object: firestore

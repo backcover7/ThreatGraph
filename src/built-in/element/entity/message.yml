@@ -26,3 +26,12 @@ module:
         type: message-broker
       tags: [ message ]
       object: rocketmq
+
+    - metadata:
+        id: 2d3792e6-a039-4842-b4f4-2ee6b977a627
+        name: Redpanda
+        description: Redpanda
+        icon: data:image/svg+xml;base64,YQ==
+        type: message-broker
+      tags: [ message ]
+      object: redpanda

@@ -148,19 +148,23 @@ export default class Template {
         }
 
         safeBuildAndPush(templates.zone, module.zone, item =>
-            zoneBuilder(item)
+            checkUUIDExistence(item.metadata.id, this.#uuidSet) ?
+                zoneBuilder(item) : null
         );
 
         safeBuildAndPush(templates.entity, module.entity, item =>
-            entityBuilder(item)
+            checkUUIDExistence(item.metadata.id, this.#uuidSet) ?
+                entityBuilder(item) : null
         );
 
         safeBuildAndPush(templates.datastore, module.datastore, item =>
-            datastoreBuilder(item)
+            checkUUIDExistence(item.metadata.id, this.#uuidSet) ?
+                datastoreBuilder(item) : null
         );
 
         safeBuildAndPush(templates.process, module.process, item =>
-            processBuilder(item)
+            checkUUIDExistence(item.metadata.id, this.#uuidSet) ?
+                processBuilder(item) : null
         );
 
         safeBuildAndPush(templates.threat, module.threat, item =>
