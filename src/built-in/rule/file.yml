@@ -1,0 +1,11 @@
+module:
+  rule:
+    - id: 40142427-3ef2-4ec9-81b3-616005f4844a
+      threat: 9f2e1d3c-4b5a-6e7f-8d9c-0a1b2c3d4e5f  # Phishing Attack via Unknown File
+      element: entity
+      # TODO
+      designs:
+        - design: $.metadata.type == 'file'
+        - designs:
+          - variable: $TAG = $.tags
+          - design: $TAG == 'Phishing'

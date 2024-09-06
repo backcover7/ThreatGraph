@@ -570,3 +570,21 @@ module:
           - 'A05:2021 Security Misconfiguration'
         stride:
           - Denial of Service
+
+    - id: 9f2e1d3c-4b5a-6e7f-8d9c-0a1b2c3d4e5f
+      name: Phishing Attack via Unknown File
+      severity: high
+      description: This threat involves users being tricked into downloading or opening malicious files from untrusted sources, often disguised as legitimate documents or applications. When opened, these files can execute malware, steal sensitive information, or provide unauthorized access to the system. This type of attack often relies on social engineering techniques to convince users to interact with the malicious file.
+      mitigation: Implement robust email filtering and anti-malware solutions. Educate users about the risks of opening attachments or downloading files from unknown sources. Use sandboxing technologies for opening suspicious files. Implement strict file type restrictions and execute permission controls. Regularly update and patch all software, especially email clients and document viewers. Use digital signatures for internal communications with attachments. Implement multi-factor authentication to mitigate the impact of credential theft.
+      compliance:
+        cwe:
+          - 'CWE-494: Download of Code Without Integrity Check'
+          - 'CWE-185: Incorrect Regular Expression'
+        owasp:
+          - 'A10:2021 - Server-Side Request Forgery (SSRF)'
+          - 'A04:2021 - Insecure Design'
+        stride:
+          - Spoofing
+          - Tampering
+          - Information Disclosure
+          - Elevation of Privilege
