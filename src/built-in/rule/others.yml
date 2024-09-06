@@ -1,0 +1,15 @@
+module:
+  rule:
+    - id: 534c3919-38e8-4409-bb00-8a37c8ef892f
+      threat: 7a8b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d  # NPM Dependency Confusion
+      element: entity
+      designs:
+        - design: $.type == 'registry'
+        - designs:
+          - variable: $TAG = $.tags
+          - design: $TAG == 'nodejs'
+
+    - id: a32c4fde-d68c-458f-bd5e-91c13393c6a3
+      threat: 51f70efe-b96d-4f32-93e7-66539c52dbd6  # Insecure Dependency Management
+      element: entity
+      design: $.type == 'registry'

@@ -588,3 +588,34 @@ module:
           - Tampering
           - Information Disclosure
           - Elevation of Privilege
+
+    - id: 7a8b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d
+      name: NPM Dependency Confusion
+      severity: high
+      description: NPM dependency confusion occurs when an attacker exploits the package resolution mechanism in NPM to trick developers into using malicious packages instead of intended internal ones. This vulnerability can lead to the execution of unauthorized code, data exfiltration, and compromise of development environments or production systems.
+      mitigation: Use scoped packages for internal dependencies. Implement a private NPM registry for internal packages. Utilize package-lock.json to lock dependencies. Regularly audit and update dependencies. Use tools to detect and prevent dependency confusion attacks. Educate developers about the risks of dependency confusion and proper package management practices.
+      compliance:
+        cwe:
+          - 'CWE-1104: Use of Unmaintained Third Party Components'
+          - 'CWE-829: Inclusion of Functionality from Untrusted Control Sphere'
+        owasp:
+          - 'A06:2021 - Vulnerable and Outdated Components'
+        stride:
+          - Tampering
+          - Information Disclosure
+          - Elevation of Privilege
+
+    - id: 51f70efe-b96d-4f32-93e7-66539c52dbd6
+      name: Insecure Dependency Management
+      severity: medium
+      description: The system uses insecure practices for managing dependencies across various programming languages and package managers, potentially exposing it to supply chain attacks and introducing vulnerabilities.
+      mitigation: Implement strict version pinning for all dependencies. Use lockfiles or equivalent mechanisms to ensure consistent dependency versions. Regularly update and audit dependencies across all used languages and frameworks. Implement automated security scanning for dependencies. Use private repositories for internal packages. Educate developers on secure dependency management practices.
+      compliance:
+        cwe:
+          - 'CWE-1104: Use of Unmaintained Third Party Components'
+        owasp:
+          - 'A06:2021 Vulnerable and Outdated Components'
+        stride:
+          - Tampering
+          - Elevation of Privilege
+          - Information Disclosure

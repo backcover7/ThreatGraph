@@ -10,15 +10,6 @@ module:
       object: jenkins
 
     - metadata:
-        id: 286fe0ef-e84a-45ca-bb59-9e8d07661aa7
-        name: Nexus repository
-        description: Nexus repository
-        icon: data:image/svg+xml;base64,YQ==
-        type: server
-      tags: [ ci ]
-      object: nexus
-
-    - metadata:
         id: 17db7ef3-e516-440d-9408-a4a06c8d7c6e
         name: GitHub
         description: GitHub
