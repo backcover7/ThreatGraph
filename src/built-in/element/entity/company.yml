@@ -179,3 +179,12 @@ module:
         type: analytics
       tags: [ vendor, visual ]
       object: tableau
+
+    - metadata:
+        id: 63395ce2-07b9-4a83-befd-0adcd520a687
+        name: Zendesk
+        description: Zendesk
+        icon: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMzEuMjkiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMjU2IDE5NSI+PHBhdGggZmlsbD0iIzAzMzYzZCIgZD0iTTExOC4yNSA1MS4yMzN2MTQyLjc3M0gwem0wLTUxLjIzM2MwIDMyLjY0NC0yNi40ODEgNTkuMTI1LTU5LjEyNSA1OS4xMjVTMCAzMi42NDUgMCAwem0xOS41IDE5NC4wMDZjMC0zMi42NzcgMjYuNDQ5LTU5LjEyNSA1OS4xMjUtNTkuMTI1UzI1NiAxNjEuMzYxIDI1NiAxOTQuMDA2em0wLTUxLjI2NlYwSDI1NnoiLz48L3N2Zz4=
+        type: customer
+      tags: [ customer, saas ]
+      object: zendesk

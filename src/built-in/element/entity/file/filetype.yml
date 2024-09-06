@@ -1,0 +1,65 @@
+module:
+  entity:
+    - metadata:
+        id: 6a1cbf66-c874-41d1-9b92-3b037d874cf6
+        name: docs
+        description: document
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ file ]
+      object: docs
+
+    - metadata:
+        id: 7e6ef4c6-d8ff-455b-84fb-d369c784b577
+        name: sheet
+        description: sheet, excel, table
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ file ]
+      object: sheet
+
+    - metadata:
+        id: d725046c-3532-4815-9eb2-68705ac13ef2
+        name: slide
+        description: slide, ppt
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ file ]
+      object: slide
+
+    - metadata:
+        id: ec9ddfdb-1414-4331-be78-9750865db320
+        name: txt
+        description: txt
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ file ]
+      object: txt
+
+    - metadata:
+        id: fdc2e278-3907-4f31-a31f-07e0475f6cad
+        name: csv
+        description: csv
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ file ]
+      object: csv
+
+    - metadata:
+        id: 042b2362-2bc0-4279-b734-93ff4a2a9e90
+        name: json
+        description: json
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ file ]
+      object: json
+
+    - metadata:
+        id: db110456-297d-4bf8-8f41-0d2746f0aa86
+        name: yaml
+        description: yaml, yml
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ file ]
+      object: yaml
+
