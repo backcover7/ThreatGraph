@@ -1,0 +1,1524 @@
+# https://www.filesec.io/
+
+module:
+  entity:
+    - metadata:
+        id: 45dbc637-bba7-4498-94f7-ba1afcd3dc36
+        name: .7z
+        description: A compressed archive file format that supports several compression algorithms
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, File, Archiver, Windows, Mac, Linux ]
+      object: 7z
+
+    - metadata:
+        id: 0c1ee8cf-4be2-424c-bf2f-09cd8edd7582
+        name: .a3x
+        description: An AutoIt3 compiled script file used for automation on Windows
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Windows ]
+      object: a3x
+
+    - metadata:
+        id: cf181c96-19fa-4088-bbcf-467d47684321
+        name: .appinstaller
+        description: An XML file used by Windows to describe and install applications
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Double, Click, Windows ]
+      object: appinstaller
+
+    - metadata:
+        id: 580c9ccf-d7e2-4928-96ba-aad2afb5c9e0
+        name: .applescript
+        description: A script file used for automating tasks on macOS
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Mac ]
+      object: applescript
+
+    - metadata:
+        id: b1f65ddb-ec40-4a9b-9f74-e3e767e0a8e9
+        name: .application
+        description: A file used to deploy ClickOnce applications on Windows
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Executable, Double, Click, Windows ]
+      object: application
+
+    - metadata:
+        id: 1a552626-3273-4103-9a64-f45e86f299a6
+        name: .appref-ms
+        description: A file containing a reference to a ClickOnce application
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Phishing, Double, Click, Windows ]
+      object: appref-ms
+
+    - metadata:
+        id: 3364cff6-ab16-4a3b-b06d-e961139beffd
+        name: .contact
+        description: Windows Contact file containing contact information for an individual.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Windows ]
+      object: contact
+
+    - metadata:
+        id: 48e72bfc-02b4-45df-b2c1-98b114d69315
+        name: .appx
+        description: A package file for Windows Store apps
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Phishing, Double, Click, Windows ]
+      object: appx
+
+    - metadata:
+        id: 594f11e3-81b2-4b67-a738-42b0f7a74069
+        name: .appxbundle
+        description: A package containing multiple .appx files for different device architectures
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Phishing, Double, Click, Windows ]
+      object: appxbundle
+
+    - metadata:
+        id: 65e088ae-acd4-4853-a8eb-38a8a77569b3
+        name: .arj
+        description: A compressed archive file format
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, File, Archiver, Windows ]
+      object: arj
+
+    - metadata:
+        id: 3219bc11-c877-4007-bca3-c129d3e85973
+        name: .asd
+        description: An AutoSave file format used by Microsoft Word
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows ]
+      object: asd
+
+    - metadata:
+        id: 0e1cf4f9-8d1c-4201-9c9b-0f8c748f2ead
+        name: .bat
+        description: A batch file containing a series of commands to be executed by the command interpreter on Windows
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Double, Click, Windows ]
+      object: bat
+
+    - metadata:
+        id: 4cb2b762-486e-4fba-b48d-75f7487d4a0a
+        name: .bgi
+        description: A file format used for background images in some applications
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Exploit, Script, Phishing, Windows ]
+      object: bgi
+
+    - metadata:
+        id: 272f7588-ff2a-44fc-b46b-f54a5f6f5a78
+        name: .bz2
+        description: A compressed file format using the Bzip2 algorithm
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, File, Archiver, Windows, Linux, Mac ]
+      object: bz2
+
+    - metadata:
+        id: 090c27ec-afaa-41ed-a14a-8105e1abc832
+        name: .cab
+        description: A Windows Cabinet file, used to store compressed files
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, File, Archiver, Windows ]
+      object: cab
+
+    - metadata:
+        id: 8bce58be-bdd8-4c1c-9cf3-3fde6b01c30a
+        name: .chm
+        description: A Microsoft Compiled HTML Help file format
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Double, Click, Windows ]
+      object: chm
+
+    - metadata:
+        id: 319e5437-3cdd-4659-90cb-10147c74fd1b
+        name: .cmd
+        description: A command script file used in Windows, similar to .bat files
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Double, Click, Windows ]
+      object: cmd
+
+    - metadata:
+        id: 48cb20b5-ac2c-47c8-a79a-7421eb3c33a7
+        name: .com
+        description: An executable file format used in DOS and Windows
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Double, Click, Windows ]
+      object: com
+
+    - metadata:
+        id: 72e6e211-a5ee-4f54-b21c-2564729701ac
+        name: .cpl
+        description: A Control Panel item file in Windows
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Double, Click, Windows ]
+      object: cpl
+
+    - metadata:
+        id: ad111915-1adb-4a0e-9273-0d7e4a1ff977
+        name: .cs
+        description: A C# source code file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Windows ]
+      object: cs
+
+    - metadata:
+        id: 5e6039dc-db00-444c-829a-e3043365d7f9
+        name: .daa
+        description: A compressed disk image file format
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Executable, File, Archiver, Windows ]
+      object: daa
+
+    - metadata:
+        id: ce641312-7204-419e-8742-3f89cf3397d7
+        name: .desktopthemepackfile
+        description: A Windows theme pack file containing desktop customization elements
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Windows ]
+      object: desktopthemepackfile
+
+    - metadata:
+        id: 7a923629-5b1a-4803-9402-b3fea8fd0eba
+        name: .diagcab
+        description: A Windows diagnostic package file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Double, Click, Executable, Windows ]
+      object: diagcab
+
+    - metadata:
+        id: 58e84b99-daf7-4baa-b30a-7bb3f305a9a7
+        name: .dll
+        description: A Dynamic-Link Library file used in Windows
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Windows ]
+      object: dll
+
+    - metadata:
+        id: 949f3158-c18a-4374-ac5f-2b9418593958
+        name: .dmg
+        description: A disk image file used on macOS
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Double, Click, Mac ]
+      object: dmg
+
+    - metadata:
+        id: 1f2f4065-7414-4be2-ad01-a46503dd5929
+        name: .doc
+        description: A Microsoft Word 97-2003 Document file format, used for text documents with formatting, images, and other features
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows, Mac ]
+      object: doc
+
+    - metadata:
+        id: 2e2a13ac-4d73-4a65-b749-63a7cbd33f3d
+        name: .docx
+        description: A Microsoft Word Open XML Document file, introduced in Word 2007, using compressed XML to store text, formatting, and other document elements
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows, Mac ]
+      object: docx
+
+    - metadata:
+        id: 0ca9c1e5-5e59-4f81-bd2a-6ae53697e5d3
+        name: .docm
+        description: A Microsoft Word document file with macros enabled
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows, Mac ]
+      object: docm
+
+    - metadata:
+        id: d0d07f66-9766-49de-a723-b103724bc3dc
+        name: .dot
+        description: A Microsoft Word template file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows, Mac ]
+      object: dot
+
+    - metadata:
+        id: 4c446b12-7954-40f1-a25e-3c1dc88a1203
+        name: .dotm
+        description: A Microsoft Word template file with macros enabled
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Windows, Mac ]
+      object: dotm
+
+    - metadata:
+        id: 5ea997e0-3d34-484d-9777-43008ea9a036
+        name: .eml
+        description: An email message file saved in the Internet Message Format
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Windows, Linux, Mac ]
+      object: eml
+
+    - metadata:
+        id: 4fe0aa79-d391-4fc5-bf70-81a8e2b55c0e
+        name: .exe
+        description: An executable file format for Windows
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Double, Click, Windows ]
+      object: exe
+
+    - metadata:
+        id: c855bf33-0a50-4e5d-adaa-5be6d47e8867
+        name: .gadget
+        description: A Windows desktop gadget file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Executable, File, Archiver, Windows ]
+      object: gadget
+
+    - metadata:
+        id: 01e8c7d5-27f4-4f1f-8a8e-3116e30d2f2a
+        name: .gz
+        description: A compressed file format using the gzip algorithm
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, File, Archiver, Windows, Linux, Mac ]
+      object: gz
+
+    - metadata:
+        id: 9f7a8b3c-6d2e-4e5f-9c1d-7f3b4a0e2d1a
+        name: .hta
+        description: An HTML application file that can run as a desktop program
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Double, Click, Windows ]
+      object: hta
+
+    - metadata:
+        id: c6f505ab-ae15-4f7a-af40-6de2b8f0a88e
+        name: .htm
+        description: A web page file written in HTML
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Script, Double, Click, Wndows, Mac, Linux ]
+      object: htm
+
+    - metadata:
+        id: 9807b52d-8fc6-43cb-bcda-d9c7767f4be5
+        name: .html
+        description: A web page file written in HTML
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Script, Double, Click, Wndows, Mac, Linux ]
+      object: html
+
+    - metadata:
+        id: 0541dabb-d73c-4789-833e-99d90fb9b814
+        name: .shtml
+        description: Server-side Include HTML file, allowing dynamic content insertion in web pages through server-side scripting.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Script, Double, Click, Windows, Mac, Linux ]
+      object: shtml
+
+    - metadata:
+        id: 77fbfa6d-e02c-46f9-b823-9409862976f1
+        name: .xht
+        description: XHTML file format, an XML-based version of HTML that follows stricter syntax rules.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Script, Double, Click, Windows, Mac, Linux ]
+      object: xht
+
+    - metadata:
+        id: 01601d1b-8a3e-4dfb-8c5c-f73c30797ebe
+        name: .xhtml
+        description: XHTML file format, similar to .xht, representing web pages in a markup language combining HTML and XML features.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Script, Double, Click, Windows, Mac, Linux ]
+      object: xhtml
+
+    - metadata:
+        id: 1e64ff2f-f203-4a0f-8a11-694a8e388804
+        name: .hwpx
+        description: A document file format used by the Hangul Word Processor
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Windows ]
+      object: hwpx
+
+    - metadata:
+        id: f0f6c824-ef54-46f2-98b4-2d11aff79647
+        name: .ics
+        description: An iCalendar file used for sharing calendar event information
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Windows, Mac, Linux ]
+      object: ics
+
+    - metadata:
+        id: 8a1e6258-0bfb-41f1-a16f-e8a208318b39
+        name: .img
+        description: A disk image file that can contain the complete contents of a disk or drive
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Double, Click, Phishing, Windows, Mac ]
+      object: img
+
+    - metadata:
+        id: 16585f80-beb9-4dfe-8de8-1ca4b077e073
+        name: .iqy
+        description: An Excel Web Query file used to import external data into Excel spreadsheets
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Windows, Mac ]
+      object: iqy
+
+    - metadata:
+        id: 2f8c9143-2b01-416e-a046-1f08354b779e
+        name: .iso
+        description: An archive file of an optical disc, containing a complete copy of the disc's contents
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Double, Click, Windows, Mac ]
+      object: iso
+
+    - metadata:
+        id: f44b7a43-28ce-436d-ad21-188c967a5506
+        name: .jar
+        description: A Java Archive file containing Java class files and associated metadata and resources
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Windows, Mac, Linux ]
+      object: jar
+
+    - metadata:
+        id: dc107e6f-c5df-4d8b-869a-096c519df5d1
+        name: .jnlp
+        description: A Java Network Launch Protocol file used to launch Java applications via a network
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Executable, Windows, Mac, Linux ]
+      object: jnlp
+
+    - metadata:
+        id: 21790bdb-3e28-42b4-a309-fefbaab2b41e
+        name: .js
+        description: A JavaScript file containing executable code
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Double, Click, Windows ]
+      object: js
+
+    - metadata:
+        id: 1e9f02ce-4e69-49d0-9c82-515dffa7296a
+        name: .jse
+        description: A JScript Encoded Script file, an encoded form of a JavaScript file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Double, Click, Windows ]
+      object: jse
+
+    - metadata:
+        id: 8cd1c540-e5eb-4243-bb9d-5cd21b1f493a
+        name: .library-ms
+        description: A Windows Library file that references a collection of folders and files
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Windows ]
+      object: library-ms
+
+    - metadata:
+        id: 0bb1e79b-8751-495c-8819-e89e6202b327
+        name: .lnk
+        description: A Windows shortcut file that points to an application or file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Double, Click, Phishing, Windows ]
+      object: lnk
+
+    - metadata:
+        id: a75cb815-822a-43c8-9f4b-697473b271cc
+        name: .mam
+        description: A Microsoft Access Module file containing VBA code
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Phishing, Double, Click, Windows ]
+      object: mam
+
+    - metadata:
+        id: 151ca6ff-f07c-40a6-b182-29b3c3be54fc
+        name: .mht
+        description: A MIME HTML file that combines HTML and external resources into a single file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Script, Double, Click, Windows ]
+      object: mht
+
+    - metadata:
+        id: b7bf148d-a946-43f2-832d-515acd7f0733
+        name: .mhtml
+        description: A MIME HTML file, similar to .mht, used to archive web pages
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Script, Double, Click, Windows ]
+      object: mhtml
+
+    - metadata:
+        id: 78785007-ebef-47b8-989b-6ac6319355d3
+        name: .mof
+        description: A Managed Object Format file used in Windows Management Instrumentation
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Script, Windows ]
+      object: mof
+
+    - metadata:
+        id: d45813f8-6abc-44ed-b6b3-58e58ccfa26c
+        name: .msc
+        description: A Microsoft Management Console file used to create, save, and open snap-in collections
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Double, Click, Windows ]
+      object: msc
+
+    - metadata:
+        id: 456b012d-0605-4739-86ca-5561b651d12d
+        name: .msi
+        description: A Microsoft Installer package used to install software on Windows
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Double, Click, Windows ]
+      object: msi
+
+    - metadata:
+        id: c81d62a5-6551-443c-b635-2ef96050c002
+        name: .msrcincident
+        description: A Microsoft Remote Assistance incident file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Windows ]
+      object: msrcincident
+
+    - metadata:
+        id: db85ec80-82a2-4092-9286-f6e54e35ffb5
+        name: .ocx
+        description: An ActiveX Control file used to add functionality to Windows applications
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Windows ]
+      object: ocx
+
+    - metadata:
+        id: 447355fc-d2ee-4c3f-88ea-eba5dcc8bb70
+        name: .odt
+        description: An OpenDocument Text file, an open-source word processing document format
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Exploit, Phishing, Double, Click, Windows ]
+      object: odt
+
+    - metadata:
+        id: cf9110c0-80e4-43cc-b341-ea37d8a503bf
+        name: .oxps
+        description: An Open XML Paper Specification file, a fixed-layout document format
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Windows ]
+      object: oxps
+
+    - metadata:
+        id: bf684fd0-00bd-4108-aa24-4193fea368b2
+        name: .pdf
+        description: A Portable Document Format file, a fixed-layout document format
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Script, Double, Click, Windows, Mac, Linux ]
+      object: pdf
+
+    - metadata:
+        id: ea93a155-3fd5-4885-beb1-4ba0f9a9d80a
+        name: .pif
+        description: A Program Information File used to store information about MS-DOS applications
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Double, Click, Windows ]
+      object: pif
+
+    - metadata:
+        id: 6eb7e0b5-d8f6-4db6-b676-cc02e41f4b9f
+        name: .pot
+        description: A Microsoft PowerPoint template file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows, Mac ]
+      object: pot
+
+    - metadata:
+        id: eea59ac3-fd83-47fc-8bec-22f3373c992a
+        name: .potm
+        description: A Microsoft PowerPoint template file with macros enabled
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows, Mac ]
+      object: potm
+
+    - metadata:
+        id: 79676544-9ba4-410a-b1d8-24bbf5f8d2b1
+        name: .ppa
+        description: A PowerPoint add-in file used to add custom commands and features to PowerPoint
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Phishing, Doubleclick, Windows, Mac ]
+      object: ppa
+
+    - metadata:
+        id: 84451e82-d8d7-444e-89c4-16e8affb2d69
+        name: .ppam
+        description: A PowerPoint add-in file (macro-enabled) for PowerPoint 2007 and later
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Phishing, Doubleclick, Windows, Mac ]
+      object: ppam
+
+    - metadata:
+        id: 3bd71b20-d6a7-49c7-bfb5-ef8bc89c15b1
+        name: .ppkg
+        description: A Windows Provisioning Package file used to configure Windows devices
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Windows ]
+      object: ppkg
+
+    - metadata:
+        id: 58831301-b65b-4ee4-b849-516ad2c8210e
+        name: .pps
+        description: A PowerPoint Slide Show file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows, Mac ]
+      object: pps
+
+    - metadata:
+        id: 46936cd5-1788-4481-8a50-73de92b8181a
+        name: .ppsm
+        description: A PowerPoint Slide Show file with macros enabled
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows, Mac ]
+      object: ppsm
+
+    - metadata:
+        id: 8e722825-5c49-46b3-adb8-31989e56aaf0
+        name: .ppt
+        description: A Microsoft PowerPoint 97-2003 Presentation file format, used for slideshows with text, graphics, and multimedia elements
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows, Mac ]
+      object: ppt
+
+    - metadata:
+        id: 9f833936-6d5a-57c4-bce9-42090e67bbf1
+        name: .pptx
+        description: A Microsoft PowerPoint Open XML Presentation file, introduced in PowerPoint 2007, using compressed XML to store slides, animations, and other presentation elements
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows, Mac ]
+      object: pptx
+
+    - metadata:
+        id: 819564b4-fb33-469e-a692-75516503db82
+        name: .pptm
+        description: A Microsoft PowerPoint Presentation file with macros enabled
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows, Mac ]
+      object: pptm
+
+    - metadata:
+        id: b9a00b7c-7b93-4e66-9d41-abd1248ea979
+        name: .docxm
+        description: Microsoft Word Macro-Enabled Document format. Allows advanced functionality through embedded macros or scripts.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Macros, Double, Click, Windows, Mac ]
+      object: docxm
+
+    - metadata:
+        id: 43b8c5fc-9366-4088-8c54-40c6c1f0450d
+        name: .xlsxm
+        description: Microsoft Excel Macro-Enabled Spreadsheet format. Supports complex calculations and automation through macros.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Macros, Double, Click, Windows, Mac ]
+      object: xlsxm
+
+    - metadata:
+        id: df9f1b94-178c-49c9-8c35-0b9938a505b7
+        name: .pptxm
+        description: Microsoft PowerPoint Macro-Enabled Presentation format. Allows for interactive and automated presentations using macros.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Macros, Double, Click, Windows, Mac ]
+      object: pptxm
+
+    - metadata:
+        id: 3d51a91a-1a6a-4420-892e-1b6f833fc955
+        name: .ps1
+        description: A PowerShell script file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Windows ]
+      object: ps1
+
+    - metadata:
+        id: f371f9d4-e8cb-4be1-8392-d3e5d29b1748
+        name: .ps1xml
+        description: PowerShell XML file used for extending and modifying the PowerShell environment.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Script, Windows ]
+      object: ps1xml
+
+    - metadata:
+        id: c2ca457f-b06e-4c1f-8a04-0fbc57b70d4b
+        name: .psc1
+        description: PowerShell Console File used to save and restore PowerShell console settings.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Script, Windows ]
+      object: psc1
+
+    - metadata:
+        id: 7b4ce494-f8dc-4ce9-95eb-6f2c8adbbb11
+        name: .psd1
+        description: PowerShell Data File used for storing configuration data.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Script, Windows ]
+      object: psd1
+
+    - metadata:
+        id: 4012af82-487a-4e27-b486-9ec4abd6043b
+        name: .psm1
+        description: PowerShell Module File containing PowerShell commands and providers.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Script, Windows ]
+      object: psm1
+
+    - metadata:
+        id: 390c0f04-66bc-4390-b585-b3e40f25a61e
+        name: .vsto
+        description: Visual Studio Tools for Office file used for Office-based solutions.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Executable, Double, Click, Windows ]
+      object: vsto
+
+    - metadata:
+        id: ea1dadec-7a9e-4552-9b7d-5098e5434b15
+        name: .pub
+        description: A Microsoft Publisher document file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows, Mac ]
+      object: pub
+
+    - metadata:
+        id: d3deefee-daa9-4300-8640-bbde77265f34
+        name: .py
+        description: A Python script file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Windows, Mac, Linux ]
+      object: py
+
+    - metadata:
+        id: 82390cc5-2bf0-45f8-80d7-8dba74531c7c
+        name: .pyc
+        description: A compiled Python file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Windows, Mac, Linux ]
+      object: pyc
+
+    - metadata:
+        id: 953a3c1f-664e-4cec-b459-0fc924e743c3
+        name: .pyo
+        description: An optimized compiled Python file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Windows, Mac, Linux ]
+      object: pyo
+
+    - metadata:
+        id: d0cb42fa-b86d-45eb-b8d5-53394b8c0c69
+        name: .pyw
+        description: A Python script file for Windows that runs without showing a console window
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Windows, Mac, Linux ]
+      object: pyw
+
+    - metadata:
+        id: 91a7b093-3f8f-4444-88c8-c82c2d1ea974
+        name: .pyz
+        description: A Python script archive
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Windows, Mac, Linux ]
+      object: pyz
+
+    - metadata:
+        id: 24cceb4d-ec2a-40cb-87af-121678f32b5b
+        name: .pyzw
+        description: A Python script archive for Windows that runs without showing a console window
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Windows, Mac, Linux ]
+      object: pyzw
+
+    - metadata:
+        id: 99d6df97-76d5-4a28-b738-e1e434494484
+        name: .rar
+        description: A Roshal Archive compressed file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, File, Archiver, Windows, Mac, Linux ]
+      object: rar
+
+    - metadata:
+        id: 3804425a-9f0c-44fd-89e7-cbb3c9c2669a
+        name: .reg
+        description: A Windows registry file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Double, Click, Windows ]
+      object: reg
+
+    - metadata:
+        id: 04cfdaab-0b0b-4987-9d1c-21015368cc34
+        name: .rtf
+        description: A Rich Text Format document
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Windows, Mac, Linux ]
+      object: rtf
+
+    - metadata:
+        id: f789ac7f-06a2-4bdb-8f0a-252bf5a5d83d
+        name: .scf
+        description: A Windows Explorer Command file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Windows ]
+      object: scf
+
+    - metadata:
+        id: bc456666-3975-4b47-ba51-d22838ea34bb
+        name: .scpt
+        description: An AppleScript script file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Mac ]
+      object: scpt
+
+    - metadata:
+        id: 4d6ffccc-283b-431b-a03f-fa12000fd67e
+        name: .scr
+        description: A Windows screen saver file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Double, Click, Windows ]
+      object: scr
+
+    - metadata:
+        id: 3fa6b299-8f17-4389-a8d0-12a4c2659d65
+        name: .sct
+        description: A Windows Script Component file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Script, Windows ]
+      object: sct
+
+    - metadata:
+        id: 8f454f1d-ccae-4433-85b4-b0d4ee016c9f
+        name: .searchConnector-ms
+        description: A Windows Search Connector file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Windows ]
+      object: searchConnector-ms
+
+    - metadata:
+        id: 29258478-5170-42e5-bf66-6d01f05d543d
+        name: .service
+        description: A systemd service unit file in Linux
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Linux ]
+      object: service
+
+    - metadata:
+        id: 40dfc756-9a21-4510-a312-9ce8dd593838
+        name: .settingcontent-ms
+        description: A Windows Settings file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Executable, Windows ]
+      object: settingcontent-ms
+
+    - metadata:
+        id: 912b9523-6ad1-43b0-bd10-16c7b9e0fe10
+        name: .sh
+        description: A shell script file for Unix-based systems
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Double, Click, Linux ]
+      object: sh
+
+    - metadata:
+        id: 5d10de90-e942-4a33-8b52-683538a93582
+        name: .sldm
+        description: A PowerPoint Slide Master file with macros enabled
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows, Mac ]
+      object: sldm
+
+    - metadata:
+        id: 8bd92f39-bff6-4f2e-aa25-274060aa2cc4
+        name: .slk
+        description: A Microsoft SYLK (Symbolic Link) file, often used with Excel
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows, Mac ]
+      object: slk
+
+    - metadata:
+        id: b40b756d-2cc5-4e3b-8c7a-648e30b570ce
+        name: .so
+        description: A shared object file, similar to DLL in Windows, used in Linux
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Linux ]
+      object: so
+
+    - metadata:
+        id: 57e46022-8e7b-4882-8b0c-aaaa1ef4dcac
+        name: .svg
+        description: A Scalable Vector Graphics file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Script, Double, Click, Windows, Mac ]
+      object: svg
+
+    - metadata:
+        id: 26004e43-7159-4f6b-ae2b-acc2d10f9523
+        name: .tar
+        description: A tape archive file, used for collecting many files into one archive file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, File, Archiver, Windows, Linux, Mac ]
+      object: tar
+
+    - metadata:
+        id: 30040b48-318e-4be8-9711-39e66f5dd651
+        name: .theme
+        description: A Windows theme file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Windows ]
+      object: theme
+
+    - metadata:
+        id: 932ff654-3ab1-4266-aac9-546b3eb3d5e0
+        name: .themepack
+        description: A Windows theme pack file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Windows ]
+      object: themepack
+
+    - metadata:
+        id: 53711132-fce3-4a5f-98b7-429257e89f6f
+        name: .timer
+        description: A systemd timer unit file in Linux
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Linux ]
+      object: timer
+
+    - metadata:
+        id: 810bc3af-d11b-4d56-bf14-e528ac06ce80
+        name: .url
+        description: An Internet shortcut file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Windows ]
+      object: url
+
+    - metadata:
+        id: e166dd5b-d25e-4d2f-8812-4a208a5e01e9
+        name: .uue
+        description: A UUEncoded file, an older form of binary-to-text encoding
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, File, Archiver, Windows ]
+      object: uue
+
+    - metadata:
+        id: 29ce2b17-25c1-4a4b-88f5-08cd9365fe3d
+        name: .vb
+        description: A Visual Basic script file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Windows ]
+      object: vb
+
+    - metadata:
+        id: e1174b28-1c4b-4d9f-9417-148e4f0a213d
+        name: .vbe
+        description: An encrypted Visual Basic script file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Double, Click, Windows ]
+      object: vbe
+
+    - metadata:
+        id: f7a8744f-909e-4f2d-8883-df675b1afdf1
+        name: .vbs
+        description: A Visual Basic script file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Double, Click, Windows ]
+      object: vbs
+
+    - metadata:
+        id: 939f6d33-4560-47d6-8207-86201e0bf38e
+        name: .vhd
+        description: A Virtual Hard Disk file used by Microsoft Virtual PC and Hyper-V
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ File, Archiver, Windows ]
+      object: vhd
+
+    - metadata:
+        id: a2d4f035-b4b5-4258-9ba4-0ff8b4a8fe77
+        name: .vhdx
+        description: An enhanced Virtual Hard Disk file used by Microsoft Hyper-V
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ File, Archiver, Windows ]
+      object: vhdx
+
+    - metadata:
+        id: 15f53314-706f-4dcb-bea9-acb6b7be8e75
+        name: .wbk
+        description: A Microsoft Word backup document file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows ]
+      object: wbk
+
+    - metadata:
+        id: 38e8630b-e7f7-43c4-936c-075bc6b6199e
+        name: .website
+        description: A file containing information about a website shortcut
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Windows ]
+      object: website
+
+    - metadata:
+        id: 18b2a58e-ab40-4e0b-95ba-f599a1b64f81
+        name: .wim
+        description: A Windows Imaging Format file, used for deploying Windows operating systems
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Executable, File, Archiver, Windows ]
+      object: wim
+
+    - metadata:
+        id: 784624ce-4d43-474b-930f-1482e38d59ae
+        name: .wiz
+        description: A Microsoft Wizard file, used for creating installation wizards
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Windows, Mac ]
+      object: wiz
+
+    - metadata:
+        id: fcf224c8-f179-4494-a454-9bebaba77561
+        name: .ws
+        description: A Windows Script file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Windows ]
+      object: ws
+
+    - metadata:
+        id: 8887ba89-d949-4414-864f-c091c2f8b3b2
+        name: .wsf
+        description: A Windows Script File that can contain multiple scripting languages
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Double, Click, Windows ]
+      object: wsf
+
+    - metadata:
+        id: a3a124ec-b143-4722-887a-e4aeb45d01eb
+        name: .wsh
+        description: A Windows Script Host Settings file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Script, Double, Click, Windows ]
+      object: wsh
+
+    - metadata:
+        id: 58a69d6b-c7ef-47fc-b9d8-475659f62585
+        name: .xlam
+        description: An Excel Add-in file with macros
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Phishing, Doubleclick, Macros, Windows, Mac ]
+      object: xlam
+
+    - metadata:
+        id: 40a0a682-70dc-47a8-be94-ce1d60eefec3
+        name: .xll
+        description: An Excel XLL Add-in file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Phishing, Double, Click, Windows ]
+      object: xll
+
+    - metadata:
+        id: 8cbdc02a-6457-4648-b0d8-ff334cf1bb66
+        name: .xlm
+        description: An Excel Macro file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows, Mac ]
+      object: xlm
+
+    - metadata:
+        id: 37fe2fe9-eddc-4ca1-826b-1f4e28bbb0cd
+        name: .xls
+        description: A Microsoft Excel 97-2003 Worksheet file format, capable of storing multiple sheets with formatting and formulas
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows, Mac ]
+      object: xls
+
+    - metadata:
+        id: 78f078c6-b67e-4eac-8962-60316bed6541
+        name: .xlsx
+        description: A Microsoft Excel Open XML Spreadsheet file, introduced in Excel 2007, using compressed XML to store data, formulas, and formatting
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows, Mac ]
+      object: xlsx
+
+    - metadata:
+        id: e8db928a-6314-4c55-a0e4-00e92a60e4ae
+        name: .xlsb
+        description: An Excel Binary Workbook file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows, Mac ]
+      object: xlsb
+
+    - metadata:
+        id: 11b7a58e-a765-4e87-99b7-535dd655853f
+        name: .xlsm
+        description: An Excel Macro-Enabled Workbook file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows, Mac ]
+      object: xlsm
+
+    - metadata:
+        id: 8788f3bc-5f16-4ecf-ac1d-137e87b204ce
+        name: .xlt
+        description: An Excel Template file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows, Mac ]
+      object: xlt
+
+    - metadata:
+        id: ec078266-d831-4594-a63a-abca3322c875
+        name: .xltm
+        description: An Excel Macro-Enabled Template file
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Macros, Windows, Mac ]
+      object: xltm
+
+    - metadata:
+        id: f90510a5-1107-4222-a70a-95d82bf9afdc
+        name: .xps
+        description: An XML Paper Specification file, a fixed-layout document format
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Windows ]
+      object: xps
+
+    - metadata:
+        id: fced19d6-ce8c-4b5d-8d1a-1609db054ecf
+        name: .xsl
+        description: An XML Style Sheet file used for transforming XML documents
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Script, Windows ]
+      object: xsl
+
+    - metadata:
+        id: 95da8900-2bfa-4473-9b72-7748b0edef5e
+        name: .xz
+        description: A compressed file using the LZMA2 compression algorithm
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, File, Archiver, Windows, Linux ]
+      object: xz
+
+    - metadata:
+        id: 5a1609e2-70a6-468a-9d98-52cca90327e4
+        name: .z
+        description: A compressed file format, commonly used on Unix systems
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, File, Archiver, Windows, Linux ]
+      object: z
+
+    - metadata:
+        id: 98293805-6a68-4a3b-9eea-90a8a520e8c0
+        name: .zip
+        description: A compressed archive file format
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, File, Archiver, Windows, Mac, Linux ]
+      object: zip
+
+    - metadata:
+        id: ee329852-0b6a-4d04-8722-7decf80d7f1f
+        name: .txt
+        description: A plain text file format that contains unformatted text. It is one of the most common and simple file types, readable by nearly all text editors and word processors.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Double, Click, Windows, Mac, Linux ]
+      object: txt
+
+    - metadata:
+        id: b8ab647d-4a8f-4c14-aeba-8bc7181a026a
+        name: .yml
+        description: A YAML (YAML Ain't Markup Language) file format used for data serialization. It is human-readable and commonly used for configuration files, data exchange, and storing data structures.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Double, Click, Script, Windows, Mac, Linux ]
+      object: yml
+
+    - metadata:
+        id: 01d5b1f2-4962-4b7d-b509-1dc3aa1ab086
+        name: .yaml
+        description: A YAML (YAML Ain't Markup Language) file format used for data serialization. It is human-readable and commonly used for configuration files, data exchange, and storing data structures.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Double, Click, Script, Windows, Mac, Linux ]
+      object: yaml
+
+    - metadata:
+        id: 446ab72c-c5ab-4678-b89c-92640d531fac
+        name: .csv
+        description: A Comma-Separated Values file format used for storing tabular data in plain text. Each line represents a row of data with fields separated by commas. It's widely used for data exchange between spreadsheet programs and databases.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Double, Click, Windows, Mac, Linux, Phishing ]
+      object: csv
+
+    - metadata:
+        id: e9dbaf93-c39b-4016-8167-4217055e759d
+        name: .json
+        description: A JavaScript Object Notation file format used for storing and transmitting data objects consisting of attribute–value pairs and arrays. It is a lightweight, text-based, language-independent data interchange format that is easy for humans to read and write and easy for machines to parse and generate.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Double, Click, Script, Windows, Mac, Linux ]
+      object: json
+
+    - metadata:
+        id: 083db772-0bbd-4a87-99e4-404ead96631a
+        name: .apk
+        description: An Android Package Kit file, which is the package file format used by the Android operating system for distribution and installation of mobile apps. It contains all the necessary files for a single Android program, including the app's code, resources, assets, certificates, and manifest file.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Executable, Double, Click, Phishing, Android ]
+      object: apk
+
+    - metadata:
+        id: 515d4da9-1e8f-4fcc-b0df-c991496c05dd
+        name: .otf
+        description: An OpenType Font file format, which is a scalable computer font format developed jointly by Adobe and Microsoft. OTF fonts can include advanced typographic features such as ligatures, small caps, and various numerical figures. They are widely supported across different operating systems and applications.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Double, Click, Windows, Mac, Linux ]
+      object: otf
+
+    - metadata:
+        id: 589723d3-a8db-45e8-9183-39dd69164e24
+        name: .gif
+        description: Graphics Interchange Format, a bitmap image format that supports up to 8 bits per pixel for each image, allowing a single image to reference its own palette of up to 256 different colors. It also supports animations and is widely used on the web for simple animations and low-resolution video clips.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Double, Click, Windows, Mac, Linux, Phishing ]
+      object: gif
+
+    - metadata:
+        id: 9a941924-0567-44b9-a2f2-a555e1dffe16
+        name: .png
+        description: Portable Network Graphics, a raster-graphics file format that supports lossless data compression. PNG was developed as an improved, non-patented replacement for GIF and can support a much wider range of colors. It's widely used for web graphics, digital images, and as a container for compressed images.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Double, Click, Windows, Mac, Linux, Phishing ]
+      object: png
+
+    - metadata:
+        id: 89e92eb2-ba6d-4d8c-be86-702d0f0b5a1e
+        name: .jpg
+        description: Joint Photographic Experts Group, a commonly used method of lossy compression for digital images. JPEG compression is used in a number of image file formats. It is particularly suitable for photographs and complex images with smooth color and intensity transitions.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Double, Click, Windows, Mac, Linux, Phishing ]
+      object: jpg
+
+    - metadata:
+        id: 7b27ce01-107a-442d-a833-800b8a26b062
+        name: .jpeg
+        description: Joint Photographic Experts Group, an alternative extension for the JPG format. It's a commonly used method of lossy compression for digital images, particularly suitable for photographs and complex images with smooth color and intensity transitions. JPEG and JPG are essentially the same format.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Double, Click, Windows, Mac, Linux, Phishing ]
+      object: jpeg
+
+    - metadata:
+        id: ae6bd78c-93aa-4b75-b0fd-a0ae4fca87d6
+        name: .tiff
+        description: Tagged Image File Format, a flexible and adaptable file format for handling images and data within a single file. TIFF files can be lossy or lossless, and they support multiple images and metadata within a single file. Commonly used in publishing, photography, and image archiving.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Double, Click, Windows, Mac, Linux ]
+      object: tiff
+
+    - metadata:
+        id: 481fc6e0-de8c-4b66-994b-75e7173c67bd
+        name: .bmp
+        description: Bitmap Image File, a raster graphics image file format used to store bitmap digital images. BMP files are uncompressed, hence they are large but maintain original image quality. They're commonly used in Windows operating systems.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Double, Click, Windows, Mac, Linux ]
+      object: bmp
+
+    - metadata:
+        id: a25b842b-97ef-4936-9337-4cf4a2901c8a
+        name: .webp
+        description: Web Picture format, developed by Google as a new image format for the web. WebP offers better compression than PNG or JPEG with support for both lossy and lossless compression, animated images, and alpha channel transparency.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Double, Click, Windows, Mac, Linux ]
+      object: webp
+
+    - metadata:
+        id: 31cca5d5-22af-438f-bed9-93e729f88dcf
+        name: .msg
+        description: Microsoft Outlook email message file format. Contains email content, attachments, and metadata in a proprietary format.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Windows ]
+      object: msg
+
+    - metadata:
+        id: ee80fd07-e23c-4aaa-9cc6-34648ed90a33
+        name: .vcf
+        description: vCard file format, used for exchanging personal and business contact information across various platforms and applications.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Windows, Mac, Linux ]
+      object: vcf
+
+    - metadata:
+        id: 8fc39e4e-dd04-43fe-baf4-1cfdec12a0d6
+        name: .m3u
+        description: Multimedia playlist file format that contains a list of multimedia files or streams to be played in sequence.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Windows, Mac, Linux ]
+      object: m3u
+
+    - metadata:
+        id: 6dd463ab-5636-4217-bb9c-b74e8e15f147
+        name: .xml
+        description: Extensible Markup Language file format used for storing and transporting structured data in a text-based format.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Script, Double, Click, Windows, Mac, Linux ]
+      object: xml
+
+    - metadata:
+        id: 1a696792-31ac-4412-a714-50fdacb6ca32
+        name: .rss
+        description: Really Simple Syndication file format used for distributing web content such as news headlines or blog entries.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Script, Double, Click, Windows, Mac, Linux ]
+      object: rss
+
+    - metadata:
+        id: a9757431-2988-476a-9671-82b099cab528
+        name: .atom
+        description: Atom Syndication Format file, an XML-based format for web feeds, similar to RSS but with some enhancements.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Script, Double, Click, Windows, Mac, Linux ]
+      object: atom
+
+    - metadata:
+        id: 13d99988-acda-4210-b3fc-1d601329a87b
+        name: .dtd
+        description: Document Type Definition file used to define the structure and legal elements of an XML document.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Script, Double, Click, Windows, Mac, Linux ]
+      object: dtd
+
+    - metadata:
+        id: b345064e-5388-41da-9401-a82af959ea6c
+        name: .vcs
+        description: vCalendar file format used for sharing calendar and scheduling information, predecessor to the .ics format.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Windows, Mac, Linux ]
+      object: vcs
+
+    - metadata:
+        id: 96d85d2f-9763-4767-9e4a-e438e0815fb3
+        name: .xpi
+        description: Cross-Platform Installer file used primarily for Mozilla Firefox extensions and themes.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Executable, Double, Click, Windows, Mac, Linux ]
+      object: xpi
+
+    - metadata:
+        id: a6aa17d1-6a38-4ca4-8112-ca90444b9ecf
+        name: .safariextz
+        description: Safari browser extension file format used to add functionality to the Safari web browser.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Executable, Double, Click, Mac ]
+      object: safariextz
+
+    - metadata:
+        id: 89a967bf-8fce-444c-ad81-3e82b240bdfb
+        name: .crx
+        description: Chrome Extension file format used for adding features and functionality to the Google Chrome browser.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Executable, Double, Click, Windows, Mac, Linux ]
+      object: crx
+
+    - metadata:
+        id: 5f4729f1-676b-4d5f-855c-644d84eef2db
+        name: .wsf
+        description: Windows Script File format that can contain multiple scripting languages within a single file.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Executable, Script, Double, Click, Windows ]
+      object: wsf
+
+    - metadata:
+        id: 7fc9321c-5724-4239-bb8e-228cee893ec9
+        name: .msp
+        description: Microsoft Patch file used to update Windows and other Microsoft software.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Executable, Double, Click, Windows ]
+      object: msp
+
+    - metadata:
+        id: 82f2a617-d73c-4558-93bd-257f9b95a2ca
+        name: .msu
+        description: Microsoft Update Standalone Package file used for distributing software updates for Windows.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Executable, Double, Click, Windows ]
+      object: msu
+
+    - metadata:
+        id: c250bf94-7081-4474-a245-6409fda139d7
+        name: .crt
+        description: Security Certificate file used to authenticate websites and encrypt web traffic.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Windows, Mac, Linux ]
+      object: crt
+
+    - metadata:
+        id: 119ea8bb-d225-438b-a826-1daf4189c139
+        name: .cer
+        description: Another format for Security Certificate files, similar to .crt.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Windows, Mac, Linux ]
+      object: cer
+
+    - metadata:
+        id: 66cb7a18-de6c-4951-9040-67ab2934242a
+        name: .rdp
+        description: Remote Desktop Protocol file used to store remote desktop connection settings.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Windows ]
+      object: rdp
+
+    - metadata:
+        id: 04b107c0-9a4f-4aa8-b17b-885f63dff630
+        name: .inf
+        description: Setup Information file used by Windows to install software or drivers.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Double, Click, Windows ]
+      object: inf
+
+    - metadata:
+        id: 75db2703-d0b2-4978-8da2-0d44f0c8dc4e
+        name: .ahk
+        description: AutoHotkey script file used for automation in Windows.
+        icon: data:image/svg+xml;base64,YQ==
+        type: file
+      tags: [ Phishing, Executable, Script, Double, Click, Windows ]
+      object: ahk

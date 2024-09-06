@@ -27,7 +27,7 @@ export const elementSchema = {
     required: [ 'id', 'name', 'type' ],
     properties: {
         id: { type: 'string', format: 'uuid' },
-        name: { type: 'string', maxLength: 20 },
+        name: { type: 'string', maxLength: 22 },
         description: { type: 'string' },
         icon: { type: 'string', pattern: '^data:image/svg(\\+xml)?;base64,(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$' },
         type: { type: 'string',  pattern: typeOrObjectPattern },
