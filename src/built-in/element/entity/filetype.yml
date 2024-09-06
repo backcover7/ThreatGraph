@@ -1506,15 +1506,6 @@ module:
       object: rdp
 
     - metadata:
-        id: 04b107c0-9a4f-4aa8-b17b-885f63dff630
-        name: .inf
-        description: Setup Information file used by Windows to install software or drivers.
-        icon: data:image/svg+xml;base64,YQ==
-        type: file
-      tags: [ Phishing, Double, Click, Windows ]
-      object: inf
-
-    - metadata:
         id: 75db2703-d0b2-4978-8da2-0d44f0c8dc4e
         name: .ahk
         description: AutoHotkey script file used for automation in Windows.
