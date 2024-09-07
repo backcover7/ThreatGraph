@@ -75,3 +75,11 @@ body,
     max-width: 250px;
   }
 }
+
+.react-flow .react-flow__handle {
+  background: #3c6fe4;
+  border-radius: 0;
+  width: 5px;
+  height: 5px;
+  border: none;
+}
