@@ -20,11 +20,12 @@ import { useDnD } from './DnDContext';
 const initialNodes: Node[] = [];
 const initialEdges: Edge[] = [];
 
-let id = 0;
-const getId = () => `dndnode_${id++}`;
+const getId = () => crypto.randomUUID();
 
 const defaultEdgeOptions = {
     type: 'default',
+    animated: true,
+    label: 'process',
     markerEnd: {
         type: MarkerType.ArrowClosed,
         width: 20,
