@@ -3,7 +3,7 @@
 import React from 'react';
 import { useDnD } from './DnDContext';
 
-type NodeType = 'input' | 'default' | 'output';
+type NodeType = 'input' | 'default' | 'output' | 'group';
 
 interface NodeInfo {
     type: NodeType;
@@ -13,6 +13,7 @@ interface NodeInfo {
 const nodeTypes: NodeInfo[] = [
     { type: 'default', label: 'Entity' },
     { type: 'output', label: 'Datastore' },
+    { type: 'group', label: 'Zone' },
 ];
 
 const Tooltip: React.FC = () => {

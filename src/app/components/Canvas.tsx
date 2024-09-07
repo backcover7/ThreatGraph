@@ -41,9 +41,11 @@ const nodeColor = (node: Node): string => {
         case 'input':
             return '#d9fdde';
         case 'output':
-            return '#d9f5ff';
+            return '#ffe1e7';
+        case 'group':
+            return '#ececec';
         default:
-            return '#e8e8e8';
+            return '#d9edff';
     }
 };
 
@@ -90,7 +92,6 @@ const Canvas: React.FC = () => {
         <div className="dndflow">
             <div className="reactflow-wrapper" ref={reactFlowWrapper}>
                 <ReactFlow
-                    // colorMode='dark'
                     nodes={nodes}
                     edges={edges}
                     onNodesChange={onNodesChange}
