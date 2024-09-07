@@ -1,0 +1,43 @@
+'use client'
+
+import React from 'react';
+import { useDnD } from './DnDContext';
+
+type NodeType = 'input' | 'default' | 'output';
+
+interface NodeInfo {
+    type: NodeType;
+    label: string;
+}
+
+const nodeTypes: NodeInfo[] = [
+    { type: 'default', label: 'Entity' },
+    { type: 'output', label: 'Datastore' },
+];
+
+const Tooltip: React.FC = () => {
+    const [_, __, setTypeAndName] = useDnD();
+
+    const onDragStart = (event: React.DragEvent<HTMLDivElement>, nodeInfo: NodeInfo) => {
+        setTypeAndName([nodeInfo.type, nodeInfo.label]);
+        event.dataTransfer.effectAllowed = 'move';
+    };
+
+    return (
+        <aside>
+            <div className="description">You can drag these nodes to the pane on the right.</div>
+            {nodeTypes.map((nodeInfo) => (
+                <div
+                    key={nodeInfo.type}
+                    className={`dndnode ${nodeInfo.type}`}
+                    onDragStart={(event) => onDragStart(event, nodeInfo)}
+                    draggable
+                >
+                    {nodeInfo.label}
+                </div>
+            ))}
+        </aside>
+    );
+};
+
+export default Tooltip;
