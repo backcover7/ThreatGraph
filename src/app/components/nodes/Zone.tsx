@@ -1,7 +1,7 @@
 'use client'
 
 import { memo } from 'react';
-import { NodeResizer } from '@xyflow/react';
+import {Node, NodeResizer, XYPosition} from '@xyflow/react';
 
 interface ZoneNodeProps {
     data: {
@@ -32,6 +32,27 @@ function ZoneNode({ data }: ZoneNodeProps) {
             </div>
         </>
     );
+}
+
+export function groupElements(nodes: Node[], position: XYPosition, newNode: Node) {
+    const parentNode = nodes.find((node) =>
+        node.type === 'group' &&
+        position.x > node.position.x &&
+        position.x < node.position.x + (node.style?.width as number || 0) &&
+        position.y > node.position.y &&
+        position.y < node.position.y + (node.style?.height as number || 0)
+    );
+
+    if (parentNode) {
+        newNode.parentId = parentNode.id;
+        newNode.extent = 'parent';
+
+        // Adjust the position to be relative to the parent
+        newNode.position = {
+            x: position.x - parentNode.position.x,
+            y: position.y - parentNode.position.y,
+        };
+    }
 }
 
 export default memo(ZoneNode);
