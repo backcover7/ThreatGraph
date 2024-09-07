@@ -14,8 +14,11 @@ import {
     Connection,
     MarkerType
 } from '@xyflow/react';
-import Tooltip from './Tooltip';
-import { useDnD } from './DnDContext';
+import Tooltip from '@/app/components/Tooltip';
+import { useDnD } from '@/app/components/DnDContext';
+import ZoneNode from "@/app/components/nodes/Zone";
+import EntityNode from "@/app/components/nodes/Entity";
+import DatastoreNode from "@/app/components/nodes/Datastore";
 
 const initialNodes: Node[] = [];
 const initialEdges: Edge[] = [];
@@ -47,6 +50,12 @@ const nodeColor = (node: Node): string => {
         default:
             return '#d9edff';
     }
+};
+
+const nodeTypes = {
+    group: ZoneNode,
+    default: EntityNode,
+    output: DatastoreNode,
 };
 
 const Canvas: React.FC = () => {
@@ -82,6 +91,10 @@ const Canvas: React.FC = () => {
                 type,
                 position,
                 data: { label: nodeName },
+                style:
+                    type === 'group' ? { width: 300, height: 180 } :  // zone
+                        type === 'output' ? { width: 100, height: 60 } :   // entity
+                            type === 'default' ? { width: 100, height: 60 } : undefined,   // datastore
             };
             setNodes((nds) => nds.concat(newNode));
         },
@@ -101,6 +114,7 @@ const Canvas: React.FC = () => {
                     onDragOver={onDragOver}
                     fitView
                     defaultEdgeOptions={defaultEdgeOptions}
+                    nodeTypes={nodeTypes}
                 >
                     <Controls />
                     <MiniMap nodeColor={nodeColor} nodeStrokeWidth={3} zoomable pannable />

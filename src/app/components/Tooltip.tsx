@@ -1,7 +1,5 @@
-'use client'
-
 import React from 'react';
-import { useDnD } from './DnDContext';
+import { useDnD } from '@/app/components/DnDContext';
 
 type NodeType = 'input' | 'default' | 'output' | 'group';
 
