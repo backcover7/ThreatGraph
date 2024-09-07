@@ -25,7 +25,6 @@ const Tooltip: React.FC = () => {
 
     return (
         <aside>
-            <div className="description">You can drag these nodes to the pane on the right.</div>
             {nodeTypes.map((nodeInfo) => (
                 <div
                     key={nodeInfo.type}

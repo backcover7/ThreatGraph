@@ -1,5 +1,10 @@
 @import '@xyflow/react/dist/style.css';
 
+/* Remove 'React Flow' watermark */
+.react-flow__attribution {
+  display: none !important;
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

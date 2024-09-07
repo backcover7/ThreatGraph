@@ -3,6 +3,7 @@
 import React, { useRef, useCallback } from 'react';
 import {
     ReactFlow,
+    MiniMap,
     addEdge,
     useNodesState,
     useEdgesState,
@@ -34,7 +35,18 @@ const defaultEdgeOptions = {
     },
 };
 
-const DnDFlow: React.FC = () => {
+const nodeColor = (node: Node): string => {
+    switch (node.type) {
+        case 'input':
+            return '#d9fdde';
+        case 'output':
+            return '#d9f5ff';
+        default:
+            return '#e8e8e8';
+    }
+};
+
+const Canvas: React.FC = () => {
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -77,6 +89,7 @@ const DnDFlow: React.FC = () => {
         <div className="dndflow">
             <div className="reactflow-wrapper" ref={reactFlowWrapper}>
                 <ReactFlow
+                    // colorMode='dark'
                     nodes={nodes}
                     edges={edges}
                     onNodesChange={onNodesChange}
@@ -88,6 +101,7 @@ const DnDFlow: React.FC = () => {
                     defaultEdgeOptions={defaultEdgeOptions}
                 >
                     <Controls />
+                    <MiniMap nodeColor={nodeColor} nodeStrokeWidth={3} zoomable pannable />
                 </ReactFlow>
             </div>
             <Tooltip />
@@ -95,4 +109,4 @@ const DnDFlow: React.FC = () => {
     );
 };
 
-export default DnDFlow;
+export default Canvas;
