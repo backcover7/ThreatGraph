@@ -7,9 +7,9 @@ import { ElementToolbar } from "@/app/components/nodes/Element";
 
 interface DatastoreNodeProps {
     data: {
-        type: 'default',
         label: string;
-    };
+    },
+    type: 'output',
 }
 
 const DatastoreNode: React.FC<DatastoreNodeProps> = ({ data }) => {

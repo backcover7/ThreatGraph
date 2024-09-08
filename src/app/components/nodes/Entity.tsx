@@ -5,7 +5,8 @@ import { ElementToolbar } from "@/app/components/nodes/Element";
 interface EntityNodeProps {
     data: {
         label: string;
-    };
+    },
+    type: 'default';
 }
 
 const EntityNode: React.FC<EntityNodeProps> = ({ data }) => {

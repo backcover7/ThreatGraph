@@ -45,7 +45,6 @@ export function getNewElement(type: string, position: XYPosition, nodeName: stri
  */
 export const ElementToolbar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [toolbarVisible, setToolbarVisible] = useState(false);
-    const [toolbarPosition, setToolbarPosition] = useState<Position>(Position.Top);
 
     const toggleToolbar = useCallback(() => {
         setToolbarVisible((prev) => !prev);
@@ -56,20 +55,21 @@ export const ElementToolbar: React.FC<{ children: React.ReactNode }> = ({ childr
     }, []);
 
     return (
-        <>
+        <div
+            style={{
+                width: '100%',
+                height: '100%',
+                cursor: 'pointer'
+            }}
+            onClick={toggleToolbar}>
+            {children}
             <NodeToolbar
                 isVisible={toolbarVisible}
-                position={toolbarPosition}
+                position={Position.Top}
             >
-                <button onClick={() => setToolbarPosition(Position.Top)}>Top</button>
-                <button onClick={() => setToolbarPosition(Position.Right)}>Right</button>
-                <button onClick={() => setToolbarPosition(Position.Bottom)}>Bottom</button>
-                <button onClick={() => setToolbarPosition(Position.Left)}>Left</button>
+                <button onClick={() => console.log(children)}>Detach</button>
                 <button onClick={hideToolbar}>Close</button>
             </NodeToolbar>
-            <div onClick={toggleToolbar}>
-                {children}
-            </div>
-        </>
+        </div>
     );
 };

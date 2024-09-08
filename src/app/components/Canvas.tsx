@@ -5,10 +5,11 @@ import {
     ReactFlow, MiniMap, Controls, Connection,
     addEdge,
     useNodesState, useEdgesState, useReactFlow,
+    Node, XYPosition, Position,
 } from '@xyflow/react';
 import Tooltip from '@/app/components/Tooltip';
 import { useDnD } from '@/app/components/DnDContext';
-import { groupElements } from "@/app/components/nodes/Zone";
+import { groupElements, isNodeCompletelyInsideZone } from "@/app/components/nodes/Zone";
 import { flowOptions } from "@/app/components/nodes/Flow";
 import { ElementColor, ElementNodes, getElementId, getNewElement } from "@/app/components/nodes/Element";
 
@@ -35,15 +36,36 @@ const Canvas: React.FC = () => {
             if (!type || !nodeName) return;
 
             const position = screenToFlowPosition({ x: event.clientX, y: event.clientY });
-            const newElem = getNewElement(type, position, nodeName);
 
-            setNodes((nds) => groupElements(nds.concat(newElem as never)) as never);
+            setNodes((nds) => {
+                const zoneNodes = nds.filter(node => (node as Node).type === 'group');
+                const parentZone = zoneNodes.find(zoneNode => isNodeCompletelyInsideZone({ position, style: { width: 1, height: 1 } } as Node, zoneNode));
+
+                let newPosition: XYPosition = position;
+                let parentNode: string | undefined = undefined;
+
+                if (parentZone) {
+                    newPosition = {
+                        x: position.x - (parentZone as Node).position.x,
+                        y: position.y - (parentZone as Node).position.y,
+                    };
+                    parentNode = (parentZone as Node).id;
+                }
+
+                const newElem = getNewElement(type, newPosition, nodeName);
+                if (parentNode) {
+                    newElem.parentId = parentNode;
+                    newElem.extent = 'parent';
+                }
+
+                return groupElements(nds.concat(newElem as never)) as never;
+            });
         },
         [screenToFlowPosition, setNodes, type, nodeName],
     );
 
     const onNodeDragStop = useCallback(() => {
-        setNodes((nds) => groupElements(nds) as never)
+        setNodes((nds) => groupElements(nds as Node[]) as never)
     }, [setNodes]);
 
     return (

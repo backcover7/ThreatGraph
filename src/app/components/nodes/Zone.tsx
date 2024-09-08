@@ -2,31 +2,14 @@ import { memo } from 'react';
 import { Node, NodeResizer, XYPosition } from '@xyflow/react';
 
 interface ZoneNodeProps {
-    data: {
-        type: 'group',
-        label: string;
-    };
+    data: { label: string; },
+    type: 'group',
 }
 
 function ZoneNode({ data }: ZoneNodeProps) {
     return (
         <>
-            <NodeResizer
-                minWidth={ 50 }
-                minHeight={ 50 }
-                color = '#ececec'
-            />
-            <div
-                style={{
-                    display: 'flex',
-                    position: 'absolute',
-                    bottom: 0,
-                    width: '100%',
-                    justifyContent: 'space-evenly',
-                    left: 0,
-                }}
-            >
-            </div>
+            <NodeResizer color = '#ececec'/>
         </>
     );
 }
@@ -55,7 +38,7 @@ export function groupElements(nodes: Node[]): Node[] {
     });
 }
 
-function isNodeCompletelyInsideZone(node: Node, zoneNode: Node): boolean {
+export function isNodeCompletelyInsideZone(node: Node, zoneNode: Node): boolean {
     const nodeRight = node.position.x + (node.style?.width as number || 0);
     const nodeBottom = node.position.y + (node.style?.height as number || 0);
     const zoneRight = zoneNode.position.x + (zoneNode.style?.width as number || 0);
