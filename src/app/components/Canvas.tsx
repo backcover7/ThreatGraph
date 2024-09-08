@@ -52,11 +52,7 @@ const Canvas: React.FC = () => {
                     parentNode = (parentZone as Node).id;
                 }
 
-                const newElem = getNewElement(type, newPosition, nodeName);
-                if (parentNode) {
-                    newElem.parentId = parentNode;
-                    newElem.extent = 'parent';
-                }
+                const newElem = getNewElement(type, newPosition, nodeName, parentNode);
 
                 return groupElements(nds.concat(newElem as never)) as never;
             });

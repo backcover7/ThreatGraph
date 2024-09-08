@@ -25,8 +25,8 @@ export const ElementNodes = {
     output: DatastoreNode,
 };
 
-export function getNewElement(type: string, position: XYPosition, nodeName: string): Node {
-    return {
+export function getNewElement(type: string, position: XYPosition, nodeName: string, parentNode?: string): Node {
+    const newElem: Node = {
         id: getElementId(),
         type,
         position,
@@ -36,6 +36,11 @@ export function getNewElement(type: string, position: XYPosition, nodeName: stri
                 type === 'output' ? { width: 80, height: 60 } :   // entity
                     type === 'default' ? { width: 80, height: 60 } : undefined,   // datastore
     }
+    if (parentNode) {
+        newElem.parentId = parentNode;
+        newElem.extent = 'parent';
+    }
+    return newElem;
 }
 
 /**
