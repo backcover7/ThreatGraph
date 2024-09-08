@@ -1,11 +1,11 @@
 'use client'
 
-import React, { useRef, useCallback } from 'react';
+import React, {useRef, useCallback, useState} from 'react';
 import {
     ReactFlow, MiniMap, Controls, Connection,
     addEdge,
     useNodesState, useEdgesState, useReactFlow,
-    Node, XYPosition,
+    Node, XYPosition, NodeMouseHandler,
 } from '@xyflow/react';
 import Tooltip from '@/app/components/Tooltip';
 import { useDnD } from '@/app/components/DnDContext';
@@ -20,17 +20,20 @@ const Canvas: React.FC = () => {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [type, nodeName] = useDnD();
+    const [isDragging, setIsDragging] = useState(false);
 
     const onConnect = useCallback(
         (params: Connection) => setEdges((eds) => addEdge(params, eds)),
         []
     );
 
+    // Drag new element
     const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
         event.dataTransfer.dropEffect = 'move';
     }, []);
 
+    // Drop new element
     const onDrop = useCallback(
         (event: React.DragEvent<HTMLDivElement>) => {
             event.preventDefault();
@@ -38,8 +41,8 @@ const Canvas: React.FC = () => {
 
             const position = screenToFlowPosition({ x: event.clientX, y: event.clientY });
 
-            setNodes((nds) => {
-                const zoneNodes = nds.filter(node => (node as Node).type === 'group');
+            setNodes((nodes) => {
+                const zoneNodes = nodes.filter(node => (node as Node).type === 'group');
                 const parentZone = zoneNodes.find(zoneNode => isNodeCompletelyInsideZone({ position, style: { width: 1, height: 1 } } as Node, zoneNode));
 
                 let newPosition: XYPosition = position;
@@ -55,15 +58,58 @@ const Canvas: React.FC = () => {
 
                 const newElem = getNewElement(type, newPosition, nodeName, parentNode);
 
-                return groupElements(push(nds, newElem as never)) as never;
+                return groupElements(push(nodes, newElem as never)) as never;
             });
         },
         [screenToFlowPosition, setNodes, type, nodeName],
     );
 
+    const onNodeDragStart = useCallback(() => {
+        setIsDragging(true);
+    }, []);
+
+    // drag existing element
     const onNodeDragStop = useCallback(() => {
-        setNodes((nds) => groupElements(nds as Node[]) as never)
+        setIsDragging(false);
+        setNodes((nodes) => {
+            return groupElements(nodes as Node[]) as never;
+        })
     }, [setNodes]);
+
+    const onNodeMouseLeave = useCallback((event: React.MouseEvent, params: Node) => {
+        if (isDragging) {
+            // Detach node from group
+            setNodes(nodes => {
+                return nodes.map(n => {
+                    if ((n as Node).id === params.id) {
+                        // TODO node is dragged out of group, need to reassign a new position
+                        // Calculate the new absolute position
+                        const parentNode = nodes.find(pn => (pn as Node).id === (n as Node).parentId);
+                        const newPosition = parentNode
+                            ? {
+                                x: (parentNode as Node).position.x + (n as Node).position.x,
+                                y: (parentNode as Node).position.y + (n as Node).position.y
+                            }
+                            : (n as Node).position;
+
+                        // Create the updated node
+                        const updatedNode = {
+                            ...(n as Node),
+                            parentId: undefined,
+                            extent: undefined,
+                            position: newPosition,
+                            positionAbsolute: newPosition
+                        };
+
+                        console.log('Node detached from group:', updatedNode.id);
+                        return updatedNode;
+                    }
+                    return n;
+                }) as never[];
+            });
+            console.log('Node is being dragged and left its parent group');
+        }
+    }, [isDragging, setNodes]);
 
     return (
         <div className="dndflow">
@@ -76,7 +122,9 @@ const Canvas: React.FC = () => {
                     onConnect={onConnect}
                     onDragOver={onDragOver}
                     onDrop={onDrop}
+                    onNodeDragStart={onNodeDragStart}
                     onNodeDragStop={onNodeDragStop}
+                    onNodeMouseLeave={onNodeMouseLeave}
                     fitView
                     defaultEdgeOptions={flowOptions}
                     nodeTypes={ElementNodes}

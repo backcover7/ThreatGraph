@@ -47,7 +47,7 @@ export function groupElements(nodes: Node[]): Node[] {
     const zoneNodes = nodes.filter(node => node.type === 'group');
 
     return nodes.map(node => {
-        if (node.parentId) return node;  // skip node which has already been grouped  TODO nested zone
+        if (node.parentId) return node;  // skip node which has already been grouped
 
         const parentZone = zoneNodes.find(zoneNode => isNodeCompletelyInsideZone(node, zoneNode));
 
