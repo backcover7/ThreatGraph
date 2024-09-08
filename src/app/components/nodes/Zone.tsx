@@ -26,7 +26,7 @@ export function groupElements(nodes: Node[]): Node[] {
             return {
                 ...node,
                 parentId: parentZone.id,
-                extent: 'parent',
+                // extent: 'parent',
                 position: {
                     x: node.position.x - parentZone.position.x,
                     y: node.position.y - parentZone.position.y,
@@ -43,7 +43,7 @@ export function isNodeCompletelyInsideZone(node: Node, zoneNode: Node): boolean 
     const nodeBottom = node.position.y + (node.style?.height as number || 0);
     const zoneRight = zoneNode.position.x + (zoneNode.style?.width as number || 0);
     const zoneBottom = zoneNode.position.y + (zoneNode.style?.height as number || 0);
-
+    debugger;
     return (
         node.position.x >= zoneNode.position.x &&
         node.position.y >= zoneNode.position.y &&

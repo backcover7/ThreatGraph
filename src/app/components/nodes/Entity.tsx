@@ -1,17 +1,17 @@
-import React, { memo, useState, useCallback } from 'react';
-import { Handle, Position, NodeToolbar } from '@xyflow/react';
+import React, { memo } from 'react';
+import { Handle, Position, NodeProps } from '@xyflow/react';
 import { ElementToolbar } from "@/app/components/nodes/Element";
 
-interface EntityNodeProps {
+interface EntityNodeProps extends NodeProps {
     data: {
         label: string;
-    },
+    };
     type: 'default';
 }
 
-const EntityNode: React.FC<EntityNodeProps> = ({ data }) => {
+const EntityNode: React.FC<EntityNodeProps> = ({ data, selected }) => {
     return (
-        <ElementToolbar>
+        <ElementToolbar selected={selected}>
             <div className="font-bold">{data.label}</div>
             <Handle type="target" position={Position.Top} id="entity-top-target"/>
             <Handle type="source" position={Position.Top} id="entity-top-source"/>

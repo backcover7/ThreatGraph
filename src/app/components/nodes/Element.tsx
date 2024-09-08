@@ -1,8 +1,8 @@
-import {Node, NodeToolbar, Position, XYPosition} from "@xyflow/react";
+import { Node, NodeToolbar, Position, XYPosition } from "@xyflow/react";
 import ZoneNode from "@/app/components/nodes/Zone";
 import EntityNode from "@/app/components/nodes/Entity";
 import DatastoreNode from "@/app/components/nodes/Datastore";
-import {useCallback, useState} from "react";
+import React, {useCallback, useState} from "react";
 
 export const getElementId = () => crypto.randomUUID();
 
@@ -38,43 +38,38 @@ export function getNewElement(type: string, position: XYPosition, nodeName: stri
     }
     if (parentNode) {
         newElem.parentId = parentNode;
-        newElem.extent = 'parent';
+        // newElem.extent = 'parent';
     }
     return newElem;
 }
 
-/**
- * <ElementToolbar></ElementToolbar>
- * @param children
- * @constructor
- */
-export const ElementToolbar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [toolbarVisible, setToolbarVisible] = useState(false);
-
-    const toggleToolbar = useCallback(() => {
-        setToolbarVisible((prev) => !prev);
-    }, []);
+export const ElementToolbar: React.FC<{
+    children: React.ReactNode;
+    selected?: boolean;
+}> = ({ children, selected }) => {
+    const [_, setToolbarVisible] = useState(false);
 
     const hideToolbar = useCallback(() => {
         setToolbarVisible(false);
     }, []);
 
+    const onDetach = useCallback(() => {
+        console.log("Detach clicked");
+        // Implement detach logic here
+    }, []);
+
     return (
-        <div
-            style={{
-                width: '100%',
-                height: '100%',
-                cursor: 'pointer'
-            }}
-            onClick={toggleToolbar}>
-            {children}
+        <>
+            <div>
+                {children}
+            </div>
             <NodeToolbar
-                isVisible={toolbarVisible}
+                isVisible={selected}
                 position={Position.Top}
             >
-                <button onClick={() => console.log(children)}>Detach</button>
+                <button onClick={onDetach}>Detach</button>
                 <button onClick={hideToolbar}>Close</button>
             </NodeToolbar>
-        </div>
+        </>
     );
 };

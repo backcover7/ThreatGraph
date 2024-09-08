@@ -1,20 +1,20 @@
 'use client'
 
 import React, {memo} from 'react';
-import { Handle, Position } from "@xyflow/react";
+import {Handle, NodeProps, Position} from "@xyflow/react";
 import { DiDatabase } from 'react-icons/di';
 import { ElementToolbar } from "@/app/components/nodes/Element";
 
-interface DatastoreNodeProps {
+interface DatastoreNodeProps extends NodeProps{
     data: {
         label: string;
     },
     type: 'output',
 }
 
-const DatastoreNode: React.FC<DatastoreNodeProps> = ({ data }) => {
+const DatastoreNode: React.FC<DatastoreNodeProps> = ({ data, selected }) => {
     return (
-        <ElementToolbar>
+        <ElementToolbar selected={selected}>
             <div className="font-bold"><DiDatabase /></div>
             <Handle type="target" position={Position.Top} id="datastore-top-target" />
             <Handle type="target" position={Position.Right} id="datastore-right-target" />
