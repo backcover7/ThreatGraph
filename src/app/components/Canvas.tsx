@@ -33,12 +33,13 @@ const Canvas: React.FC = () => {
         (event: React.DragEvent<HTMLDivElement>) => {
             event.preventDefault();
             if (!type || !nodeName) return;
-            const position = screenToFlowPosition({
-                x: event.clientX,
-                y: event.clientY,
-            });
 
+            // Get the drop position
+            const position = screenToFlowPosition({ x: event.clientX, y: event.clientY });
+
+            // Create a new element
             const newElem =  getNewElement(type, position, nodeName);
+
             groupElements(nodes, position, newElem);
             setNodes((nds) => nds.concat([newElem as never]));
         },

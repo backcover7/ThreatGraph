@@ -1,7 +1,7 @@
 'use client'
 
-import { memo } from 'react';
-import {Node, NodeResizer, XYPosition} from '@xyflow/react';
+import React, { memo, useState, useCallback } from 'react';
+import { Node, NodeResizer, XYPosition, NodeToolbar, Position } from '@xyflow/react';
 
 interface ZoneNodeProps {
     data: {
