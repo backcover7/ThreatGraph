@@ -1,5 +1,3 @@
-'use client'
-
 import { Node } from "@xyflow/react";
 
 function compare(node1: Node, node2: Node): number {
