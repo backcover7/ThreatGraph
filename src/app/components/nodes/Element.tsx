@@ -2,7 +2,7 @@ import { Node, NodeToolbar, Position, XYPosition } from "@xyflow/react";
 import ZoneNode from "@/app/components/nodes/Zone";
 import EntityNode from "@/app/components/nodes/Entity";
 import DatastoreNode from "@/app/components/nodes/Datastore";
-import React, {useCallback, useState} from "react";
+import React, {useCallback } from "react";
 
 export const getElementId = () => crypto.randomUUID();
 

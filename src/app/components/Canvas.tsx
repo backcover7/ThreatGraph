@@ -15,7 +15,7 @@ import { ElementColor, ElementNodes, getElementId, getNewElement } from "@/app/c
 import { push } from "@/app/components/utils";
 
 const Canvas: React.FC = () => {
-    const { screenToFlowPosition } = useReactFlow();
+    const { screenToFlowPosition, addNodes } = useReactFlow();
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -74,8 +74,8 @@ const Canvas: React.FC = () => {
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
                     onConnect={onConnect}
-                    onDrop={onDrop}
                     onDragOver={onDragOver}
+                    onDrop={onDrop}
                     onNodeDragStop={onNodeDragStop}
                     fitView
                     defaultEdgeOptions={flowOptions}
