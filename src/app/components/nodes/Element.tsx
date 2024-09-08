@@ -38,7 +38,7 @@ export function getNewElement(type: string, position: XYPosition, nodeName: stri
     }
     if (parentNode) {
         newElem.parentId = parentNode;
-        // newElem.extent = 'parent';
+        newElem.extent = 'parent';
     }
     return newElem;
 }
@@ -47,15 +47,10 @@ export const ElementToolbar: React.FC<{
     children: React.ReactNode;
     selected?: boolean;
 }> = ({ children, selected }) => {
-    const [_, setToolbarVisible] = useState(false);
-
-    const hideToolbar = useCallback(() => {
-        setToolbarVisible(false);
-    }, []);
 
     const onDetach = useCallback(() => {
         console.log("Detach clicked");
-        // Implement detach logic here
+        // TODO Implement detach logic here
     }, []);
 
     return (
@@ -68,7 +63,6 @@ export const ElementToolbar: React.FC<{
                 position={Position.Top}
             >
                 <button onClick={onDetach}>Detach</button>
-                <button onClick={hideToolbar}>Close</button>
             </NodeToolbar>
         </>
     );
