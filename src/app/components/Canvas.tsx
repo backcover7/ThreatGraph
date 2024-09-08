@@ -5,13 +5,14 @@ import {
     ReactFlow, MiniMap, Controls, Connection,
     addEdge,
     useNodesState, useEdgesState, useReactFlow,
-    Node, XYPosition, Position,
+    Node, XYPosition,
 } from '@xyflow/react';
 import Tooltip from '@/app/components/Tooltip';
 import { useDnD } from '@/app/components/DnDContext';
 import { groupElements, isNodeCompletelyInsideZone } from "@/app/components/nodes/Zone";
 import { flowOptions } from "@/app/components/nodes/Flow";
 import { ElementColor, ElementNodes, getElementId, getNewElement } from "@/app/components/nodes/Element";
+import { push } from "@/app/components/utils";
 
 const Canvas: React.FC = () => {
     const { screenToFlowPosition } = useReactFlow();
@@ -54,7 +55,7 @@ const Canvas: React.FC = () => {
 
                 const newElem = getNewElement(type, newPosition, nodeName, parentNode);
 
-                return groupElements(nds.concat(newElem as never)) as never;
+                return groupElements(push(nds, newElem as never)) as never;
             });
         },
         [screenToFlowPosition, setNodes, type, nodeName],
