@@ -10,7 +10,7 @@ import Tooltip from '@/app/components/Tooltip';
 import { useDnD } from '@/app/components/DnDContext';
 import { groupElements } from "@/app/components/nodes/Zone";
 import { flowOptions } from "@/app/components/nodes/Flow";
-import {ElementColor, ElementNodes, getElementId, getNewElement} from "@/app/components/nodes/Element";
+import { ElementColor, ElementNodes, getElementId, getNewElement } from "@/app/components/nodes/Element";
 
 const Canvas: React.FC = () => {
     const { screenToFlowPosition } = useReactFlow();
@@ -34,17 +34,17 @@ const Canvas: React.FC = () => {
             event.preventDefault();
             if (!type || !nodeName) return;
 
-            // Get the drop position
             const position = screenToFlowPosition({ x: event.clientX, y: event.clientY });
+            const newElem = getNewElement(type, position, nodeName);
 
-            // Create a new element
-            const newElem =  getNewElement(type, position, nodeName);
-
-            groupElements(nodes, position, newElem);
-            setNodes((nds) => nds.concat([newElem as never]));
+            setNodes((nds) => groupElements(nds.concat(newElem as never)) as never);
         },
-        [screenToFlowPosition, setNodes, type, nodeName, nodes],
+        [screenToFlowPosition, setNodes, type, nodeName],
     );
+
+    const onNodeDragStop = useCallback(() => {
+        setNodes((nds) => groupElements(nds) as never)
+    }, [setNodes]);
 
     return (
         <div className="dndflow">
@@ -57,6 +57,7 @@ const Canvas: React.FC = () => {
                     onConnect={onConnect}
                     onDrop={onDrop}
                     onDragOver={onDragOver}
+                    onNodeDragStop={onNodeDragStop}
                     fitView
                     defaultEdgeOptions={flowOptions}
                     nodeTypes={ElementNodes}

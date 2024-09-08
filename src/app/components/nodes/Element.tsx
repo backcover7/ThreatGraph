@@ -1,4 +1,4 @@
-import {Node, NodeResizer, NodeToolbar, Position, XYPosition} from "@xyflow/react";
+import {Node, NodeToolbar, Position, XYPosition} from "@xyflow/react";
 import ZoneNode from "@/app/components/nodes/Zone";
 import EntityNode from "@/app/components/nodes/Entity";
 import DatastoreNode from "@/app/components/nodes/Datastore";
@@ -32,9 +32,9 @@ export function getNewElement(type: string, position: XYPosition, nodeName: stri
         position,
         data: { label: nodeName },
         style:
-            type === 'group' ? { width: 300, height: 180 } :  // zone
-                type === 'output' ? { width: 100, height: 60 } :   // entity
-                    type === 'default' ? { width: 100, height: 60 } : undefined,   // datastore
+            type === 'group' ? { width: 400, height: 240 } :  // zone
+                type === 'output' ? { width: 80, height: 60 } :   // entity
+                    type === 'default' ? { width: 80, height: 60 } : undefined,   // datastore
     }
 }
 

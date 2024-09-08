@@ -1,7 +1,5 @@
-'use client'
-
-import React, { memo, useState, useCallback } from 'react';
-import { Node, NodeResizer, XYPosition, NodeToolbar, Position } from '@xyflow/react';
+import { memo } from 'react';
+import { Node, NodeResizer, XYPosition } from '@xyflow/react';
 
 interface ZoneNodeProps {
     data: {
@@ -18,7 +16,6 @@ function ZoneNode({ data }: ZoneNodeProps) {
                 minHeight={ 50 }
                 color = '#ececec'
             />
-            {/*<div style={{ padding: 10 }}>{data.label}</div>*/}
             <div
                 style={{
                     display: 'flex',
@@ -34,25 +31,42 @@ function ZoneNode({ data }: ZoneNodeProps) {
     );
 }
 
-export function groupElements(nodes: Node[], position: XYPosition, newNode: Node): void {
-    const parentNode = nodes.find((node) =>
-        node.type === 'group' &&
-        position.x > node.position.x &&
-        position.x < node.position.x + (node.style?.width as number || 0) &&
-        position.y > node.position.y &&
-        position.y < node.position.y + (node.style?.height as number || 0)
+export function groupElements(nodes: Node[]): Node[] {
+    const zoneNodes = nodes.filter(node => node.type === 'group');
+
+    return nodes.map(node => {
+        if (node.type === 'group') return node;
+
+        const parentZone = zoneNodes.find(zoneNode => isNodeCompletelyInsideZone(node, zoneNode));
+
+        if (parentZone) {
+            return {
+                ...node,
+                parentId: parentZone.id,
+                extent: 'parent',
+                position: {
+                    x: node.position.x - parentZone.position.x,
+                    y: node.position.y - parentZone.position.y,
+                },
+            };
+        }
+
+        return node;
+    });
+}
+
+function isNodeCompletelyInsideZone(node: Node, zoneNode: Node): boolean {
+    const nodeRight = node.position.x + (node.style?.width as number || 0);
+    const nodeBottom = node.position.y + (node.style?.height as number || 0);
+    const zoneRight = zoneNode.position.x + (zoneNode.style?.width as number || 0);
+    const zoneBottom = zoneNode.position.y + (zoneNode.style?.height as number || 0);
+
+    return (
+        node.position.x >= zoneNode.position.x &&
+        node.position.y >= zoneNode.position.y &&
+        nodeRight <= zoneRight &&
+        nodeBottom <= zoneBottom
     );
-
-    if (parentNode) {
-        newNode.parentId = parentNode.id;
-        newNode.extent = 'parent';
-
-        // Adjust the position to be relative to the parent
-        newNode.position = {
-            x: position.x - parentNode.position.x,
-            y: position.y - parentNode.position.y,
-        };
-    }
 }
 
 export default memo(ZoneNode);
