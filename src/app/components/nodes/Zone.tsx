@@ -34,7 +34,7 @@ function ZoneNode({ data }: ZoneNodeProps) {
     );
 }
 
-export function groupElements(nodes: Node[], position: XYPosition, newNode: Node) {
+export function groupElements(nodes: Node[], position: XYPosition, newNode: Node): void {
     const parentNode = nodes.find((node) =>
         node.type === 'group' &&
         position.x > node.position.x &&

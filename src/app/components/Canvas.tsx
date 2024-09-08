@@ -2,31 +2,26 @@
 
 import React, { useRef, useCallback } from 'react';
 import {
-    ReactFlow, MiniMap, Controls,
+    ReactFlow, MiniMap, Controls, Connection,
     addEdge,
     useNodesState, useEdgesState, useReactFlow,
-    Node, Edge, Connection,
-    MarkerType, XYPosition
 } from '@xyflow/react';
 import Tooltip from '@/app/components/Tooltip';
 import { useDnD } from '@/app/components/DnDContext';
 import { groupElements } from "@/app/components/nodes/Zone";
 import { flowOptions } from "@/app/components/nodes/Flow";
-import { ElementColor, ElementNodes, getNewElement } from "@/app/components/nodes/Element";
-
-const initialNodes: Node[] = [];
-const initialEdges: Edge[] = [];
+import {ElementColor, ElementNodes, getElementId, getNewElement} from "@/app/components/nodes/Element";
 
 const Canvas: React.FC = () => {
-    const reactFlowWrapper = useRef<HTMLDivElement>(null);
-    const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-    const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
     const { screenToFlowPosition } = useReactFlow();
+    const reactFlowWrapper = useRef<HTMLDivElement>(null);
+    const [nodes, setNodes, onNodesChange] = useNodesState([]);
+    const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [type, nodeName] = useDnD();
 
     const onConnect = useCallback(
         (params: Connection) => setEdges((eds) => addEdge(params, eds)),
-        [],
+        []
     );
 
     const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
@@ -43,11 +38,11 @@ const Canvas: React.FC = () => {
                 y: event.clientY,
             });
 
-            const newElem = getNewElement(type, position, nodeName);
+            const newElem =  getNewElement(type, position, nodeName);
             groupElements(nodes, position, newElem);
-            setNodes((nds) => nds.concat(newElem));
+            setNodes((nds) => nds.concat([newElem as never]));
         },
-        [screenToFlowPosition, setNodes, type, nodeName],
+        [screenToFlowPosition, setNodes, type, nodeName, nodes],
     );
 
     return (
