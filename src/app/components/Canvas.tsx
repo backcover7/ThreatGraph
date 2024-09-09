@@ -50,7 +50,7 @@ const Canvas: React.FC = () => {
                 return groupElements(push(nodes, newElem as never)) as never;
             });
         },
-        [screenToFlowPosition, setNodes, type, nodeName, getInternalNode],
+        [screenToFlowPosition, setNodes, type, nodeName ],
     );
 
     const onNodeDragStart = useCallback(() => {
@@ -64,6 +64,13 @@ const Canvas: React.FC = () => {
             return groupElements(nodes as Node[]) as never;
         })
     }, [setNodes]);
+
+    const onNodeMouseEnter = useCallback((event: React.MouseEvent, params: Node) => {
+        if (isDragging) {
+            // TODO if a node is dragged from a zone to a nested zone
+            return;
+        }
+    }, [isDragging, setNodes]);
 
     const onNodeMouseLeave = useCallback((event: React.MouseEvent, params: Node) => {
         if (isDragging) {
@@ -108,6 +115,7 @@ const Canvas: React.FC = () => {
                     onNodeDragStart={onNodeDragStart}
                     onNodeDragStop={onNodeDragStop}
                     onNodeMouseLeave={onNodeMouseLeave}
+                    onNodeMouseEnter={onNodeMouseEnter}
                     fitView
                     defaultEdgeOptions={flowOptions}
                     nodeTypes={ElementNodes}

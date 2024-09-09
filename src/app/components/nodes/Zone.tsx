@@ -2,14 +2,16 @@ import React, {memo, useCallback} from 'react';
 import {Node, NodeProps, NodeResizer, ResizeDragEvent, ResizeParams, useReactFlow} from '@xyflow/react';
 import {EntityOrDatastoreHeight, EntityOrDatastoreWidth} from "@/app/components/nodes/Element";
 
+let getInternalNodeHook: (arg0: string) => any;
+
 interface ZoneNodeProps extends NodeProps {
     data: { label: string };
     type: 'group';
 }
 
 function ZoneNode({ id, data }: ZoneNodeProps) {
-    const {setNodes, getNodes} = useReactFlow();
-
+    const {setNodes, getNodes, getInternalNode} = useReactFlow();
+    getInternalNodeHook = getInternalNode;
     const onResizeEnd = useCallback((evt: ResizeDragEvent, params: ResizeParams) => {
         setNodes((nodes) => {
             // debugger;
@@ -25,7 +27,7 @@ function ZoneNode({ id, data }: ZoneNodeProps) {
                 // minWidth={EntityOrDatastoreWidth + 1}
                 // minHeight={EntityOrDatastoreHeight + 1}
             />
-            {/*<div className="font-bold p-2">{data.label}</div>*/}
+            <div className="font-bold p-2">{id}</div>
         </>
     );
 }
@@ -58,13 +60,16 @@ export function groupElements(nodes: Node[]): Node[] {
         const parentZone = zoneNodes.find(zoneNode => isNodeCompletelyInsideZone(node, zoneNode));
 
         if (parentZone) {
+            const internalZoneNode = getInternalNodeHook(parentZone.id);
+            const parentZoneX = internalZoneNode?.internals.positionAbsolute?.x ?? parentZone.position.x;
+            const parentZoneY = internalZoneNode?.internals.positionAbsolute?.y ?? parentZone.position.y;
             return {
                 ...node,
                 parentId: parentZone.id,
                 extent: 'parent',
                 position: {
-                    x: node.position.x - parentZone.position.x,
-                    y: node.position.y - parentZone.position.y,
+                    x: node.position.x - (parentZoneX ? parentZoneX : parentZone.position.x),
+                    y: node.position.y - (parentZoneY ? parentZoneY : parentZone.position.y),
                 },
             };
         }
@@ -78,13 +83,22 @@ export function isNodeCompletelyInsideZone(node: Node, zoneNode: Node): boolean 
 
     if (node.type === 'group' && getArea(node) >= getArea(zoneNode)) return false;
 
+    // const internalNode = getInternalNodeHook(node.id);
+    const internalZoneNode = getInternalNodeHook(zoneNode.id);
+
+    // const nodeX = internalNode?.internals.positionAbsolute?.x ?? node.position.x;
+    // const nodeY = internalNode?.internals.positionAbsolute?.y ?? node.position.y;
     const nodeRight = node.position.x + (Number(node.measured?.width) || Number(node.style?.width) || 0);
     const nodeBottom = node.position.y + (Number(node.measured?.height) || Number(node.style?.height) || 0);
-    const zoneRight = zoneNode.position.x + (Number(zoneNode.measured?.width) || Number(node.style?.width) || 0);
-    const zoneBottom = zoneNode.position.y + (Number(zoneNode.measured?.height) || Number(node.style?.height) || 0);
+
+    const zoneX = internalZoneNode?.internals.positionAbsolute?.x ?? zoneNode.position.x;
+    const zoneY = internalZoneNode?.internals.positionAbsolute?.y ?? zoneNode.position.y;
+    const zoneRight = zoneX + (Number(zoneNode.measured?.width) || Number(zoneNode.style?.width) || 0);
+    const zoneBottom = zoneY + (Number(zoneNode.measured?.height) || Number(zoneNode.style?.height) || 0);
+
     return (
-        node.position.x >= zoneNode.position.x &&
-        node.position.y >= zoneNode.position.y &&
+        node.position.x >= zoneX &&
+        node.position.y >= zoneY &&
         nodeRight <= zoneRight &&
         nodeBottom <= zoneBottom
     );

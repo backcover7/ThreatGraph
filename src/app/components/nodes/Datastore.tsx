@@ -12,14 +12,15 @@ interface DatastoreNodeProps extends NodeProps{
     type: 'output',
 }
 
-const DatastoreNode: React.FC<DatastoreNodeProps> = ({ data, selected }) => {
+const DatastoreNode: React.FC<DatastoreNodeProps> = ({ id, data, selected }) => {
     return (
         <ElementToolbar selected={selected}>
-            <div className="font-bold"><DiDatabase /></div>
-            <Handle type="target" position={Position.Top} id="datastore-top-target" />
-            <Handle type="target" position={Position.Right} id="datastore-right-target" />
-            <Handle type="target" position={Position.Bottom} id="datastore-botton-target" />
-            <Handle type="target" position={Position.Left} id="datastore-left-target" />
+            <div className="font-bold">{id}</div>
+            {/*<div className="font-bold"><DiDatabase/></div>*/}
+            <Handle type="target" position={Position.Top} id="datastore-top-target"/>
+            <Handle type="target" position={Position.Right} id="datastore-right-target"/>
+            <Handle type="target" position={Position.Bottom} id="datastore-botton-target"/>
+            <Handle type="target" position={Position.Left} id="datastore-left-target"/>
         </ElementToolbar>
     );
 };

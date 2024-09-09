@@ -9,10 +9,10 @@ interface EntityNodeProps extends NodeProps {
     type: 'default';
 }
 
-const EntityNode: React.FC<EntityNodeProps> = ({ data, selected }) => {
+const EntityNode: React.FC<EntityNodeProps> = ({ id, data, selected }) => {
     return (
         <ElementToolbar selected={selected}>
-            <div className="font-bold">{data.label}</div>
+            <div className="font-bold">{id}</div>
             <Handle type="target" position={Position.Top} id="entity-top-target"/>
             <Handle type="source" position={Position.Top} id="entity-top-source"/>
             <Handle type="target" position={Position.Right} id="entity-right-target"/>
