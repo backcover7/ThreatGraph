@@ -1,5 +1,5 @@
-import { Node } from "@xyflow/react";
-import {getArea, isNodeCompletelyInsideZone} from "@/app/components/nodes/Zone";
+import {Connection, Node} from "@xyflow/react";
+import {getArea} from "@/app/components/nodes/Zone";
 
 function compare(node1: Node, node2: Node): number {
     if (node1.type === 'group' && node2.type !== 'group') return -1;  // node1 should be placed before node2
@@ -21,4 +21,8 @@ export function push(arr: ReadonlyArray<Node>, element: Node): Node[] {
 
 export function concat(arr: ReadonlyArray<Node>, elements: ReadonlyArray<Node>): Node[] {
     return sortArray([...arr, ...elements]);
+}
+
+export function getEdgeIdFromConnection(conn: Connection) {
+    return 'xy-edge__' + conn.source + conn.sourceHandle + '-' + conn.target + conn.targetHandle;
 }

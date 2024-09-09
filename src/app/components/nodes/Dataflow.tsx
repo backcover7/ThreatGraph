@@ -1,6 +1,6 @@
 import {MarkerType} from "@xyflow/react";
 
-export const flowOptions = {
+export const Dataflow = {
     type: 'default',
     animated: true,
     label: 'process',

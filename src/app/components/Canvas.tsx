@@ -4,7 +4,7 @@ import React, {useCallback, useRef, useState} from 'react';
 import {
     addEdge,
     Connection,
-    Controls, Edge,
+    Controls, Edge, HandleType,
     MiniMap,
     Node,
     ReactFlow, reconnectEdge,
@@ -15,27 +15,47 @@ import {
 import Tooltip from '@/app/components/Tooltip';
 import {useDnD} from '@/app/components/DnDContext';
 import {detachElement, groupElements} from "@/app/components/nodes/Zone";
-import {flowOptions} from "@/app/components/nodes/Flow";
+import {Dataflow} from "@/app/components/nodes/Dataflow";
 import {ElementColor, ElementNodes, getNewElement} from "@/app/components/nodes/Element";
-import {push} from "@/app/components/utils";
+import {getEdgeIdFromConnection, push} from "@/app/components/utils";
 
 const Canvas: React.FC = () => {
     const { screenToFlowPosition, addNodes, getInternalNode } = useReactFlow();
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
+    const edgeReconnectSuccessful = useRef(true);
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [type, nodeName] = useDnD();
 
     const onConnect = useCallback(
-        (params: Connection) => setEdges((eds) => addEdge(params, eds)),
-        []
+        (conn: Connection) => setEdges((eds) => {
+            // Do not try to add edges between two same node with same positions
+            if ((eds as Edge[]).some(ed=> ed.id === getEdgeIdFromConnection(conn)))
+                return eds;
+            return addEdge(conn, eds);
+        }),
+        [setEdges, addEdge]
     );
 
-    const onReconnect = useCallback(
-        (oldEdge: Edge, newConnection: Connection) =>
-            setEdges((els) => reconnectEdge(oldEdge, newConnection, els) as never),
-        [],
-    );
+    const onReconnectStart = useCallback(() => {
+        edgeReconnectSuccessful.current = false;
+    }, []);
+
+    const onReconnect = useCallback((oldEdge: Edge, newConnection: Connection) => {
+        edgeReconnectSuccessful.current = true;
+        setEdges((edges) => {
+            // Do not try to add edges between two same node with same positions
+            if ((edges as Edge[]).some(ed=> ed.id === getEdgeIdFromConnection(newConnection)))
+                return edges;
+            return reconnectEdge(oldEdge, newConnection, edges) as never
+        });
+    },[setEdges]);
+
+    const onReconnectEnd = useCallback((event: MouseEvent | TouchEvent, edge: never, handleType: HandleType) => {
+        if (!edgeReconnectSuccessful.current) {
+            setEdges((eds) => eds.filter((e) => (e as Edge).id !== (edge as Edge).id));
+        }
+    }, [setEdges]);
 
     // Drag new element
     const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
@@ -83,13 +103,15 @@ const Canvas: React.FC = () => {
                     onEdgesChange={onEdgesChange}
                     edgesReconnectable={true}
                     onConnect={onConnect}
+                    onReconnectStart={onReconnectStart}
                     onReconnect={onReconnect}
+                    onReconnectEnd={onReconnectEnd}
                     onDragOver={onDragOver}
                     onDrop={onDrop}
                     onNodeDragStart={onNodeDragStart}
                     onNodeDragStop={onNodeDragStop}
                     fitView
-                    defaultEdgeOptions={flowOptions}
+                    defaultEdgeOptions={Dataflow}
                     nodeTypes={ElementNodes}
                 >
                     <Controls />
