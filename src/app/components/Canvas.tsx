@@ -81,8 +81,6 @@ const Canvas: React.FC = () => {
                     onDrop={onDrop}
                     onNodeDragStart={onNodeDragStart}
                     onNodeDragStop={onNodeDragStop}
-                    onNodeMouseLeave={onNodeMouseLeave}
-                    onNodeMouseEnter={onNodeMouseEnter}
                     fitView
                     defaultEdgeOptions={flowOptions}
                     nodeTypes={ElementNodes}
