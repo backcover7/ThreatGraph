@@ -47,6 +47,30 @@ function sortZoneNodes(nodes: Node[]): Node[] {
     return [...sortedZoneNodes, ...nonZoneNodes];
 }
 
+export function detachElement(detachedNode: Node, nodes: Node[]): never[] {
+    return nodes.map((n: Node) => {
+        if ((n as Node).id === detachedNode.id) {
+            // Calculate the new absolute position
+            const parentNode = nodes.find((pn: Node) => (pn as Node).id === (n as Node).parentId);
+            const newPosition = parentNode
+                ? {
+                    x: (parentNode as Node).position.x + (n as Node).position.x,
+                    y: (parentNode as Node).position.y + (n as Node).position.y
+                }
+                : (n as Node).position;
+
+            // Create the updated node
+            return {
+                ...(n as Node),
+                parentId: undefined,
+                extent: undefined,
+                position: newPosition,
+            };
+        }
+        return n;
+    }) as never[];
+}
+
 export function groupElements(nodes: Node[]): Node[] {
     // TODO nested zones, check from smallest zone
     nodes = sortZoneNodes(nodes);

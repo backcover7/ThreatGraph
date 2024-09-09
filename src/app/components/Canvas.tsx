@@ -14,7 +14,7 @@ import {
 } from '@xyflow/react';
 import Tooltip from '@/app/components/Tooltip';
 import {useDnD} from '@/app/components/DnDContext';
-import {groupElements} from "@/app/components/nodes/Zone";
+import {detachElement, groupElements} from "@/app/components/nodes/Zone";
 import {flowOptions} from "@/app/components/nodes/Flow";
 import {ElementColor, ElementNodes, getNewElement} from "@/app/components/nodes/Element";
 import {push} from "@/app/components/utils";
@@ -53,8 +53,11 @@ const Canvas: React.FC = () => {
         [screenToFlowPosition, setNodes, type, nodeName ],
     );
 
-    const onNodeDragStart = useCallback(() => {
-        setIsDragging(true);
+    const onNodeDragStart = useCallback((event: React.MouseEvent, detachedNode: Node) => {
+        // Detach node from group
+        setNodes(nodes => {
+            return detachElement(detachedNode, nodes);
+        });
     }, []);
 
     // drag existing element
@@ -75,29 +78,7 @@ const Canvas: React.FC = () => {
     const onNodeMouseLeave = useCallback((event: React.MouseEvent, params: Node) => {
         if (isDragging) {
             // Detach node from group
-            setNodes(nodes => {
-                return nodes.map(n => {
-                    if ((n as Node).id === params.id) {
-                        // Calculate the new absolute position
-                        const parentNode = nodes.find(pn => (pn as Node).id === (n as Node).parentId);
-                        const newPosition = parentNode
-                            ? {
-                                x: (parentNode as Node).position.x + (n as Node).position.x,
-                                y: (parentNode as Node).position.y + (n as Node).position.y
-                            }
-                            : (n as Node).position;
 
-                        // Create the updated node
-                        return {
-                            ...(n as Node),
-                            parentId: undefined,
-                            extent: undefined,
-                            position: newPosition,
-                        };
-                    }
-                    return n;
-                }) as never[];
-            });
         }
     }, [isDragging, setNodes]);
 
