@@ -1,5 +1,6 @@
 import React, {memo, useCallback} from 'react';
 import {Node, NodeProps, NodeResizer, ResizeDragEvent, ResizeParams, useReactFlow} from '@xyflow/react';
+import {EntityOrDatastoreHeight, EntityOrDatastoreWidth} from "@/app/components/nodes/Element";
 
 interface ZoneNodeProps extends NodeProps {
     data: { label: string };
@@ -21,6 +22,8 @@ function ZoneNode({ id, data }: ZoneNodeProps) {
             <NodeResizer
                 color="#ececec"
                 onResizeEnd={onResizeEnd}
+                // minWidth={EntityOrDatastoreWidth + 1}
+                // minHeight={EntityOrDatastoreHeight + 1}
             />
             {/*<div className="font-bold p-2">{data.label}</div>*/}
         </>
@@ -43,8 +46,11 @@ function sortZoneNodes(nodes: Node[]): Node[] {
 }
 
 export function groupElements(nodes: Node[]): Node[] {
+    // TODO nested zones, check from smallest zone
     nodes = sortZoneNodes(nodes);
-    const zoneNodes = nodes.filter(node => node.type === 'group');
+    let zoneNodes = nodes.filter(node => node.type === 'group');
+    // debugger;
+    zoneNodes = zoneNodes.reverse();
 
     return nodes.map(node => {
         if (node.parentId) return node;  // skip node which has already been grouped
@@ -70,7 +76,7 @@ export function groupElements(nodes: Node[]): Node[] {
 export function isNodeCompletelyInsideZone(node: Node, zoneNode: Node): boolean {
     if (node === zoneNode) return false;
 
-    if (getArea(node) >= getArea(zoneNode)) return false;
+    if (node.type === 'group' && getArea(node) >= getArea(zoneNode)) return false;
 
     const nodeRight = node.position.x + (Number(node.measured?.width) || Number(node.style?.width) || 0);
     const nodeBottom = node.position.y + (Number(node.measured?.height) || Number(node.style?.height) || 0);

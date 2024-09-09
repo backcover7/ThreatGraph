@@ -1,8 +1,11 @@
-import { Node, NodeToolbar, Position, XYPosition } from "@xyflow/react";
+import {Node, NodeToolbar, Position, XYPosition} from "@xyflow/react";
 import ZoneNode from "@/app/components/nodes/Zone";
 import EntityNode from "@/app/components/nodes/Entity";
 import DatastoreNode from "@/app/components/nodes/Datastore";
-import React, {useCallback } from "react";
+import React, {useCallback} from "react";
+
+export const EntityOrDatastoreWidth = 80;
+export const EntityOrDatastoreHeight = 60;
 
 export const getElementId = () => crypto.randomUUID();
 
@@ -25,22 +28,17 @@ export const ElementNodes = {
     output: DatastoreNode,
 };
 
-export function getNewElement(type: string, position: XYPosition, nodeName: string, parentNode?: string): Node {
-    const newElem: Node = {
+export function getNewElement(type: string, position: XYPosition, nodeName: string): Node {
+    return {
         id: getElementId(),
         type,
         position,
-        data: { label: nodeName },
+        data: {label: nodeName},
         style:
-            type === 'group' ? { width: 400, height: 240 } :  // zone
-                type === 'output' ? { width: 80, height: 60 } :   // entity
-                    type === 'default' ? { width: 80, height: 60 } : undefined,   // datastore
-    }
-    if (parentNode) {
-        newElem.parentId = parentNode;
-        newElem.extent = 'parent';
-    }
-    return newElem;
+            type === 'group' ? {width: 400, height: 240} :  // zone
+                type === 'output' ? {width: EntityOrDatastoreWidth, height: EntityOrDatastoreHeight} :   // entity
+                    type === 'default' ? {width: EntityOrDatastoreWidth, height: EntityOrDatastoreHeight} : undefined,   // datastore
+    };
 }
 
 export const ElementToolbar: React.FC<{
