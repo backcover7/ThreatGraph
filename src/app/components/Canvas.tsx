@@ -68,20 +68,6 @@ const Canvas: React.FC = () => {
         })
     }, [setNodes]);
 
-    const onNodeMouseEnter = useCallback((event: React.MouseEvent, params: Node) => {
-        if (isDragging) {
-            // TODO if a node is dragged from a zone to a nested zone
-            return;
-        }
-    }, [isDragging, setNodes]);
-
-    const onNodeMouseLeave = useCallback((event: React.MouseEvent, params: Node) => {
-        if (isDragging) {
-            // Detach node from group
-
-        }
-    }, [isDragging, setNodes]);
-
     return (
         <div className="dndflow">
             <div className="reactflow-wrapper" ref={reactFlowWrapper}>
