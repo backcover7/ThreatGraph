@@ -4,10 +4,10 @@ import React, {useCallback, useRef, useState} from 'react';
 import {
     addEdge,
     Connection,
-    Controls,
+    Controls, Edge,
     MiniMap,
     Node,
-    ReactFlow,
+    ReactFlow, reconnectEdge,
     useEdgesState,
     useNodesState,
     useReactFlow,
@@ -25,11 +25,16 @@ const Canvas: React.FC = () => {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [type, nodeName] = useDnD();
-    const [isDragging, setIsDragging] = useState(false);
 
     const onConnect = useCallback(
         (params: Connection) => setEdges((eds) => addEdge(params, eds)),
         []
+    );
+
+    const onReconnect = useCallback(
+        (oldEdge: Edge, newConnection: Connection) =>
+            setEdges((els) => reconnectEdge(oldEdge, newConnection, els) as never),
+        [],
     );
 
     // Drag new element
@@ -47,36 +52,38 @@ const Canvas: React.FC = () => {
 
             setNodes((nodes) => {
                 const newElem = getNewElement(type, position, nodeName);
-                return groupElements(push(nodes, newElem as never)) as never;
+                return groupElements(push(nodes, newElem as never), getInternalNode) as never;
             });
         },
-        [screenToFlowPosition, setNodes, type, nodeName ],
+        [screenToFlowPosition, setNodes, type, nodeName, getInternalNode],
     );
 
     const onNodeDragStart = useCallback((event: React.MouseEvent, detachedNode: Node) => {
         // Detach node from group
         setNodes(nodes => {
-            return detachElement(detachedNode, nodes);
+            return detachElement(detachedNode, nodes, getInternalNode);
         });
-    }, []);
+    }, [getInternalNode]);
 
     // drag existing element
     const onNodeDragStop = useCallback(() => {
-        setIsDragging(false);
         setNodes((nodes) => {
-            return groupElements(nodes as Node[]) as never;
+            return groupElements(nodes as Node[], getInternalNode) as never;
         })
-    }, [setNodes]);
+    }, [setNodes, getInternalNode]);
 
     return (
         <div className="dndflow">
             <div className="reactflow-wrapper" ref={reactFlowWrapper}>
                 <ReactFlow
+                    className="touch-flow"
                     nodes={nodes}
                     edges={edges}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
+                    edgesReconnectable={true}
                     onConnect={onConnect}
+                    onReconnect={onReconnect}
                     onDragOver={onDragOver}
                     onDrop={onDrop}
                     onNodeDragStart={onNodeDragStart}

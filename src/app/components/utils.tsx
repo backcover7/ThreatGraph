@@ -1,5 +1,5 @@
 import { Node } from "@xyflow/react";
-import {isNodeCompletelyInsideZone} from "@/app/components/nodes/Zone";
+import {getArea, isNodeCompletelyInsideZone} from "@/app/components/nodes/Zone";
 
 function compare(node1: Node, node2: Node): number {
     if (node1.type === 'group' && node2.type !== 'group') return -1;  // node1 should be placed before node2
@@ -7,7 +7,7 @@ function compare(node1: Node, node2: Node): number {
 
     // Both are group node
     // If node1 is in the node2, node2 should be placed before node1 because parentNode node2 should be previous to childNode node1
-    if (isNodeCompletelyInsideZone(node1, node2)) return 1;
+    if (getArea(node1) < getArea(node2)) return 1;
     else return -1;
 }
 
