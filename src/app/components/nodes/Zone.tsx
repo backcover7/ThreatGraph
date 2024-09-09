@@ -40,6 +40,7 @@ function sortZoneNodes(nodes: Node[]): Node[] {
  * Detach the node itself
  * @param detachedNode
  * @param nodes
+ * @param getInternalNode
  */
 export function detachElement(detachedNode: Node, nodes: Node[], getInternalNode: any): never[] {
     return nodes.map((n: Node) => {
@@ -67,6 +68,7 @@ export function detachElement(detachedNode: Node, nodes: Node[], getInternalNode
 /**
  * Group nodes
  * @param nodes
+ * @param getInternalNode
  */
 export function groupElements(nodes: Node[], getInternalNode: any): Node[] {
     nodes = sortZoneNodes(nodes);
