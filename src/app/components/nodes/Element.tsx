@@ -46,8 +46,8 @@ export const ElementToolbar: React.FC<{
     selected?: boolean;
 }> = ({ children, selected }) => {
 
-    const onDetach = useCallback(() => {
-        console.log("Detach clicked");
+    const onTest = useCallback(() => {
+        console.log("tese");
         // TODO Implement detach logic here
     }, []);
 
@@ -60,7 +60,7 @@ export const ElementToolbar: React.FC<{
                 isVisible={selected}
                 position={Position.Top}
             >
-                <button onClick={onDetach}>Detach</button>
+                <button onClick={onTest}>testbutton</button>
             </NodeToolbar>
         </>
     );

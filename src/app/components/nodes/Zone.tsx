@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, {memo, useCallback} from 'react';
 import { Node, NodeProps, NodeResizer, useReactFlow } from '@xyflow/react';
 import {EntityOrDatastoreHeight, EntityOrDatastoreWidth} from "@/app/components/nodes/Element";
 
@@ -8,11 +8,19 @@ interface ZoneNodeProps extends NodeProps {
 }
 
 function ZoneNode({ id, data, selected }: ZoneNodeProps) {
+    const { setNodes, getInternalNode } = useReactFlow();
+    const onResizeEnd = useCallback(() => {
+        setNodes((nodes) => {
+            return groupElements(nodes as Node[], getInternalNode) as never;
+        })
+    }, [setNodes, getInternalNode]);
+
     return (
         <>
             <NodeResizer
                 color="#ececec"
                 isVisible={selected}
+                onResizeEnd={onResizeEnd}
                 // minWidth={EntityOrDatastoreWidth + 1}
                 // minHeight={EntityOrDatastoreHeight + 1}
             />
