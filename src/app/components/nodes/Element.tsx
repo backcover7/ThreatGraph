@@ -80,7 +80,7 @@ export const ElementToolbar: React.FC<{
             <div style={{
                 position: 'relative',
                 color: '#555',
-                bottom: -35,
+                bottom: -15,
                 fontSize: 8,
             }}>
                 {getChildrenLabels()}
