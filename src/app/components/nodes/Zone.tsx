@@ -1,9 +1,11 @@
 import React, {memo, useCallback} from 'react';
-import { Node, NodeProps, NodeResizer, useReactFlow } from '@xyflow/react';
-import {ElementToolbar, EntityOrDatastoreHeight, EntityOrDatastoreWidth} from "@/app/components/nodes/Element";
+import {Node, NodeProps, NodeResizer, NodeToolbar, Position, useReactFlow} from '@xyflow/react';
+import {ElementToolbar} from "@/app/components/nodes/Element";
 
 interface ZoneNodeProps extends NodeProps {
-    data: { label: string };
+    data: {
+        label: string
+    };
     type: 'group';
 }
 
@@ -15,16 +17,36 @@ const ZoneNode: React.FC<ZoneNodeProps> = ({ id, data, selected }) => {
         })
     }, [setNodes, getInternalNode]);
 
+    const onTest = useCallback(() => {
+        console.log("test");
+        // TODO Implement logic here
+    }, []);
+
     return (
         <>
             <NodeResizer
-                color="#ececec"
+                color='#2561ff'
                 isVisible={selected}
+                minWidth={100}
+                minHeight={50}
                 onResizeEnd={onResizeEnd}
-                // minWidth={EntityOrDatastoreWidth + 1}
-                // minHeight={EntityOrDatastoreHeight + 1}
             />
-            <div className="font-bold p-2">{id}</div>
+            <NodeToolbar
+                isVisible={selected}
+                position={Position.Top}
+            >
+                <button onClick={onTest}>button1</button>
+                <button onClick={onTest}>button2</button>
+            </NodeToolbar>
+            <div style={{
+                position: 'absolute',
+                color: '#555',
+                top: 2,
+                fontSize: 8,
+                left: 5
+            }}>
+                {data.label}
+            </div>
         </>
     );
 }

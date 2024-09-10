@@ -14,7 +14,11 @@ const EntityNode: React.FC<EntityNodeProps> = ({ id, data, selected }) => {
     return (
         <ElementToolbar selected={selected} id={id}>
             {/*<div className="font-bold">{id}</div>*/}
-            <FaLaptop />
+            <FaLaptop style={{
+                position: 'relative',
+                top: 5,
+                fontSize: 30
+            }} />
             <Handle type="target" position={Position.Top} id="entity-top-target"/>
             <Handle type="source" position={Position.Top} id="entity-top-source"/>
             <Handle type="target" position={Position.Right} id="entity-right-target"/>

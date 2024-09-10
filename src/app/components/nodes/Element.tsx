@@ -5,9 +5,6 @@ import DatastoreNode from "@/app/components/nodes/Datastore";
 import React, {useCallback} from "react";
 import TextNode from "@/app/components/nodes/TextNode";
 
-export const EntityOrDatastoreWidth = 80;
-export const EntityOrDatastoreHeight = 60;
-
 export const getElementId = () => crypto.randomUUID();
 
 export const ElementColor = (node: Node): string => {
@@ -44,8 +41,8 @@ export function getNewElement(type: string, position: XYPosition, nodeName: stri
         },
         style:
             type === 'group' ? {width: 400, height: 240} :
-                type === 'output' ? {width: EntityOrDatastoreWidth, height: EntityOrDatastoreHeight} :
-                    type === 'default' ? {width: EntityOrDatastoreWidth, height: EntityOrDatastoreHeight} :
+                type === 'output' ? {width: 80, height: 60} :
+                    type === 'default' ? {width: 80, height: 60} :
                         type === 'annotation' ? {width: 150, height: 50} : undefined,
     };
 }
@@ -77,8 +74,8 @@ export const ElementToolbar: React.FC<{
                 isVisible={selected}
                 position={Position.Top}
             >
-                <button onClick={onTest}>bt1</button>
-                <button onClick={onTest}>bt2</button>
+                <button onClick={onTest}>button1</button>
+                <button onClick={onTest}>button2</button>
             </NodeToolbar>
             <div style={{
                 position: 'relative',

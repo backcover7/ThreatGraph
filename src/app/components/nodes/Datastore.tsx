@@ -16,7 +16,11 @@ const DatastoreNode: React.FC<DatastoreNodeProps> = ({ id, data, selected }) => 
     return (
         <ElementToolbar selected={selected} id={id}>
             {/*<div className="font-bold">{id}</div>*/}
-            <DiDatabase/>
+            <DiDatabase style={{
+                position: 'relative',
+                top: 5,
+                fontSize: 30
+            }} />
             <Handle type="target" position={Position.Top} id="datastore-top-target"/>
             <Handle type="target" position={Position.Right} id="datastore-right-target"/>
             <Handle type="target" position={Position.Bottom} id="datastore-botton-target"/>
