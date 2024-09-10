@@ -4,7 +4,7 @@ import React, {useCallback, useRef, useState} from 'react';
 import {
     addEdge,
     Connection,
-    Controls, Edge, HandleType,
+    Controls, Edge, getConnectedEdges, getIncomers, getOutgoers, HandleType,
     MiniMap,
     Node,
     ReactFlow, reconnectEdge,
@@ -17,7 +17,7 @@ import {useDnD} from '@/app/components/DnDContext';
 import {detachElement, groupElements} from "@/app/components/nodes/Zone";
 import {defaultEdgeOptions, edgeTypes} from "@/app/components/nodes/Dataflow";
 import {ElementColor, ElementNodes, getNewElement} from "@/app/components/nodes/Element";
-import {checkValidConnection, checkValidEdgesFromConnection, push} from "@/app/components/utils";
+import {isValidConnection, isValidEdgesFromConnection, push} from "@/app/components/utils";
 
 const Canvas: React.FC = () => {
     const { screenToFlowPosition, addNodes, getInternalNode } = useReactFlow();
@@ -29,11 +29,11 @@ const Canvas: React.FC = () => {
 
     const onConnect = useCallback(
         (conn: Connection) => setEdges((edges) => {
-            if(!checkValidConnection(conn)) return edges;
+            if(!isValidConnection(conn)) return edges;
 
             const label = `${`hello`}`;
             // Do not try to add edges between two same node with same positions
-            if ((edges as Edge[]).some(ed=> checkValidEdgesFromConnection(conn, ed.id)))
+            if ((edges as Edge[]).some(ed=> !isValidEdgesFromConnection(conn, ed.id)))
                 return edges;
             return addEdge({ ...conn, data: { label }, type: 'process' }, edges) as never;
         }),
@@ -47,9 +47,9 @@ const Canvas: React.FC = () => {
     const onReconnect = useCallback((oldEdge: Edge, newConnection: Connection) => {
         edgeReconnectSuccessful.current = true;
         setEdges((edges) => {
-            if(!checkValidConnection(newConnection)) return edges;
+            if(!isValidConnection(newConnection)) return edges;
             // Do not try to add edges between two same node with same positions
-            if ((edges as Edge[]).some(ed=> checkValidEdgesFromConnection(newConnection, ed.id)))
+            if ((edges as Edge[]).some(ed=> !isValidEdgesFromConnection(newConnection, ed.id)))
                 return edges;
             return reconnectEdge(oldEdge, newConnection, edges) as never
         });
@@ -98,6 +98,33 @@ const Canvas: React.FC = () => {
             return groupElements(nodes as Node[], getInternalNode) as never;
         })
     }, [setNodes, getInternalNode]);
+
+    const onNodesDelete = useCallback(
+        (deleted: Node[]) => {
+            setEdges((edges) =>
+                deleted.reduce((acc: Edge[], node: Node) => {
+                    const incomers = getIncomers(node, nodes, edges);
+                    const outgoers = getOutgoers(node, nodes, edges);
+                    const connectedEdges = getConnectedEdges([node], edges);
+
+                    const remainingEdges = acc.filter(
+                        (edge) => !connectedEdges.includes(edge as never)
+                    );
+
+                    const createdEdges = incomers.flatMap(({ id: source }) =>
+                        outgoers.map(({ id: target }) => ({
+                            id: `${source}->${target}`,
+                            source,
+                            target,
+                        }))
+                    );
+
+                    return [...remainingEdges, ...createdEdges];
+                }, edges) as never
+            );
+        },
+        [nodes, edges]
+    );
 
     return (
         <div className="dndflow">
