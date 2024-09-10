@@ -1,15 +1,15 @@
 import React, { memo, useState, useCallback, useEffect, useRef } from 'react';
-import { useReactFlow } from '@xyflow/react';
+import { NodeProps, useReactFlow } from '@xyflow/react';
 
-interface TextNodeProps {
-    id: string;
+interface TextNodeProps extends NodeProps {
     data: {
         label: string;
         isNew?: boolean;
     };
+    type: 'annotation';
 }
 
-function TextNode({ id, data }: TextNodeProps): React.ReactElement {
+const Text: React.FC<TextNodeProps> = ({ id, data }) => {
     const [isEditing, setIsEditing] = useState(data.isNew ?? false);
     const [text, setText] = useState(data.label);
     const { setNodes } = useReactFlow();
@@ -50,28 +50,28 @@ function TextNode({ id, data }: TextNodeProps): React.ReactElement {
 
     return (
         <div style={{ padding: 0, display: 'flex', fontSize: 12 }}>
-    {isEditing ? (
-            <input
-                ref={inputRef}
-        type="text"
-        value={text}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        onKeyDown={handleKeyDown}
-        className="blinking-cursor"
-        style={{
-        fontSize: 12,
-            width: '100%',
-            border: 'none',
-            outline: 'none',
-            background: 'transparent'
-    }}
-        />
-    ) : (
-        <div onDoubleClick={() => setIsEditing(true)}>{text}</div>
-    )}
-    </div>
-);
-}
+            {isEditing ? (
+                <input
+                    ref={inputRef}
+                    type="text"
+                    value={text}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    onKeyDown={handleKeyDown}
+                    className="blinking-cursor"
+                    style={{
+                        fontSize: 12,
+                        width: '100%',
+                        border: 'none',
+                        outline: 'none',
+                        background: 'transparent'
+                    }}
+                />
+            ) : (
+                <div onDoubleClick={() => setIsEditing(true)}>{text}</div>
+            )}
+        </div>
+    );
+};
 
-export default memo(TextNode);
+export default memo(Text);

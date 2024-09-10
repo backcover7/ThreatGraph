@@ -3,7 +3,7 @@ import ZoneNode from "@/app/components/nodes/Zone";
 import EntityNode from "@/app/components/nodes/Entity";
 import DatastoreNode from "@/app/components/nodes/Datastore";
 import React, {useCallback} from "react";
-import TextNode from "@/app/components/nodes/TextNode";
+import TextNode from "@/app/components/nodes/Text";
 
 export const getElementId = () => crypto.randomUUID();
 
