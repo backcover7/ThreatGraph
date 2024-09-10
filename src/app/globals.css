@@ -26,11 +26,12 @@ body,
 }
 
 .tooltip-container {
-  display: flex;
-  justify-content: center;
-  padding: 10px;
+  display: flow;
+  justify-content: normal;
+  padding: 2px;
   background: #fcfcfc;
   border-bottom: 1px solid #eee;
+  float: left;
 }
 
 .tooltip {
@@ -40,7 +41,7 @@ body,
 
 .dndflow .reactflow-wrapper {
   flex-grow: 1;
-  height: calc(100% - 60px); /* Adjust based on the height of your tooltip */
+  height: calc(98%); /* Adjust based on the height of your tooltip */
 }
 
 .dndflow .dndnode {
@@ -52,7 +53,6 @@ body,
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: grab;
   font-size: 12px;
 }
 
@@ -101,13 +101,14 @@ body,
 
 @keyframes blink {
   0% { opacity: 1; }
-  50% { opacity: 0; }
+  33% { opacity: 0; }
+  66% { opacity: 1; }
   100% { opacity: 1; }
 }
 
 .blinking-cursor {
   caret-color: black;
-  animation: blink 1s infinite;
+  animation: blink 0.7s infinite;
 }
 
 .blinking-cursor:focus {

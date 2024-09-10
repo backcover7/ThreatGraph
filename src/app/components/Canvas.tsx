@@ -152,6 +152,7 @@ const Canvas: React.FC = () => {
                     edges={edges}
                     edgeTypes={edgeTypes}
                     defaultEdgeOptions={defaultEdgeOptions}
+                    style={{ cursor: 'default' }}
                 >
                     <Controls/>
                     <MiniMap nodeColor={ElementColor} nodeStrokeWidth={3} zoomable pannable/>
