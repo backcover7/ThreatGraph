@@ -10,7 +10,7 @@ interface ZoneNodeProps extends NodeProps {
 
 const ZoneNode: React.FC<ZoneNodeProps> = ({ id, data, selected }) => {
     const { setNodes, getInternalNode } = useReactFlow();
-    
+
     const onResizeEnd = useCallback(() => {
         setNodes((nodes) => {
             return groupElements(nodes as Node[], getInternalNode, setNodes) as never;
