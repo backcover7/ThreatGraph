@@ -33,19 +33,10 @@ const Canvas: React.FC = () => {
             // Do not try to add edges between two same node with same positions
             if ((eds as Edge[]).some(ed=> ed.id === getEdgeIdFromConnection(conn)))
                 return eds;
-            return addEdge({ ...conn, data: { label }, type: 'custom' }, eds) as never;
+            return addEdge({ ...conn, data: { label }, type: 'process' }, eds) as never;
         }),
         [setEdges, addEdge]
     );
-
-    // const onConnect = useCallback(
-    //     (params: Connection) => {
-    //         // You can set a default label or generate one based on the connection
-    //         const label = `Flow ${params.source} -> ${params.target}`;
-    //         setEdges((eds) => addEdge({ ...params, data: { label }, type: 'custom' }, eds));
-    //     },
-    //     [setEdges]
-    // );
 
     const onReconnectStart = useCallback(() => {
         edgeReconnectSuccessful.current = false;

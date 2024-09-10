@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { Handle, Position, NodeProps } from '@xyflow/react';
 import { ElementToolbar } from "@/app/components/nodes/Element";
+import { FaLaptop } from "react-icons/fa";
 
 interface EntityNodeProps extends NodeProps {
     data: {
@@ -11,8 +12,9 @@ interface EntityNodeProps extends NodeProps {
 
 const EntityNode: React.FC<EntityNodeProps> = ({ id, data, selected }) => {
     return (
-        <ElementToolbar selected={selected}>
-            <div className="font-bold">{id}</div>
+        <ElementToolbar selected={selected} id={id}>
+            {/*<div className="font-bold">{id}</div>*/}
+            <FaLaptop />
             <Handle type="target" position={Position.Top} id="entity-top-target"/>
             <Handle type="source" position={Position.Top} id="entity-top-source"/>
             <Handle type="target" position={Position.Right} id="entity-right-target"/>

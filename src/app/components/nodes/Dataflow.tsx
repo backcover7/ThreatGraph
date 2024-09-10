@@ -2,7 +2,7 @@ import React from 'react';
 import {BaseEdge, Edge, EdgeLabelRenderer, EdgeProps, getBezierPath, MarkerType} from '@xyflow/react';
 
 export const defaultEdgeOptions = {
-    type: 'custom',
+    type: 'process',
     markerEnd: {
         type: MarkerType.ArrowClosed,
         width: 20,
@@ -43,11 +43,12 @@ const Dataflow: React.FC<EdgeProps<Edge<{ label: string }>>> = ({
                     style={{
                         position: 'absolute',
                         transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-                        background: '#ffcc00',
-                        padding: 10,
-                        borderRadius: 5,
-                        fontSize: 12,
-                        fontWeight: 700,
+                        background: '#cfe0ff',
+                        padding: 5,
+                        borderRadius: 10,
+                        fontSize: 10,
+                        fontWeight: 400,
+                        opacity: 0.9,
                     }}
                     className="nodrag nopan"
                 >
@@ -59,5 +60,5 @@ const Dataflow: React.FC<EdgeProps<Edge<{ label: string }>>> = ({
 };
 
 export const edgeTypes = {
-    custom: Dataflow,
+    process: Dataflow,
 };

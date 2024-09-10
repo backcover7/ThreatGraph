@@ -14,9 +14,9 @@ interface DatastoreNodeProps extends NodeProps{
 
 const DatastoreNode: React.FC<DatastoreNodeProps> = ({ id, data, selected }) => {
     return (
-        <ElementToolbar selected={selected}>
-            <div className="font-bold">{id}</div>
-            {/*<div className="font-bold"><DiDatabase/></div>*/}
+        <ElementToolbar selected={selected} id={id}>
+            {/*<div className="font-bold">{id}</div>*/}
+            <DiDatabase/>
             <Handle type="target" position={Position.Top} id="datastore-top-target"/>
             <Handle type="target" position={Position.Right} id="datastore-right-target"/>
             <Handle type="target" position={Position.Bottom} id="datastore-botton-target"/>

@@ -1,4 +1,4 @@
-import {Node, NodeToolbar, Position, XYPosition} from "@xyflow/react";
+import {Node, NodeToolbar, Position, useReactFlow, XYPosition} from "@xyflow/react";
 import ZoneNode from "@/app/components/nodes/Zone";
 import EntityNode from "@/app/components/nodes/Entity";
 import DatastoreNode from "@/app/components/nodes/Datastore";
@@ -44,12 +44,20 @@ export function getNewElement(type: string, position: XYPosition, nodeName: stri
 export const ElementToolbar: React.FC<{
     children: React.ReactNode;
     selected?: boolean;
-}> = ({ children, selected }) => {
+    id: string;
+}> = ({ children, selected, id }) => {
+    const { getNodes } = useReactFlow();
 
     const onTest = useCallback(() => {
-        console.log("tese");
-        // TODO Implement detach logic here
+        console.log("test");
+        // TODO Implement logic here
     }, []);
+
+    const getChildrenLabels = useCallback(() => {
+        const nodes = getNodes();
+        const childNodes = nodes.filter(node => node.id === id);
+        return childNodes[0].data.label as string;
+    }, [getNodes, id]);
 
     return (
         <>
@@ -60,7 +68,15 @@ export const ElementToolbar: React.FC<{
                 isVisible={selected}
                 position={Position.Top}
             >
-                <button onClick={onTest}>testbutton</button>
+                <button onClick={onTest}>bt1</button>
+                <button onClick={onTest}>bt2</button>
+            </NodeToolbar>
+            <NodeToolbar
+                isVisible={true}
+                position={Position.Bottom}
+                className="font-bold"
+            >
+                {getChildrenLabels()}
             </NodeToolbar>
         </>
     );
