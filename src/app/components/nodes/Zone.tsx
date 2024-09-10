@@ -12,6 +12,12 @@ interface ZoneNodeProps extends NodeProps {
 const ZoneNode: React.FC<ZoneNodeProps> = ({ id, data, selected }) => {
     const { setNodes, getInternalNode } = useReactFlow();
 
+    const onResizeStart = useCallback(() => {
+        setNodes((nodes) => {
+            return groupElements(nodes as Node[], getInternalNode, setNodes) as never;
+        })
+    }, [setNodes, getInternalNode]);
+
     const onResize = useCallback(() => {
         setNodes((nodes) => {
             return groupElements(nodes as Node[], getInternalNode, setNodes) as never;
@@ -36,7 +42,8 @@ const ZoneNode: React.FC<ZoneNodeProps> = ({ id, data, selected }) => {
                 isVisible={selected}
                 minWidth={100}
                 minHeight={50}
-                onResize={onResize}
+                onResizeStart={onResizeStart}
+                // onResize={onResize}
                 onResizeEnd={onResizeEnd}
             />
             <NodeToolbar
