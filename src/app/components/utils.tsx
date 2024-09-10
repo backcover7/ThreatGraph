@@ -23,6 +23,17 @@ export function concat(arr: ReadonlyArray<Node>, elements: ReadonlyArray<Node>):
     return sortArray([...arr, ...elements]);
 }
 
-export function getEdgeIdFromConnection(conn: Connection) {
-    return 'xy-edge__' + conn.source + conn.sourceHandle + '-' + conn.target + conn.targetHandle;
+export function checkValidEdgesFromConnection(conn: Connection, id: string): boolean {
+    const { source, sourceHandle, target, targetHandle } = conn;
+    const createEdgeId = (start: string, startHandle: string | null, end: string, endHandle: string | null) =>
+        `xy-edge__${start}${startHandle ?? ''}-${end}${endHandle ?? ''}`;
+
+    return ![
+        createEdgeId(source, sourceHandle, target, targetHandle),
+        createEdgeId(target, targetHandle, source, sourceHandle)
+    ].includes(id);
+}
+
+export function checkValidConnection(conn: Connection): boolean {
+    return conn.source !== conn.target;
 }

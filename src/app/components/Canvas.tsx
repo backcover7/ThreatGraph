@@ -17,7 +17,7 @@ import {useDnD} from '@/app/components/DnDContext';
 import {detachElement, groupElements} from "@/app/components/nodes/Zone";
 import {defaultEdgeOptions, edgeTypes} from "@/app/components/nodes/Dataflow";
 import {ElementColor, ElementNodes, getNewElement} from "@/app/components/nodes/Element";
-import {getEdgeIdFromConnection, push} from "@/app/components/utils";
+import {checkValidConnection, checkValidEdgesFromConnection, push} from "@/app/components/utils";
 
 const Canvas: React.FC = () => {
     const { screenToFlowPosition, addNodes, getInternalNode } = useReactFlow();
@@ -28,12 +28,14 @@ const Canvas: React.FC = () => {
     const [type, nodeName] = useDnD();
 
     const onConnect = useCallback(
-        (conn: Connection) => setEdges((eds) => {
+        (conn: Connection) => setEdges((edges) => {
+            if(!checkValidConnection(conn)) return edges;
+
             const label = `${`hello`}`;
             // Do not try to add edges between two same node with same positions
-            if ((eds as Edge[]).some(ed=> ed.id === getEdgeIdFromConnection(conn)))
-                return eds;
-            return addEdge({ ...conn, data: { label }, type: 'process' }, eds) as never;
+            if ((edges as Edge[]).some(ed=> checkValidEdgesFromConnection(conn, ed.id)))
+                return edges;
+            return addEdge({ ...conn, data: { label }, type: 'process' }, edges) as never;
         }),
         [setEdges, addEdge]
     );
@@ -45,8 +47,9 @@ const Canvas: React.FC = () => {
     const onReconnect = useCallback((oldEdge: Edge, newConnection: Connection) => {
         edgeReconnectSuccessful.current = true;
         setEdges((edges) => {
+            if(!checkValidConnection(newConnection)) return edges;
             // Do not try to add edges between two same node with same positions
-            if ((edges as Edge[]).some(ed=> ed.id === getEdgeIdFromConnection(newConnection)))
+            if ((edges as Edge[]).some(ed=> checkValidEdgesFromConnection(newConnection, ed.id)))
                 return edges;
             return reconnectEdge(oldEdge, newConnection, edges) as never
         });
