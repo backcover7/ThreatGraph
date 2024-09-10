@@ -18,6 +18,8 @@ export const ElementColor = (node: Node): string => {
             return '#ffe1e7';
         case 'group':
             return '#ececec';
+        case 'annotation':
+            return '#ffffff';
         default:
             return '#d9edff';
     }
@@ -78,13 +80,14 @@ export const ElementToolbar: React.FC<{
                 <button onClick={onTest}>bt1</button>
                 <button onClick={onTest}>bt2</button>
             </NodeToolbar>
-            <NodeToolbar
-                isVisible={true}
-                position={Position.Bottom}
-                className="font-bold"
-            >
+            <div style={{
+                position: 'relative',
+                color: '#555',
+                bottom: -35,
+                fontSize: 8,
+            }}>
                 {getChildrenLabels()}
-            </NodeToolbar>
+            </div>
         </>
     );
 };
