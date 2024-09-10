@@ -1,6 +1,6 @@
 import React, {memo, useCallback} from 'react';
 import {Node, NodeProps, NodeResizer, NodeToolbar, Position, useReactFlow} from '@xyflow/react';
-import {ElementToolbar} from "@/app/components/nodes/Element";
+import {re} from "mathjs";
 
 interface ZoneNodeProps extends NodeProps {
     data: {
@@ -11,9 +11,16 @@ interface ZoneNodeProps extends NodeProps {
 
 const ZoneNode: React.FC<ZoneNodeProps> = ({ id, data, selected }) => {
     const { setNodes, getInternalNode } = useReactFlow();
+
+    const onResize = useCallback(() => {
+        setNodes((nodes) => {
+            return groupElements(nodes as Node[], getInternalNode, setNodes) as never;
+        })
+    }, [setNodes, getInternalNode]);
+
     const onResizeEnd = useCallback(() => {
         setNodes((nodes) => {
-            return groupElements(nodes as Node[], getInternalNode) as never;
+            return groupElements(nodes as Node[], getInternalNode, setNodes) as never;
         })
     }, [setNodes, getInternalNode]);
 
@@ -29,6 +36,7 @@ const ZoneNode: React.FC<ZoneNodeProps> = ({ id, data, selected }) => {
                 isVisible={selected}
                 minWidth={100}
                 minHeight={50}
+                onResize={onResize}
                 onResizeEnd={onResizeEnd}
             />
             <NodeToolbar
@@ -79,8 +87,8 @@ export function detachElement(detachedNode: Node, nodes: Node[], getInternalNode
             const internalNode = getInternalNode(detachedNode.id)
             const newPosition = internalNode.parentId
                 ? {
-                    x: internalNode.internals.positionAbsolute.X,
-                    y: internalNode.internals.positionAbsolute.Y,
+                    x: internalNode.internals.positionAbsolute.x,
+                    y: internalNode.internals.positionAbsolute.y,
                 }
                 : n.position;
 
@@ -100,13 +108,19 @@ export function detachElement(detachedNode: Node, nodes: Node[], getInternalNode
  * @param nodes
  * @param getInternalNode
  */
-export function groupElements(nodes: Node[], getInternalNode: any): Node[] {
+export function groupElements(nodes: Node[], getInternalNode: any, setNodes: any): Node[] {
     nodes = sortZoneNodes(nodes);
 
     let zoneNodes = nodes.filter(node => node.type === 'group').reverse();
 
     return nodes.map(node => {
-        const parentZone = zoneNodes.find(zoneNode => isNodeCompletelyInsideZone(node, zoneNode, getInternalNode));
+        const parentZone = zoneNodes.find(zoneNode => {
+            const isInside = isNodeCompletelyInsideZone(node, zoneNode, getInternalNode);
+            if (node.parentId === zoneNode.id && !isInside) {
+                setNodes((nodes: Node[]) => detachElement(node, nodes, getInternalNode) as never );
+            }
+            return isInside;
+        });
 
         if (parentZone && parentZone.id !== node.parentId) {
             const internalNode = getInternalNode(node.id);
@@ -151,10 +165,10 @@ export function isNodeCompletelyInsideZone(node: Node, zoneNode: Node, getIntern
     const zoneBottom = zoneAbsoluteY + (Number(zoneNode.measured?.height) || Number(zoneNode.style?.height) || 0);
 
     return (
-        nodeAbsoluteX >= zoneAbsoluteX &&
-        nodeAbsoluteY >= zoneAbsoluteY &&
-        nodeRight <= zoneRight &&
-        nodeBottom <= zoneBottom
+        nodeAbsoluteX > zoneAbsoluteX &&
+        nodeAbsoluteY > zoneAbsoluteY &&
+        nodeRight < zoneRight &&
+        nodeBottom < zoneBottom
     );
 }
 

@@ -79,7 +79,7 @@ const Canvas: React.FC = () => {
                 if (type === 'annotation') {
                     newElem.data = { ...newElem.data, label: '', isNew: true };
                 }
-                return groupElements(push(nodes, newElem as never), getInternalNode) as never;
+                return groupElements(push(nodes, newElem as never), getInternalNode, setNodes) as never;
             });
         },
         [screenToFlowPosition, setNodes, type, nodeName, getInternalNode],
@@ -95,7 +95,7 @@ const Canvas: React.FC = () => {
     // drag existing element
     const onNodeDragStop = useCallback(() => {
         setNodes((nodes) => {
-            return groupElements(nodes as Node[], getInternalNode) as never;
+            return groupElements(nodes as Node[], getInternalNode, setNodes) as never;
         })
     }, [setNodes, getInternalNode]);
 
@@ -148,6 +148,7 @@ const Canvas: React.FC = () => {
                     onDrop={onDrop}
                     onNodeDragStart={onNodeDragStart}
                     onNodeDragStop={onNodeDragStop}
+                    // onNodesDelete={onNodesDelete}
                     edges={edges}
                     edgeTypes={edgeTypes}
                     defaultEdgeOptions={defaultEdgeOptions}

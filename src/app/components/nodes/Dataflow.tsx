@@ -3,6 +3,7 @@ import {BaseEdge, Edge, EdgeLabelRenderer, EdgeProps, getBezierPath, MarkerType}
 
 export const defaultEdgeOptions = {
     type: 'process',
+    zIndex: 1000,  // Make sure edge is always on the top layer
     markerEnd: {
         type: MarkerType.ArrowClosed,
         width: 20,
