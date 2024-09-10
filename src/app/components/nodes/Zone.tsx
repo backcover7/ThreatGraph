@@ -1,6 +1,5 @@
 import React, {memo, useCallback} from 'react';
 import {Node, NodeProps, NodeResizer, NodeToolbar, Position, useReactFlow} from '@xyflow/react';
-import {re} from "mathjs";
 
 interface ZoneNodeProps extends NodeProps {
     data: {
@@ -11,19 +10,7 @@ interface ZoneNodeProps extends NodeProps {
 
 const ZoneNode: React.FC<ZoneNodeProps> = ({ id, data, selected }) => {
     const { setNodes, getInternalNode } = useReactFlow();
-
-    const onResizeStart = useCallback(() => {
-        setNodes((nodes) => {
-            return groupElements(nodes as Node[], getInternalNode, setNodes) as never;
-        })
-    }, [setNodes, getInternalNode]);
-
-    const onResize = useCallback(() => {
-        setNodes((nodes) => {
-            return groupElements(nodes as Node[], getInternalNode, setNodes) as never;
-        })
-    }, [setNodes, getInternalNode]);
-
+    
     const onResizeEnd = useCallback(() => {
         setNodes((nodes) => {
             return groupElements(nodes as Node[], getInternalNode, setNodes) as never;
@@ -41,9 +28,7 @@ const ZoneNode: React.FC<ZoneNodeProps> = ({ id, data, selected }) => {
                 color='#2561ff'
                 isVisible={selected}
                 minWidth={100}
-                minHeight={50}
-                onResizeStart={onResizeStart}
-                // onResize={onResize}
+                minHeight={80}
                 onResizeEnd={onResizeEnd}
             />
             <NodeToolbar
@@ -153,11 +138,7 @@ export function groupElements(nodes: Node[], getInternalNode: any, setNodes: any
     });
 }
 
-export function isNodeCompletelyInsideZone(node: Node, zoneNode: Node, getInternalNode: any): boolean {
-    if (node === zoneNode) return false;
-
-    if (node.type === 'group' && getArea(node) >= getArea(zoneNode)) return false;
-
+function getBoarders(node: Node, zoneNode: Node, getInternalNode: any) {
     const internalNode = getInternalNode(node.id);
     const internalZoneNode = getInternalNode(zoneNode.id);
 
@@ -171,6 +152,16 @@ export function isNodeCompletelyInsideZone(node: Node, zoneNode: Node, getIntern
     const zoneRight = zoneAbsoluteX + (Number(zoneNode.measured?.width) || Number(zoneNode.style?.width) || 0);
     const zoneBottom = zoneAbsoluteY + (Number(zoneNode.measured?.height) || Number(zoneNode.style?.height) || 0);
 
+    return {nodeAbsoluteX, nodeAbsoluteY, nodeRight, nodeBottom, zoneAbsoluteX, zoneAbsoluteY, zoneRight, zoneBottom}
+}
+
+export function isNodeCompletelyInsideZone(node: Node, zoneNode: Node, getInternalNode: any): boolean {
+    if (node === zoneNode) return false;
+
+    if (node.type === 'group' && getArea(node) >= getArea(zoneNode)) return false;
+
+    const {nodeAbsoluteX, nodeAbsoluteY, nodeRight, nodeBottom, zoneAbsoluteX, zoneAbsoluteY, zoneRight, zoneBottom} = getBoarders(node, zoneNode, getInternalNode);
+
     return (
         nodeAbsoluteX > zoneAbsoluteX &&
         nodeAbsoluteY > zoneAbsoluteY &&
@@ -178,6 +169,18 @@ export function isNodeCompletelyInsideZone(node: Node, zoneNode: Node, getIntern
         nodeBottom < zoneBottom
     );
 }
+
+function isBoarderTouched(node: Node, zoneNode: Node, getInternalNode: any) {
+    const {nodeAbsoluteX, nodeAbsoluteY, nodeRight, nodeBottom, zoneAbsoluteX, zoneAbsoluteY, zoneRight, zoneBottom} = getBoarders(node, zoneNode, getInternalNode);
+
+    return (
+        nodeAbsoluteX === zoneAbsoluteX ||
+        nodeAbsoluteY === zoneAbsoluteY ||
+        nodeRight === zoneRight ||
+        nodeBottom === zoneBottom
+    );
+}
+
 
 export function getArea(node: Node): number {
     return (Number(node.measured?.width) || Number(node.style?.width) || 0) * (Number(node.measured?.height) || Number(node.style?.height) || 0);
