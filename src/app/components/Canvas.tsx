@@ -59,7 +59,7 @@ const Canvas: React.FC = () => {
     }, [setEdges]);
 
     // Drag new element
-    const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+    const onDragOver = useCallback( (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
         event.dataTransfer.dropEffect = 'move';
     }, []);
@@ -73,6 +73,9 @@ const Canvas: React.FC = () => {
 
             setNodes((nodes) => {
                 const newElem = getNewElement(type, position, nodeName);
+                if (type === 'annotation') {
+                    newElem.data = { ...newElem.data, label: '', isNew: true };
+                }
                 return groupElements(push(nodes, newElem as never), getInternalNode) as never;
             });
         },
@@ -95,6 +98,9 @@ const Canvas: React.FC = () => {
 
     return (
         <div className="dndflow">
+            <div className="tooltip-container">
+                <Tooltip/>
+            </div>
             <div className="reactflow-wrapper" ref={reactFlowWrapper}>
                 <ReactFlow
                     fitView
@@ -116,11 +122,10 @@ const Canvas: React.FC = () => {
                     edgeTypes={edgeTypes}
                     defaultEdgeOptions={defaultEdgeOptions}
                 >
-                    <Controls />
-                    <MiniMap nodeColor={ElementColor} nodeStrokeWidth={3} zoomable pannable />
+                    <Controls/>
+                    <MiniMap nodeColor={ElementColor} nodeStrokeWidth={3} zoomable pannable/>
                 </ReactFlow>
             </div>
-            <Tooltip />
         </div>
     );
 };

@@ -19,33 +19,45 @@ body,
 }
 
 .dndflow {
-  flex-direction: column;
   display: flex;
+  flex-direction: column;
   flex-grow: 1;
   height: 100%;
 }
 
-.dndflow aside {
-  border-right: 1px solid #eee;
-  padding: 15px 10px;
-  font-size: 12px;
+.tooltip-container {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
   background: #fcfcfc;
+  border-bottom: 1px solid #eee;
 }
 
-.dndflow aside .description {
-  margin-bottom: 10px;
+.tooltip {
+  display: flex;
+  gap: 10px;
+}
+
+.dndflow .reactflow-wrapper {
+  flex-grow: 1;
+  height: calc(100% - 60px); /* Adjust based on the height of your tooltip */
 }
 
 .dndflow .dndnode {
   height: 20px;
-  padding: 4px;
+  padding: 4px 8px;
   border: 1px solid #1a192b;
   border-radius: 2px;
-  margin-bottom: 10px;
+  margin: 0 5px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: grab;
+  font-size: 12px;
+}
+
+.dndflow .dndnode .drag-label {
+  margin-left: 5px;
 }
 
 .dndflow .dndnode.input {
@@ -56,9 +68,12 @@ body,
   border-color: #000000;
 }
 
-.dndflow .reactflow-wrapper {
-  flex-grow: 1;
-  height: 100%;
+.dndflow .dndnode.default {
+  border-color: #000000;
+}
+
+.dndflow .dndnode.group {
+  border-color: #000000;
 }
 
 .dndflow .selectall {
@@ -82,4 +97,79 @@ body,
   width: 5px;
   height: 5px;
   border: none;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.blinking-cursor {
+  caret-color: black;
+  animation: blink 1s infinite;
+}
+
+.blinking-cursor:focus {
+  outline: none;
+}
+
+/* Styles for the node toolbar */
+.react-flow__node-toolbar {
+  position: absolute;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  font-size: 10px;
+  padding: 2px;
+  z-index: 10;
+}
+
+.react-flow__node-toolbar button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin: 0 2px;
+  padding: 2px 4px;
+}
+
+.react-flow__node-toolbar button:hover {
+  background-color: #f0f0f0;
+}
+
+/* Styles for node labels */
+.react-flow__node-label {
+  font-size: 12px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Styles for edge labels */
+.react-flow__edge-label {
+  font-size: 10px;
+  padding: 1px 3px;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Styles for minimap */
+.react-flow__minimap {
+  bottom: 20px;
+  right: 20px;
+}
+
+/* Styles for controls */
+.react-flow__controls {
+  bottom: 20px;
+  left: 20px;
+}
+
+/* Styles for node resizer */
+.react-flow__node-resizer {
+  border-color: #3c6fe4;
+}
+
+.react-flow__node-resizer-handle {
+  background: #3c6fe4;
 }

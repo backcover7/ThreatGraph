@@ -3,6 +3,7 @@ import ZoneNode from "@/app/components/nodes/Zone";
 import EntityNode from "@/app/components/nodes/Entity";
 import DatastoreNode from "@/app/components/nodes/Datastore";
 import React, {useCallback} from "react";
+import TextNode from "@/app/components/nodes/TextNode";
 
 export const EntityOrDatastoreWidth = 80;
 export const EntityOrDatastoreHeight = 60;
@@ -26,6 +27,7 @@ export const ElementNodes = {
     group: ZoneNode,
     default: EntityNode,
     output: DatastoreNode,
+    annotation: TextNode,
 };
 
 export function getNewElement(type: string, position: XYPosition, nodeName: string): Node {
@@ -33,11 +35,16 @@ export function getNewElement(type: string, position: XYPosition, nodeName: stri
         id: getElementId(),
         type,
         position,
-        data: {label: nodeName},
+        data: {
+            label: nodeName,
+            level: type === 'annotation' ? 1 : undefined,
+            arrowStyle: type === 'annotation' ? { position: 'absolute', bottom: -10, right: -10 } : undefined,
+        },
         style:
-            type === 'group' ? {width: 400, height: 240} :  // zone
-                type === 'output' ? {width: EntityOrDatastoreWidth, height: EntityOrDatastoreHeight} :   // entity
-                    type === 'default' ? {width: EntityOrDatastoreWidth, height: EntityOrDatastoreHeight} : undefined,   // datastore
+            type === 'group' ? {width: 400, height: 240} :
+                type === 'output' ? {width: EntityOrDatastoreWidth, height: EntityOrDatastoreHeight} :
+                    type === 'default' ? {width: EntityOrDatastoreWidth, height: EntityOrDatastoreHeight} :
+                        type === 'annotation' ? {width: 150, height: 50} : undefined,
     };
 }
 
