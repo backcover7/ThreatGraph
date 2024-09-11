@@ -1,9 +1,10 @@
-import React from 'react';
-import {BaseEdge, Edge, EdgeLabelRenderer, EdgeProps, getBezierPath, MarkerType} from '@xyflow/react';
+import React, { useState, useCallback } from 'react';
+import { BaseEdge, Edge, EdgeLabelRenderer, EdgeProps, getBezierPath, MarkerType, useReactFlow } from '@xyflow/react';
+import ProcessNode from "@/app/components/nodes/process/ProcessComponent";
 
 export const defaultEdgeOptions = {
     type: 'process',
-    zIndex: 1000,  // Make sure edge is always on the top layer but lower than EdgeLabelRender zIndex
+    zIndex: 1000,
     markerEnd: {
         type: MarkerType.ArrowClosed,
         width: 20,
@@ -15,18 +16,18 @@ export const defaultEdgeOptions = {
     },
 };
 
-const DataflowEdge: React.FC<EdgeProps<Edge<{ label: string }>>> = ({
-                                                                    id,
-                                                                    sourceX,
-                                                                    sourceY,
-                                                                    targetX,
-                                                                    targetY,
-                                                                    sourcePosition,
-                                                                    targetPosition,
-                                                                    style = {},
-                                                                    markerEnd,
-                                                                    data,
-                                                                }) => {
+const DataflowEdge: React.FC<EdgeProps<Edge<{ label: string, isProcessNode?: boolean }>>> = ({
+                                                                                                 id,
+                                                                                                 sourceX,
+                                                                                                 sourceY,
+                                                                                                 targetX,
+                                                                                                 targetY,
+                                                                                                 sourcePosition,
+                                                                                                 targetPosition,
+                                                                                                 style = {},
+                                                                                                 markerEnd,
+                                                                                                 data,
+                                                                                             }) => {
     const [edgePath, labelX, labelY] = getBezierPath({
         sourceX,
         sourceY,
@@ -36,9 +37,17 @@ const DataflowEdge: React.FC<EdgeProps<Edge<{ label: string }>>> = ({
         targetPosition,
     });
 
-    const onProcessAdding = () => {
+    const { setEdges } = useReactFlow();
+    const [showProcessNode, setShowProcessNode] = useState(data?.isProcessNode || false);
 
-    }
+    const onAddProcess = useCallback(() => {
+        setShowProcessNode(true);
+        setEdges((eds) =>
+            eds.map((ed) =>
+                ed.id === id ? { ...ed, data: { ...ed.data, isProcessNode: true } } : ed
+            )
+        );
+    }, [id, setEdges]);
 
     return (
         <>
@@ -50,13 +59,17 @@ const DataflowEdge: React.FC<EdgeProps<Edge<{ label: string }>>> = ({
                         transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
                         pointerEvents: 'all',
                         fontSize: 10,
-                        zIndex: 2000  // Edge zIndex is 1000, process should be over Edge zIndex
+                        zIndex: 1000
                     }}
                     className="nodrag nopan"
                 >
-                    <button className="edgebutton" onClick={onProcessAdding}>
-                        +
-                    </button>
+                    {showProcessNode ? (
+                        <ProcessNode data={{ label: 'P' }} />
+                    ) : (
+                        <button className="edgebutton" onClick={onAddProcess}>
+                            +
+                        </button>
+                    )}
                 </div>
             </EdgeLabelRenderer>
         </>

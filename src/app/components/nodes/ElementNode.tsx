@@ -4,17 +4,20 @@ import EntityNode from "@/app/components/nodes/EntityNode";
 import DatastoreNode from "@/app/components/nodes/DatastoreNode";
 import React, {useCallback} from "react";
 import TextNode from "@/app/components/nodes/TextNode";
+import ProcessNode from "@/app/components/nodes/process/ProcessComponent";
 
 export const getElementId = () => crypto.randomUUID();
 
 export const ElementColor = (node: Node): string => {
     switch (node.type) {
-        case 'input':
+        case 'group':
+            return '#ececec';
+        case 'default':
             return '#d9fdde';
         case 'output':
             return '#ffe1e7';
-        case 'group':
-            return '#ececec';
+        case 'process':
+            return '#c2cf62';
         case 'text':
             return '#ffffff';
         default:
@@ -26,6 +29,7 @@ export const ElementNodes = {
     group: ZoneNode,
     default: EntityNode,
     output: DatastoreNode,
+    process: ProcessNode,
     text: TextNode,
 };
 
@@ -41,9 +45,11 @@ export function getNewElement(type: string, position: XYPosition, nodeName: stri
         },
         style:
             type === 'group' ? {width: 400, height: 240} :
-                type === 'output' ? {width: 80, height: 60} :
-                    type === 'default' ? {width: 80, height: 60} :
-                        type === 'text' ? {width: 150, height: 50} : undefined,
+            type === 'default' ? {width: 80, height: 60} :
+            type === 'output' ? {width: 80, height: 60} :
+            type === 'process' ? {width: 40, height: 10} :
+            type === 'text' ? {width: 150, height: 50} :
+            undefined,
     };
 }
 
