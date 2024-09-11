@@ -33,7 +33,3 @@ export function isValidEdgesFromConnection(conn: Connection, id: string): boolea
         createEdgeId(target, (targetHandle as string).replace('target', 'source'), source, (sourceHandle as string).replace('source', 'target'))
     ].includes(id);
 }
-
-export function isValidConnection(conn: Connection): boolean {
-    return conn.source !== conn.target;
-}

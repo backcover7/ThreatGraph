@@ -26,58 +26,42 @@ body,
 }
 
 .tooltip-container {
-  display: flow;
-  justify-content: normal;
-  padding: 2px;
+  position: fixed;
+  top: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
   background: #fcfcfc;
-  border-bottom: 1px solid #eee;
-  float: left;
+  padding: 1px 100px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.tooltip-container > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 40px;
+  border: 0;
+  border-radius: 4px;
+  cursor: grab;
+  font-size: 18px;
+  transition: background-color 0.2s;
+  gap: 30px
 }
 
 .tooltip {
   display: flex;
-  gap: 10px;
+  gap: 50px;
 }
 
 .dndflow .reactflow-wrapper {
   flex-grow: 1;
   height: calc(98%); /* Adjust based on the height of your tooltip */
-}
-
-.dndflow .dndnode {
-  height: 20px;
-  padding: 4px 8px;
-  border: 1px solid #1a192b;
-  border-radius: 2px;
-  margin: 0 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 12px;
-}
-
-.dndflow .dndnode .drag-label {
-  margin-left: 5px;
-}
-
-.dndflow .dndnode.input {
-  border-color: #000000;
-}
-
-.dndflow .dndnode.output {
-  border-color: #000000;
-}
-
-.dndflow .dndnode.default {
-  border-color: #000000;
-}
-
-.dndflow .dndnode.group {
-  border-color: #000000;
-}
-
-.dndflow .selectall {
-  margin-top: 10px;
 }
 
 @media screen and (min-width: 768px) {

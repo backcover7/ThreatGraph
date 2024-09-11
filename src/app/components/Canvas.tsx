@@ -7,7 +7,7 @@ import {
     Controls, Edge, getConnectedEdges, getIncomers, getOutgoers, HandleType,
     MiniMap,
     Node,
-    ReactFlow, reconnectEdge,
+    ReactFlow, ReactFlowProvider, reconnectEdge,
     useEdgesState,
     useNodesState,
     useReactFlow,
@@ -17,7 +17,7 @@ import {useDnD} from '@/app/components/DnDContext';
 import {detachElement, groupElements} from "@/app/components/nodes/Zone";
 import {defaultEdgeOptions, edgeTypes} from "@/app/components/nodes/Dataflow";
 import {ElementColor, ElementNodes, getNewElement} from "@/app/components/nodes/Element";
-import {isValidConnection, isValidEdgesFromConnection, push} from "@/app/components/utils";
+import {isValidEdgesFromConnection, push} from "@/app/components/utils";
 
 const Canvas: React.FC = () => {
     const { screenToFlowPosition, addNodes, getInternalNode } = useReactFlow();
@@ -27,10 +27,10 @@ const Canvas: React.FC = () => {
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [type, nodeName] = useDnD();
 
+    const isValidConnection = (connection) => connection.source !== connection.target;
+
     const onConnect = useCallback(
         (conn: Connection) => setEdges((edges) => {
-            if(!isValidConnection(conn)) return edges;
-
             const label = `${`hello`}`;
             // Do not try to add edges between two same node with same positions
             if ((edges as Edge[]).some(ed=> !isValidEdgesFromConnection(conn, ed.id)))
@@ -47,7 +47,6 @@ const Canvas: React.FC = () => {
     const onReconnect = useCallback((oldEdge: Edge, newConnection: Connection) => {
         edgeReconnectSuccessful.current = true;
         setEdges((edges) => {
-            if(!isValidConnection(newConnection)) return edges;
             // Do not try to add edges between two same node with same positions
             if ((edges as Edge[]).some(ed=> !isValidEdgesFromConnection(newConnection, ed.id)))
                 return edges;
@@ -73,16 +72,20 @@ const Canvas: React.FC = () => {
             event.preventDefault();
             if (!type || !nodeName) return;
             const position = screenToFlowPosition({ x: event.clientX, y: event.clientY });
+            const newElem = getNewElement(type, position, nodeName);
+            if (type === 'annotation') {
+                newElem.data = { ...newElem.data, label: '', isNew: true };
+            }
 
-            setNodes((nodes) => {
-                const newElem = getNewElement(type, position, nodeName);
-                if (type === 'annotation') {
-                    newElem.data = { ...newElem.data, label: '', isNew: true };
-                }
-                return groupElements(push(nodes, newElem as never), getInternalNode, setNodes) as never;
-            });
+            if (nodes.length == 0) {
+                addNodes(newElem);
+            } else {
+                setNodes((nodes) => {
+                    return groupElements(push(nodes, newElem as never), getInternalNode, setNodes) as never;
+                });
+            }
         },
-        [screenToFlowPosition, setNodes, type, nodeName, getInternalNode],
+        [nodes, screenToFlowPosition, setNodes, type, nodeName, getInternalNode],
     );
 
     const onNodeDragStart = useCallback((event: React.MouseEvent, detachedNode: Node) => {
@@ -128,10 +131,10 @@ const Canvas: React.FC = () => {
 
     return (
         <div className="dndflow">
-            <div className="tooltip-container">
-                <Tooltip/>
-            </div>
             <div className="reactflow-wrapper" ref={reactFlowWrapper}>
+                <div className="tooltip-container">
+                    <Tooltip/>
+                </div>
                 <ReactFlow
                     fitView
                     className="touch-flow"
@@ -148,14 +151,14 @@ const Canvas: React.FC = () => {
                     onDrop={onDrop}
                     onNodeDragStart={onNodeDragStart}
                     onNodeDragStop={onNodeDragStop}
-                    // onNodesDelete={onNodesDelete}
                     edges={edges}
                     edgeTypes={edgeTypes}
                     defaultEdgeOptions={defaultEdgeOptions}
-                    style={{ cursor: 'default' }}
+                    isValidConnection={isValidConnection}
+                    style={{cursor: 'default'}}
                 >
                     <Controls/>
-                    <MiniMap nodeColor={ElementColor} nodeStrokeWidth={3} zoomable pannable/>
+                    <MiniMap nodeColor={ElementColor} nodeStrokeWidth={1} zoomable pannable/>
                 </ReactFlow>
             </div>
         </div>

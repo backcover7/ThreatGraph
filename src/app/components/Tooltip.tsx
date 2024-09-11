@@ -27,28 +27,10 @@ const Tooltip: React.FC = () => {
     };
 
     return (
-        <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '10px',
-            background: '#fcfcfc',
-            height: '100%',
-        }}>
+        <div>
             {nodeTypes.map((nodeInfo) => (
                 <div
                     key={nodeInfo.type}
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        width: '40px',
-                        height: '40px',
-                        border: '0px',
-                        borderRadius: '4px',
-                        cursor: 'grab',
-                        fontSize: '18px',
-                    }}
                     onDragStart={(event) => onDragStart(event, nodeInfo)}
                     draggable
                     title={nodeInfo.dragLabel}
