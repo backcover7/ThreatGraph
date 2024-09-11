@@ -1,5 +1,5 @@
 import {Connection, Node} from "@xyflow/react";
-import {getArea} from "@/app/components/nodes/Zone";
+import {getArea} from "@/app/components/nodes/ZoneNode";
 
 function compare(node1: Node, node2: Node): number {
     if (node1.type === 'group' && node2.type !== 'group') return -1;  // node1 should be placed before node2

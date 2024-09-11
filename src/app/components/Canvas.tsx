@@ -2,22 +2,25 @@
 
 import React, {useCallback, useRef, useState} from 'react';
 import {
-    addEdge,
-    Connection,
-    Controls, Edge, getConnectedEdges, getIncomers, getOutgoers, HandleType,
+    addEdge, Background, BackgroundVariant,
+    Connection, ControlButton,
+    Controls, Edge, HandleType,
     MiniMap,
     Node, Panel,
-    ReactFlow, ReactFlowProvider, reconnectEdge,
+    ReactFlow, reconnectEdge,
     useEdgesState,
     useNodesState,
-    useReactFlow,
+    useReactFlow, ViewportPortal,
 } from '@xyflow/react';
 import Tooltip from '@/app/components/Tooltip';
 import {useDnD} from '@/app/components/DnDContext';
-import {detachElement, groupElements} from "@/app/components/nodes/Zone";
-import {defaultEdgeOptions, edgeTypes} from "@/app/components/nodes/Dataflow";
-import {ElementColor, ElementNodes, getNewElement} from "@/app/components/nodes/Element";
+import {detachElement, groupElements} from "@/app/components/nodes/ZoneNode";
+import {defaultEdgeOptions, edgeTypes} from "@/app/components/nodes/DataflowEdge";
+import {ElementColor, ElementNodes, getNewElement} from "@/app/components/nodes/ElementNode";
 import {isValidEdgesFromConnection, push} from "@/app/components/utils";
+import {FaWandMagicSparkles} from "react-icons/fa6";
+import {RxQuestionMarkCircled} from "react-icons/rx";
+import {HiQuestionMarkCircle} from "react-icons/hi";
 
 const Canvas: React.FC = () => {
     const { screenToFlowPosition, addNodes, getInternalNode } = useReactFlow();
@@ -26,7 +29,7 @@ const Canvas: React.FC = () => {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [type, nodeName] = useDnD();
-    const [colorMode, setColorMode] = useState<ColorMode>('system');
+    const [colorMode, setColorMode] = useState<ColorMode>('light'); // TODO
 
     const isValidConnection = (connection) => connection.source !== connection.target;
 
@@ -103,33 +106,6 @@ const Canvas: React.FC = () => {
         })
     }, [setNodes, getInternalNode]);
 
-    const onNodesDelete = useCallback(
-        (deleted: Node[]) => {
-            setEdges((edges) =>
-                deleted.reduce((acc: Edge[], node: Node) => {
-                    const incomers = getIncomers(node, nodes, edges);
-                    const outgoers = getOutgoers(node, nodes, edges);
-                    const connectedEdges = getConnectedEdges([node], edges);
-
-                    const remainingEdges = acc.filter(
-                        (edge) => !connectedEdges.includes(edge as never)
-                    );
-
-                    const createdEdges = incomers.flatMap(({ id: source }) =>
-                        outgoers.map(({ id: target }) => ({
-                            id: `${source}->${target}`,
-                            source,
-                            target,
-                        }))
-                    );
-
-                    return [...remainingEdges, ...createdEdges];
-                }, edges) as never
-            );
-        },
-        [nodes, edges]
-    );
-
     const onChangeDarkMode: ChangeEventHandler<HTMLSelectElement> = (evt) => {
         setColorMode(evt.target.value as ColorMode);
     };
@@ -137,11 +113,7 @@ const Canvas: React.FC = () => {
     return (
         <div className="dndflow">
             <div className="reactflow-wrapper" ref={reactFlowWrapper}>
-                <div className="tooltip-container">
-                    <Tooltip/>
-                </div>
                 <ReactFlow
-                    fitView
                     className="touch-flow"
                     colorMode={colorMode}
                     nodes={nodes}
@@ -163,14 +135,35 @@ const Canvas: React.FC = () => {
                     isValidConnection={isValidConnection}
                     style={{cursor: 'default'}}
                 >
-                    <Controls/>
+                    <Controls>
+                        {/**TODO**/}
+                        <ControlButton onClick={() => alert('This is ZoneZone')}>
+                            <HiQuestionMarkCircle />
+                        </ControlButton>
+                    </Controls>
                     <MiniMap nodeColor={ElementColor} nodeStrokeWidth={1} zoomable pannable/>
-                    <Panel position="top-right">
-                        <select onChange={onChangeDarkMode} data-testid="colormode-select">
-                            <option value="system">system</option>
-                            <option value="light">light</option>
-                            <option value="dark">dark</option>
-                        </select>
+                    <Panel position='top-left'>
+                        <div>This is for icon bar TODO</div>
+                    </Panel>
+                    <Panel position="top-center">
+                        <div className="tooltip-container">
+                            <Tooltip/>
+                        </div>
+                    </Panel>
+                    <Panel position='top-right'>
+                        <div>
+                            This is for run button TODO
+                        </div>
+                        <div>
+                            This is for properties bar TODO
+                        </div>
+                        <div>
+                            This is for threat bar TODO
+                        </div>
+                    </Panel>
+                    <Background color="#a5b0fa" variant={BackgroundVariant.Cross} gap={30} />
+                    <Panel position='bottom-center'>
+                        <div>This is for run background settings like dark mode TODO</div>
                     </Panel>
                 </ReactFlow>
             </div>

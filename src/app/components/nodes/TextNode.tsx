@@ -9,7 +9,7 @@ interface TextNodeProps extends NodeProps {
     type: 'annotation';
 }
 
-const Text: React.FC<TextNodeProps> = ({ id, data }) => {
+const TextNode: React.FC<TextNodeProps> = ({ id, data }) => {
     const [isEditing, setIsEditing] = useState(data.isNew ?? false);
     const [text, setText] = useState(data.label);
     const { setNodes } = useReactFlow();
@@ -74,4 +74,4 @@ const Text: React.FC<TextNodeProps> = ({ id, data }) => {
     );
 };
 
-export default memo(Text);
+export default memo(TextNode);

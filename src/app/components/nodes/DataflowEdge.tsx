@@ -3,7 +3,7 @@ import {BaseEdge, Edge, EdgeLabelRenderer, EdgeProps, getBezierPath, MarkerType}
 
 export const defaultEdgeOptions = {
     type: 'process',
-    zIndex: 1000,  // Make sure edge is always on the top layer
+    zIndex: 1000,  // Make sure edge is always on the top layer but lower than EdgeLabelRender zIndex
     markerEnd: {
         type: MarkerType.ArrowClosed,
         width: 20,
@@ -15,7 +15,7 @@ export const defaultEdgeOptions = {
     },
 };
 
-const Dataflow: React.FC<EdgeProps<Edge<{ label: string }>>> = ({
+const DataflowEdge: React.FC<EdgeProps<Edge<{ label: string }>>> = ({
                                                                     id,
                                                                     sourceX,
                                                                     sourceY,
@@ -36,6 +36,12 @@ const Dataflow: React.FC<EdgeProps<Edge<{ label: string }>>> = ({
         targetPosition,
     });
 
+    const visibility = 'hidden';
+
+    const onProcessAdding = () => {
+
+    }
+
     return (
         <>
             <BaseEdge id={id} className="react-flow__edge-path" path={edgePath} markerEnd={markerEnd} style={style} />
@@ -50,10 +56,13 @@ const Dataflow: React.FC<EdgeProps<Edge<{ label: string }>>> = ({
                         fontSize: 10,
                         fontWeight: 400,
                         opacity: 0.9,
+                        zIndex: 2000  // Edge zIndex is 1000, process should be over Edge zIndex
                     }}
                     className="nodrag nopan"
                 >
-                    {data?.label}
+                    <button className="edgebutton" onClick={onProcessAdding}>
+                        +
+                    </button>
                 </div>
             </EdgeLabelRenderer>
         </>
@@ -61,5 +70,5 @@ const Dataflow: React.FC<EdgeProps<Edge<{ label: string }>>> = ({
 };
 
 export const edgeTypes = {
-    process: Dataflow,
+    process: DataflowEdge,
 };

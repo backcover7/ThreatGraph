@@ -1,9 +1,9 @@
 import {Node, NodeToolbar, Position, useReactFlow, XYPosition} from "@xyflow/react";
-import ZoneNode from "@/app/components/nodes/Zone";
-import EntityNode from "@/app/components/nodes/Entity";
-import DatastoreNode from "@/app/components/nodes/Datastore";
+import ZoneNode from "@/app/components/nodes/ZoneNode";
+import EntityNode from "@/app/components/nodes/EntityNode";
+import DatastoreNode from "@/app/components/nodes/DatastoreNode";
 import React, {useCallback} from "react";
-import TextNode from "@/app/components/nodes/Text";
+import TextNode from "@/app/components/nodes/TextNode";
 
 export const getElementId = () => crypto.randomUUID();
 
@@ -80,7 +80,7 @@ export const ElementToolbar: React.FC<{
             <div style={{
                 position: 'relative',
                 color: '#555',
-                bottom: -15,
+                bottom: 0,
                 fontSize: 8,
             }}>
                 {getChildrenLabels()}

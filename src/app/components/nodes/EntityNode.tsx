@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
-import { Handle, Position, NodeProps } from '@xyflow/react';
-import { ElementToolbar } from "@/app/components/nodes/Element";
+import {Handle, Position, NodeProps, NodeResizer} from '@xyflow/react';
+import { ElementToolbar } from "@/app/components/nodes/ElementNode";
 import { FaLaptop } from "react-icons/fa";
 
 interface EntityNodeProps extends NodeProps {
@@ -13,12 +13,19 @@ interface EntityNodeProps extends NodeProps {
 // TODO https://reactflow.dev/learn/tutorials/mind-map-app-with-react-flow
 const EntityNode: React.FC<EntityNodeProps> = ({ id, data, selected }) => {
     return (
+        // TODO NodeResize
         <ElementToolbar selected={selected} id={id}>
+            <NodeResizer
+                color='#2561ff'
+                isVisible={selected}
+                minWidth={100}
+                minHeight={80}
+            />
             {/*<div className="font-bold">{id}</div>*/}
             <FaLaptop style={{
                 position: 'relative',
-                top: 5,
-                fontSize: 30
+                top: 1,
+                fontSize: 24
             }} />
             <Handle type="target" position={Position.Top} id="entity-top-target"/>
             <Handle type="source" position={Position.Top} id="entity-top-source"/>
