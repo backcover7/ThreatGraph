@@ -6,7 +6,7 @@ import {
     Connection,
     Controls, Edge, getConnectedEdges, getIncomers, getOutgoers, HandleType,
     MiniMap,
-    Node,
+    Node, Panel,
     ReactFlow, ReactFlowProvider, reconnectEdge,
     useEdgesState,
     useNodesState,
@@ -26,6 +26,7 @@ const Canvas: React.FC = () => {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [type, nodeName] = useDnD();
+    const [colorMode, setColorMode] = useState<ColorMode>('system');
 
     const isValidConnection = (connection) => connection.source !== connection.target;
 
@@ -129,6 +130,10 @@ const Canvas: React.FC = () => {
         [nodes, edges]
     );
 
+    const onChangeDarkMode: ChangeEventHandler<HTMLSelectElement> = (evt) => {
+        setColorMode(evt.target.value as ColorMode);
+    };
+
     return (
         <div className="dndflow">
             <div className="reactflow-wrapper" ref={reactFlowWrapper}>
@@ -138,6 +143,7 @@ const Canvas: React.FC = () => {
                 <ReactFlow
                     fitView
                     className="touch-flow"
+                    colorMode={colorMode}
                     nodes={nodes}
                     nodeTypes={ElementNodes}
                     onNodesChange={onNodesChange}
@@ -159,6 +165,13 @@ const Canvas: React.FC = () => {
                 >
                     <Controls/>
                     <MiniMap nodeColor={ElementColor} nodeStrokeWidth={1} zoomable pannable/>
+                    <Panel position="top-right">
+                        <select onChange={onChangeDarkMode} data-testid="colormode-select">
+                            <option value="system">system</option>
+                            <option value="light">light</option>
+                            <option value="dark">dark</option>
+                        </select>
+                    </Panel>
                 </ReactFlow>
             </div>
         </div>

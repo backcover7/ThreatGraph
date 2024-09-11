@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 
+// TODO https://reactflow.dev/learn/troubleshooting/remove-attribution
 const Canvas = dynamic(() => import('./components/Canvas'), { ssr: false })
 
 export default function Home() {

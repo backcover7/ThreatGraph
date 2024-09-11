@@ -11,6 +11,22 @@ interface ZoneNodeProps extends NodeProps {
 const ZoneNode: React.FC<ZoneNodeProps> = ({ id, data, selected }) => {
     const { setNodes, getInternalNode } = useReactFlow();
 
+    const onResize = useCallback(() => {
+        // TODO Use count to only allow to call this onevent one time
+        const zoneNode = nodes.find(node => node.id === id);
+
+        setNodes((nodes) => {
+            nodes.map(node => {
+                // This happens when zone is resizing smaller to exclude one child node.
+                const touched = isBoarderTouched(node, zoneNode, getInternalNode);
+                if (touched) {
+                    return detachElement(node, nodes, getInternalNode);
+                }
+            });
+            return groupElements(nodes as Node[], getInternalNode, setNodes) as never;
+        })
+    }, [setNodes, getInternalNode]);
+
     const onResizeEnd = useCallback(() => {
         setNodes((nodes) => {
             return groupElements(nodes as Node[], getInternalNode, setNodes) as never;

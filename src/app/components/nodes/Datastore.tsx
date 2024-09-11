@@ -16,7 +16,7 @@ const DatastoreNode: React.FC<DatastoreNodeProps> = ({ id, data, selected }) => 
     return (
         <ElementToolbar selected={selected} id={id}>
             {/*<div className="font-bold">{id}</div>*/}
-            <DiDatabase style={{
+            <DiDatabase style={{  // TODO move all inline style to global.css
                 position: 'relative',
                 top: 5,
                 fontSize: 30

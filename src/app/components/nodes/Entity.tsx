@@ -10,6 +10,7 @@ interface EntityNodeProps extends NodeProps {
     type: 'default';
 }
 
+// TODO https://reactflow.dev/learn/tutorials/mind-map-app-with-react-flow
 const EntityNode: React.FC<EntityNodeProps> = ({ id, data, selected }) => {
     return (
         <ElementToolbar selected={selected} id={id}>
