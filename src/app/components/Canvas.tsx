@@ -10,7 +10,7 @@ import {
     ReactFlow, reconnectEdge,
     useEdgesState,
     useNodesState,
-    useReactFlow, ViewportPortal,
+    useReactFlow,
 } from '@xyflow/react';
 import Tooltip from '@/app/components/Tooltip';
 import {useDnD} from '@/app/components/DnDContext';
@@ -18,8 +18,6 @@ import {detachElement, groupElements} from "@/app/components/nodes/ZoneNode";
 import {defaultEdgeOptions, edgeTypes} from "@/app/components/nodes/DataflowEdge";
 import {ElementColor, ElementNodes, getNewElement} from "@/app/components/nodes/ElementNode";
 import {isValidEdgesFromConnection, push} from "@/app/components/utils";
-import {FaWandMagicSparkles} from "react-icons/fa6";
-import {RxQuestionMarkCircled} from "react-icons/rx";
 import {HiQuestionMarkCircle} from "react-icons/hi";
 
 const Canvas: React.FC = () => {
@@ -29,9 +27,10 @@ const Canvas: React.FC = () => {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [type, nodeName] = useDnD();
-    const [colorMode, setColorMode] = useState<ColorMode>('light'); // TODO
 
-    const isValidConnection = (connection) => connection.source !== connection.target;
+    const isValidConnection = useCallback((connection: Edge | Connection) => {
+        return connection.source !== connection.target
+    }, [])
 
     const onConnect = useCallback(
         (conn: Connection) => setEdges((edges) => {
@@ -106,19 +105,16 @@ const Canvas: React.FC = () => {
         })
     }, [setNodes, getInternalNode]);
 
-    const onChangeDarkMode: ChangeEventHandler<HTMLSelectElement> = (evt) => {
-        setColorMode(evt.target.value as ColorMode);
-    };
-
     return (
         <div className="dndflow">
             <div className="reactflow-wrapper" ref={reactFlowWrapper}>
                 <ReactFlow
+                    fitView
                     className="touch-flow"
-                    colorMode={colorMode}
                     nodes={nodes}
                     nodeTypes={ElementNodes}
                     onNodesChange={onNodesChange}
+                    isValidConnection={isValidConnection}
                     onEdgesChange={onEdgesChange}
                     edgesReconnectable={true}
                     onConnect={onConnect}
@@ -132,7 +128,6 @@ const Canvas: React.FC = () => {
                     edges={edges}
                     edgeTypes={edgeTypes}
                     defaultEdgeOptions={defaultEdgeOptions}
-                    isValidConnection={isValidConnection}
                     style={{cursor: 'default'}}
                 >
                     <Controls>
@@ -161,7 +156,9 @@ const Canvas: React.FC = () => {
                             This is for threat bar TODO
                         </div>
                     </Panel>
-                    <Background color="#a5b0fa" variant={BackgroundVariant.Cross} gap={30} />
+                    <Background
+                        color="#00000" variant={BackgroundVariant.Cross} gap={30}
+                    />
                     <Panel position='bottom-center'>
                         <div>This is for run background settings like dark mode TODO</div>
                     </Panel>
