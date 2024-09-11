@@ -12,13 +12,14 @@ import {
     useNodesState,
     useReactFlow,
 } from '@xyflow/react';
-import Tooltip from '@/app/components/Tooltip';
+import GeneralTools from '@/app/components/toolbar/GeneralTools';
 import {useDnD} from '@/app/components/DnDContext';
 import {detachElement, groupElements} from "@/app/components/nodes/ZoneNode";
 import {defaultEdgeOptions, edgeTypes} from "@/app/components/nodes/DataflowEdge";
 import {ElementColor, ElementNodes, getNewElement} from "@/app/components/nodes/ElementNode";
 import {push} from "@/app/components/utils";
 import {HiQuestionMarkCircle} from "react-icons/hi";
+import {IoPlayCircle} from "react-icons/io5";
 
 const Canvas: React.FC = () => {
     const { screenToFlowPosition, addNodes, getInternalNode, getEdges } = useReactFlow();
@@ -164,6 +165,10 @@ const Canvas: React.FC = () => {
         }
     }, [setNodes, setEdges, getInternalNode]);
 
+    const runAnalysis = () => {
+
+    }
+
     return (
         <div className="dndflow">
             <div className="reactflow-wrapper" ref={reactFlowWrapper}>
@@ -195,30 +200,60 @@ const Canvas: React.FC = () => {
                             <HiQuestionMarkCircle />
                         </ControlButton>
                     </Controls>
-                    <MiniMap nodeColor={ElementColor} nodeStrokeWidth={1} zoomable pannable/>
+                    <MiniMap nodeColor={ElementColor} nodeStrokeWidth={1} zoomable pannable />
                     <Panel position='top-left'>
-                        <div>This is for icon bar TODO</div>
-                    </Panel>
-                    <Panel position="top-center">
-                        <div className="tooltip-container">
-                            <Tooltip/>
+                        <div style={{
+                            width: '50px',
+                            height: '100vh',
+                            borderRight: '1px solid #ccc',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'flex-start',
+                            alignItems: 'center',
+                            padding: '10px 0'
+                        }}>
+                            {/* Add your icon bar items here */}
+                            <div>Icon</div>
+                            <div>Bar</div>
+                            <div>TODO</div>
                         </div>
                     </Panel>
                     <Panel position='top-right'>
-                        <div>
-                            This is for run button TODO
+                        <div style={{
+                            width: '300px',
+                            height: '100vh',
+                            borderLeft: '1px solid #ccc',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            padding: '10px'
+                        }}>
+                            <div style={{
+                                zIndex: 9999,
+                                display: 'flex',
+                                background: '#fcfcfc',
+                                width: '50px',
+                                height: '30px',
+                                border: 1,
+                                stopColor: 'black'
+                            }}>
+                                <button onClick={runAnalysis}>
+                                    <IoPlayCircle />
+                                </button>
+                                {/*TODO progress*/}
+                            </div>
+                            <div>This is for properties bar TODO</div>
+                            <div>This is for threat bar TODO</div>
                         </div>
-                        <div>
-                            This is for properties bar TODO
-                        </div>
-                        <div>
-                            This is for threat bar TODO
+                    </Panel>
+                    <Panel position="bottom-center">
+                        <div className="toolbar-container">
+                            <GeneralTools/>
                         </div>
                     </Panel>
                     <Background
                         color="#00000" variant={BackgroundVariant.Cross} gap={30}
                     />
-                    <Panel position='bottom-center'>
+                    <Panel position='top-center'>
                         <div>This is for run background settings like dark mode TODO</div>
                     </Panel>
                 </ReactFlow>

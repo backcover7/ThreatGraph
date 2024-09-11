@@ -20,7 +20,7 @@ const nodeTypes: NodeInfo[] = [
     { type: 'text', label: <AiOutlineFontColors />, dragLabel: 'Text' },
 ];
 
-const Tooltip: React.FC = () => {
+const GeneralTools: React.FC = () => {
     const [_, __, setTypeAndName] = useDnD();
 
     const onDragStart = (event: React.DragEvent<HTMLDivElement>, nodeInfo: NodeInfo) => {
@@ -44,4 +44,4 @@ const Tooltip: React.FC = () => {
     );
 };
 
-export default memo(Tooltip);
+export default memo(GeneralTools);
