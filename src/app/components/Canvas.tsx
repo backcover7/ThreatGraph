@@ -17,7 +17,7 @@ import {useDnD} from '@/app/components/DnDContext';
 import {detachElement, groupElements} from "@/app/components/nodes/ZoneNode";
 import {defaultEdgeOptions, edgeTypes} from "@/app/components/nodes/DataflowEdge";
 import {ElementColor, ElementNodes, getNewElement} from "@/app/components/nodes/ElementNode";
-import {isValidEdgesFromConnection, push} from "@/app/components/utils";
+import {push} from "@/app/components/utils";
 import {HiQuestionMarkCircle} from "react-icons/hi";
 
 const Canvas: React.FC = () => {
@@ -28,19 +28,36 @@ const Canvas: React.FC = () => {
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [type, nodeName] = useDnD();
 
-    const isValidConnection = useCallback((connection: Edge | Connection) => {
-        return connection.source !== connection.target
-    }, [])
+    const isValidConnection = useCallback((connection: Connection | Edge) => {
+        const { source, sourceHandle, target, targetHandle } = connection as Connection;
+
+        // Check if source and target are the same
+        if (source === target) {
+            return false;
+        }
+
+        const createEdgeId = (start: string, startHandle: string | null, end: string, endHandle: string | null) =>
+            `xy-edge__${start}${startHandle ?? ''}-${end}${endHandle ?? ''}`;
+
+        const newEdgeId = createEdgeId(source, sourceHandle, target, targetHandle);
+        const reverseEdgeId = createEdgeId(
+            target,
+            (targetHandle as string)?.replace('target', 'source'),
+            source,
+            (sourceHandle as string)?.replace('source', 'target')
+        );
+
+        // Check if the edge already exists
+        return !(edges as Edge[]).some(edge =>
+            edge.id === newEdgeId || edge.id === reverseEdgeId
+        );
+    }, [edges]);
 
     const onConnect = useCallback(
         (conn: Connection) => setEdges((edges) => {
-            const label = `${`hello`}`;
-            // Do not try to add edges between two same node with same positions
-            if ((edges as Edge[]).some(ed=> !isValidEdgesFromConnection(conn, ed.id)))
-                return edges;
-            return addEdge({ ...conn, data: { label }, type: 'process' }, edges) as never;
+            return addEdge({ ...conn, type: 'process' }, edges) as never;
         }),
-        [setEdges, addEdge]
+        [setEdges]
     );
 
     const onReconnectStart = useCallback(() => {
@@ -50,9 +67,6 @@ const Canvas: React.FC = () => {
     const onReconnect = useCallback((oldEdge: Edge, newConnection: Connection) => {
         edgeReconnectSuccessful.current = true;
         setEdges((edges) => {
-            // Do not try to add edges between two same node with same positions
-            if ((edges as Edge[]).some(ed=> !isValidEdgesFromConnection(newConnection, ed.id)))
-                return edges;
             return reconnectEdge(oldEdge, newConnection, edges) as never
         });
     },[setEdges]);
@@ -76,7 +90,7 @@ const Canvas: React.FC = () => {
             if (!type || !nodeName) return;
             const position = screenToFlowPosition({ x: event.clientX, y: event.clientY });
             const newElem = getNewElement(type, position, nodeName);
-            if (type === 'annotation') {
+            if (type === 'text') {
                 newElem.data = { ...newElem.data, label: '', isNew: true };
             }
 

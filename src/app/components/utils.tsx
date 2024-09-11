@@ -22,14 +22,3 @@ export function push(arr: ReadonlyArray<Node>, element: Node): Node[] {
 export function concat(arr: ReadonlyArray<Node>, elements: ReadonlyArray<Node>): Node[] {
     return sortArray([...arr, ...elements]);
 }
-
-export function isValidEdgesFromConnection(conn: Connection, id: string): boolean {
-    const { source, sourceHandle, target, targetHandle } = conn;
-    const createEdgeId = (start: string, startHandle: string | null, end: string, endHandle: string | null) =>
-        `xy-edge__${start}${startHandle ?? ''}-${end}${endHandle ?? ''}`;
-
-    return ![
-        createEdgeId(source, sourceHandle, target, targetHandle),
-        createEdgeId(target, (targetHandle as string).replace('target', 'source'), source, (sourceHandle as string).replace('source', 'target'))
-    ].includes(id);
-}

@@ -36,8 +36,6 @@ const DataflowEdge: React.FC<EdgeProps<Edge<{ label: string }>>> = ({
         targetPosition,
     });
 
-    const visibility = 'hidden';
-
     const onProcessAdding = () => {
 
     }
@@ -50,12 +48,8 @@ const DataflowEdge: React.FC<EdgeProps<Edge<{ label: string }>>> = ({
                     style={{
                         position: 'absolute',
                         transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-                        background: '#cfe0ff',
-                        padding: 5,
-                        borderRadius: 10,
+                        pointerEvents: 'all',
                         fontSize: 10,
-                        fontWeight: 400,
-                        opacity: 0.9,
                         zIndex: 2000  // Edge zIndex is 1000, process should be over Edge zIndex
                     }}
                     className="nodrag nopan"

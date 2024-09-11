@@ -1,3 +1,5 @@
+/*Check this page before editing https://reactflow.dev/learn/customization/theming */
+
 @import '@xyflow/react/dist/style.css';
 
 /* Remove 'React Flow' watermark */
@@ -153,4 +155,15 @@ body,
 
 .react-flow__node-resizer-handle {
   background: #3c6fe4;
+}
+
+.edgebutton {
+  width: 20px;
+  height: 20px;
+  background: #eee;
+  border: 1px solid #fff;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 12px;
+  line-height: 1;
 }

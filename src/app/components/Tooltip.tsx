@@ -3,7 +3,7 @@ import { useDnD } from '@/app/components/DnDContext';
 import { LuDatabase, LuFrame, LuRectangleHorizontal } from "react-icons/lu";
 import {AiOutlineFontColors} from "react-icons/ai";
 
-type NodeType = 'input' | 'default' | 'output' | 'group' | 'annotation';
+type NodeType = 'input' | 'default' | 'output' | 'group' | 'text';
 
 interface NodeInfo {
     type: NodeType;
@@ -15,7 +15,7 @@ const nodeTypes: NodeInfo[] = [
     { type: 'group', label: <LuFrame />, dragLabel: 'Zone' },
     { type: 'default', label: <LuRectangleHorizontal />, dragLabel: 'Entity' },
     { type: 'output', label: <LuDatabase />, dragLabel: 'Datastore' },
-    { type: 'annotation', label: <AiOutlineFontColors />, dragLabel: 'Text' },
+    { type: 'text', label: <AiOutlineFontColors />, dragLabel: 'Text' },
 ];
 
 const Tooltip: React.FC = () => {

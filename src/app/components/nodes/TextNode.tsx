@@ -6,7 +6,7 @@ interface TextNodeProps extends NodeProps {
         label: string;
         isNew?: boolean;
     };
-    type: 'annotation';
+    type: 'text';
 }
 
 const TextNode: React.FC<TextNodeProps> = ({ id, data }) => {
