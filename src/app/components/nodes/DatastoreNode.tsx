@@ -19,8 +19,8 @@ const DatastoreNode: React.FC<DatastoreNodeProps> = ({ id, data, selected }) => 
             <NodeResizer
                 color='#2561ff'
                 isVisible={selected}
-                minWidth={100}
-                minHeight={80}
+                minWidth={30}
+                minHeight={20}
             />
             <DiDatabase style={{  // TODO move all inline style to global.css
                 position: 'relative',

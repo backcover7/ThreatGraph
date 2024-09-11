@@ -21,7 +21,7 @@ import {push} from "@/app/components/utils";
 import {HiQuestionMarkCircle} from "react-icons/hi";
 
 const Canvas: React.FC = () => {
-    const { screenToFlowPosition, addNodes, getInternalNode } = useReactFlow();
+    const { screenToFlowPosition, addNodes, getInternalNode, getEdges } = useReactFlow();
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
     const edgeReconnectSuccessful = useRef(true);
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -83,26 +83,56 @@ const Canvas: React.FC = () => {
         event.dataTransfer.dropEffect = 'move';
     }, []);
 
+    const checkDropOnEdge = (x: number, y: number) => {
+        return getEdges().find(edge => {
+            const edgeElement = document.querySelector(`[data-testid="rf__edge-${edge.id}"]`);
+            if (edgeElement) {
+                const rect = edgeElement.getBoundingClientRect();
+                return (
+                    x >= rect.left &&
+                    x <= rect.right &&
+                    y >= rect.top &&
+                    y <= rect.bottom
+                );
+            }
+            return false;
+        });
+    };
+
     // Drop new element
     const onDrop = useCallback(
         (event: React.DragEvent<HTMLDivElement>) => {
             event.preventDefault();
             if (!type || !nodeName) return;
+
             const position = screenToFlowPosition({ x: event.clientX, y: event.clientY });
             const newElem = getNewElement(type, position, nodeName);
+
             if (type === 'text') {
                 newElem.data = { ...newElem.data, label: '', isNew: true };
             }
 
-            if (nodes.length == 0) {
-                addNodes(newElem);
+            const droppedOnEdge = checkDropOnEdge(event.clientX, event.clientY);
+
+            if (droppedOnEdge && type === 'process') {
+                // Update the edge to show ProcessComponent
+                setEdges(edges => (edges as Edge[]).map(edge =>
+                    edge.id === droppedOnEdge.id
+                        ? { ...edge, data: { ...edge.data, isProcessNode: true } }
+                        : edge
+                ) as never);
             } else {
-                setNodes((nodes) => {
-                    return groupElements(push(nodes, newElem as never), getInternalNode, setNodes) as never;
-                });
+                // Add node as usual
+                if (nodes.length === 0) {
+                    addNodes(newElem);
+                } else {
+                    setNodes((nodes) => {
+                        return groupElements(push(nodes, newElem as never), getInternalNode, setNodes) as never;
+                    });
+                }
             }
         },
-        [nodes, screenToFlowPosition, setNodes, type, nodeName, getInternalNode],
+        [nodes, screenToFlowPosition, setNodes, type, nodeName, getInternalNode, getEdges, setEdges, addNodes]
     );
 
     const onNodeDragStart = useCallback((event: React.MouseEvent, detachedNode: Node) => {
@@ -113,17 +143,32 @@ const Canvas: React.FC = () => {
     }, [getInternalNode]);
 
     // drag existing element
-    const onNodeDragStop = useCallback(() => {
-        setNodes((nodes) => {
-            return groupElements(nodes as Node[], getInternalNode, setNodes) as never;
-        })
-    }, [setNodes, getInternalNode]);
+    const onNodeDragStop = useCallback((event: React.MouseEvent, node: Node) => {
+        const droppedOnEdge = checkDropOnEdge(event.clientX, event.clientY);
+
+        if (droppedOnEdge && node.type === 'process') {
+            // Update the edge to show ProcessComponent
+            setEdges(edges => (edges as Edge[]).map(edge =>
+                edge.id === droppedOnEdge.id
+                    ? { ...edge, data: { ...edge.data, isProcessNode: true } }
+                    : edge
+            ) as never);
+
+            // Remove the dragged process node
+            setNodes(nodes => (nodes as Node[]).filter(n => n.id !== node.id) as never);
+        } else {
+            // Group elements as before
+            setNodes((nodes) => {
+                return groupElements(nodes as Node[], getInternalNode, setNodes) as never;
+            });
+        }
+    }, [setNodes, setEdges, getInternalNode]);
 
     return (
         <div className="dndflow">
             <div className="reactflow-wrapper" ref={reactFlowWrapper}>
                 <ReactFlow
-                    fitView
+                    // fitView
                     className="touch-flow"
                     nodes={nodes}
                     nodeTypes={ElementNodes}

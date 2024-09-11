@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { BaseEdge, Edge, EdgeLabelRenderer, EdgeProps, getBezierPath, MarkerType, useReactFlow } from '@xyflow/react';
 import ProcessNode from "@/app/components/nodes/process/ProcessComponent";
+import {ElementToolbar} from "@/app/components/nodes/ElementNode";
 
 export const defaultEdgeOptions = {
     type: 'process',
@@ -63,7 +64,7 @@ const DataflowEdge: React.FC<EdgeProps<Edge<{ label: string, isProcessNode?: boo
                     }}
                     className="nodrag nopan"
                 >
-                    {showProcessNode ? (
+                    {showProcessNode || data?.isProcessNode ? (
                         <ProcessNode data={{ label: 'P' }} />
                     ) : (
                         <button className="edgebutton" onClick={onAddProcess}>

@@ -13,13 +13,12 @@ interface EntityNodeProps extends NodeProps {
 // TODO https://reactflow.dev/learn/tutorials/mind-map-app-with-react-flow
 const EntityNode: React.FC<EntityNodeProps> = ({ id, data, selected }) => {
     return (
-        // TODO NodeResize
         <ElementToolbar selected={selected} id={id}>
             <NodeResizer
                 color='#2561ff'
                 isVisible={selected}
-                minWidth={100}
-                minHeight={80}
+                minWidth={30}
+                minHeight={20}
             />
             {/*<div className="font-bold">{id}</div>*/}
             <FaLaptop style={{
