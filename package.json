@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/dompurify": "^3.0.5",
     "@types/js-yaml": "^4.0.9",
     "@xyflow/react": "^12.2.1",
     "ajv": "^8.17.1",

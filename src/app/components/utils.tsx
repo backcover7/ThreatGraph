@@ -1,5 +1,6 @@
-import {Connection, Node} from "@xyflow/react";
+import {Node} from "@xyflow/react";
 import {getArea} from "@/app/components/nodes/ZoneNode";
+import DOMPurify from "dompurify";
 
 function compare(node1: Node, node2: Node): number {
     if (node1.type === 'group' && node2.type !== 'group') return -1;  // node1 should be placed before node2
@@ -21,4 +22,34 @@ export function push(arr: ReadonlyArray<Node>, element: Node): Node[] {
 
 export function concat(arr: ReadonlyArray<Node>, elements: ReadonlyArray<Node>): Node[] {
     return sortArray([...arr, ...elements]);
+}
+
+// TODO Use img src to read dataUrl
+export function sanitizeDataUrl(dataUrl: URL): URL {
+    const url = dataUrl instanceof URL ? dataUrl : new URL(dataUrl);
+
+    // Use regex to match if the data URL is an SVG XML base64 encoded data URL
+    const svgDataUrlRegex: RegExp = /^data:image\/svg\+xml;base64,/;
+    if (!svgDataUrlRegex.test(url.href)) {
+        throw new Error('Invalid SVG data URL');
+    }
+
+    // Convert data URL to SVG
+    const base64Data: string = url.href.split(',')[1];
+    const svgString: string = atob(base64Data);
+
+    // Call svgToDataUrl
+    return svgToDataUrl(svgString);
+}
+
+export function svgToDataUrl(svgString: string): URL {
+    // Use DOMPurify to sanitize SVG
+    const sanitizedSvg: string = DOMPurify.sanitize(svgString);
+    if (!sanitizedSvg) {
+        throw new Error('SVG sanitization failed');
+    }
+
+    // Convert sanitized SVG to data URL
+    const encodedSvg: string = encodeURIComponent(sanitizedSvg);
+    return new URL(`data:image/svg+xml,${encodedSvg}`);
 }

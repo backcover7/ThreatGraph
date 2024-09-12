@@ -24,6 +24,7 @@ const ZoneNode: React.FC<ZoneNodeProps> = ({ id, data, selected }) => {
 
     return (
         <>
+            // TODO
             <ElementToolbar id={id} selected={selected}>
                 <NodeResizer
                     color='#2561ff'
