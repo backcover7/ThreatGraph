@@ -4,7 +4,7 @@ import EntityNode from "@/app/components/nodes/EntityNode";
 import DatastoreNode from "@/app/components/nodes/DatastoreNode";
 import React, {useCallback} from "react";
 import TextNode from "@/app/components/nodes/TextNode";
-import ProcessNode from "@/app/components/nodes/process/ProcessComponent";
+import ProcessNode from "@/app/components/nodes/ProcessNode";
 
 export const getElementId = () => crypto.randomUUID();
 
@@ -33,16 +33,11 @@ export const ElementNodes = {
     text: TextNode,
 };
 
-export function getNewElement(type: string, position: XYPosition, nodeName: string): Node {
+export function getNewElement(type: string, position: XYPosition, data?: any): Node {
     return {
         id: getElementId(),
         type,
         position,
-        data: {
-            label: nodeName,
-            level: type === 'text' ? 1 : undefined,
-            arrowStyle: type === 'text' ? { position: 'absolute', bottom: -10, right: -10 } : undefined,
-        },
         style:
             type === 'group' ? {width: 400, height: 240} :
             type === 'default' ? {width: 80, height: 60} :
@@ -50,6 +45,7 @@ export function getNewElement(type: string, position: XYPosition, nodeName: stri
             type === 'process' ? {width: 40, height: 10} :
             type === 'text' ? {width: 150, height: 50} :
             undefined,
+        data,  // model data
     };
 }
 
@@ -58,18 +54,10 @@ export const ElementToolbar: React.FC<{
     selected?: boolean;
     id: string;
 }> = ({ children, selected, id }) => {
-    const { getNodes } = useReactFlow();
-
     const onTest = useCallback(() => {
         console.log("test");
         // TODO Implement logic here
     }, []);
-
-    const getChildrenLabels = useCallback(() => {
-        const nodes = getNodes();
-        const childNodes = nodes.filter(node => node.id === id);
-        return childNodes[0].data.label as string;
-    }, [getNodes, id]);
 
     return (
         <>
@@ -89,7 +77,6 @@ export const ElementToolbar: React.FC<{
                 bottom: 0,
                 fontSize: 8,
             }}>
-                {getChildrenLabels()}
             </div>
         </>
     );

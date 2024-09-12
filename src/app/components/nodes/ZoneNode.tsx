@@ -1,10 +1,10 @@
 import React, {memo, useCallback} from 'react';
-import {Node, NodeProps, NodeResizer, NodeToolbar, Position, useReactFlow} from '@xyflow/react';
+import {Handle, Node, NodeProps, NodeResizer, NodeToolbar, Position, useReactFlow} from '@xyflow/react';
+import {Zone} from "@/DFD/zone";
+import {ElementToolbar} from "@/app/components/nodes/ElementNode";
 
 interface ZoneNodeProps extends NodeProps {
-    data: {
-        label: string
-    };
+    data: Zone;
     type: 'group';
 }
 
@@ -24,30 +24,32 @@ const ZoneNode: React.FC<ZoneNodeProps> = ({ id, data, selected }) => {
 
     return (
         <>
-            <NodeResizer
-                color='#2561ff'
-                isVisible={selected}
-                minWidth={100}
-                minHeight={80}
-                // onResize={onResize}
-                onResizeEnd={onResizeEnd}
-            />
-            <NodeToolbar
-                isVisible={selected}
-                position={Position.Top}
-            >
-                <button onClick={onTest}>button1</button>
-                <button onClick={onTest}>button2</button>
-            </NodeToolbar>
-            <div style={{
-                position: 'absolute',
-                color: '#555',
-                top: 2,
-                fontSize: 8,
-                left: 5
-            }}>
-                {data.label}
-            </div>
+            <ElementToolbar id={id} selected={selected}>
+                <NodeResizer
+                    color='#2561ff'
+                    isVisible={selected}
+                    minWidth={100}
+                    minHeight={80}
+                    // onResize={onResize}
+                    onResizeEnd={onResizeEnd}
+                />
+                {/*<NodeToolbar*/}
+                {/*    isVisible={selected}*/}
+                {/*    position={Position.Top}*/}
+                {/*>*/}
+                {/*    <button onClick={onTest}>button1</button>*/}
+                {/*    <button onClick={onTest}>button2</button>*/}
+                {/*</NodeToolbar>*/}
+                <div style={{
+                    position: 'absolute',
+                    color: '#555',
+                    top: 2,
+                    fontSize: 8,
+                    left: 5
+                }}>
+                    {data ? data.metadata.name : 'Zone'}
+                </div>
+            </ElementToolbar>
         </>
     );
 }

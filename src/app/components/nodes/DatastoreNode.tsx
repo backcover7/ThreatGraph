@@ -4,18 +4,16 @@ import React, {memo} from 'react';
 import {Handle, NodeProps, NodeResizer, Position} from "@xyflow/react";
 import { DiDatabase } from 'react-icons/di';
 import { ElementToolbar } from "@/app/components/nodes/ElementNode";
+import {DataStore} from "@/DFD/node/datastore";
 
 interface DatastoreNodeProps extends NodeProps{
-    data: {
-        label: string;
-    },
-    type: 'output',
+    data: DataStore;
+    type: 'output';
 }
 
 const DatastoreNode: React.FC<DatastoreNodeProps> = ({ id, data, selected }) => {
     return (
         <ElementToolbar selected={selected} id={id}>
-            {/*<div className="font-bold">{id}</div>*/}
             <NodeResizer
                 color='#2561ff'
                 isVisible={selected}
@@ -27,6 +25,9 @@ const DatastoreNode: React.FC<DatastoreNodeProps> = ({ id, data, selected }) => 
                 top: 1,
                 fontSize: 24
             }} />
+            <div>
+                {data ? data.metadata.name : 'Datastore'}
+            </div>
             <Handle type="target" position={Position.Top} id="datastore-top-target"/>
             <Handle type="target" position={Position.Right} id="datastore-right-target"/>
             <Handle type="target" position={Position.Bottom} id="datastore-botton-target"/>

@@ -2,11 +2,10 @@ import React, { memo } from 'react';
 import {Handle, Position, NodeProps, NodeResizer} from '@xyflow/react';
 import { ElementToolbar } from "@/app/components/nodes/ElementNode";
 import { FaLaptop } from "react-icons/fa";
+import {Entity} from "@/DFD/node/entity";
 
 interface EntityNodeProps extends NodeProps {
-    data: {
-        label: string;
-    };
+    data: Entity;
     type: 'default';
 }
 
@@ -20,12 +19,14 @@ const EntityNode: React.FC<EntityNodeProps> = ({ id, data, selected }) => {
                 minWidth={30}
                 minHeight={20}
             />
-            {/*<div className="font-bold">{id}</div>*/}
             <FaLaptop style={{
                 position: 'relative',
                 top: 1,
                 fontSize: 24
             }} />
+            <div>
+                {data ? data.metadata.name : 'Entity'}
+            </div>
             <Handle type="target" position={Position.Top} id="entity-top-target"/>
             <Handle type="source" position={Position.Top} id="entity-top-source"/>
             <Handle type="target" position={Position.Right} id="entity-right-target"/>

@@ -1,7 +1,8 @@
 import React, { useState, useCallback } from 'react';
-import { BaseEdge, Edge, EdgeLabelRenderer, EdgeProps, getBezierPath, MarkerType, useReactFlow } from '@xyflow/react';
-import ProcessNode from "@/app/components/nodes/process/ProcessComponent";
-import {ElementToolbar} from "@/app/components/nodes/ElementNode";
+import { BaseEdge, Edge, EdgeLabelRenderer, EdgeProps, getBezierPath, MarkerType, useReactFlow, NodeProps } from '@xyflow/react';
+import ProcessNode, { ProcessNodeProps } from "@/app/components/nodes/ProcessNode";
+import { Process } from "@/DFD/process";
+import {MdOutlinePrecisionManufacturing} from "react-icons/md";
 
 export const defaultEdgeOptions = {
     type: 'process',
@@ -17,18 +18,18 @@ export const defaultEdgeOptions = {
     },
 };
 
-const DataflowEdge: React.FC<EdgeProps<Edge<{ label: string, isProcessNode?: boolean }>>> = ({
-                                                                                                 id,
-                                                                                                 sourceX,
-                                                                                                 sourceY,
-                                                                                                 targetX,
-                                                                                                 targetY,
-                                                                                                 sourcePosition,
-                                                                                                 targetPosition,
-                                                                                                 style = {},
-                                                                                                 markerEnd,
-                                                                                                 data,
-                                                                                             }) => {
+const DataflowEdge: React.FC<EdgeProps<Edge<{ process?: Process, isProcessNode?: boolean }>>> = ({
+                                                                                                     id,
+                                                                                                     sourceX,
+                                                                                                     sourceY,
+                                                                                                     targetX,
+                                                                                                     targetY,
+                                                                                                     sourcePosition,
+                                                                                                     targetPosition,
+                                                                                                     style = {},
+                                                                                                     markerEnd,
+                                                                                                     data,
+                                                                                                 }) => {
     const [edgePath, labelX, labelY] = getBezierPath({
         sourceX,
         sourceY,
@@ -48,7 +49,21 @@ const DataflowEdge: React.FC<EdgeProps<Edge<{ label: string, isProcessNode?: boo
                 ed.id === id ? { ...ed, data: { ...ed.data, isProcessNode: true } } : ed
             )
         );
+        // You might want to trigger some application logic here to handle the actual process creation
+        // For example: triggerProcessCreation(id);
     }, [id, setEdges]);
+
+    // Default props for ProcessNode when used in an edge
+    const defaultProcessNodeProps: Omit<ProcessNodeProps, 'data'> = {
+        id: `${id}`,
+        type: 'process',
+        zIndex: 2000,
+        dragging: false,
+        isConnectable: false,
+        selected: false,
+        positionAbsoluteX: 0,
+        positionAbsoluteY: 0,
+    };
 
     return (
         <>
@@ -65,7 +80,31 @@ const DataflowEdge: React.FC<EdgeProps<Edge<{ label: string, isProcessNode?: boo
                     className="nodrag nopan"
                 >
                     {showProcessNode || data?.isProcessNode ? (
-                        <ProcessNode data={{ label: 'P' }} />
+                        data?.process ? (
+                            <ProcessNode
+                                {...defaultProcessNodeProps}
+                                data={{
+                                    process: data.process,
+                                    isProcessNode: true
+                                }}
+                            />
+                        ) : (
+                            <div style={{
+                                background: '#ebebeb',
+                                fontSize: '8px',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                height: '100%',
+                            }}>
+                                <div>
+                                    <MdOutlinePrecisionManufacturing/>
+                                </div>
+                                <div>
+                                    {'Process'}
+                                </div>
+                            </div>
+                        )
                     ) : (
                         <button className="edgebutton" onClick={onAddProcess}>
                             +

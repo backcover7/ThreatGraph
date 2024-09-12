@@ -107,7 +107,7 @@ const Canvas: React.FC = () => {
             if (!type || !nodeName) return;
 
             const position = screenToFlowPosition({ x: event.clientX, y: event.clientY });
-            const newElem = getNewElement(type, position, nodeName);
+            const newElem = getNewElement(type, position);  // TODO data is empty when dragging an empty template icon from generaltools toolbar.
 
             if (type === 'text') {
                 newElem.data = { ...newElem.data, label: '', isNew: true };
