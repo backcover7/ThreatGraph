@@ -7,7 +7,7 @@ import {ElementToolbar} from "@/app/components/nodes/ElementNode";
 
 interface ZoneNodeProps extends NodeProps {
     data: {
-        model: Zone
+        model: Zone;
     };
     type: 'group';
 }

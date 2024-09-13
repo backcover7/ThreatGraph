@@ -16,11 +16,11 @@ import GeneralTools from '@/app/components/toolbar/GeneralTools';
 import {useDnD} from '@/app/components/DnDContext';
 import {detachElement, groupElements} from "@/app/components/nodes/ZoneNode";
 import {defaultEdgeOptions, edgeTypes} from "@/app/components/nodes/DataflowEdge";
-import {ElementColor, ElementNodes, getNewElement, NodeType} from "@/app/components/nodes/ElementNode";
+import {ElementColor, ElementNodes, getNewElement} from "@/app/components/nodes/ElementNode";
 import {push} from "@/app/components/utils";
 import {HiQuestionMarkCircle} from "react-icons/hi";
 import {IoPlayCircle} from "react-icons/io5";
-import BuiltInTools from "@/app/components/toolbar/BuiltInTools";
+// import BuiltInTools from "@/app/components/toolbar/BuiltInTools";
 
 const Canvas: React.FC = () => {
     const { screenToFlowPosition, addNodes, getInternalNode, getEdges } = useReactFlow();
@@ -106,7 +106,7 @@ const Canvas: React.FC = () => {
     const onDrop = useCallback(
         (event: React.DragEvent<HTMLDivElement>) => {
             event.preventDefault();
-            if (!type || !data) return;
+            if (!type) return;
 
             const position = screenToFlowPosition({ x: event.clientX, y: event.clientY });
             const newElem = getNewElement(type, position, data);
@@ -170,7 +170,7 @@ const Canvas: React.FC = () => {
                     // fitView
                     className="touch-flow"
                     nodes={nodes}
-                    nodeTypes={ElementNodes as NodeTypes}
+                    nodeTypes={ElementNodes}
                     onNodesChange={onNodesChange}
                     isValidConnection={isValidConnection}
                     onEdgesChange={onEdgesChange}
@@ -206,7 +206,7 @@ const Canvas: React.FC = () => {
                             alignItems: 'center',
                             padding: '10px 0'
                         }}>
-                            <BuiltInTools />
+                            {/*<BuiltInTools />*/}
                         </div>
                     </Panel>
                     <Panel position='top-right'>

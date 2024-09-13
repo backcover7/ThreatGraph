@@ -5,7 +5,7 @@ import { NodeType } from "@/app/components/nodes/ElementNode";
 
 // Updated context type to include only `type` and `data`
 type DnDContextType = [
-        NodeType | null,
+    NodeType | null,
     any,
     React.Dispatch<React.SetStateAction<[NodeType | null, any]>>
 ];

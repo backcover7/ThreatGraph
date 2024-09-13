@@ -8,7 +8,7 @@ import {DataStore} from "@/DFD/node/datastore";
 
 interface DatastoreNodeProps extends NodeProps{
     data: {
-        model: DataStore
+        model: DataStore;
     };
     type: 'output';
 }

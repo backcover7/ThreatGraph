@@ -8,7 +8,7 @@ import {Entity} from "@/DFD/node/entity";
 
 interface EntityNodeProps extends NodeProps {
     data: {
-        model: Entity
+        model: Entity;
     };
     type: 'default';
 }
