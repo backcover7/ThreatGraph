@@ -25,7 +25,7 @@ const DatastoreNode: React.FC<DatastoreNodeProps> = ({ id, data, selected }) => 
                 minHeight={20}
             />
             {data.model ? (
-                <IconRenderer dataUrl={data.model.metadata.icon} />
+                <IconRenderer dataUrl={data.model.metadata.icon} width={'30%'} height={'30%'} />
             ) : (
                 <DiDatabase style={{  // TODO move all inline style to global.css
                     position: 'relative',

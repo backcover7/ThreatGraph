@@ -24,7 +24,7 @@ const EntityNode: React.FC<EntityNodeProps> = ({ id, data, selected }) => {
                 minHeight={20}
             />
             {data.model ? (
-                <IconRenderer dataUrl={data.model.metadata.icon} />
+                <IconRenderer dataUrl={data.model.metadata.icon} width={'30%'} height={'30%'} />
             ) : (
                 <FaLaptop style={{
                     position: 'relative',

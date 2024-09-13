@@ -29,6 +29,7 @@ const BuiltInTools: React.FC = () => {
                 title={item.metadata.name || 'Unnamed'}
             >
                 <IconRenderer dataUrl={item.metadata.icon} />
+                <div>{item.metadata.name}</div>
             </div>
         ));
     };

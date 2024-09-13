@@ -5,9 +5,11 @@ import { sanitizeDataUrl } from "@/app/components/utils";
 
 interface IconRendererProps {
     dataUrl?: string;
+    width?: string;
+    height?: string;
 }
 
-const IconRenderer: React.FC<IconRendererProps> = ({ dataUrl = '' }) => {
+const IconRenderer: React.FC<IconRendererProps> = ({ dataUrl = '', width='100%', height='100%' }) => {
     const [svgContent, setSvgContent] = useState<string>(dataUrl);
     const [sanitizedUrl, setSanitizedUrl] = useState<string | null>(null);
 
@@ -29,7 +31,7 @@ const IconRenderer: React.FC<IconRendererProps> = ({ dataUrl = '' }) => {
     }
 
     return (
-        <img src={sanitizedUrl} alt="Icon" width={'100%'} height={'100%'} /> // TODO alt
+        <img src={sanitizedUrl} alt="Icon" width={width} height={height}/> // TODO alt
     );
 };
 
