@@ -1,48 +1,54 @@
 'use client'
 
-import React, { memo } from 'react';
-import { useDnD } from '@/app/components/DnDContext';
-import { LuDatabase, LuFrame, LuRectangleHorizontal } from "react-icons/lu";
-import { AiOutlineFontColors } from "react-icons/ai";
-import { GiGearStick } from "react-icons/gi";
-import {NodeType} from "@/app/components/nodes/ElementNode";
+import React from 'react';
+
+import {useDnD} from "@/app/components/DnDContext";
+import {LuDatabase, LuFrame, LuRectangleHorizontal} from "react-icons/lu";
+import {AiOutlineFontColors} from "react-icons/ai";
 
 interface NodeInfo {
-    type: NodeType;
-    label: React.ReactNode;
+    type: 'group' | 'default' | 'output' | 'process' | 'text';
     dragLabel: string;
+    icon: React.ReactNode;
 }
 
 const nodeTypes: NodeInfo[] = [
-    { type: 'group', label: <LuFrame />, dragLabel: 'Zone' },
-    { type: 'default', label: <LuRectangleHorizontal />, dragLabel: 'Entity' },
-    { type: 'output', label: <LuDatabase />, dragLabel: 'Datastore' },
-    // { type: 'process', label: <GiGearStick />, dragLabel: 'Process' },
-    { type: 'text', label: <AiOutlineFontColors />, dragLabel: 'Text' },
+    { type: 'group', dragLabel: 'Zone', icon: <LuFrame /> },
+    { type: 'default', dragLabel: 'Entity', icon: <LuRectangleHorizontal /> },
+    { type: 'output', dragLabel: 'Datastore', icon: <LuDatabase /> },
+    // { type: 'process', dragLabel: 'Process', icon: <GiGearStick /> },
+    { type: 'text', dragLabel: 'Text', icon: <AiOutlineFontColors /> },
 ];
 
 const GeneralTools: React.FC = () => {
-    const [type, data, setDnDState] = useDnD();
+    const [, , setDnDState] = useDnD();
 
     const onDragStart = (event: React.DragEvent<HTMLDivElement>, nodeInfo: NodeInfo) => {
-        setDnDState([nodeInfo.type, nodeInfo.dragLabel]);
+        event.dataTransfer.setData('application/reactflow', nodeInfo.type);
         event.dataTransfer.effectAllowed = 'move';
+
+        if (nodeInfo.type === 'text') {
+            setDnDState([nodeInfo.type, { label: 'placeholder' }]);
+        } else {
+            setDnDState([nodeInfo.type, {model: undefined}]);
+        }
     };
 
     return (
-        <div>
+        <div className="general-tools">
             {nodeTypes.map((nodeInfo) => (
                 <div
                     key={nodeInfo.type}
+                    className="dndnode"
                     onDragStart={(event) => onDragStart(event, nodeInfo)}
                     draggable
                     title={nodeInfo.dragLabel}
                 >
-                    {nodeInfo.label}
+                    {nodeInfo.icon}
                 </div>
             ))}
         </div>
     );
 };
 
-export default memo(GeneralTools);
+export default GeneralTools;

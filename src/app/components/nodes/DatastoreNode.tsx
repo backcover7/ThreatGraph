@@ -5,6 +5,8 @@ import {Handle, NodeProps, NodeResizer, Position} from "@xyflow/react";
 import { DiDatabase } from 'react-icons/di';
 import { ElementToolbar } from "@/app/components/nodes/ElementNode";
 import {DataStore} from "@/DFD/node/datastore";
+import IconRenderer from "@/app/components/IconRenderer";
+import {FaLaptop} from "react-icons/fa";
 
 interface DatastoreNodeProps extends NodeProps{
     data: {
@@ -22,11 +24,15 @@ const DatastoreNode: React.FC<DatastoreNodeProps> = ({ id, data, selected }) => 
                 minWidth={30}
                 minHeight={20}
             />
-            <DiDatabase style={{  // TODO move all inline style to global.css
-                position: 'relative',
-                top: 1,
-                fontSize: 24
-            }} />
+            {data.model ? (
+                <IconRenderer dataUrl={data.model.metadata.icon} />
+            ) : (
+                <DiDatabase style={{  // TODO move all inline style to global.css
+                    position: 'relative',
+                    top: 1,
+                    fontSize: 24
+                }} />
+            )}
             <div>
                 {data.model ? data.model.metadata.name : 'Datastore'}
             </div>

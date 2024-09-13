@@ -3,7 +3,6 @@
 import React, {memo, useCallback} from 'react';
 import {Node, NodeProps, NodeResizer, NodeToolbar, Position, useReactFlow} from '@xyflow/react';
 import {Zone} from "@/DFD/zone";
-import {ElementToolbar} from "@/app/components/nodes/ElementNode";
 
 interface ZoneNodeProps extends NodeProps {
     data: {

@@ -5,6 +5,7 @@ import {Handle, Position, NodeProps, NodeResizer} from '@xyflow/react';
 import { ElementToolbar } from "@/app/components/nodes/ElementNode";
 import { FaLaptop } from "react-icons/fa";
 import {Entity} from "@/DFD/node/entity";
+import IconRenderer from "@/app/components/IconRenderer";
 
 interface EntityNodeProps extends NodeProps {
     data: {
@@ -13,7 +14,6 @@ interface EntityNodeProps extends NodeProps {
     type: 'default';
 }
 
-// TODO https://reactflow.dev/learn/tutorials/mind-map-app-with-react-flow
 const EntityNode: React.FC<EntityNodeProps> = ({ id, data, selected }) => {
     return (
         <ElementToolbar selected={selected} id={id}>
@@ -23,11 +23,15 @@ const EntityNode: React.FC<EntityNodeProps> = ({ id, data, selected }) => {
                 minWidth={30}
                 minHeight={20}
             />
-            <FaLaptop style={{
-                position: 'relative',
-                top: 1,
-                fontSize: 24
-            }} />
+            {data.model ? (
+                <IconRenderer dataUrl={data.model.metadata.icon} />
+            ) : (
+                <FaLaptop style={{
+                    position: 'relative',
+                    top: 1,
+                    fontSize: 24
+                }} />
+            )}
             <div>
                 {data.model ? data.model.metadata.name : 'Entity'}
             </div>

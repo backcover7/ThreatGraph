@@ -29,7 +29,7 @@ const IconRenderer: React.FC<IconRendererProps> = ({ dataUrl = '' }) => {
     }
 
     return (
-        <img src={sanitizedUrl} alt="Icon" /> // TODO alt
+        <img src={sanitizedUrl} alt="Icon" width={'100%'} height={'100%'} /> // TODO alt
     );
 };
 
