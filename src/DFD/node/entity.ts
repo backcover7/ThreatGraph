@@ -1,9 +1,9 @@
 // Entity Type
-import { typeOrObjectPattern } from '../base';
 import { Element, elementSchema, buildElement } from '../element';
 import { Additions } from "../additions";
 import { Node } from './node';
 import { UUID } from 'crypto';
+import {typeOrObjectPattern} from "../symbol";
 
 export type Entity = Node & {
     metadata: {

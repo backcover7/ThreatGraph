@@ -156,3 +156,159 @@ body,
   line-height: 1;
   z-index: 2000;
 }
+
+/* Styles for Built-in Tools */
+.built-in-tools {
+  width: 100%;
+  padding: 10px;
+  overflow-y: auto;
+  max-height: calc(100vh - 60px); /* Adjust based on your layout */
+}
+
+.built-in-tools h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.tool-section {
+  margin-bottom: 20px;
+}
+
+.tool-section h4 {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #666;
+}
+
+.dndnode {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  cursor: grab;
+  background-color: white;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.dndnode:hover {
+  background-color: #f0f0f0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.dndnode-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e0e0e0;
+  border-radius: 50%;
+  margin-right: 12px;
+  overflow: hidden;
+}
+
+.dndnode-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.dndnode-label {
+  font-size: 12px;
+  color: #333;
+}
+
+.icon-error, .icon-placeholder {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.icon-error {
+  background-color: #ffcccc;
+  color: #ff0000;
+}
+
+.icon-placeholder {
+  background-color: #cccccc;
+  color: #666666;
+}
+
+/* Additional utility classes */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.m-2 {
+  margin: 0.5rem;
+}
+
+.p-2 {
+  padding: 0.5rem;
+}
+
+.rounded {
+  border-radius: 0.25rem;
+}
+
+.shadow {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.bg-white {
+  background-color: #ffffff;
+}
+
+.text-gray-700 {
+  color: #4a5568;
+}
+
+.hover\:bg-gray-100:hover {
+  background-color: #f7fafc;
+}
+
+.transition {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}

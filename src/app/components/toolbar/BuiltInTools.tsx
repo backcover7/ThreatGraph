@@ -1,50 +1,73 @@
 'use client'
 
-import React, { memo } from 'react';
-import { useDnD } from '@/app/components/DnDContext';
-import Template from "@/parser/template";
-import {LuFrame} from "react-icons/lu";
+import React, { useEffect, useState } from 'react';
+import {useDnD} from "@/app/components/DnDContext";
 import IconRenderer from "@/app/components/IconRenderer";
+import {useTemplate} from "@/app/components/toolbar/TemplateContext";
 import {NodeType} from "@/app/components/nodes/ElementNode";
 
-interface NodeInfo {
-    type: NodeType;
-    label: React.ReactNode;
-    dragLabel: string;
-    data: any;
-}
-
-// const loader = new Template();
-// const {zone, entity, datastore, process, threat, rule} = await loader.loadBuiltinTemplates();
-//
-let nodeTypes: NodeInfo[] = [];
-// zone.forEach(z => {nodeTypes.push({type: 'group', label: <LuFrame />, dragLabel: z.metadata.name, data: z})});
-// entity.forEach(e => {nodeTypes.push({type: 'default', label: <IconRenderer dataUrl={e.metadata.icon} />, dragLabel: e.metadata.name, data: e})});
-// datastore.forEach(d => {nodeTypes.push({type: 'output', label: <IconRenderer dataUrl={d.metadata.icon} />, dragLabel: d.metadata.name, data: d})});
-// process.forEach(p => {nodeTypes.push({type: 'process', label: <IconRenderer dataUrl={p.metadata.icon} />, dragLabel: p.metadata.name, data: p})});
-
 const BuiltInTools: React.FC = () => {
-    const [, , setDnDState] = useDnD();
+    const [, , setDraggedItem] = useDnD();
+    const templates = useTemplate();
+    const [loadedTemplates, setLoadedTemplates] = useState<any>({});
 
-    const onDragStart = (event: React.DragEvent<HTMLDivElement>, nodeInfo: NodeInfo) => {
-        setDnDState([nodeInfo.type, nodeInfo.data]);
+    useEffect(() => {
+        setLoadedTemplates(templates);
+    }, [templates]);
+
+    const onDragStart = (event: React.DragEvent<HTMLDivElement>, nodeType: NodeType, data: any) => {
+        event.dataTransfer.setData('application/reactflow', nodeType);
         event.dataTransfer.effectAllowed = 'move';
+        setDraggedItem([nodeType, data]);
+    };
+
+    const renderTemplateItems = (items: any[], type: NodeType) => {
+        return items.map((item, index) => (
+            <div
+                key={`${type}-${index}`}
+                className="dndnode"
+                onDragStart={(event) => onDragStart(event, type, item)}
+                draggable
+            >
+                {item.metadata.icon ? (
+                    <IconRenderer dataUrl={item.metadata.icon} />
+                ) : (
+                    <div className="dndnode-icon">{type.charAt(0).toUpperCase()}</div>
+                )}
+                <div className="dndnode-label">{item.metadata.name}</div>
+            </div>
+        ));
     };
 
     return (
-        <div>
-            {nodeTypes.map((nodeInfo, index) => (
-                <div
-                    key={nodeInfo.type}
-                    onDragStart={(event) => onDragStart(event, nodeInfo)}
-                    draggable
-                    title={nodeInfo.dragLabel}
-                >
-                    {nodeInfo.label}
+        <div className="built-in-tools">
+            <h3>Built-in Tools</h3>
+            {loadedTemplates.zone && (
+                <div className="tool-section">
+                    <h4>Zones</h4>
+                    {renderTemplateItems(loadedTemplates.zone, 'group')}
                 </div>
-            ))}
+            )}
+            {loadedTemplates.entity && (
+                <div className="tool-section">
+                    <h4>Entities</h4>
+                    {renderTemplateItems(loadedTemplates.entity, 'default')}
+                </div>
+            )}
+            {loadedTemplates.datastore && (
+                <div className="tool-section">
+                    <h4>Datastores</h4>
+                    {renderTemplateItems(loadedTemplates.datastore, 'output')}
+                </div>
+            )}
+            {loadedTemplates.process && (
+                <div className="tool-section">
+                    <h4>Processes</h4>
+                    {renderTemplateItems(loadedTemplates.process, 'process')}
+                </div>
+            )}
         </div>
     );
 };
 
-export default memo(BuiltInTools);
+export default BuiltInTools;

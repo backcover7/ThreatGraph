@@ -873,7 +873,7 @@ module:
         icon: data:image/svg+xml;base64,YQ==
         type: file
       tags: [ Phishing, Windows ]
-      object: searchConnector-ms
+      object: searchconnector-ms
 
     - metadata:
         id: 29258478-5170-42e5-bf66-6d01f05d543d

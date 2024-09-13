@@ -6,8 +6,6 @@ import { threatSchema, threatBuilder } from './threat';
 import { ruleSchema, ruleBuilder } from './rule';
 import { additionsSchema, additionsOptionsSchema } from "./additions";
 
-export const typeOrObjectPattern = '^[a-z0-9]+(-[a-z0-9]+)*$'
-
 export const moduleSchema = {
     type: 'object',
     required: ['module'],

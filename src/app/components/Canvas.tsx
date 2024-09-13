@@ -20,6 +20,7 @@ import {ElementColor, ElementNodes, getNewElement} from "@/app/components/nodes/
 import {push} from "@/app/components/utils";
 import {HiQuestionMarkCircle} from "react-icons/hi";
 import {IoPlayCircle} from "react-icons/io5";
+import BuiltInTools from "@/app/components/toolbar/BuiltInTools";
 // import BuiltInTools from "@/app/components/toolbar/BuiltInTools";
 
 const Canvas: React.FC = () => {
@@ -206,7 +207,7 @@ const Canvas: React.FC = () => {
                             alignItems: 'center',
                             padding: '10px 0'
                         }}>
-                            {/*<BuiltInTools />*/}
+                            <BuiltInTools />
                         </div>
                     </Panel>
                     <Panel position='top-right'>

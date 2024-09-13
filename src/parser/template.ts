@@ -6,7 +6,7 @@ import path from 'path';
 import { UUID } from 'crypto';
 import { moduleSchema, zoneBuilder, ruleBuilder, threatBuilder, processBuilder, datastoreBuilder, entityBuilder } from '../DFD/base';
 
-type templateType = {
+export type templateType = {
     zone: any[],
     entity: any[],
     datastore: any[],
@@ -30,7 +30,7 @@ export default class Template {
     }
 
     async loadBuiltinTemplates(): Promise<templateType> {
-        const builtin = './built-in';
+        const builtin = path.join(process.cwd(), 'src', 'built-in');
         return await this.loadBulkTemplates(builtin);
     }
 

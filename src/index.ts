@@ -1,15 +1,6 @@
 /**
  * diagram -> analyze elements -> apply threat
  */
-
-// Use circular-json to stringfy the following objects
-// import * as CircularJSON from 'circular-json';
-// console.log(CircularJSON.stringify(objA));
-
-// Use lodash to deep copy the following objects
-// import _ from 'lodash';
-// const lodashCloned = _.cloneDeep(objA);
-
 import Template from './parser/template';
 import Analyzer from './parser/analyzer';
 import Canvas from './draw/canvas';
