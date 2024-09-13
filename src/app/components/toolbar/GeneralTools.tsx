@@ -17,7 +17,7 @@ const nodeTypes: NodeInfo[] = [
     { type: 'group', label: <LuFrame />, dragLabel: 'Zone' },
     { type: 'default', label: <LuRectangleHorizontal />, dragLabel: 'Entity' },
     { type: 'output', label: <LuDatabase />, dragLabel: 'Datastore' },
-    { type: 'process', label: <GiGearStick />, dragLabel: 'Process' },
+    // { type: 'process', label: <GiGearStick />, dragLabel: 'Process' },
     { type: 'text', label: <AiOutlineFontColors />, dragLabel: 'Text' },
 ];
 
