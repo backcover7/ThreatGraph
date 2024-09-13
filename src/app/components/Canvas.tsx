@@ -6,7 +6,7 @@ import {
     Connection, ControlButton,
     Controls, Edge, HandleType,
     MiniMap,
-    Node, Panel,
+    Node, NodeTypes, Panel,
     ReactFlow, reconnectEdge,
     useEdgesState,
     useNodesState,
@@ -16,7 +16,7 @@ import GeneralTools from '@/app/components/toolbar/GeneralTools';
 import {useDnD} from '@/app/components/DnDContext';
 import {detachElement, groupElements} from "@/app/components/nodes/ZoneNode";
 import {defaultEdgeOptions, edgeTypes} from "@/app/components/nodes/DataflowEdge";
-import {ElementColor, ElementNodes, getNewElement} from "@/app/components/nodes/ElementNode";
+import {ElementColor, ElementNodes, getNewElement, NodeType} from "@/app/components/nodes/ElementNode";
 import {push} from "@/app/components/utils";
 import {HiQuestionMarkCircle} from "react-icons/hi";
 import {IoPlayCircle} from "react-icons/io5";
@@ -170,7 +170,7 @@ const Canvas: React.FC = () => {
                     // fitView
                     className="touch-flow"
                     nodes={nodes}
-                    nodeTypes={ElementNodes}
+                    nodeTypes={ElementNodes as NodeTypes}
                     onNodesChange={onNodesChange}
                     isValidConnection={isValidConnection}
                     onEdgesChange={onEdgesChange}

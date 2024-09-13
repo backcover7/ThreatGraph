@@ -11,6 +11,7 @@ export interface ProcessNodeProps extends NodeProps {
         model: Process;
         isProcessNode: boolean;
     };
+    type: 'process';
 }
 
 const ProcessNode: React.FC<ProcessNodeProps> = ({ id, data, selected }) => {
