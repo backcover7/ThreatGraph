@@ -1,9 +1,16 @@
 'use client'
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { NodeType } from "@/app/components/nodes/ElementNode";
 
-type DnDContextType = [string | null, string | null, React.Dispatch<React.SetStateAction<[string | null, string | null]>>];
+// Updated context type to include only `type` and `data`
+type DnDContextType = [
+        NodeType | null,
+    any,
+    React.Dispatch<React.SetStateAction<[NodeType | null, any]>>
+];
 
+// Initialize the context with default values
 export const DnDContext = createContext<DnDContextType>([null, null, () => {}]);
 
 interface DnDProviderProps {
@@ -11,15 +18,17 @@ interface DnDProviderProps {
 }
 
 export const DnDProvider: React.FC<DnDProviderProps> = ({ children }) => {
-    const [typeAndName, setTypeAndName] = useState<[string | null, string | null]>([null, null]);
+    // Initialize the state with type and data
+    const [state, setState] = useState<[NodeType | null, any]>([null, null]);
 
     return (
-        <DnDContext.Provider value={[...typeAndName, setTypeAndName]}>
+        <DnDContext.Provider value={[...state, setState]}>
             {children}
         </DnDContext.Provider>
     );
 }
 
+// Custom hook to use the DnDContext
 export const useDnD = (): DnDContextType => {
     return useContext(DnDContext);
 }

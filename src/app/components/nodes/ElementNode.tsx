@@ -1,12 +1,14 @@
 'use client'
 
-import {Node, NodeToolbar, Position, XYPosition} from "@xyflow/react";
+import {Node, NodeToolbar, Position, useReactFlow, XYPosition} from "@xyflow/react";
 import ZoneNode from "@/app/components/nodes/ZoneNode";
 import EntityNode from "@/app/components/nodes/EntityNode";
 import DatastoreNode from "@/app/components/nodes/DatastoreNode";
 import React, {useCallback} from "react";
 import TextNode from "@/app/components/nodes/TextNode";
 import ProcessNode from "@/app/components/nodes/ProcessNode";
+
+export type NodeType = 'group' | 'input' | 'default' | 'output' | 'process' | 'text';
 
 export const getElementId = () => crypto.randomUUID();
 
@@ -35,7 +37,12 @@ export const ElementNodes = {
     text: TextNode,
 };
 
-export function getNewElement(type: string, position: XYPosition, data?: any): Node {
+export function getNewElement(type: NodeType, position: XYPosition, data?: any): Node {
+    if (type === 'text' && (!data || typeof data.label !== 'string')) {
+        data = { label: '', isNew: true };
+    }
+    data = data || {};
+
     return {
         id: getElementId(),
         type,

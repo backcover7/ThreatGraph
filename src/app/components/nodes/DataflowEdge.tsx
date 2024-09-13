@@ -86,7 +86,7 @@ const DataflowEdge: React.FC<EdgeProps<Edge<{ process?: Process, isProcessNode?:
                             <ProcessNode
                                 {...defaultProcessNodeProps}
                                 data={{
-                                    process: data.process,
+                                    model: data.process,
                                     isProcessNode: true
                                 }}
                             />

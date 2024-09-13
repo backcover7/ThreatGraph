@@ -3,10 +3,9 @@
 import React, { memo } from 'react';
 import { useDnD } from '@/app/components/DnDContext';
 import { LuDatabase, LuFrame, LuRectangleHorizontal } from "react-icons/lu";
-import {AiOutlineFontColors} from "react-icons/ai";
-import {GiGearStick} from "react-icons/gi";
-
-type NodeType = 'group' | 'input' | 'default' | 'output' | 'process' | 'text';
+import { AiOutlineFontColors } from "react-icons/ai";
+import { GiGearStick } from "react-icons/gi";
+import {NodeType} from "@/app/components/nodes/ElementNode";
 
 interface NodeInfo {
     type: NodeType;
@@ -23,10 +22,10 @@ const nodeTypes: NodeInfo[] = [
 ];
 
 const GeneralTools: React.FC = () => {
-    const [_, __, setTypeAndName] = useDnD();
+    const [type, data, setDnDState] = useDnD();
 
     const onDragStart = (event: React.DragEvent<HTMLDivElement>, nodeInfo: NodeInfo) => {
-        setTypeAndName([nodeInfo.type, nodeInfo.dragLabel]);
+        setDnDState([nodeInfo.type, nodeInfo.dragLabel]);
         event.dataTransfer.effectAllowed = 'move';
     };
 

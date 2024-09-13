@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { memo } from 'react';
 import { NodeProps, NodeResizer } from '@xyflow/react';
@@ -8,7 +8,7 @@ import {MdOutlinePrecisionManufacturing} from "react-icons/md";
 
 export interface ProcessNodeProps extends NodeProps {
     data: {
-        process: Process;
+        model: Process;
         isProcessNode: boolean;
     };
 }
@@ -19,8 +19,6 @@ const ProcessNode: React.FC<ProcessNodeProps> = ({ id, data, selected }) => {
             <NodeResizer
                 color='#2561ff'
                 isVisible={selected}
-                minWidth={30}
-                minHeight={20}
             />
             <div style={{
                 background: '#ebebeb',
@@ -34,7 +32,7 @@ const ProcessNode: React.FC<ProcessNodeProps> = ({ id, data, selected }) => {
                     <MdOutlinePrecisionManufacturing />
                 </div>
                 <div>
-                    {data ? data.process.metadata.name : 'Process'}
+                    {data.model ? data.model.metadata.name : 'Process'}
                 </div>
             </div>
         </ElementToolbar>

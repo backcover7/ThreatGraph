@@ -6,7 +6,9 @@ import {Zone} from "@/DFD/zone";
 import {ElementToolbar} from "@/app/components/nodes/ElementNode";
 
 interface ZoneNodeProps extends NodeProps {
-    data: Zone;
+    data: {
+        model: Zone
+    };
     type: 'group';
 }
 
@@ -24,15 +26,12 @@ const ZoneNode: React.FC<ZoneNodeProps> = ({ id, data, selected }) => {
         // TODO Implement logic here
     }, []);
 
-    // TODO elementtoolbar
     return (
-        <>
-            {/*<ElementToolbar id={id} selected={selected}>*/}
+        // <ElementToolbar id={id} selected={selected}>  // TODO
+            <div className="zone-node">
                 <NodeResizer
                     color='#2561ff'
                     isVisible={selected}
-                    minWidth={100}
-                    minHeight={80}
                     onResizeEnd={onResizeEnd}
                 />
                 <div style={{
@@ -42,10 +41,10 @@ const ZoneNode: React.FC<ZoneNodeProps> = ({ id, data, selected }) => {
                     fontSize: 8,
                     left: 5
                 }}>
-                    {data ? data.metadata.name : 'Zone'}
+                    {data.model ? data.model.metadata.name : 'Zone'}
                 </div>
-            {/*</ElementToolbar>*/}
-        </>
+            </div>
+        // </ElementToolbar>
     );
 }
 

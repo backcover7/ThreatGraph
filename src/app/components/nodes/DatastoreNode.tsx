@@ -7,7 +7,9 @@ import { ElementToolbar } from "@/app/components/nodes/ElementNode";
 import {DataStore} from "@/DFD/node/datastore";
 
 interface DatastoreNodeProps extends NodeProps{
-    data: DataStore;
+    data: {
+        model: DataStore
+    };
     type: 'output';
 }
 
@@ -26,7 +28,7 @@ const DatastoreNode: React.FC<DatastoreNodeProps> = ({ id, data, selected }) => 
                 fontSize: 24
             }} />
             <div>
-                {data ? data.metadata.name : 'Datastore'}
+                {data.model ? data.model.metadata.name : 'Datastore'}
             </div>
             <Handle type="target" position={Position.Top} id="datastore-top-target"/>
             <Handle type="target" position={Position.Right} id="datastore-right-target"/>

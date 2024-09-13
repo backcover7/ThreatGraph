@@ -20,6 +20,7 @@ import {ElementColor, ElementNodes, getNewElement} from "@/app/components/nodes/
 import {push} from "@/app/components/utils";
 import {HiQuestionMarkCircle} from "react-icons/hi";
 import {IoPlayCircle} from "react-icons/io5";
+import BuiltInTools from "@/app/components/toolbar/BuiltInTools";
 
 const Canvas: React.FC = () => {
     const { screenToFlowPosition, addNodes, getInternalNode, getEdges } = useReactFlow();
@@ -27,7 +28,7 @@ const Canvas: React.FC = () => {
     const edgeReconnectSuccessful = useRef(true);
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-    const [type, nodeName] = useDnD();
+    const [type, data] = useDnD();
 
     const isValidConnection = useCallback((connection: Connection | Edge) => {
         const { source, sourceHandle, target, targetHandle } = connection as Connection;
@@ -84,6 +85,7 @@ const Canvas: React.FC = () => {
         event.dataTransfer.dropEffect = 'move';
     }, []);
 
+    // Check if process node is drop on edge. If so, turn it to a child div of EdgeLabelRenderer
     const checkDropOnEdge = (x: number, y: number) => {
         return getEdges().find(edge => {
             const edgeElement = document.querySelector(`[data-testid="rf__edge-${edge.id}"]`);
@@ -104,14 +106,10 @@ const Canvas: React.FC = () => {
     const onDrop = useCallback(
         (event: React.DragEvent<HTMLDivElement>) => {
             event.preventDefault();
-            if (!type || !nodeName) return;
+            if (!type || !data) return;
 
             const position = screenToFlowPosition({ x: event.clientX, y: event.clientY });
-            const newElem = getNewElement(type, position);  // TODO data is empty when dragging an empty template icon from generaltools toolbar.
-
-            if (type === 'text') {
-                newElem.data = { ...newElem.data, label: '', isNew: true };
-            }
+            const newElem = getNewElement(type, position, data);
 
             const droppedOnEdge = checkDropOnEdge(event.clientX, event.clientY);
 
@@ -133,7 +131,7 @@ const Canvas: React.FC = () => {
                 }
             }
         },
-        [nodes, screenToFlowPosition, setNodes, type, nodeName, getInternalNode, getEdges, setEdges, addNodes]
+        [nodes, screenToFlowPosition, setNodes, type, data, getInternalNode, getEdges, setEdges, addNodes]
     );
 
     const onNodeDragStart = useCallback((event: React.MouseEvent, detachedNode: Node) => {
@@ -150,18 +148,14 @@ const Canvas: React.FC = () => {
         if (droppedOnEdge && node.type === 'process') {
             // Update the edge to show ProcessComponent
             setEdges(edges => (edges as Edge[]).map(edge =>
-                edge.id === droppedOnEdge.id
-                    ? { ...edge, data: { ...edge.data, isProcessNode: true } }
-                    : edge
+                edge.id === droppedOnEdge.id ? { ...edge, data: { ...edge.data, isProcessNode: true } } : edge
             ) as never);
 
             // Remove the dragged process node
             setNodes(nodes => (nodes as Node[]).filter(n => n.id !== node.id) as never);
         } else {
             // Group elements as before
-            setNodes((nodes) => {
-                return groupElements(nodes as Node[], getInternalNode, setNodes) as never;
-            });
+            setNodes((nodes) => groupElements(nodes as Node[], getInternalNode, setNodes) as never);
         }
     }, [setNodes, setEdges, getInternalNode]);
 
@@ -212,10 +206,7 @@ const Canvas: React.FC = () => {
                             alignItems: 'center',
                             padding: '10px 0'
                         }}>
-                            {/* Add your icon bar items here */}
-                            <div>Icon</div>
-                            <div>Bar</div>
-                            <div>TODO</div>
+                            <BuiltInTools />
                         </div>
                     </Panel>
                     <Panel position='top-right'>

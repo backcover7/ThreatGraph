@@ -7,7 +7,9 @@ import { FaLaptop } from "react-icons/fa";
 import {Entity} from "@/DFD/node/entity";
 
 interface EntityNodeProps extends NodeProps {
-    data: Entity;
+    data: {
+        model: Entity
+    };
     type: 'default';
 }
 
@@ -27,7 +29,7 @@ const EntityNode: React.FC<EntityNodeProps> = ({ id, data, selected }) => {
                 fontSize: 24
             }} />
             <div>
-                {data ? data.metadata.name : 'Entity'}
+                {data.model ? data.model.metadata.name : 'Entity'}
             </div>
             <Handle type="target" position={Position.Top} id="entity-top-target"/>
             <Handle type="source" position={Position.Top} id="entity-top-source"/>
