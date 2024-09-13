@@ -1,4 +1,6 @@
-import {Node, NodeToolbar, Position, useReactFlow, XYPosition} from "@xyflow/react";
+'use client'
+
+import {Node, NodeToolbar, Position, XYPosition} from "@xyflow/react";
 import ZoneNode from "@/app/components/nodes/ZoneNode";
 import EntityNode from "@/app/components/nodes/EntityNode";
 import DatastoreNode from "@/app/components/nodes/DatastoreNode";

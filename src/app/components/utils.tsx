@@ -1,3 +1,5 @@
+'use client'
+
 import {Node} from "@xyflow/react";
 import {getArea} from "@/app/components/nodes/ZoneNode";
 import DOMPurify from "dompurify";

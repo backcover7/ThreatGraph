@@ -1,3 +1,5 @@
+'use client'
+
 import React, { memo } from 'react';
 import { useDnD } from '@/app/components/DnDContext';
 import { LuDatabase, LuFrame, LuRectangleHorizontal } from "react-icons/lu";

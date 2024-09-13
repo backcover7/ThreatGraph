@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useCallback } from 'react';
 import { BaseEdge, Edge, EdgeLabelRenderer, EdgeProps, getBezierPath, MarkerType, useReactFlow, NodeProps } from '@xyflow/react';
 import ProcessNode, { ProcessNodeProps } from "@/app/components/nodes/ProcessNode";

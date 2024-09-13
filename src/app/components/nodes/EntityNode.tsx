@@ -1,3 +1,5 @@
+'use client'
+
 import React, { memo } from 'react';
 import {Handle, Position, NodeProps, NodeResizer} from '@xyflow/react';
 import { ElementToolbar } from "@/app/components/nodes/ElementNode";
