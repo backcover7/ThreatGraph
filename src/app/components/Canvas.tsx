@@ -21,7 +21,6 @@ import {push} from "@/app/components/utils";
 import {HiQuestionMarkCircle} from "react-icons/hi";
 import {IoPlayCircle} from "react-icons/io5";
 import BuiltInTools from "@/app/components/toolbar/BuiltInTools";
-// import BuiltInTools from "@/app/components/toolbar/BuiltInTools";
 
 const Canvas: React.FC = () => {
     const { screenToFlowPosition, addNodes, getInternalNode, getEdges } = useReactFlow();
@@ -114,14 +113,14 @@ const Canvas: React.FC = () => {
 
             const droppedOnEdge = checkDropOnEdge(event.clientX, event.clientY);
 
-            // if (droppedOnEdge && type === 'process') {
-            //     // Update the edge to show ProcessComponent
-            //     setEdges(edges => (edges as Edge[]).map(edge =>
-            //         edge.id === droppedOnEdge.id
-            //             ? { ...edge, data: { ...edge.data, isProcessNode: true } }
-            //             : edge
-            //     ) as never);
-            // } else {
+            if (droppedOnEdge && type === 'process') {
+                // Update the edge to show ProcessComponent
+                setEdges(edges => (edges as Edge[]).map(edge =>
+                    edge.id === droppedOnEdge.id
+                        ? { ...edge, data: { ...edge.data, isProcessNode: true } }
+                        : edge
+                ) as never);
+            } else {
                 // Add node as usual
                 if (nodes.length === 0) {
                     addNodes(newElem);
@@ -130,7 +129,7 @@ const Canvas: React.FC = () => {
                         return groupElements(push(nodes, newElem as never), getInternalNode, setNodes) as never;
                     });
                 }
-            // }
+            }
         },
         [nodes, screenToFlowPosition, setNodes, type, data, getInternalNode, getEdges, setEdges, addNodes]
     );
@@ -144,20 +143,20 @@ const Canvas: React.FC = () => {
 
     // drag existing element
     const onNodeDragStop = useCallback((event: React.MouseEvent, node: Node) => {
-        // const droppedOnEdge = checkDropOnEdge(event.clientX, event.clientY);
-        //
-        // if (droppedOnEdge && node.type === 'process') {
-        //     // Update the edge to show ProcessComponent
-        //     setEdges(edges => (edges as Edge[]).map(edge =>
-        //         edge.id === droppedOnEdge.id ? { ...edge, data: { ...edge.data, isProcessNode: true } } : edge
-        //     ) as never);
-        //
-        //     // Remove the dragged process node
-        //     setNodes(nodes => (nodes as Node[]).filter(n => n.id !== node.id) as never);
-        // } else {
+        const droppedOnEdge = checkDropOnEdge(event.clientX, event.clientY);
+
+        if (droppedOnEdge && node.type === 'process') {
+            // Update the edge to show ProcessComponent
+            setEdges(edges => (edges as Edge[]).map(edge =>
+                edge.id === droppedOnEdge.id ? { ...edge, data: { ...edge.data, isProcessNode: true } } : edge
+            ) as never);
+
+            // Remove the dragged process node
+            setNodes(nodes => (nodes as Node[]).filter(n => n.id !== node.id) as never);
+        } else {
             // Group elements as before
             setNodes((nodes) => groupElements(nodes as Node[], getInternalNode, setNodes) as never);
-        // }
+        }
     }, [setNodes, setEdges, getInternalNode]);
 
     const runAnalysis = () => {

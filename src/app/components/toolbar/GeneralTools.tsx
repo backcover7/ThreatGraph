@@ -5,6 +5,7 @@ import React from 'react';
 import {useDnD} from "@/app/components/DnDContext";
 import {LuDatabase, LuFrame, LuRectangleHorizontal} from "react-icons/lu";
 import {AiOutlineFontColors} from "react-icons/ai";
+import {GiGearStick} from "react-icons/gi";
 
 interface NodeInfo {
     type: 'group' | 'default' | 'output' | 'process' | 'text';
@@ -16,7 +17,7 @@ const nodeTypes: NodeInfo[] = [
     { type: 'group', dragLabel: 'Zone', icon: <LuFrame /> },
     { type: 'default', dragLabel: 'Entity', icon: <LuRectangleHorizontal /> },
     { type: 'output', dragLabel: 'Datastore', icon: <LuDatabase /> },
-    // { type: 'process', dragLabel: 'Process', icon: <GiGearStick /> },
+    { type: 'process', dragLabel: 'Process', icon: <GiGearStick /> },
     { type: 'text', dragLabel: 'Text', icon: <AiOutlineFontColors /> },
 ];
 

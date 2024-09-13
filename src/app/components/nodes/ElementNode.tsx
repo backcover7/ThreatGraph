@@ -6,6 +6,7 @@ import EntityNode from "@/app/components/nodes/EntityNode";
 import DatastoreNode from "@/app/components/nodes/DatastoreNode";
 import React, {useCallback} from "react";
 import TextNode from "@/app/components/nodes/TextNode";
+import ProcessNode from "@/app/components/nodes/ProcessNode";
 
 export type NodeType = 'group' | 'input' | 'default' | 'output' | 'process' | 'text';
 
@@ -32,7 +33,7 @@ export const ElementNodes = {
     group: ZoneNode,
     default: EntityNode,
     output: DatastoreNode,
-    // process: ProcessNode,
+    process: ProcessNode,
     text: TextNode,
 };
 
@@ -50,7 +51,7 @@ export function getNewElement(type: NodeType, position: XYPosition, data?: any):
             type === 'group' ? {width: 400, height: 240} :
             type === 'default' ? {width: 80, height: 60} :
             type === 'output' ? {width: 80, height: 60} :
-            type === 'process' ? {width: 40, height: 10} :
+            type === 'process' ? {width: 60, height: 10} :
             type === 'text' ? {width: 150, height: 50} :
             undefined,
         data,  // model data
