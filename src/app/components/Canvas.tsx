@@ -117,7 +117,7 @@ const Canvas: React.FC = () => {
                 // Update the edge to show ProcessComponent
                 setEdges(edges => (edges as Edge[]).map(edge =>
                     edge.id === droppedOnEdge.id
-                        ? { ...edge, data: { ...edge.data, isProcessNode: true } }
+                        ? { ...edge, data: { ...edge.data, process: data, isProcessNode: true } }
                         : edge
                 ) as never);
             } else {
@@ -148,7 +148,7 @@ const Canvas: React.FC = () => {
         if (droppedOnEdge && node.type === 'process') {
             // Update the edge to show ProcessComponent
             setEdges(edges => (edges as Edge[]).map(edge =>
-                edge.id === droppedOnEdge.id ? { ...edge, data: { ...edge.data, isProcessNode: true } } : edge
+                edge.id === droppedOnEdge.id ? { ...edge, data: { ...edge.data, process: node.data, isProcessNode: true } } : edge
             ) as never);
 
             // Remove the dragged process node
