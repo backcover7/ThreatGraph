@@ -3,6 +3,10 @@ import { BaseEdge, Edge, EdgeLabelRenderer, EdgeProps, getBezierPath, MarkerType
 // import ProcessNode, { ProcessNodeProps } from "@/app/components/nodes/ProcessNode";
 import { Process } from "@/DFD/process";
 import { MdOutlinePrecisionManufacturing } from "react-icons/md";
+import {DataFlow} from "@/DFD/dataflow";
+import ProcessNode from "@/app/components/nodes/ProcessNode";
+import IconRenderer from "@/app/components/IconRenderer";
+import {GiGearStick} from "react-icons/gi";
 
 export const defaultEdgeOptions = {
     type: 'process',
@@ -16,9 +20,18 @@ export const defaultEdgeOptions = {
     style: {
         strokeWidth: 1,
     },
+    data: {
+        isProcessNode: false,
+        dataflow: {
+            model: undefined,
+        },
+        process: {
+            model: undefined,
+        },
+    },
 };
 
-const DataflowEdge: React.FC<EdgeProps<Edge<{ process?: Process, isProcessNode?: boolean }>>> = ({
+const DataflowEdge: React.FC<EdgeProps<Edge<{dataflow?: {model: DataFlow}, process?: {model: Process}, isProcessNode?: boolean}>>> = ({
                                                                                                      id,
                                                                                                      sourceX,
                                                                                                      sourceY,
@@ -42,24 +55,10 @@ const DataflowEdge: React.FC<EdgeProps<Edge<{ process?: Process, isProcessNode?:
     const { setEdges } = useReactFlow();
 
     const onAddProcess = useCallback(() => {
-        setEdges((eds) =>
-            eds.map((ed) =>
-                ed.id === id ? { ...ed, data: { ...ed.data, isProcessNode: true, process: {} } } : ed  // Add empty process
-            )
-        );
+        setEdges(edges => (edges as Edge[]).map(edge =>
+            edge.id === id ? { ...edge, data: { ...edge.data, isProcessNode: true } } : edge
+        ) as never);
     }, [id, setEdges]);
-
-    // Default props for ProcessNode when used in an edge
-    // const defaultProcessNodeProps: Omit<ProcessNodeProps, 'data'> = {
-    //     id: `${id}`,
-    //     type: 'process',
-    //     zIndex: 2000,
-    //     dragging: false,
-    //     isConnectable: false,
-    //     selected: false,
-    //     positionAbsoluteX: 0,
-    //     positionAbsoluteY: 0,
-    // };
 
     return (
         <>
@@ -75,37 +74,25 @@ const DataflowEdge: React.FC<EdgeProps<Edge<{ process?: Process, isProcessNode?:
                     }}
                     className="nodrag nopan"
                 >
-                    {/*{data?.isProcessNode ? (*/}
-                    {/*    data.process ? (*/}
-                    {/*        <ProcessNode*/}
-                    {/*            {...defaultProcessNodeProps}*/}
-                    {/*            data={{*/}
-                    {/*                model: data.process,*/}
-                    {/*                isProcessNode: true*/}
-                    {/*            }}*/}
-                    {/*        />*/}
-                    {/*    ) : (*/}
-                    {/*        <div style={{*/}
-                    {/*            background: '#ebebeb',*/}
-                    {/*            fontSize: '8px',*/}
-                    {/*            display: 'flex',*/}
-                    {/*            justifyContent: 'center',*/}
-                    {/*            alignItems: 'center',*/}
-                    {/*            height: '100%',*/}
-                    {/*        }}>*/}
-                    {/*            <div>*/}
-                    {/*                <MdOutlinePrecisionManufacturing/>*/}
-                    {/*            </div>*/}
-                    {/*            <div>*/}
-                    {/*                {'Process'}*/}
-                    {/*            </div>*/}
-                    {/*        </div>*/}
-                    {/*    )*/}
-                    {/*) : (*/}
-                        <button className="edgebutton" onClick={onAddProcess}>
-                            +
-                        </button>
-                    {/*)}*/}
+                    {data?.isProcessNode ?
+                        <div style={{
+                            position: 'relative',
+                            fontSize: 10
+                        }}>
+                            {data.process?.model ? (
+                                <IconRenderer dataUrl={data.process.model.metadata.icon} width={'30%'} height={'30%'}/>
+                            ) : (
+                                <GiGearStick style={{
+                                    position: 'relative',
+                                    top: 1,
+                                    fontSize: 12
+                                }}/>
+                            )}
+                            {data.process?.model ? data.process.model.metadata.name : 'Process'}
+                        </div>
+                        :
+                        (<button className="edgebutton" onClick={onAddProcess}>+</button>)
+                    }
                 </div>
             </EdgeLabelRenderer>
         </>
