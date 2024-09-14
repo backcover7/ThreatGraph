@@ -24,7 +24,6 @@ export function concat(arr: ReadonlyArray<Node>, elements: ReadonlyArray<Node>):
     return sortArray([...arr, ...elements]);
 }
 
-// TODO Use img src to read dataUrl
 export function sanitizeDataUrl(dataUrl: string): string {
     try {
         const url = new URL(dataUrl);
