@@ -159,6 +159,20 @@ const Canvas: React.FC = () => {
         }
     }, [setNodes, setEdges, getInternalNode]);
 
+    const onKeyDown = useCallback((event: KeyboardEvent) => {
+        if (event.metaKey && event.key === 'a') {
+            event.preventDefault();
+            setNodes(nodes => (nodes as Node[]).map(node => ({...node, selected: true,})) as never);
+            setEdges(edges => (edges as Edge[]).map(edge => ({...edge, selected: true,})) as never);
+        }
+        // TODO Copy & Paste
+    }, [setNodes, setEdges]);
+
+    React.useEffect(() => {
+        document.addEventListener('keydown', onKeyDown);
+        return () => {document.removeEventListener('keydown', onKeyDown);};
+    }, [onKeyDown]);
+
     const runAnalysis = () => {
 
     }
@@ -169,6 +183,8 @@ const Canvas: React.FC = () => {
                 <ReactFlow
                     // fitView
                     className="touch-flow"
+                    style={{cursor: 'default'}}
+                    panOnScroll={true}
                     nodes={nodes}
                     nodeTypes={ElementNodes}
                     onNodesChange={onNodesChange}
@@ -186,7 +202,6 @@ const Canvas: React.FC = () => {
                     edges={edges}
                     edgeTypes={edgeTypes}
                     defaultEdgeOptions={defaultEdgeOptions}
-                    style={{cursor: 'default'}}
                 >
                     <Controls>
                         {/**TODO**/}
