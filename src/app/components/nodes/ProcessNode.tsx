@@ -10,6 +10,7 @@ import IconRenderer from "@/app/components/IconRenderer";
 interface ProcessNodeProps extends NodeProps {
     data: {
         model: Process;
+        element: 'process';
     };
     type: 'process';
 }

@@ -1,12 +1,21 @@
 import React, { useCallback } from 'react';
 import { BaseEdge, Edge, EdgeLabelRenderer, EdgeProps, getBezierPath, MarkerType, useReactFlow } from '@xyflow/react';
-// import ProcessNode, { ProcessNodeProps } from "@/app/components/nodes/ProcessNode";
 import { Process } from "@/DFD/process";
-import { MdOutlinePrecisionManufacturing } from "react-icons/md";
 import {DataFlow} from "@/DFD/dataflow";
-import ProcessNode from "@/app/components/nodes/ProcessNode";
 import IconRenderer from "@/app/components/IconRenderer";
 import {GiGearStick} from "react-icons/gi";
+
+export type DataFlowEdgeData = {
+    isProcessNode: false,
+    dataflow: {
+        model: DataFlow,
+        element: 'dataflow';
+    },
+    process: {
+        model: Process,
+        element: 'process';
+    }
+}
 
 export const defaultEdgeOptions = {
     type: 'process',

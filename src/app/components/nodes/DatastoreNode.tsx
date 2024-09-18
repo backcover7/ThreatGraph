@@ -11,6 +11,7 @@ import {FaLaptop} from "react-icons/fa";
 interface DatastoreNodeProps extends NodeProps{
     data: {
         model: DataStore;
+        element: 'datastore';
     };
     type: 'output';
 }

@@ -10,6 +10,7 @@ import IconRenderer from "@/app/components/IconRenderer";
 interface EntityNodeProps extends NodeProps {
     data: {
         model: Entity;
+        element: 'entity';
     };
     type: 'default';
 }

@@ -3,9 +3,9 @@
  */
 import Template from './parser/template';
 import Analyzer from './parser/analyzer';
-import Canvas from './draw/canvas';
 import fs from 'fs/promises';
 import { Result } from './DFD/result';
+import Canvas from "./draw/canvas";
 
 async function main() {
     const loader = new Template();
@@ -19,7 +19,7 @@ async function main() {
 
     // Threat Modeling
     const outOfScope: string[] = [];  // shape id collection
-    const canvas = new Canvas(await fs.readFile('../tests/authn.json', 'utf-8')); // TODO
+    const canvas = new Canvas(await fs.readFile('../tests/authn.excalidraw.png', 'utf-8')); // TODO
     const canvasElems = canvas.process();
 
     const inScopeElems = canvasElems.filter(elem => !outOfScope.includes(elem.id));

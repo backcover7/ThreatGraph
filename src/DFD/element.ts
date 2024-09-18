@@ -1,7 +1,7 @@
 import { UUID, randomUUID } from 'crypto';
 import {typeOrObjectPattern} from "./symbol";
 
-export const ModelElements = {
+export const elementTypes = {
     ZONE: 'zone',
     ENTITY: 'entity',
     DATASTORE: 'datastore',

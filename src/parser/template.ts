@@ -31,6 +31,7 @@ export default class Template {
 
     async loadBuiltinTemplates(): Promise<templateType> {
         const builtin = path.join(process.cwd(), 'src', 'built-in');
+        // const builtin = './built-in';
         return await this.loadBulkTemplates(builtin);
     }
 

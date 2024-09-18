@@ -7,13 +7,13 @@ import {Zone} from "@/DFD/zone";
 interface ZoneNodeProps extends NodeProps {
     data: {
         model: Zone;
+        element: 'zone';
     };
     type: 'group';
 }
 
 const ZoneNode: React.FC<ZoneNodeProps> = ({ id, data, selected }) => {
     const { setNodes, getInternalNode } = useReactFlow();
-
     const onResizeEnd = useCallback(() => {
         setNodes((nodes) => {
             return groupElements(nodes as Node[], getInternalNode, setNodes) as never;

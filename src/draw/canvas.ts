@@ -8,7 +8,7 @@
  */
 
 import * as basicShapes from './validate';
-import { ModelElements } from '../DFD/element';
+import { elementTypes } from '../DFD/element';
 import { ZoneAttached } from '../DFD/zone';
 import { NodeAttached } from '../DFD/node/node';
 import { ProcessAttached } from '../DFD/process';
@@ -53,15 +53,15 @@ export default class Canvas {
 
     #buildAttachedProperty(shape: any): any {
         switch (shape.model.metadata.element) {
-            case ModelElements.ZONE:
+            case elementTypes.ZONE:
                 return this.#buildFrameAttached(shape);
-            case ModelElements.ENTITY:
+            case elementTypes.ENTITY:
                 return this.#buildNodeShapeAttached(shape);
-            case ModelElements.DATASTORE:
+            case elementTypes.DATASTORE:
                 return this.#buildNodeShapeAttached(shape);
-            case ModelElements.PROCESS:
+            case elementTypes.PROCESS:
                 return this.#buildTextAttached(shape);
-            case ModelElements.DATAFLOW:
+            case elementTypes.DATAFLOW:
                 return this.#buildArrowAttached(shape);
             default:
                 return {};
@@ -70,11 +70,11 @@ export default class Canvas {
 
     #parseShapeToElement(shape: any): boolean {
         switch (shape.model.metadata.element) {
-            case ModelElements.ZONE:
-            case ModelElements.ENTITY:
-            case ModelElements.DATASTORE:
-            case ModelElements.PROCESS:
-            case ModelElements.DATAFLOW:
+            case elementTypes.ZONE:
+            case elementTypes.ENTITY:
+            case elementTypes.DATASTORE:
+            case elementTypes.PROCESS:
+            case elementTypes.DATAFLOW:
                 return true;
             default:
                 return false;
@@ -89,10 +89,10 @@ export default class Canvas {
                 .filter((s: any) => s.frameId === frameShape.id && s.type === basicShapes.shapes.FRAME)
                 .map((s: any) => this.#processedElements.get(s.id)),
             entities: this.#shapes
-                .filter((s: any) => s.frameId === frameShape.id && s.type === basicShapes.shapes.RECTANGLE && s.model.metadata.element === ModelElements.ENTITY)
+                .filter((s: any) => s.frameId === frameShape.id && s.type === basicShapes.shapes.RECTANGLE && s.model.metadata.element === elementTypes.ENTITY)
                 .map((s: any) => this.#processedElements.get(s.id)),
             datastores: this.#shapes
-                .filter((s: any) => s.frameId === frameShape.id && s.type === basicShapes.shapes.RECTANGLE && s.model.metadata.element === ModelElements.DATASTORE)
+                .filter((s: any) => s.frameId === frameShape.id && s.type === basicShapes.shapes.RECTANGLE && s.model.metadata.element === elementTypes.DATASTORE)
                 .map((s: any) => this.#processedElements.get(s.id)),
         };
     }

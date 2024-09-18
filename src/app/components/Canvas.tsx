@@ -7,7 +7,7 @@ import {
     Controls, Edge, HandleType,
     MiniMap,
     Node, NodeTypes, Panel,
-    ReactFlow, reconnectEdge,
+    ReactFlow, ReactFlowInstance, ReactFlowJsonObject, reconnectEdge,
     useEdgesState,
     useNodesState,
     useReactFlow,
@@ -21,14 +21,19 @@ import {push} from "@/app/components/utils";
 import {HiQuestionMarkCircle} from "react-icons/hi";
 import {IoPlayCircle} from "react-icons/io5";
 import BuiltInTools from "@/app/components/toolbar/BuiltInTools";
+import Diagram from "@/draw/diagram";
+import Analyzer from "@/parser/analyzer";
+import {Result} from "@/DFD/result";
+import {useTemplate} from "@/app/components/toolbar/TemplateContext";
 
 const Canvas: React.FC = () => {
-    const { screenToFlowPosition, addNodes, getInternalNode, getEdges } = useReactFlow();
+    const { screenToFlowPosition, addNodes, getInternalNode, getNodes, getEdges } = useReactFlow();
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
     const edgeReconnectSuccessful = useRef(true);
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [type, data] = useDnD();
+    const templates = useTemplate();
 
     const isValidConnection = useCallback((connection: Connection | Edge) => {
         const { source, sourceHandle, target, targetHandle } = connection as Connection;
@@ -38,21 +43,25 @@ const Canvas: React.FC = () => {
             return false;
         }
 
-        const createEdgeId = (start: string, startHandle: string | null, end: string, endHandle: string | null) =>
-            `xy-edge__${start}${startHandle ?? ''}-${end}${endHandle ?? ''}`;
-
-        const newEdgeId = createEdgeId(source, sourceHandle, target, targetHandle);
-        const reverseEdgeId = createEdgeId(
-            target,
-            (targetHandle as string)?.replace('target', 'source'),
-            source,
-            (sourceHandle as string)?.replace('source', 'target')
-        );
-
-        // Check if the edge already exists
         return !(edges as Edge[]).some(edge =>
-            edge.id === newEdgeId || edge.id === reverseEdgeId
-        );
+            (edge.source === source && edge.target === target) || (edge.target === source && edge.source === target)
+        )
+
+        // const createEdgeId = (start: string, startHandle: string | null, end: string, endHandle: string | null) =>
+        //     `xy-edge__${start}${startHandle ?? ''}-${end}${endHandle ?? ''}`;
+        //
+        // const newEdgeId = createEdgeId(source, sourceHandle, target, targetHandle);
+        // const reverseEdgeId = createEdgeId(
+        //     target,
+        //     (targetHandle as string)?.replace('target', 'source'),
+        //     source,
+        //     (sourceHandle as string)?.replace('source', 'target')
+        // );
+        //
+        // // Check if the edge already exists
+        // return !(edges as Edge[]).some(edge =>
+        //     edge.id === newEdgeId || edge.id === reverseEdgeId
+        // );
     }, [edges]);
 
     const onConnect = useCallback(
@@ -173,9 +182,34 @@ const Canvas: React.FC = () => {
         return () => {document.removeEventListener('keydown', onKeyDown);};
     }, [onKeyDown]);
 
-    const runAnalysis = () => {
+    const runAnalysis = useCallback(() => {
+        const allNodes = getNodes();
+        const allEdges = getEdges();
+        const diagram = new Diagram(allNodes, allEdges);
+        const canvasElems = diagram.process();
 
-    }
+        const outOfScope: string[] = [];  // shape id collection
+        const inScopeElems = canvasElems.filter(elem => !outOfScope.includes(elem.id));
+
+        const results: [] = [];
+
+        const allRules = templates.rule;
+        const allThreats = templates.threat;
+        console.log('Start Scanning ...')
+        allRules.forEach((rule) => {
+            const analyzer = new Analyzer(rule, inScopeElems, allThreats);
+            analyzer.startEvaluation(results);
+        })
+
+        results.forEach((result: Result) => {
+            const threat = allThreats.find(threat => threat.id === result.threat);
+            const element = canvasElems.find(elem => elem.metadata.shape === result.shape);
+            console.log('[+] Found threat ' + threat.name + ' > ' + element.metadata.name);
+        })
+        console.log('[!] ' + results.length + ' threats found!')
+        console.log('Finished');
+
+    }, [getNodes, getEdges]);
 
     return (
         <div className="dndflow">
