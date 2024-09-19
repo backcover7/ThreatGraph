@@ -120,7 +120,12 @@ export default class Evaluator {
         for (const [key, value] of this.#tempVariables) {
             context[key] = value;
         }
-        return this.#math.evaluate(expression, context);
+        try {
+            return this.#math.evaluate(expression, context);
+        } catch {
+            console.error(expression);
+            return null;
+        }
     }
 
     #resolvePath(obj: any, path: string): any {

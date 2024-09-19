@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { BaseEdge, Edge, EdgeLabelRenderer, EdgeProps, getBezierPath, MarkerType, useReactFlow } from '@xyflow/react';
 import { Process } from "@/DFD/process";
-import {DataFlow} from "@/DFD/dataflow";
+import {DataFlow, getDefaultDataFlow} from "@/DFD/dataflow";
 import IconRenderer from "@/app/components/IconRenderer";
 import {GiGearStick} from "react-icons/gi";
 
@@ -32,7 +32,7 @@ export const defaultEdgeOptions = {
     data: {
         isProcessNode: false,
         dataflow: {
-            model: undefined,
+            model: getDefaultDataFlow(),
             element: 'dataflow',
         },
         process: {

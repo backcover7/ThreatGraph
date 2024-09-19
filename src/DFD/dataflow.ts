@@ -25,23 +25,34 @@ export type DataflowAttached = {
     destination: Entity | DataStore;
 }
 
-export function buildDataFlow(
-    name: string,
-    type: protocol,
-    isSSL: boolean = false,
-    mTLS: boolean = false,
-    id?: UUID | undefined,
-    description?: string,
-    additions?: Record<string, unknown>): DataFlow {
+export function getDefaultDataFlow(): DataFlow {
     return {
         metadata: {
-            ...buildElement(name, 'dataflow', type, id, description),
-            type: type,
+            ...buildElement('general', 'dataflow', 'unknown'),
         },
         ssl: {
-            isSSL,
-            mTLS,
-        },
-        additions,
+            isSSL: false,
+            mTLS: false,
+        }
     };
 }
+
+// export function buildDataFlow(
+//     name: string,
+//     type: protocol,
+//     isSSL: boolean = false,
+//     mTLS: boolean = false,
+//     id?: UUID | undefined,
+//     description?: string,
+//     additions?: Record<string, unknown>): DataFlow {
+//     return {
+//         metadata: {
+//             ...buildElement(name, 'dataflow', type, id, description),
+//         },
+//         ssl: {
+//             isSSL,
+//             mTLS,
+//         },
+//         additions,
+//     };
+// }

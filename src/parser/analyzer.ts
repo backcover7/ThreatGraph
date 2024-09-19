@@ -43,6 +43,7 @@ import { Result } from '../DFD/result'
 import {expression} from "mathjs";
 import crypto from "crypto";
 import {UUID} from "node:crypto";
+import { v4 as uuidv4 } from 'uuid';
 
 export default class Analyzer {
     #MAX_DEPTH = 10;
@@ -78,7 +79,7 @@ export default class Analyzer {
                 rule: this.#rule.id,
                 threat: this.#relatedThreat.id,
             }
-            const blockId: UUID = crypto.randomUUID();
+            const blockId: UUID = uuidv4() as UUID;
             this.#evaluator?.enterBlock(blockId);
             if (this.#rule.designs && this.#evaluateDesigns(this.#rule.designs, ruleContext, 0) ||
                 this.#rule.either && this.#evaluateEitherDesign(this.#rule.either, ruleContext, 0) ||
@@ -106,7 +107,7 @@ export default class Analyzer {
      */
     #evaluateDesigns(expressions: any[], ruleContextObject: any, depth: number): boolean {
         if (this.#depthCheck(depth += 1)) {
-            const blockId: UUID = crypto.randomUUID();
+            const blockId: UUID = uuidv4() as UUID;
             this.#evaluator?.enterBlock(blockId);
             this.#registerVariables(expressions, ruleContextObject, blockId);
 
@@ -130,7 +131,7 @@ export default class Analyzer {
      */
     #evaluateEitherDesign(expressions: any[], ruleContextObject: any, depth: number): boolean {
         if (this.#depthCheck(depth += 1)) {
-            const blockId: UUID = crypto.randomUUID();
+            const blockId: UUID = uuidv4() as UUID;
             this.#evaluator?.enterBlock(blockId);
             this.#registerVariables(expressions, ruleContextObject, blockId);
 

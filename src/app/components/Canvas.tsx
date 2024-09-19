@@ -66,7 +66,7 @@ const Canvas: React.FC = () => {
 
     const onConnect = useCallback(
         (conn: Connection) => setEdges((edges) => {
-            return addEdge({ ...conn, type: 'process' }, edges) as never;
+            return addEdge(conn, edges) as never;
         }),
         [setEdges]
     );
@@ -246,7 +246,7 @@ const Canvas: React.FC = () => {
                     <MiniMap nodeColor={ElementColor} nodeStrokeWidth={1} zoomable pannable />
                     <Panel position='top-left'>
                         <div style={{
-                            width: '50px',
+                            width: '150px',
                             height: '100vh',
                             borderRight: '1px solid #ccc',
                             display: 'flex',

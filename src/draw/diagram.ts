@@ -23,53 +23,32 @@ export default class Diagram {
             // zone, entity, datastore
             this.#nodes.forEach((node: Node) => {
                 const model: any = node.data.model;
-                const processedElement = {
-                    ...model,
-                    metadata: {
-                        ...(model.metadata || {}),
-                        shape: node.id
-                    },
-                    attached: (()=>{
-                        switch (model.metadata.element) {
-                            case elementTypes.ZONE:
-                                return this.#buildZoneAttached(node);
-                            case elementTypes.ENTITY:
-                            case elementTypes.DATASTORE:
-                                return this.#buildNodeAttached(node);
-                            default:
-                                return;
-                        }
-                    })()
-                };
-                this.#processedElements.push(processedElement);
+                model.metadata.shape = node.id;
+                model.attached = (()=>{
+                    switch (model.metadata.element) {
+                        case elementTypes.ZONE:
+                            return this.#buildZoneAttached(node);
+                        case elementTypes.ENTITY:
+                        case elementTypes.DATASTORE:
+                            return this.#buildNodeAttached(node);
+                        default:
+                            return;
+                    }
+                })();
+                this.#processedElements.push(model);
             });
             // dataflow, process
             this.#edges.forEach((edge: Edge) => {
                 const edgeAttached = this.#buildDataflowAttached(edge);
-                // TODO bug here when run analysis
-                const dataflowModel = (edge.data as DataFlowEdgeData).dataflow?.model;
-                const processModel = (edge.data as DataFlowEdgeData).process?.model;
-                const processedElements = [
-                    // DataflowAttached
-                    {
-                        ...dataflowModel,
-                        metadata: {
-                            ...(dataflowModel.metadata || {}),
-                            shape: edge.id
-                        },
-                        attached: edgeAttached.dataflowAttached
-                    },
-                    // ProcessAttached
-                    {
-                        ...processModel,
-                        metadata: {
-                            ...(processModel.metadata || {}),
-                            shape: edge.id
-                        },
-                        attached: edgeAttached.processAttached
-                    },
-                ];
-                this.#processedElements.push(processedElements);
+                const dataflowModel = (edge.data as DataFlowEdgeData).dataflow?.model as any;
+                dataflowModel.metadata.shape = edge.id;
+                dataflowModel.attached = edgeAttached.dataflowAttached;
+
+                const processModel = (edge.data as DataFlowEdgeData).process?.model as any;
+                processModel.metadata.shape = edge.id;
+                processModel.attached = edgeAttached.processAttached;
+
+                this.#processedElements.push(dataflowModel, processModel);
             });
 
             return this.#processedElements;
@@ -82,7 +61,7 @@ export default class Diagram {
     #buildZoneAttached(zone: Node): ZoneAttached {
         return {
             parent: this.#nodes.find(parentZone => parentZone.id === zone.parentId)?.data.model as Zone,
-            children: this.#nodes.filter(childZone => childZone.parentId === zone.id).map(childZone => childZone.data.model) as Zone[],
+            children: this.#nodes.filter(childZone => childZone.parentId === zone.id && (childZone.data.model as Zone).metadata.element === 'zone').map(childZone => childZone.data.model) as Zone[],
             entities: this.#nodes.filter(childEntity => childEntity.parentId === zone.id &&
                 (childEntity.data.model as Entity).metadata.element === 'entity')
                 .map(childEntity => childEntity.data.model) as Entity[],

@@ -13,13 +13,13 @@ export default async function RootLayout({ children }: {
     return (
         <html lang="en">
         <body>
-        <ReactFlowProvider>
-            <DnDProvider>
-                <TemplateProvider templates={templates}>
+        <TemplateProvider templates={templates}>
+            <ReactFlowProvider>
+                <DnDProvider>
                     {children}
-                </TemplateProvider>
-            </DnDProvider>
-        </ReactFlowProvider>
+                </DnDProvider>
+            </ReactFlowProvider>
+        </TemplateProvider>
         </body>
         </html>
     )

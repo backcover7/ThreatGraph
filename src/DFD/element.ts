@@ -43,7 +43,7 @@ export function buildElement<T extends ElementType>(
     description?: string,
     icon?: string): Element & { element: T } {
     return {
-        id: id !== undefined ? id : randomUUID(),
+        id: id !== undefined ? id : crypto.randomUUID() as UUID,
         name,
         description,
         icon,
