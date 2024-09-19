@@ -33,9 +33,11 @@ export const defaultEdgeOptions = {
         isProcessNode: false,
         dataflow: {
             model: undefined,
+            element: 'dataflow',
         },
         process: {
             model: undefined,
+            element: 'process',
         },
     },
 };
