@@ -25,6 +25,7 @@ import Diagram from "@/draw/diagram";
 import Analyzer from "@/parser/analyzer";
 import {Result} from "@/DFD/result";
 import {useTemplate} from "@/app/components/toolbar/TemplateContext";
+import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 
 const Canvas: React.FC = () => {
     const { screenToFlowPosition, addNodes, getInternalNode, getNodes, getEdges } = useReactFlow();

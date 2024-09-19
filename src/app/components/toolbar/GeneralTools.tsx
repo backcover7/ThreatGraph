@@ -6,6 +6,9 @@ import {useDnD} from "@/app/components/DnDContext";
 import {LuDatabase, LuFrame, LuRectangleHorizontal} from "react-icons/lu";
 import {AiOutlineFontColors} from "react-icons/ai";
 import {GiGearStick} from "react-icons/gi";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {Button} from "@/components/ui/button";
+import {ChevronRight} from "lucide-react";
 
 interface NodeInfo {
     type: 'group' | 'default' | 'output' | 'process' | 'text';
