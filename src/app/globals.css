@@ -1,5 +1,4 @@
 /*Check this page before editing https://reactflow.dev/learn/customization/theming */
-
 @import '@xyflow/react/dist/style.css';
 @tailwind base;
 @tailwind components;

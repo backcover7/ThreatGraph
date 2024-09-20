@@ -28,7 +28,7 @@ const BuiltInTools: React.FC = () => {
                 draggable
                 title={item.metadata.name || 'Unnamed'}
             >
-                <IconRenderer dataUrl={item.metadata.icon} />
+                <IconRenderer dataUrl={item.metadata.icon} width={'20%'} height={'20%'}/>
                 <div>{item.metadata.name}</div>
             </div>
         ));

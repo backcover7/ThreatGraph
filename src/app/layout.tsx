@@ -1,7 +1,7 @@
-import './globals.css'
+import '@/app/globals.css'
 import { ReactFlowProvider } from '@xyflow/react'
 import { DnDProvider } from './components/DnDContext'
-import Template, {templateType} from "@/parser/template";
+import Template from "@/parser/template";
 import {TemplateProvider} from "@/app/components/toolbar/TemplateContext";
 
 export default async function RootLayout({ children }: {

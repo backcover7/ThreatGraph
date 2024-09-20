@@ -34,6 +34,7 @@ const Canvas: React.FC = () => {
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [type, data] = useDnD();
     const templates = useTemplate();
+    const [analysisResults, setAnalysisResults] = useState<Result[]>([]);
 
     const isValidConnection = useCallback((connection: Connection | Edge) => {
         const { source, sourceHandle, target, targetHandle } = connection as Connection;
@@ -208,6 +209,7 @@ const Canvas: React.FC = () => {
         })
         console.log('[!] ' + results.length + ' threats found!')
         console.log('Finished');
+        setAnalysisResults(results);
 
     }, [getNodes, getEdges]);
 
@@ -246,9 +248,8 @@ const Canvas: React.FC = () => {
                     <MiniMap nodeColor={ElementColor} nodeStrokeWidth={1} zoomable pannable />
                     <Panel position='top-left'>
                         <div style={{
-                            width: '150px',
+                            width: '200px',
                             height: '100vh',
-                            borderRight: '1px solid #ccc',
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'flex-start',
@@ -262,7 +263,6 @@ const Canvas: React.FC = () => {
                         <div style={{
                             width: '300px',
                             height: '100vh',
-                            borderLeft: '1px solid #ccc',
                             display: 'flex',
                             flexDirection: 'column',
                             padding: '10px'
@@ -282,7 +282,24 @@ const Canvas: React.FC = () => {
                                 {/*TODO progress*/}
                             </div>
                             <div>This is for properties bar TODO</div>
-                            <div>This is for threat bar TODO</div>
+                            <div>
+                                <h3>Threat Analysis Results</h3>
+                                {analysisResults.length > 0 ? (
+                                    <ul>
+                                        {analysisResults.map((result, index) => {
+                                            const threat = templates.threat.find(t => t.id === result.threat);
+                                            return (
+                                                <li key={index}>
+                                                    <strong>{threat?.name}</strong>
+                                                    {/*result.shape*/}
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
+                                ) : (
+                                    <p>No threats detected. Run analysis to see results.</p>
+                                )}
+                            </div>
                         </div>
                     </Panel>
                     <Panel position="bottom-center">
