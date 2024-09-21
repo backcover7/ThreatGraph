@@ -3,14 +3,9 @@
 import React, {useCallback, useRef, useState} from 'react';
 import {
     addEdge, Background, BackgroundVariant,
-    Connection, ControlButton,
-    Controls, Edge, HandleType,
-    MiniMap,
-    Node, NodeTypes, Panel,
-    ReactFlow, ReactFlowInstance, ReactFlowJsonObject, reconnectEdge,
-    useEdgesState,
-    useNodesState,
-    useReactFlow,
+    Connection, ControlButton, Controls, Edge, HandleType, MiniMap, Node, Panel,
+    ReactFlow, reconnectEdge,
+    useEdgesState, useNodesState, useReactFlow,
 } from '@xyflow/react';
 import GeneralTools from '@/app/components/toolbar/GeneralTools';
 import {useDnD} from '@/app/components/DnDContext';
@@ -25,6 +20,13 @@ import Diagram from "@/draw/diagram";
 import Analyzer from "@/parser/analyzer";
 import {Result} from "@/DFD/result";
 import {useTemplate} from "@/app/components/toolbar/TemplateContext";
+import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
+import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
+import {Label} from "@/components/ui/label";
+import {Button} from "@/components/ui/button";
+import {Input} from "@/components/ui/input";
+import {Badge} from "lucide-react";
+import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 
 const Canvas: React.FC = () => {
     const { screenToFlowPosition, addNodes, getInternalNode, getNodes, getEdges } = useReactFlow();
@@ -260,58 +262,82 @@ const Canvas: React.FC = () => {
                         </div>
                     </Panel>
                     <Panel position='top-right'>
-                        <div style={{
-                            width: '300px',
-                            height: '100vh',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            padding: '10px'
-                        }}>
-                            <div style={{
-                                zIndex: 9999,
-                                display: 'flex',
-                                background: '#fcfcfc',
-                                width: '50px',
-                                height: '30px',
-                                border: 1,
-                                stopColor: 'black'
-                            }}>
-                                <button onClick={runAnalysis}>
-                                    <IoPlayCircle />
-                                </button>
-                                {/*TODO progress*/}
-                            </div>
-                            <div>This is for properties bar TODO</div>
-                            <div>
-                                <h3>Threat Analysis Results</h3>
-                                {analysisResults.length > 0 ? (
-                                    <ul>
-                                        {analysisResults.map((result, index) => {
-                                            const threat = templates.threat.find(t => t.id === result.threat);
-                                            return (
-                                                <li key={index}>
-                                                    <strong>{threat?.name}</strong>
-                                                    {/*result.shape*/}
-                                                </li>
-                                            );
-                                        })}
-                                    </ul>
-                                ) : (
-                                    <p>No threats detected. Run analysis to see results.</p>
-                                )}
-                            </div>
-                        </div>
+                        <Card>
+                            <Avatar>
+                                <AvatarImage src="https://github.com/shadcn.png" />
+                                <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
+                            <Button onClick={runAnalysis}>Run</Button>
+                        </Card>
+
+                        <Card>
+                            <Tabs defaultValue="properties" className="w-[400px]">
+                                <TabsList className="grid w-full grid-cols-2">
+                                    <TabsTrigger value="properties">Properties</TabsTrigger>
+                                    <TabsTrigger value="style">Style</TabsTrigger>
+                                </TabsList>
+                                <TabsContent value="properties">
+                                    <Card>
+                                        <CardContent className="space-y-2">
+                                        </CardContent>
+                                    </Card>
+                                </TabsContent>
+                                <TabsContent value="style">
+                                    <Card>
+                                        <CardContent className="space-y-2">
+                                        </CardContent>
+                                    </Card>
+                                </TabsContent>
+                            </Tabs>
+                        </Card>
+
+                        <Card>
+                            <Tabs defaultValue="layers" className="w-[400px]">
+                                <TabsList className="grid w-full grid-cols-2">
+                                    <TabsTrigger value="layers">Layers</TabsTrigger>
+                                    <TabsTrigger value="threats">Threats</TabsTrigger>
+                                </TabsList>
+                                <TabsContent value="layers">
+                                    <Card>
+                                    <CardContent className="space-y-2">
+                                    </CardContent>
+                                    </Card>
+                                </TabsContent>
+                                <TabsContent value="threats">
+                                    <Card>
+                                    <CardContent className="space-y-2">
+                                        {analysisResults.length > 0 ? (
+                                            <ul>
+                                                {analysisResults.map((result, index) => {
+                                                    const threat = templates.threat.find(t => t.id === result.threat);
+                                                    return (
+                                                        <li key={index}>
+                                                            <strong>{threat?.name}</strong>
+                                                            {/*result.shape*/}
+                                                        </li>
+                                                    );
+                                                })}
+                                            </ul>
+                                        ) : (
+                                            <p>No threats detected. Run analysis to see results.</p>
+                                        )}
+                                    </CardContent>
+                                    </Card>
+                                </TabsContent>
+                            </Tabs>
+                        </Card>
                     </Panel>
                     <Panel position="bottom-center">
-                        <div className="toolbar-container">
-                            <GeneralTools/>
-                        </div>
+                        <GeneralTools/>
                     </Panel>
                     <Background
                         color="#00000" variant={BackgroundVariant.Cross} gap={30}
                     />
                     <Panel position='top-center'>
-                        <div>This is for run background settings like dark mode TODO</div>
+                        <Card>
+                            {/*This is for run background settings like dark mode TODO*/}
+                            <Button></Button>
+                        </Card>
                     </Panel>
                 </ReactFlow>
             </div>

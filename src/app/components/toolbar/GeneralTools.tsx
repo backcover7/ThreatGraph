@@ -6,6 +6,8 @@ import {useDnD} from "@/app/components/DnDContext";
 import {LuDatabase, LuFrame, LuRectangleHorizontal} from "react-icons/lu";
 import {AiOutlineFontColors} from "react-icons/ai";
 import {GiGearStick} from "react-icons/gi";
+import {Card} from "@/components/ui/card";
+import {Button} from "@/components/ui/button";
 
 interface NodeInfo {
     type: 'group' | 'default' | 'output' | 'process' | 'text';
@@ -24,7 +26,7 @@ const nodeTypes: NodeInfo[] = [
 const GeneralTools: React.FC = () => {
     const [, , setDnDState] = useDnD();
 
-    const onDragStart = (event: React.DragEvent<HTMLDivElement>, nodeInfo: NodeInfo) => {
+    const onDragStart = (event: React.DragEvent<HTMLButtonElement>, nodeInfo: NodeInfo) => {
         event.dataTransfer.setData('application/reactflow', nodeInfo.type);
         event.dataTransfer.effectAllowed = 'move';
 
@@ -36,19 +38,20 @@ const GeneralTools: React.FC = () => {
     };
 
     return (
-        <div className="general-tools">
+        <Card>
             {nodeTypes.map((nodeInfo) => (
-                <div
+                <Button
+                    variant="outline"
+                    size="icon"
                     key={nodeInfo.type}
-                    className="dndnode"
                     onDragStart={(event) => onDragStart(event, nodeInfo)}
                     draggable
                     title={nodeInfo.dragLabel}
                 >
                     {nodeInfo.icon}
-                </div>
+                </Button>
             ))}
-        </div>
+        </Card>
     );
 };
 

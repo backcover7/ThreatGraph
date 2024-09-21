@@ -5,13 +5,16 @@ import { useDnD } from "@/app/components/DnDContext";
 import { useTemplate } from "@/app/components/toolbar/TemplateContext";
 import { NodeType } from "@/app/components/nodes/ElementNode";
 import IconRenderer from "@/app/components/IconRenderer";
+import {Card} from "@/components/ui/card";
+import {Button} from "@/components/ui/button";
+import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 
 
 const BuiltInTools: React.FC = () => {
     const [, , setDnDState] = useDnD();
     const templates = useTemplate();
 
-    const onDragStart = (event: React.DragEvent<HTMLDivElement>, nodeType: NodeType, modelData: any) => {
+    const onDragStart = (event: React.DragEvent<HTMLButtonElement>, nodeType: NodeType, modelData: any) => {
         event.dataTransfer.setData('application/reactflow', nodeType);
         event.dataTransfer.effectAllowed = 'move';
         setDnDState([nodeType, { model: modelData }]);
@@ -21,26 +24,42 @@ const BuiltInTools: React.FC = () => {
         if (!templates[type] || templates[type].length === 0) return null;
 
         return templates[type].map((item: any, index: number) => (
-            <div
+            <Button
+                variant="outline"
+                size="icon"
                 key={`${type}-${index}`}
-                className="dndnode"
                 onDragStart={(event) => onDragStart(event, nodeType, item)}
                 draggable
-                title={item.metadata.name || 'Unnamed'}
+                // title={item.metadata.name || 'Unnamed'}
             >
-                <IconRenderer dataUrl={item.metadata.icon} width={'20%'} height={'20%'}/>
-                <div>{item.metadata.name}</div>
-            </div>
+                <IconRenderer dataUrl={item.metadata.icon} width={'20%'} height={'20%'}/>{item.metadata.name}
+            </Button>
         ));
     };
 
     return (
-        <div className="built-in-tools">
-            {renderToolSection('zone', 'group')}
-            {renderToolSection('entity', 'default')}
-            {renderToolSection('datastore', 'output')}
-            {renderToolSection('process', 'process')}
-        </div>
+        <Card>
+            <Tabs defaultValue="zone" className="w-[300px]">
+                <TabsList>
+                    <TabsTrigger value="zone">Zone</TabsTrigger>
+                    <TabsTrigger value="entity">Entity</TabsTrigger>
+                    <TabsTrigger value="datastore">Datastore</TabsTrigger>
+                    <TabsTrigger value="process">Process</TabsTrigger>
+                </TabsList>
+                <TabsContent value="zone">
+                    {renderToolSection('zone', 'group')}
+                </TabsContent>
+                <TabsContent value="entity">
+                    {renderToolSection('entity', 'default')}
+                </TabsContent>
+                <TabsContent value="datastore">
+                    {renderToolSection('datastore', 'output')}
+                </TabsContent>
+                <TabsContent value="process">
+                    {renderToolSection('process', 'process')}
+                </TabsContent>
+            </Tabs>
+        </Card>
     );
 };
 
