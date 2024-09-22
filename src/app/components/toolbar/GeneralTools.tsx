@@ -41,7 +41,7 @@ const GeneralTools: React.FC = () => {
         <Card>
             {nodeTypes.map((nodeInfo) => (
                 <Button
-                    variant="outline"
+                    variant="ghost"
                     size="icon"
                     key={nodeInfo.type}
                     onDragStart={(event) => onDragStart(event, nodeInfo)}

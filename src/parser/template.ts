@@ -68,8 +68,6 @@ export default class Template {
                     }
                 }
             }
-
-            console.log(`Finished loading templates...`);
         } catch (error) {
             console.error('Failed to load templates:', error);
         }

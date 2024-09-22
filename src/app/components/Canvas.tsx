@@ -2,8 +2,7 @@
 
 import React, {useCallback, useRef, useState} from 'react';
 import {
-    addEdge, Background, BackgroundVariant,
-    Connection, ControlButton, Controls, Edge, HandleType, MiniMap, Node, Panel,
+    addEdge, Connection, Controls, Edge, HandleType, MiniMap, Node, Panel,
     ReactFlow, reconnectEdge,
     useEdgesState, useNodesState, useReactFlow,
 } from '@xyflow/react';
@@ -13,20 +12,16 @@ import {detachElement, groupElements} from "@/app/components/nodes/ZoneNode";
 import {defaultEdgeOptions, edgeTypes} from "@/app/components/nodes/DataflowEdge";
 import {ElementColor, ElementNodes, getNewElement} from "@/app/components/nodes/ElementNode";
 import {push} from "@/app/components/utils";
-import {HiQuestionMarkCircle} from "react-icons/hi";
-import {IoPlayCircle} from "react-icons/io5";
 import BuiltInTools from "@/app/components/toolbar/BuiltInTools";
 import Diagram from "@/draw/diagram";
 import Analyzer from "@/parser/analyzer";
 import {Result} from "@/DFD/result";
 import {useTemplate} from "@/app/components/toolbar/TemplateContext";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
-import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
-import {Label} from "@/components/ui/label";
+import {Card, CardContent} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
-import {Input} from "@/components/ui/input";
-import {Badge} from "lucide-react";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
+import {FaCirclePlay} from "react-icons/fa6";
 
 const Canvas: React.FC = () => {
     const { screenToFlowPosition, addNodes, getInternalNode, getNodes, getEdges } = useReactFlow();
@@ -34,7 +29,9 @@ const Canvas: React.FC = () => {
     const edgeReconnectSuccessful = useRef(true);
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+
     const [type, data] = useDnD();
+
     const templates = useTemplate();
     const [analysisResults, setAnalysisResults] = useState<Result[]>([]);
 
@@ -176,6 +173,8 @@ const Canvas: React.FC = () => {
             event.preventDefault();
             setNodes(nodes => (nodes as Node[]).map(node => ({...node, selected: true,})) as never);
             setEdges(edges => (edges as Edge[]).map(edge => ({...edge, selected: true,})) as never);
+        } else if (event.metaKey && event.key === 'J') {
+            event.preventDefault();
         }
         // TODO Copy & Paste
     }, [setNodes, setEdges]);
@@ -243,23 +242,13 @@ const Canvas: React.FC = () => {
                 >
                     <Controls>
                         {/**TODO**/}
-                        <ControlButton onClick={() => alert('This is ZoneZone')}>
-                            <HiQuestionMarkCircle />
-                        </ControlButton>
+                        {/*<ControlButton onClick={() => alert('This is ZoneZone')}>*/}
+                        {/*    <HiQuestionMarkCircle />*/}
+                        {/*</ControlButton>*/}
                     </Controls>
                     <MiniMap nodeColor={ElementColor} nodeStrokeWidth={1} zoomable pannable />
                     <Panel position='top-left'>
-                        <div style={{
-                            width: '200px',
-                            height: '100vh',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'flex-start',
-                            alignItems: 'center',
-                            padding: '10px 0'
-                        }}>
-                            <BuiltInTools />
-                        </div>
+                        <BuiltInTools />
                     </Panel>
                     <Panel position='top-right'>
                         <Card>
@@ -267,7 +256,9 @@ const Canvas: React.FC = () => {
                                 <AvatarImage src="https://github.com/shadcn.png" />
                                 <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
-                            <Button onClick={runAnalysis}>Run</Button>
+                            <Button variant="ghost" onClick={runAnalysis}>
+                                <FaCirclePlay className="h-4 w-4"/>
+                            </Button>
                         </Card>
 
                         <Card>
@@ -305,40 +296,40 @@ const Canvas: React.FC = () => {
                                 </TabsContent>
                                 <TabsContent value="threats">
                                     <Card>
-                                    <CardContent className="space-y-2">
-                                        {analysisResults.length > 0 ? (
-                                            <ul>
-                                                {analysisResults.map((result, index) => {
-                                                    const threat = templates.threat.find(t => t.id === result.threat);
-                                                    return (
-                                                        <li key={index}>
-                                                            <strong>{threat?.name}</strong>
-                                                            {/*result.shape*/}
-                                                        </li>
-                                                    );
-                                                })}
-                                            </ul>
-                                        ) : (
-                                            <p>No threats detected. Run analysis to see results.</p>
-                                        )}
-                                    </CardContent>
+                                        <CardContent className="space-y-2">
+                                            {analysisResults.length > 0 ? (
+                                                <ul>
+                                                    {analysisResults.map((result, index) => {
+                                                        const threat = templates.threat.find(t => t.id === result.threat);
+                                                        return (
+                                                            <li key={index}>
+                                                                <strong>{threat?.name}</strong>
+                                                                {/*result.shape*/}
+                                                            </li>
+                                                        );
+                                                    })}
+                                                </ul>
+                                            ) : (
+                                                <p>No threats detected. Run analysis to see results.</p>
+                                            )}
+                                        </CardContent>
                                     </Card>
                                 </TabsContent>
                             </Tabs>
                         </Card>
                     </Panel>
-                    <Panel position="bottom-center">
+                    <Panel position="top-center">
                         <GeneralTools/>
                     </Panel>
-                    <Background
-                        color="#00000" variant={BackgroundVariant.Cross} gap={30}
-                    />
-                    <Panel position='top-center'>
-                        <Card>
-                            {/*This is for run background settings like dark mode TODO*/}
-                            <Button></Button>
-                        </Card>
-                    </Panel>
+                    {/*<Background*/}
+                    {/*    color="#00000" variant={BackgroundVariant.Cross} gap={30}*/}
+                    {/*/>*/}
+                    {/*<Panel position='top-center'>*/}
+                    {/*    <Card>*/}
+                    {/*        /!*This is for run background settings like dark mode TODO*!/*/}
+                    {/*        <Button></Button>*/}
+                    {/*    </Card>*/}
+                    {/*</Panel>*/}
                 </ReactFlow>
             </div>
         </div>
