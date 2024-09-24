@@ -22,6 +22,8 @@ import {Card, CardContent} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {FaCirclePlay} from "react-icons/fa6";
+import {AlertTriangle} from "lucide-react";
+import {useToast} from "@/hooks/use-toast";
 
 const Canvas: React.FC = () => {
     const { screenToFlowPosition, addNodes, getInternalNode, getNodes, getEdges } = useReactFlow();
@@ -33,7 +35,9 @@ const Canvas: React.FC = () => {
     const [type, data] = useDnD();
 
     const templates = useTemplate();
+    const { toast } = useToast()
     const [analysisResults, setAnalysisResults] = useState<Result[]>([]);
+    const [activeTab, setActiveTab] = useState("layers");
 
     const isValidConnection = useCallback((connection: Connection | Edge) => {
         const { source, sourceHandle, target, targetHandle } = connection as Connection;
@@ -211,6 +215,7 @@ const Canvas: React.FC = () => {
         console.log('[!] ' + results.length + ' threats found!')
         console.log('Finished');
         setAnalysisResults(results);
+        setActiveTab("threats");
 
     }, [getNodes, getEdges]);
 
@@ -283,7 +288,7 @@ const Canvas: React.FC = () => {
                         </Card>
 
                         <Card>
-                            <Tabs defaultValue="layers" className="w-[400px]">
+                            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-[400px]">
                                 <TabsList className="grid w-full grid-cols-2">
                                     <TabsTrigger value="layers">Layers</TabsTrigger>
                                     <TabsTrigger value="threats">Threats</TabsTrigger>
@@ -298,17 +303,16 @@ const Canvas: React.FC = () => {
                                     <Card>
                                         <CardContent className="space-y-2">
                                             {analysisResults.length > 0 ? (
-                                                <ul>
+                                                <div className="space-y-2">
                                                     {analysisResults.map((result, index) => {
                                                         const threat = templates.threat.find(t => t.id === result.threat);
                                                         return (
-                                                            <li key={index}>
-                                                                <strong>{threat?.name}</strong>
-                                                                {/*result.shape*/}
-                                                            </li>
+                                                            <Button key={index} variant="outline" className="w-full justify-start">
+                                                                <AlertTriangle className="mr-2 h-4 w-4" /> {threat?.name}
+                                                            </Button>
                                                         );
                                                     })}
-                                                </ul>
+                                                </div>
                                             ) : (
                                                 <p>No threats detected. Run analysis to see results.</p>
                                             )}

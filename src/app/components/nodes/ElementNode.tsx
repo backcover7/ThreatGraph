@@ -7,6 +7,7 @@ import DatastoreNode from "@/app/components/nodes/DatastoreNode";
 import React, {useCallback} from "react";
 import TextNode from "@/app/components/nodes/TextNode";
 import ProcessNode from "@/app/components/nodes/ProcessNode";
+import {Button} from "@/components/ui/button";
 
 export type NodeType = 'group' | 'input' | 'default' | 'output' | 'process' | 'text';
 
@@ -55,6 +56,8 @@ export function getNewElement(type: NodeType, position: XYPosition, data?: any):
             type === 'text' ? {width: 150, height: 50} :
             undefined,
         data,  // model data
+        selected: true,
+        dragging: false
     };
 }
 
@@ -77,8 +80,8 @@ export const ElementToolbar: React.FC<{
                 isVisible={selected}
                 position={Position.Top}
             >
-                <button onClick={onTest}>button1</button>
-                <button onClick={onTest}>button2</button>
+                <Button onClick={onTest}>button1</Button>
+                <Button onClick={onTest}>button2</Button>
             </NodeToolbar>
             <div style={{
                 position: 'relative',

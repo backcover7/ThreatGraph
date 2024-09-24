@@ -3,6 +3,7 @@ import { ReactFlowProvider } from '@xyflow/react'
 import { DnDProvider } from './components/DnDContext'
 import Template from "@/parser/template";
 import {TemplateProvider} from "@/app/components/toolbar/TemplateContext";
+import {Toaster} from "@/components/ui/toaster";
 
 export default async function RootLayout({ children }: {
     children: React.ReactNode
@@ -13,6 +14,7 @@ export default async function RootLayout({ children }: {
     return (
         <html lang="en">
         <body>
+        <Toaster />
         <TemplateProvider templates={templates}>
             <ReactFlowProvider>
                 <DnDProvider>
