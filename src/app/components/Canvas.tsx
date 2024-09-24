@@ -2,9 +2,9 @@
 
 import React, {useCallback, useRef, useState} from 'react';
 import {
-    addEdge, Connection, Controls, Edge, HandleType, MiniMap, Node, Panel,
+    addEdge, Connection, Controls, Edge, HandleType, MiniMap, Node, OnSelectionChangeParams, Panel,
     ReactFlow, reconnectEdge,
-    useEdgesState, useNodesState, useReactFlow,
+    useEdgesState, useNodesState, useOnSelectionChange, useReactFlow,
 } from '@xyflow/react';
 import GeneralTools from '@/app/components/toolbar/GeneralTools';
 import {useDnD} from '@/app/components/DnDContext';
@@ -138,8 +138,9 @@ const Canvas: React.FC = () => {
                 if (nodes.length === 0) {
                     addNodes(newElem);
                 } else {
-                    setNodes((nodes) => {
-                        return groupElements(push(nodes, newElem as never), getInternalNode, setNodes) as never;
+                    setNodes((prevNodes) => {
+                        const unSelectedNodes = prevNodes.map((node: Node) => ({...node, selected: false}));
+                        return groupElements(push(unSelectedNodes, newElem as never), getInternalNode, setNodes) as never;
                     });
                 }
             }
@@ -171,6 +172,11 @@ const Canvas: React.FC = () => {
             setNodes((nodes) => groupElements(nodes as Node[], getInternalNode, setNodes) as never);
         }
     }, [setNodes, setEdges, getInternalNode]);
+
+    // TODO
+    const onSelectionChange = useCallback((params: { nodes: Node[]; edges: Edge[] }) => {
+        console.log(params);
+    }, [])
 
     const onKeyDown = useCallback((event: KeyboardEvent) => {
         if (event.metaKey && event.key === 'a') {
@@ -244,6 +250,7 @@ const Canvas: React.FC = () => {
                     edges={edges}
                     edgeTypes={edgeTypes}
                     defaultEdgeOptions={defaultEdgeOptions}
+                    onSelectionChange={onSelectionChange}
                 >
                     <Controls>
                         {/**TODO**/}
