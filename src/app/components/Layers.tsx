@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/collapsible";
 import {GiGearStick} from "react-icons/gi";
 import {AiOutlineFontColors} from "react-icons/ai";
+import {ScrollArea} from "@/components/ui/scroll-area";
 
 interface TreeNode {
     id: string;
@@ -65,9 +66,9 @@ const TreeNodeComponent: React.FC<TreeNodeComponentProps> = ({ treeNode, nodes, 
     const name = model?.metadata?.name ?? 'Unnamed';
 
     const indentationStyle = {
-        paddingLeft: `${level * 20}px`,
+        paddingLeft: `${level * 5}px`,
         borderLeft: level > 0 ? '1px solid #e2e8f0' : 'none',
-        marginLeft: level > 0 ? '10px' : '0',
+        marginLeft: level > 0 ? '3px' : '0',
     };
 
     if (treeNode.children.length === 0) {
@@ -121,7 +122,7 @@ interface TreeViewProps {
     nodes: Node[];
 }
 
-export default function TreeView({ nodes }: TreeViewProps) {
+export default function TreeView(nodes: Node[]) {
     const tree = getGroupTree(nodes);
 
     return (
