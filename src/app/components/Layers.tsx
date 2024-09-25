@@ -1,10 +1,18 @@
-import {Node} from "@xyflow/react";
-import {Zone} from "@/DFD/zone";
-import {Entity} from "@/DFD/node/entity";
-import {DataStore} from "@/DFD/node/datastore";
-import {Process} from "@/DFD/process";
-import {Button} from "@/components/ui/button";
-import {LuFrame} from "react-icons/lu";
+import React from 'react';
+import { Node } from "@xyflow/react";
+import { Zone } from "@/DFD/zone";
+import { Entity } from "@/DFD/node/entity";
+import { DataStore } from "@/DFD/node/datastore";
+import { Process } from "@/DFD/process";
+import { Button } from "@/components/ui/button";
+import {LuFrame, LuChevronRight, LuChevronDown, LuRectangleHorizontal, LuDatabase} from "react-icons/lu";
+import {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import {GiGearStick} from "react-icons/gi";
+import {AiOutlineFontColors} from "react-icons/ai";
 
 interface TreeNode {
     id: string;
@@ -47,42 +55,79 @@ function getGroupTree(nodes: Node[]): TreeNode[] {
 interface TreeNodeComponentProps {
     treeNode: TreeNode;
     nodes: Node[];
+    level: number;
 }
 
-const TreeNodeComponent: React.FC<TreeNodeComponentProps> = ({ treeNode, nodes }) => {
+const TreeNodeComponent: React.FC<TreeNodeComponentProps> = ({ treeNode, nodes, level }) => {
+    const [isOpen, setIsOpen] = React.useState(false);
     const node = nodes.find((node: Node) => node.id === treeNode.id);
     const model = node?.data?.model as Zone|Entity|DataStore|Process|undefined;
     const name = model?.metadata?.name ?? 'Unnamed';
 
-    return (
-        <div>
-            {treeNode.children.length === 0 ? (
-                <Button variant="ghost" size="sm">
+    const indentationStyle = {
+        paddingLeft: `${level * 20}px`,
+        borderLeft: level > 0 ? '1px solid #e2e8f0' : 'none',
+        marginLeft: level > 0 ? '10px' : '0',
+    };
+
+    if (treeNode.children.length === 0) {
+        return (
+            <div style={indentationStyle} className="py-1">
+                <Button variant="ghost" size="sm" className="w-full justify-start">
                     <h4 className="text-sm font-semibold flex items-center">
-                        <LuFrame className="mr-2 h-4 w-4" />
+                        {
+                            treeNode?.type === 'group' ? <LuFrame className="mr-2 h-4 w-4" /> :
+                            treeNode?.type === 'default' ? <LuRectangleHorizontal className="mr-2 h-4 w-4" /> :
+                            treeNode?.type === 'output' ? <LuDatabase className="mr-2 h-4 w-4" /> :
+                            treeNode?.type === 'process' ? <GiGearStick className="mr-2 h-4 w-4" /> :
+                            treeNode?.type === 'text' ? <AiOutlineFontColors className="mr-2 h-4 w-4" /> :
+                            <></>
+                        }
                         {name}
                     </h4>
                 </Button>
-            ) : (
-                <div>
-                    <h4 className="text-sm font-semibold">{name}</h4>
-                    {treeNode.children.map(child => (
-                        <TreeNodeComponent key={child.id} treeNode={child} nodes={nodes} />
-                    ))}
-                </div>
-            )}
+            </div>
+        );
+    }
+
+    return (
+        <div style={indentationStyle}>
+            <Collapsible
+                open={isOpen}
+                onOpenChange={setIsOpen}
+                className="w-full"
+            >
+                <CollapsibleTrigger asChild>
+                    <Button variant="ghost" size="sm" className="w-full justify-start py-1">
+                        <h4 className="text-sm font-semibold flex items-center">
+                            {isOpen ? <LuChevronDown className="mr-2 h-4 w-4" /> : <LuChevronRight className="mr-2 h-4 w-4" />}
+                            <LuFrame className="mr-2 h-4 w-4" />{name}
+                        </h4>
+                    </Button>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                    <div className="ml-4">
+                        {treeNode.children.map(child => (
+                            <TreeNodeComponent key={child.id} treeNode={child} nodes={nodes} level={level + 1} />
+                        ))}
+                    </div>
+                </CollapsibleContent>
+            </Collapsible>
         </div>
     );
 };
 
+interface TreeViewProps {
+    nodes: Node[];
+}
 
-export default function TreeView(nodes: Node[]) {
+export default function TreeView({ nodes }: TreeViewProps) {
     const tree = getGroupTree(nodes);
 
     return (
-        <div>
+        <div className="p-4">
             {tree.map(treeNode => (
-                <TreeNodeComponent key={treeNode.id} treeNode={treeNode} nodes={nodes} />
+                <TreeNodeComponent key={treeNode.id} treeNode={treeNode} nodes={nodes} level={0} />
             ))}
         </div>
     );
