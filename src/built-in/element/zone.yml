@@ -3,7 +3,7 @@ module:
     - metadata:
         id: 933566ae-d1f1-4f7f-8d3f-47630c778490
         # Any node not in a zone will be considered to be in a totally untrusted zone.
-        name: Untrusted zone
+        name: Untrusted Zone
         description: Totally untrusted zone
         icon: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iYmxhY2siIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNNCA3aDE2TTQgMTdoMTZNNyA0djE2TTE3IDR2MTYiLz48L3N2Zz4=
         type: untrusted

@@ -32,6 +32,10 @@ import {DataStore} from "@/DFD/node/datastore";
 import {Process} from "@/DFD/process";
 import {Switch} from "@/components/ui/switch";
 import {DataFlow} from "@/DFD/dataflow";
+import {Scrollbar} from "@radix-ui/react-scroll-area";
+import {ScrollArea} from "@/components/ui/scroll-area";
+import {LuDatabase, LuFrame, LuRectangleHorizontal} from "react-icons/lu";
+import {GiGearStick} from "react-icons/gi";
 
 const Canvas: React.FC = () => {
     const { screenToFlowPosition, addNodes, getInternalNode, getNodes, getEdges } = useReactFlow();
@@ -181,7 +185,7 @@ const Canvas: React.FC = () => {
     }, [setNodes, setEdges, getInternalNode]);
 
     const [selectedElems, setSelectedElems] = useState<string[]>([]);
-    const [lastSelectedElem, setLastSelectedElem] = useState<{type: string, id: string}>();
+    const [lastSelectedElem, setLastSelectedElem] = useState<string>();
 
     // get last selected element and show details in the properties panel
     useOnSelectionChange({
@@ -194,34 +198,12 @@ const Canvas: React.FC = () => {
             setSelectedElems(newSelectedIds);
 
             const newlySelectedId = newSelectedIds.find(id => !currentSelectedIds.has(id));
-            if (newlySelectedId) {
-                const selectedNode = nodes.find(node => node.id === newlySelectedId);
-                const selectedEdge = edges.find(edge => edge.id === newlySelectedId);
+            if (newlySelectedId) setLastSelectedElem(newlySelectedId);
 
-                if (selectedNode) {
-                    setLastSelectedElem({ type: 'node', id: newlySelectedId });
-                } else if (selectedEdge) {
-                    const isEdgeLabel = (selectedEdge.data?.isProcessNode ?? false) &&
-                        document.elementFromPoint(lastMousePosition.x, lastMousePosition.y)?.closest('.react-flow__edge-label');
-
-                    setLastSelectedElem({
-                        type: isEdgeLabel ? 'edgeLabel' : 'edge',
-                        id: newlySelectedId
-                    });
-                }
-            } else if (newSelectedIds.length === 0) {
-                setLastSelectedElem(undefined);
-            }
-            // setLastSelectedElem(newlySelectedId);
         }, [selectedElems])
     });
 
-    const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
-    const onMouseMove = useCallback((event: React.MouseEvent) => {
-        setLastMousePosition({ x: event.clientX, y: event.clientY });
-    }, []);
-
-    const renderProperties = () => {
+    const renderProperties = useCallback(() => {
         if (!lastSelectedElem) {
             return (
                 <Label className="flex items-center justify-center text-gray-500">
@@ -230,8 +212,8 @@ const Canvas: React.FC = () => {
             );
         }
 
-        const selectedNode = lastSelectedElem.type === 'node' ? nodes.find(node => (node as Node).id === lastSelectedElem.id) as unknown as Node : undefined;
-        const selectedEdge = lastSelectedElem.type === 'edge' || lastSelectedElem.type === 'edgeLabel' ? edges.find(edge => (edge as Edge).id === lastSelectedElem.id) as unknown as Edge : undefined;
+        const selectedNode = nodes.find(node => (node as Node).id === lastSelectedElem) as unknown as Node;
+        const selectedEdge = edges.find(edge => (edge as Edge).id === lastSelectedElem) as unknown as Edge;
 
         const handleInputChange = (field: string, value: string) => {};
 
@@ -321,61 +303,56 @@ const Canvas: React.FC = () => {
 
         } else if (selectedEdge) {
             const edgeData = selectedEdge.data as { dataflow?: { model: DataFlow }, process?: { model: Process }, isProcessNode?: boolean };
-            if (lastSelectedElem.type === 'edgeLabel' && edgeData.isProcessNode) {
-                return (
-                    <>
+            return (
+                <>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label className="text-right">ID</Label>
+                        <Label className="text-center">{selectedEdge.id}</Label>
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label className="text-right">Source</Label>
+                        <Label className="text-center">{selectedEdge.source}</Label>
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label className="text-right">Target</Label>
+                        <Label className="text-center">{selectedEdge.target}</Label>
+                    </div>
+                    {edgeData.dataflow?.model && (
                         <div className="grid grid-cols-4 items-center gap-4">
-                            <Label className="text-right">Process Name</Label>
+                            <Label className="text-right">Dataflow Name</Label>
                             <Input
-                                value={edgeData.process?.model.metadata.name}
-                                onChange={(e) => handleInputChange('process.model.metadata.name', e.target.value)}
+                                value={edgeData.dataflow.model.metadata.name}
+                                onChange={(e) => handleInputChange('dataflow.model.metadata.name', e.target.value)}
                                 className="text-center col-span-3"
                             />
                         </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Label className="text-right">Critical</Label>
-                            <Input
-                                value={edgeData.process?.model.attributes.critical}
-                                onChange={(e) => handleInputChange('process.model.attributes.critical', e.target.value)}
-                                className="text-center col-span-3"
-                            />
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Switch id="isCsrfProtected"/>
-                            <Label className="text-right">isCsrfProtected</Label>
-                        </div>
-                    </>
-                );
-            } else {
-                return (
-                    <>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Label className="text-right">ID</Label>
-                            <Label className="text-center">{selectedEdge.id}</Label>
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Label className="text-right">Source</Label>
-                            <Label className="text-center">{selectedEdge.source}</Label>
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Label className="text-right">Target</Label>
-                            <Label className="text-center">{selectedEdge.target}</Label>
-                        </div>
-                        {edgeData.dataflow?.model && (
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label className="text-right">Dataflow Name</Label>
-                                <Input
-                                    value={edgeData.dataflow.model.metadata.name}
-                                    onChange={(e) => handleInputChange('dataflow.model.metadata.name', e.target.value)}
-                                    className="text-center col-span-3"
-                                />
-                            </div>
-                        )}
-                    </>
-                );
-            }
+                    )}
+                </>
+            );
         }
-    };
+    },[nodes, edges]);
+
+    const renderLayers = useCallback(() => {
+        return (
+            <>
+                {nodes.map((node: Node) => {
+                    const model = node.data?.model as Zone|Entity|DataStore|Process|undefined;
+                    const name = model?.metadata?.name ?? 'Unnamed';
+                    return (
+                        <Button key={node.id}>
+                            {
+                                node.type === 'group' ? <LuFrame className="mr-2 h-4 w-4" /> :
+                                    node.type === 'default' ? <LuRectangleHorizontal className="mr-2 h-4 w-4" /> :
+                                        node.type === 'output' ? <LuDatabase className="mr-2 h-4 w-4" /> :
+                                            node.type === 'process' ? <GiGearStick className="mr-2 h-4 w-4" /> : <></>
+                            }
+                            {name}
+                        </Button>
+                    );
+                })}
+            </>
+        );
+    }, [nodes]);
 
     const onKeyDown = useCallback((event: KeyboardEvent) => {
         if (event.metaKey && event.key === 'a') {
@@ -425,7 +402,7 @@ const Canvas: React.FC = () => {
     }, [getNodes, getEdges]);
 
     return (
-        <div className="dndflow" onMouseMove={onMouseMove}>
+        <div className="dndflow">
             <div className="reactflow-wrapper" ref={reactFlowWrapper}>
                 <ReactFlow
                     // fitView
@@ -497,7 +474,9 @@ const Canvas: React.FC = () => {
                                     <TabsTrigger value="threats">Threats</TabsTrigger>
                                 </TabsList>
                                 <TabsContent value="layers">
-                                    <></>
+                                     <ScrollArea className="grid w-full grid-cols-2">
+                                         {renderLayers()}
+                                     </ScrollArea>
                                 </TabsContent>
                                 <TabsContent value="threats">
                                     {analysisResults.length > 0 ? (
