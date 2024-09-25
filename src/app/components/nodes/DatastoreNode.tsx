@@ -6,12 +6,10 @@ import { DiDatabase } from 'react-icons/di';
 import { ElementToolbar } from "@/app/components/nodes/ElementNode";
 import {DataStore} from "@/DFD/node/datastore";
 import IconRenderer from "@/app/components/IconRenderer";
-import {FaLaptop} from "react-icons/fa";
 
 interface DatastoreNodeProps extends NodeProps{
     data: {
         model: DataStore;
-        element: 'datastore';
     };
     type: 'output';
 }

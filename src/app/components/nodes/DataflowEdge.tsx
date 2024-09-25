@@ -6,7 +6,7 @@ import IconRenderer from "@/app/components/IconRenderer";
 import {GiGearStick} from "react-icons/gi";
 
 export type DataFlowEdgeData = {
-    isProcessNode: false,
+    isProcessNode: boolean,
     dataflow: {
         model: DataFlow,
         element: 'dataflow';
@@ -33,11 +33,9 @@ export const defaultEdgeOptions = {
         isProcessNode: false,
         dataflow: {
             model: getDefaultDataFlow(),
-            element: 'dataflow',
         },
         process: {
             model: undefined,
-            element: 'process',
         },
     },
 };

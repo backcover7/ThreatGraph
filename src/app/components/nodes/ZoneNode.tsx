@@ -7,7 +7,6 @@ import {Zone} from "@/DFD/zone";
 interface ZoneNodeProps extends NodeProps {
     data: {
         model: Zone;
-        element: 'zone';
     };
     type: 'group';
 }

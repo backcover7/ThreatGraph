@@ -18,12 +18,20 @@ import Analyzer from "@/parser/analyzer";
 import {Result} from "@/DFD/result";
 import {useTemplate} from "@/app/components/toolbar/TemplateContext";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
-import {Card, CardContent} from "@/components/ui/card";
+import {Card} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {FaCirclePlay} from "react-icons/fa6";
 import {AlertTriangle} from "lucide-react";
-import {useToast} from "@/hooks/use-toast";
+import {Label} from "@/components/ui/label";
+import {Input} from "@/components/ui/input";
+import {Badge} from "@/components/ui/badge";
+import {Zone} from "@/DFD/zone";
+import {Entity} from "@/DFD/node/entity";
+import {DataStore} from "@/DFD/node/datastore";
+import {Process} from "@/DFD/process";
+import {Switch} from "@/components/ui/switch";
+import {DataFlow} from "@/DFD/dataflow";
 
 const Canvas: React.FC = () => {
     const { screenToFlowPosition, addNodes, getInternalNode, getNodes, getEdges } = useReactFlow();
@@ -35,7 +43,6 @@ const Canvas: React.FC = () => {
     const [type, data] = useDnD();
 
     const templates = useTemplate();
-    const { toast } = useToast()
     const [analysisResults, setAnalysisResults] = useState<Result[]>([]);
     const [activeTab, setActiveTab] = useState("layers");
 
@@ -173,10 +180,202 @@ const Canvas: React.FC = () => {
         }
     }, [setNodes, setEdges, getInternalNode]);
 
-    // TODO
-    const onSelectionChange = useCallback((params: { nodes: Node[]; edges: Edge[] }) => {
-        console.log(params);
-    }, [])
+    const [selectedElems, setSelectedElems] = useState<string[]>([]);
+    const [lastSelectedElem, setLastSelectedElem] = useState<{type: string, id: string}>();
+
+    // get last selected element and show details in the properties panel
+    useOnSelectionChange({
+        onChange: useCallback(({ nodes, edges }: { nodes: Node[]; edges: Edge[] }) => {
+            const currentSelectedIds = new Set(selectedElems);
+            const newSelectedIds = [
+                ...nodes.map((node) => node.id),
+                ...edges.map((edge) => edge.id)
+            ];
+            setSelectedElems(newSelectedIds);
+
+            const newlySelectedId = newSelectedIds.find(id => !currentSelectedIds.has(id));
+            if (newlySelectedId) {
+                const selectedNode = nodes.find(node => node.id === newlySelectedId);
+                const selectedEdge = edges.find(edge => edge.id === newlySelectedId);
+
+                if (selectedNode) {
+                    setLastSelectedElem({ type: 'node', id: newlySelectedId });
+                } else if (selectedEdge) {
+                    const isEdgeLabel = (selectedEdge.data?.isProcessNode ?? false) &&
+                        document.elementFromPoint(lastMousePosition.x, lastMousePosition.y)?.closest('.react-flow__edge-label');
+
+                    setLastSelectedElem({
+                        type: isEdgeLabel ? 'edgeLabel' : 'edge',
+                        id: newlySelectedId
+                    });
+                }
+            } else if (newSelectedIds.length === 0) {
+                setLastSelectedElem(undefined);
+            }
+            // setLastSelectedElem(newlySelectedId);
+        }, [selectedElems])
+    });
+
+    const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
+    const onMouseMove = useCallback((event: React.MouseEvent) => {
+        setLastMousePosition({ x: event.clientX, y: event.clientY });
+    }, []);
+
+    const renderProperties = () => {
+        if (!lastSelectedElem) {
+            return (
+                <Label className="flex items-center justify-center text-gray-500">
+                    Select one element
+                </Label>
+            );
+        }
+
+        const selectedNode = lastSelectedElem.type === 'node' ? nodes.find(node => (node as Node).id === lastSelectedElem.id) as unknown as Node : undefined;
+        const selectedEdge = lastSelectedElem.type === 'edge' || lastSelectedElem.type === 'edgeLabel' ? edges.find(edge => (edge as Edge).id === lastSelectedElem.id) as unknown as Edge : undefined;
+
+        const handleInputChange = (field: string, value: string) => {};
+
+        if (selectedNode) {
+            const data = selectedNode.data as { model: Zone|Entity|DataStore|Process; element: 'zone'|'entity'|'datastore'|'process' };
+            const model = data.model;
+
+            const metadata = model?.metadata || { name: '', description: '', element: '' };
+            const tags = model?.tags || [];
+            return (
+                <>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label className="text-right">ID</Label>
+                        <Label className="text-center">{selectedNode.id}</Label>
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label className="text-right">Name</Label>
+                        <Input
+                            id="name"
+                            value={metadata.name}
+                            onChange={(e) => handleInputChange('metadata.name', e.target.value)}
+                            className="col-span-2"
+                        />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label className="text-right">Description</Label>
+                        <Input
+                            id="description"
+                            value={metadata.description}
+                            onChange={(e) => handleInputChange('metadata.description', e.target.value)}
+                            className="col-span-2"
+                        />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label className="text-right">Type</Label>
+                        <Label className="text-center">{metadata.element}</Label>
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label className="text-right">Tags</Label>
+                        <div className="col-span-3 flex items-center space-x-2 overflow-x-auto">
+                            {tags.map((tag, index) => (
+                                <Badge key={index}>{tag}</Badge>
+                            ))}
+                        </div>
+                    </div>
+                    {selectedNode.type === 'group' &&
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label className="text-right">Trust</Label>
+                            <Input id="trust" value={model && 'trust' in model ? (model as Zone).trust : ''} className="text-center col-span-3"/>
+                        </div>
+                    }
+                    {selectedNode.type === 'default' &&
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label className="text-right">Object</Label>
+                            <Input
+                                id="object"
+                                value={model && 'object' in model ? (model as Entity).object : ''}
+                                onChange={(e) => handleInputChange('object', e.target.value)}
+                                className="col-span-2"
+                            />
+                        </div>
+                    }
+                    {selectedNode.type === 'output' &&
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label className="text-right">Object</Label>
+                            <Label className="text-center col-span-3">datastore</Label>
+                        </div>
+                    }
+                    {selectedNode.type === 'process' &&
+                        <>
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label className="text-right">Critical</Label>
+                                <Input
+                                    id="critical"
+                                    value={model && 'attributes' in model ? (model as Process).attributes.critical : ''}
+                                    onChange={(e) => handleInputChange('attributes.critical', e.target.value)}
+                                    className="text-center col-span-3"/>
+                            </div>
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Switch id="isCsrfProtected"/>
+                                <Label className="text-right">isCsrfProtected</Label>
+                            </div>
+                        </>
+                    }
+                </>
+            );
+
+        } else if (selectedEdge) {
+            const edgeData = selectedEdge.data as { dataflow?: { model: DataFlow }, process?: { model: Process }, isProcessNode?: boolean };
+            if (lastSelectedElem.type === 'edgeLabel' && edgeData.isProcessNode) {
+                return (
+                    <>
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label className="text-right">Process Name</Label>
+                            <Input
+                                value={edgeData.process?.model.metadata.name}
+                                onChange={(e) => handleInputChange('process.model.metadata.name', e.target.value)}
+                                className="text-center col-span-3"
+                            />
+                        </div>
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label className="text-right">Critical</Label>
+                            <Input
+                                value={edgeData.process?.model.attributes.critical}
+                                onChange={(e) => handleInputChange('process.model.attributes.critical', e.target.value)}
+                                className="text-center col-span-3"
+                            />
+                        </div>
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Switch id="isCsrfProtected"/>
+                            <Label className="text-right">isCsrfProtected</Label>
+                        </div>
+                    </>
+                );
+            } else {
+                return (
+                    <>
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label className="text-right">ID</Label>
+                            <Label className="text-center">{selectedEdge.id}</Label>
+                        </div>
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label className="text-right">Source</Label>
+                            <Label className="text-center">{selectedEdge.source}</Label>
+                        </div>
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label className="text-right">Target</Label>
+                            <Label className="text-center">{selectedEdge.target}</Label>
+                        </div>
+                        {edgeData.dataflow?.model && (
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label className="text-right">Dataflow Name</Label>
+                                <Input
+                                    value={edgeData.dataflow.model.metadata.name}
+                                    onChange={(e) => handleInputChange('dataflow.model.metadata.name', e.target.value)}
+                                    className="text-center col-span-3"
+                                />
+                            </div>
+                        )}
+                    </>
+                );
+            }
+        }
+    };
 
     const onKeyDown = useCallback((event: KeyboardEvent) => {
         if (event.metaKey && event.key === 'a') {
@@ -226,7 +425,7 @@ const Canvas: React.FC = () => {
     }, [getNodes, getEdges]);
 
     return (
-        <div className="dndflow">
+        <div className="dndflow" onMouseMove={onMouseMove}>
             <div className="reactflow-wrapper" ref={reactFlowWrapper}>
                 <ReactFlow
                     // fitView
@@ -250,7 +449,10 @@ const Canvas: React.FC = () => {
                     edges={edges}
                     edgeTypes={edgeTypes}
                     defaultEdgeOptions={defaultEdgeOptions}
-                    onSelectionChange={onSelectionChange}
+                    // onNodeMouseEnter={}
+                    // onNodeMouseLeave={}
+                    // onEdgeMouseEnter={}
+                    // onEdgeMouseLeave={}  // TODO hover and highlight node and edge
                 >
                     <Controls>
                         {/**TODO**/}
@@ -263,7 +465,7 @@ const Canvas: React.FC = () => {
                         <BuiltInTools />
                     </Panel>
                     <Panel position='top-right'>
-                        <Card>
+                        <Card className="h-[5vh]">
                             <Avatar>
                                 <AvatarImage src="https://github.com/shadcn.png" />
                                 <AvatarFallback>CN</AvatarFallback>
@@ -273,58 +475,45 @@ const Canvas: React.FC = () => {
                             </Button>
                         </Card>
 
-                        <Card>
+                        <Card className="h-[20vh]">
                             <Tabs defaultValue="properties" className="w-[400px]">
                                 <TabsList className="grid w-full grid-cols-2">
                                     <TabsTrigger value="properties">Properties</TabsTrigger>
                                     <TabsTrigger value="style">Style</TabsTrigger>
                                 </TabsList>
                                 <TabsContent value="properties">
-                                    <Card>
-                                        <CardContent className="space-y-2">
-                                        </CardContent>
-                                    </Card>
+                                    {renderProperties()}
                                 </TabsContent>
                                 <TabsContent value="style">
-                                    <Card>
-                                        <CardContent className="space-y-2">
-                                        </CardContent>
-                                    </Card>
+                                    {/*TODO*/}
                                 </TabsContent>
                             </Tabs>
                         </Card>
 
-                        <Card>
+                        <Card className="h-[40vh]">
                             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-[400px]">
                                 <TabsList className="grid w-full grid-cols-2">
                                     <TabsTrigger value="layers">Layers</TabsTrigger>
                                     <TabsTrigger value="threats">Threats</TabsTrigger>
                                 </TabsList>
                                 <TabsContent value="layers">
-                                    <Card>
-                                    <CardContent className="space-y-2">
-                                    </CardContent>
-                                    </Card>
+                                    <></>
                                 </TabsContent>
                                 <TabsContent value="threats">
-                                    <Card>
-                                        <CardContent className="space-y-2">
-                                            {analysisResults.length > 0 ? (
-                                                <div className="space-y-2">
-                                                    {analysisResults.map((result, index) => {
-                                                        const threat = templates.threat.find(t => t.id === result.threat);
-                                                        return (
-                                                            <Button key={index} variant="outline" className="w-full justify-start">
-                                                                <AlertTriangle className="mr-2 h-4 w-4" /> {threat?.name}
-                                                            </Button>
-                                                        );
-                                                    })}
-                                                </div>
-                                            ) : (
-                                                <p>No threats detected. Run analysis to see results.</p>
-                                            )}
-                                        </CardContent>
-                                    </Card>
+                                    {analysisResults.length > 0 ? (
+                                        <div className="space-y-2">
+                                            {analysisResults.map((result, index) => {
+                                                const threat = templates.threat.find(t => t.id === result.threat);
+                                                return (
+                                                    <Button key={index} variant="outline" className="w-full justify-start">
+                                                        <AlertTriangle className="mr-2 h-4 w-4" /> {threat?.name}
+                                                    </Button>
+                                                );
+                                            })}
+                                        </div>
+                                    ) : (
+                                        <div>No threats</div>
+                                    )}
                                 </TabsContent>
                             </Tabs>
                         </Card>

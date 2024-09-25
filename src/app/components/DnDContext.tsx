@@ -8,7 +8,7 @@ import { DataStore } from "@/DFD/node/datastore";
 import { Process } from "@/DFD/process";
 
 type DnDData =
-    | { model: Zone | Entity | DataStore | Process | undefined}  // 用于 BuiltInTools
+    | { model: Zone | Entity | DataStore | Process | undefined}
     | { label: string }
     | null;
 
