@@ -68,7 +68,7 @@ const TreeNodeComponent: React.FC<TreeNodeComponentProps> = ({ treeNode, nodes, 
     const indentationStyle = {
         paddingLeft: `${level * 5}px`,
         borderLeft: level > 0 ? '1px solid #e2e8f0' : 'none',
-        marginLeft: level > 0 ? '3px' : '0',
+        marginLeft: level > 0 ? '4px' : '0',
     };
 
     if (treeNode.children.length === 0) {

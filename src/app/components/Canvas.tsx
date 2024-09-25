@@ -6,17 +6,17 @@ import {
     ReactFlow, reconnectEdge,
     useEdgesState, useNodesState, useOnSelectionChange, useReactFlow,
 } from '@xyflow/react';
-import GeneralTools from '@/app/components/toolbar/GeneralTools';
+import GeneralTools from '@/app/components/panels/toolbar/GeneralTools';
 import {useDnD} from '@/app/components/DnDContext';
 import {detachElement, groupElements} from "@/app/components/nodes/ZoneNode";
 import {defaultEdgeOptions, edgeTypes} from "@/app/components/nodes/DataflowEdge";
 import {ElementColor, ElementNodes, getNewElement} from "@/app/components/nodes/ElementNode";
 import {push} from "@/app/components/utils";
-import BuiltInTools from "@/app/components/toolbar/BuiltInTools";
+import BuiltInTools from "@/app/components/panels/toolbar/BuiltInTools";
 import Diagram from "@/draw/diagram";
 import Analyzer from "@/parser/analyzer";
 import {Result} from "@/DFD/result";
-import {useTemplate} from "@/app/components/toolbar/TemplateContext";
+import {useTemplate} from "@/app/components/panels/toolbar/TemplateContext";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import {Card} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
@@ -33,7 +33,8 @@ import {Process} from "@/DFD/process";
 import {Switch} from "@/components/ui/switch";
 import {DataFlow} from "@/DFD/dataflow";
 import {ScrollArea} from "@/components/ui/scroll-area";
-import TreeView from "@/app/components/Layers";
+import TreeView from "@/app/components/panels/Layers";
+import Properties from "@/app/components/panels/Properties";
 
 const Canvas: React.FC = () => {
     const { screenToFlowPosition, addNodes, getInternalNode, getNodes, getEdges } = useReactFlow();
@@ -330,7 +331,6 @@ const Canvas: React.FC = () => {
         }
     },[nodes, edges]);
 
-    const [isOpen, setIsOpen] = React.useState(true)
     const renderLayers = useCallback(() => {
         return (
             <>
@@ -368,7 +368,6 @@ const Canvas: React.FC = () => {
 
         const allRules = templates.rule;
         const allThreats = templates.threat;
-        console.log('Start Scanning ...')
         allRules.forEach((rule) => {
             const analyzer = new Analyzer(rule, inScopeElems, allThreats);
             analyzer.startEvaluation(results);
@@ -377,10 +376,8 @@ const Canvas: React.FC = () => {
         results.forEach((result: Result) => {
             const threat = allThreats.find(threat => threat.id === result.threat);
             const element = canvasElems.find(elem => elem.metadata.shape === result.shape);
-            console.log('[+] Found threat ' + threat.name + ' > ' + element.metadata.name);
         })
         console.log('[!] ' + results.length + ' threats found!')
-        console.log('Finished');
         setAnalysisResults(results);
         setActiveTab("threats");
 
@@ -444,7 +441,7 @@ const Canvas: React.FC = () => {
                                     <TabsTrigger value="style">Style</TabsTrigger>
                                 </TabsList>
                                 <TabsContent value="properties">
-                                    {renderProperties()}
+                                    <Properties lastSelectedElem={lastSelectedElem} nodes={nodes} edges={edges} />
                                 </TabsContent>
                                 <TabsContent value="style">
                                     {/*TODO*/}

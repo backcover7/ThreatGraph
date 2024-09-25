@@ -2,7 +2,7 @@ import '@/app/globals.css'
 import { ReactFlowProvider } from '@xyflow/react'
 import { DnDProvider } from './components/DnDContext'
 import Template from "@/parser/template";
-import {TemplateProvider} from "@/app/components/toolbar/TemplateContext";
+import {TemplateProvider} from "@/app/components/panels/toolbar/TemplateContext";
 import {Toaster} from "@/components/ui/toaster";
 
 export default async function RootLayout({ children }: {
