@@ -5,15 +5,17 @@ import { useDnD } from "@/app/components/DnDContext";
 import { useTemplate } from "@/app/components/panels/toolbar/TemplateContext";
 import { NodeType } from "@/app/components/nodes/ElementNode";
 import IconRenderer from "@/app/components/IconRenderer";
-import {Card} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import {ScrollArea} from "@/components/ui/scroll-area";
+import {templateType} from "@/parser/template";
 
+interface BuiltInToolsProps {
+    templates: templateType;
+}
 
-const BuiltInTools: React.FC = () => {
+const BuiltInTools: React.FC<BuiltInToolsProps> = ({ templates }) => {
     const [, , setDnDState] = useDnD();
-    const templates = useTemplate();
 
     const onDragStart = (event: React.DragEvent<HTMLButtonElement>, nodeType: NodeType, modelData: any) => {
         event.dataTransfer.setData('application/reactflow', nodeType);

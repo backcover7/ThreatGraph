@@ -51,55 +51,24 @@ const Canvas: React.FC = () => {
 
     const isValidConnection = useCallback((connection: Connection | Edge) => {
         const { source, sourceHandle, target, targetHandle } = connection as Connection;
-
         // Check if source and target are the same
-        if (source === target) {
-            return false;
-        }
-
-        return !(edges as Edge[]).some(edge =>
-            (edge.source === source && edge.target === target) || (edge.target === source && edge.source === target)
-        )
-
-        // const createEdgeId = (start: string, startHandle: string | null, end: string, endHandle: string | null) =>
-        //     `xy-edge__${start}${startHandle ?? ''}-${end}${endHandle ?? ''}`;
-        //
-        // const newEdgeId = createEdgeId(source, sourceHandle, target, targetHandle);
-        // const reverseEdgeId = createEdgeId(
-        //     target,
-        //     (targetHandle as string)?.replace('target', 'source'),
-        //     source,
-        //     (sourceHandle as string)?.replace('source', 'target')
-        // );
-        //
-        // // Check if the edge already exists
-        // return !(edges as Edge[]).some(edge =>
-        //     edge.id === newEdgeId || edge.id === reverseEdgeId
-        // );
+        if (source === target) return false;
+        return !(edges as Edge[]).some(edge => (edge.source === source && edge.target === target) || (edge.target === source && edge.source === target))
     }, [edges]);
 
-    const onConnect = useCallback(
-        (conn: Connection) => setEdges((edges) => {
-            return addEdge(conn, edges) as never;
-        }),
-        [setEdges]
-    );
+    const onConnect = useCallback((conn: Connection) => {
+        setEdges((edges) => { return addEdge(conn, edges) as never; })
+    }, [setEdges]);
 
-    const onReconnectStart = useCallback(() => {
-        edgeReconnectSuccessful.current = false;
-    }, []);
+    const onReconnectStart = useCallback(() => { edgeReconnectSuccessful.current = false; }, []);
 
     const onReconnect = useCallback((oldEdge: Edge, newConnection: Connection) => {
         edgeReconnectSuccessful.current = true;
-        setEdges((edges) => {
-            return reconnectEdge(oldEdge, newConnection, edges) as never
-        });
+        setEdges((edges) => { return reconnectEdge(oldEdge, newConnection, edges) as never });
     },[setEdges]);
 
     const onReconnectEnd = useCallback((event: MouseEvent | TouchEvent, edge: never, handleType: HandleType) => {
-        if (!edgeReconnectSuccessful.current) {
-            setEdges((eds) => eds.filter((e) => (e as Edge).id !== (edge as Edge).id));
-        }
+        if (!edgeReconnectSuccessful.current) setEdges((eds) => eds.filter((e) => (e as Edge).id !== (edge as Edge).id));
     }, [setEdges]);
 
     // Drag new element
@@ -202,135 +171,6 @@ const Canvas: React.FC = () => {
         }, [selectedElems])
     });
 
-    const renderProperties = useCallback(() => {
-        if (!lastSelectedElem) {
-            return (
-                <Label className="flex items-center justify-center text-gray-500">
-                    Select one element
-                </Label>
-            );
-        }
-
-        const selectedNode = nodes.find(node => (node as Node).id === lastSelectedElem) as unknown as Node;
-        const selectedEdge = edges.find(edge => (edge as Edge).id === lastSelectedElem) as unknown as Edge;
-
-        const handleInputChange = (field: string, value: string) => {};
-
-        if (selectedNode) {
-            const data = selectedNode.data as { model: Zone|Entity|DataStore|Process; element: 'zone'|'entity'|'datastore'|'process' };
-            const model = data.model;
-
-            const metadata = model?.metadata || { name: '', description: '', element: '' };
-            const tags = model?.tags || [];
-            return (
-                <>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label className="text-right">ID</Label>
-                        <Label className="text-center">{selectedNode.id}</Label>
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label className="text-right">Name</Label>
-                        <Input
-                            id="name"
-                            value={metadata.name}
-                            onChange={(e) => handleInputChange('metadata.name', e.target.value)}
-                            className="col-span-2"
-                        />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label className="text-right">Description</Label>
-                        <Input
-                            id="description"
-                            value={metadata.description}
-                            onChange={(e) => handleInputChange('metadata.description', e.target.value)}
-                            className="col-span-2"
-                        />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label className="text-right">Type</Label>
-                        <Label className="text-center">{metadata.element}</Label>
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label className="text-right">Tags</Label>
-                        <div className="col-span-3 flex items-center space-x-2 overflow-x-auto">
-                            {tags.map((tag, index) => (
-                                <Badge key={index}>{tag}</Badge>
-                            ))}
-                        </div>
-                    </div>
-                    {selectedNode.type === 'group' &&
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Label className="text-right">Trust</Label>
-                            <Input id="trust" value={model && 'trust' in model ? (model as Zone).trust : ''} className="text-center col-span-3"/>
-                        </div>
-                    }
-                    {selectedNode.type === 'default' &&
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Label className="text-right">Object</Label>
-                            <Input
-                                id="object"
-                                value={model && 'object' in model ? (model as Entity).object : ''}
-                                onChange={(e) => handleInputChange('object', e.target.value)}
-                                className="col-span-2"
-                            />
-                        </div>
-                    }
-                    {selectedNode.type === 'output' &&
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Label className="text-right">Object</Label>
-                            <Label className="text-center col-span-3">datastore</Label>
-                        </div>
-                    }
-                    {selectedNode.type === 'process' &&
-                        <>
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label className="text-right">Critical</Label>
-                                <Input
-                                    id="critical"
-                                    value={model && 'attributes' in model ? (model as Process).attributes.critical : ''}
-                                    onChange={(e) => handleInputChange('attributes.critical', e.target.value)}
-                                    className="text-center col-span-3"/>
-                            </div>
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Switch id="isCsrfProtected"/>
-                                <Label className="text-right">isCsrfProtected</Label>
-                            </div>
-                        </>
-                    }
-                </>
-            );
-
-        } else if (selectedEdge) {
-            const edgeData = selectedEdge.data as { dataflow?: { model: DataFlow }, process?: { model: Process }, isProcessNode?: boolean };
-            return (
-                <>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label className="text-right">ID</Label>
-                        <Label className="text-center">{selectedEdge.id}</Label>
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label className="text-right">Source</Label>
-                        <Label className="text-center">{selectedEdge.source}</Label>
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label className="text-right">Target</Label>
-                        <Label className="text-center">{selectedEdge.target}</Label>
-                    </div>
-                    {edgeData.dataflow?.model && (
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Label className="text-right">Dataflow Name</Label>
-                            <Input
-                                value={edgeData.dataflow.model.metadata.name}
-                                onChange={(e) => handleInputChange('dataflow.model.metadata.name', e.target.value)}
-                                className="text-center col-span-3"
-                            />
-                        </div>
-                    )}
-                </>
-            );
-        }
-    },[nodes, edges]);
-
     const renderLayers = useCallback(() => {
         return (
             <>
@@ -421,7 +261,7 @@ const Canvas: React.FC = () => {
                     </Controls>
                     <MiniMap nodeColor={ElementColor} nodeStrokeWidth={1} zoomable pannable />
                     <Panel position='top-left'>
-                        <BuiltInTools />
+                        <BuiltInTools templates={templates} />
                     </Panel>
                     <Panel position='top-right'>
                         <Card className="h-[5vh]">
