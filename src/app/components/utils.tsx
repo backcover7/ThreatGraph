@@ -55,3 +55,16 @@ export function svgToDataUrl(svgString: string): string {
     const encodedSvg: string = encodeURIComponent(sanitizedSvg);
     return `data:image/svg+xml,${encodedSvg}`;
 }
+
+export function sortZoneNodes(nodes: Node[]): Node[] {
+    const zoneNodes = nodes.filter(node => node.type === 'group');
+    const nonZoneNodes = nodes.filter(node => node.type !== 'group');
+
+    const sortedZoneNodes = zoneNodes.sort((a, b) => {
+        const areaA = getArea(a);
+        const areaB = getArea(b);
+        return areaB - areaA;
+    });
+
+    return [...sortedZoneNodes, ...nonZoneNodes];
+}

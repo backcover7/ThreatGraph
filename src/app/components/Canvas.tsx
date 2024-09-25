@@ -32,10 +32,8 @@ import {DataStore} from "@/DFD/node/datastore";
 import {Process} from "@/DFD/process";
 import {Switch} from "@/components/ui/switch";
 import {DataFlow} from "@/DFD/dataflow";
-import {Scrollbar} from "@radix-ui/react-scroll-area";
 import {ScrollArea} from "@/components/ui/scroll-area";
-import {LuDatabase, LuFrame, LuRectangleHorizontal} from "react-icons/lu";
-import {GiGearStick} from "react-icons/gi";
+import TreeView from "@/app/components/Layers";
 
 const Canvas: React.FC = () => {
     const { screenToFlowPosition, addNodes, getInternalNode, getNodes, getEdges } = useReactFlow();
@@ -332,24 +330,11 @@ const Canvas: React.FC = () => {
         }
     },[nodes, edges]);
 
+    const [isOpen, setIsOpen] = React.useState(true)
     const renderLayers = useCallback(() => {
         return (
             <>
-                {nodes.map((node: Node) => {
-                    const model = node.data?.model as Zone|Entity|DataStore|Process|undefined;
-                    const name = model?.metadata?.name ?? 'Unnamed';
-                    return (
-                        <Button key={node.id}>
-                            {
-                                node.type === 'group' ? <LuFrame className="mr-2 h-4 w-4" /> :
-                                    node.type === 'default' ? <LuRectangleHorizontal className="mr-2 h-4 w-4" /> :
-                                        node.type === 'output' ? <LuDatabase className="mr-2 h-4 w-4" /> :
-                                            node.type === 'process' ? <GiGearStick className="mr-2 h-4 w-4" /> : <></>
-                            }
-                            {name}
-                        </Button>
-                    );
-                })}
+                {TreeView(nodes)}
             </>
         );
     }, [nodes]);

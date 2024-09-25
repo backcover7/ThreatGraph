@@ -3,6 +3,7 @@
 import React, {memo, useCallback} from 'react';
 import {Node, NodeProps, NodeResizer, NodeToolbar, Position, useReactFlow} from '@xyflow/react';
 import {Zone} from "@/DFD/zone";
+import {sortZoneNodes} from "@/app/components/utils";
 
 interface ZoneNodeProps extends NodeProps {
     data: {
@@ -48,19 +49,6 @@ const ZoneNode: React.FC<ZoneNodeProps> = ({ id, data, selected }) => {
 
 export default memo(ZoneNode);
 
-function sortZoneNodes(nodes: Node[]): Node[] {
-    const zoneNodes = nodes.filter(node => node.type === 'group');
-    const nonZoneNodes = nodes.filter(node => node.type !== 'group');
-
-    const sortedZoneNodes = zoneNodes.sort((a, b) => {
-        const areaA = getArea(a);
-        const areaB = getArea(b);
-        return areaB - areaA;
-    });
-
-    return [...sortedZoneNodes, ...nonZoneNodes];
-}
-
 /**
  * Detach the node itself
  * @param detachedNode
@@ -94,6 +82,7 @@ export function detachElement(detachedNode: Node, nodes: Node[], getInternalNode
  * Group nodes
  * @param nodes
  * @param getInternalNode
+ * @param setNodes
  */
 export function groupElements(nodes: Node[], getInternalNode: any, setNodes: any): Node[] {
     nodes = sortZoneNodes(nodes);
