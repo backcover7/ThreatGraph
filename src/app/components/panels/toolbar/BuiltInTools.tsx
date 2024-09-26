@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { useDnD } from "@/app/components/DnDContext";
-import { useTemplate } from "@/app/components/panels/toolbar/TemplateContext";
 import { NodeType } from "@/app/components/nodes/ElementNode";
 import IconRenderer from "@/app/components/IconRenderer";
 import {Button} from "@/components/ui/button";

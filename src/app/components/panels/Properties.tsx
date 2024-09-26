@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import { Node, Edge } from '@xyflow/react';
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -172,4 +172,4 @@ const Properties: React.FC<PropertiesPanelProps> = ({ lastSelectedElem, nodes, e
     return null;
 };
 
-export default Properties;
+export default memo(Properties);
