@@ -17,14 +17,23 @@ export const useCommand = () => useContext(CommandContext);
 export const CommandProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [isCommandOpen, setIsCommandOpen] = useState(false);
     const commandRef = useRef<HTMLDivElement>(null);
+    const lastShiftPressTime = useRef<number | null>(null);
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.metaKey && event.key === 'k') {
-                event.preventDefault();
-                setIsCommandOpen(prev => !prev);
+            if (event.key === 'Shift') {
+                const currentTime = new Date().getTime();
+                if (lastShiftPressTime.current && currentTime - lastShiftPressTime.current <= 500) {
+                    event.preventDefault();
+                    setIsCommandOpen(prev => !prev);
+                    lastShiftPressTime.current = null;
+                } else {
+                    lastShiftPressTime.current = currentTime;
+                }
             } else if (event.key === 'Escape' && isCommandOpen) {
                 setIsCommandOpen(false);
+            } else {
+                lastShiftPressTime.current = null;
             }
         };
 
@@ -51,7 +60,7 @@ export const CommandProvider: React.FC<{ children: React.ReactNode }> = ({ child
                             <Command>
                                 <CommandInput placeholder="Type a command or search..." />
                                 <CommandList>
-                                    <CommandEmpty>Try annother command</CommandEmpty>
+                                    <CommandEmpty>Try another command</CommandEmpty>
                                     <CommandGroup heading="Suggestions">
                                         <CommandItem>Create an Element</CommandItem>
                                         <CommandItem></CommandItem>
