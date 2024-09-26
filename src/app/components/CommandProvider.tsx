@@ -23,27 +23,22 @@ export const CommandProvider: React.FC<{ children: React.ReactNode }> = ({ child
             if (event.metaKey && event.key === 'k') {
                 event.preventDefault();
                 setIsCommandOpen(prev => !prev);
+            } else if (event.key === 'Escape' && isCommandOpen) {
+                setIsCommandOpen(false);
             }
         };
 
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
-    }, []);
+    }, [isCommandOpen]);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (commandRef.current && !commandRef.current.contains(event.target as Node)) {
-                setIsCommandOpen(false);
-            }
+            if (commandRef.current && !commandRef.current.contains(event.target as Node)) setIsCommandOpen(false);
         };
 
-        if (isCommandOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
-        }
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
+        if (isCommandOpen) document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [isCommandOpen]);
 
     return (
@@ -56,11 +51,10 @@ export const CommandProvider: React.FC<{ children: React.ReactNode }> = ({ child
                             <Command>
                                 <CommandInput placeholder="Type a command or search..." />
                                 <CommandList>
-                                    <CommandEmpty>No results found.</CommandEmpty>
+                                    <CommandEmpty>Try annother command</CommandEmpty>
                                     <CommandGroup heading="Suggestions">
-                                        <CommandItem>Add Node</CommandItem>
-                                        <CommandItem>Remove Node</CommandItem>
-                                        <CommandItem>Connect Nodes</CommandItem>
+                                        <CommandItem>Create an Element</CommandItem>
+                                        <CommandItem></CommandItem>
                                     </CommandGroup>
                                 </CommandList>
                             </Command>
