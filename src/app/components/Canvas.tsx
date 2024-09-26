@@ -185,9 +185,15 @@ const Canvas: React.FC = () => {
             setNodes(nodes => (nodes as Node[]).map(node => ({...node, selected: true,})) as never);
             setEdges(edges => (edges as Edge[]).map(edge => ({...edge, selected: true,})) as never);
         } else if (event.metaKey && event.key === 'J') {
+            // TODO Command
+            event.preventDefault();
+        } else if ((event.ctrlKey || event.metaKey) && event.key === 'c') {
+            // TODO Copy
+            event.preventDefault();
+        } else if ((event.ctrlKey || event.metaKey) && event.key === 'v') {
+            // TODO Paste
             event.preventDefault();
         }
-        // TODO Copy & Paste
     }, [setNodes, setEdges]);
 
     React.useEffect(() => {
