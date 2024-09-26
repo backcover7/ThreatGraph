@@ -21,6 +21,7 @@ export const CommandProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
+            // Double shift
             if (event.key === 'Shift') {
                 const currentTime = new Date().getTime();
                 if (lastShiftPressTime.current && currentTime - lastShiftPressTime.current <= 500) {
