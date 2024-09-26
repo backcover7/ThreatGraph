@@ -4,6 +4,7 @@ import { DnDProvider } from './components/DnDContext'
 import Template from "@/parser/template";
 import {TemplateProvider} from "@/app/components/panels/toolbar/TemplateContext";
 import {Toaster} from "@/components/ui/toaster";
+import {CommandProvider} from "@/app/components/CommandProvider";
 
 export default async function RootLayout({ children }: {
     children: React.ReactNode
@@ -18,7 +19,9 @@ export default async function RootLayout({ children }: {
         <TemplateProvider templates={templates}>
             <ReactFlowProvider>
                 <DnDProvider>
-                    {children}
+                    <CommandProvider>
+                        {children}
+                    </CommandProvider>
                 </DnDProvider>
             </ReactFlowProvider>
         </TemplateProvider>

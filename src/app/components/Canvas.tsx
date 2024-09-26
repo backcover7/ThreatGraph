@@ -23,18 +23,10 @@ import {Button} from "@/components/ui/button";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {FaCirclePlay} from "react-icons/fa6";
 import {AlertTriangle} from "lucide-react";
-import {Label} from "@/components/ui/label";
-import {Input} from "@/components/ui/input";
-import {Badge} from "@/components/ui/badge";
-import {Zone} from "@/DFD/zone";
-import {Entity} from "@/DFD/node/entity";
-import {DataStore} from "@/DFD/node/datastore";
-import {Process} from "@/DFD/process";
-import {Switch} from "@/components/ui/switch";
-import {DataFlow} from "@/DFD/dataflow";
 import {ScrollArea} from "@/components/ui/scroll-area";
 import TreeView from "@/app/components/panels/Layers";
 import Properties from "@/app/components/panels/Properties";
+import {useCommand} from "@/app/components/CommandProvider";
 
 const Canvas: React.FC = () => {
     const { screenToFlowPosition, addNodes, getInternalNode, getNodes, getEdges } = useReactFlow();
@@ -44,6 +36,7 @@ const Canvas: React.FC = () => {
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
     const [type, data] = useDnD();
+    const { setIsCommandOpen } = useCommand();
 
     const templates = useTemplate();
     const [analysisResults, setAnalysisResults] = useState<Result[]>([]);
