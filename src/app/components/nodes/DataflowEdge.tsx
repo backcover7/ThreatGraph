@@ -4,6 +4,9 @@ import { Process } from "@/DFD/process";
 import {DataFlow, getDefaultDataFlow} from "@/DFD/dataflow";
 import IconRenderer from "@/app/components/IconRenderer";
 import {GiGearStick} from "react-icons/gi";
+import {Button} from "@/components/ui/button";
+import {FiPlus} from "react-icons/fi";
+import {FaCirclePlus} from "react-icons/fa6";
 
 export type DataFlowEdgeData = {
     isProcessNode: boolean,
@@ -100,7 +103,9 @@ const DataflowEdge: React.FC<EdgeProps<Edge<{dataflow?: {model: DataFlow}, proce
                             {data.process?.model ? data.process.model.metadata.name : 'Process'}
                         </div>
                         :
-                        (<button className="edgebutton" onClick={onAddProcess}>+</button>)
+                        (<Button className="edgebutton" onClick={onAddProcess}>
+                            <FaCirclePlus />
+                        </Button>)
                     }
                 </div>
             </EdgeLabelRenderer>

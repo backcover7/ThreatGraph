@@ -9,6 +9,18 @@
   display: none !important;
 }
 
+/* Styles for minimap */
+.react-flow__minimap {
+  bottom: 20px;
+  right: 20px;
+}
+
+/* Styles for controls */
+.react-flow__controls {
+  bottom: 20px;
+  left: 20px;
+}
+
 .dndflow {
   display: flex;
   flex-direction: column;
@@ -35,30 +47,6 @@
 
 .blinking-cursor:focus {
   outline: none;
-}
-
-/* Styles for minimap */
-.react-flow__minimap {
-  bottom: 20px;
-  right: 20px;
-}
-
-/* Styles for controls */
-.react-flow__controls {
-  bottom: 20px;
-  left: 20px;
-}
-
-.edgebutton {
-  width: 20px;
-  height: 20px;
-  background: #eee;
-  border: 1px solid #fff;
-  cursor: pointer;
-  border-radius: 50%;
-  font-size: 12px;
-  line-height: 1;
-  z-index: 2000;
 }
 
 .dndnode {
