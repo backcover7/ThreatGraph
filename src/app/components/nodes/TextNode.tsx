@@ -2,6 +2,7 @@
 
 import React, { memo, useState, useCallback, useEffect, useRef } from 'react';
 import { NodeProps, useReactFlow } from '@xyflow/react';
+import {Input} from "@/components/ui/input";
 
 interface TextNodeProps extends NodeProps {
     data: {
@@ -12,7 +13,7 @@ interface TextNodeProps extends NodeProps {
 }
 
 const TextNode: React.FC<TextNodeProps> = ({ id, data }) => {
-    const [isEditing, setIsEditing] = useState(data.isNew ?? false);
+    const [isEditing, setIsEditing] = useState(data.isNew ?? true);
     const [text, setText] = useState(data.label);
     const { setNodes } = useReactFlow();
     const inputRef = useRef<HTMLInputElement>(null);
@@ -51,9 +52,9 @@ const TextNode: React.FC<TextNodeProps> = ({ id, data }) => {
     }, [isEditing, text, id, setNodes]);
 
     return (
-        <div style={{ padding: 0, display: 'flex', fontSize: 12 }}>
+        <div>
             {isEditing ? (
-                <input
+                <Input
                     ref={inputRef}
                     type="text"
                     value={text}
@@ -61,13 +62,6 @@ const TextNode: React.FC<TextNodeProps> = ({ id, data }) => {
                     onBlur={handleBlur}
                     onKeyDown={handleKeyDown}
                     className="blinking-cursor"
-                    style={{
-                        fontSize: 12,
-                        width: '100%',
-                        border: 'none',
-                        outline: 'none',
-                        background: 'transparent'
-                    }}
                 />
             ) : (
                 <div onDoubleClick={() => setIsEditing(true)}>{text}</div>

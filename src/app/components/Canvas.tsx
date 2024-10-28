@@ -263,7 +263,7 @@ const Canvas: React.FC = () => {
                         <BuiltInTools templates={templates} />
                     </Panel>
                     <Panel position='top-right'>
-                        <Card className="h-[5vh]">
+                        <Card className="flex h-[5vh]">
                             <Avatar>
                                 <AvatarImage src="https://github.com/shadcn.png" />
                                 <AvatarFallback>CN</AvatarFallback>

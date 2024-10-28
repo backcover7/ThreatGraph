@@ -33,22 +33,6 @@
   height: calc(98%); /* Adjust based on the height of your toolbar */
 }
 
-@keyframes blink {
-  0% { opacity: 1; }
-  33% { opacity: 0; }
-  66% { opacity: 1; }
-  100% { opacity: 1; }
-}
-
-.blinking-cursor {
-  caret-color: black;
-  animation: blink 0.7s infinite;
-}
-
-.blinking-cursor:focus {
-  outline: none;
-}
-
 .dndnode {
   display: flex;
   align-items: center;

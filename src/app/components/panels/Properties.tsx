@@ -9,7 +9,7 @@ import { Zone } from "@/DFD/zone";
 import { Entity } from "@/DFD/node/entity";
 import { DataStore } from "@/DFD/node/datastore";
 import { Process } from "@/DFD/process";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
 import {Separator} from "@/components/ui/separator";
 
 interface PropertiesPanelProps {
@@ -25,11 +25,7 @@ const Properties: React.FC<PropertiesPanelProps> = ({ lastSelectedElem, nodes, e
 
     if (!lastSelectedElem) {
         return (
-            <Card className="w-full h-full flex items-center justify-center">
-                <CardContent>
-                    <Label className="text-gray-500">Select an element to view properties</Label>
-                </CardContent>
-            </Card>
+            <Label className="text-gray-500">Select an element to view properties</Label>
         );
     }
 
@@ -53,119 +49,112 @@ const Properties: React.FC<PropertiesPanelProps> = ({ lastSelectedElem, nodes, e
         const tags = model?.tags || [];
 
         return (
-            <Card className="w-full">
-                <CardContent>
-                    {renderCommonProperties(selectedNode)}
-                    <div className="space-y-4">
-                        <div className="grid grid-cols-3 gap-4">
-                            <Label className="text-right font-bold">Name:</Label>
-                            <Input
-                                value={metadata.name}
-                                onChange={(e) => handleInputChange('metadata.name', e.target.value)}
-                                className="col-span-2"
-                            />
-                        </div>
-                        <div className="grid grid-cols-3 gap-4">
-                            <Label className="text-right font-bold">Description:</Label>
-                            <Input
-                                value={metadata.description}
-                                onChange={(e) => handleInputChange('metadata.description', e.target.value)}
-                                className="col-span-2"
-                            />
-                        </div>
-                        <div className="grid grid-cols-3 gap-4">
-                            <Label className="text-right font-bold">Type:</Label>
-                            <span className="col-span-2">{metadata.element}</span>
-                        </div>
-                        <div className="grid grid-cols-3 gap-4">
-                            <Label className="text-right font-bold">Tags:</Label>
-                            <div className="col-span-2 flex flex-wrap gap-2">
-                                {tags.map((tag, index) => (
-                                    <Badge key={index} variant="secondary">{tag}</Badge>
-                                ))}
-                            </div>
-                        </div>
-                        {selectedNode.type === 'group' && (
-                            <div className="grid grid-cols-3 gap-4">
-                                <Label className="text-right font-bold">Trust:</Label>
-                                <Input
-                                    value={model && 'trust' in model ? (model as Zone).trust : ''}
-                                    onChange={(e) => handleInputChange('trust', e.target.value)}
-                                    className="col-span-2"
-                                />
-                            </div>
-                        )}
-                        {selectedNode.type === 'default' && (
-                            <div className="grid grid-cols-3 gap-4">
-                                <Label className="text-right font-bold">Object:</Label>
-                                <Input
-                                    value={model && 'object' in model ? (model as Entity).object : ''}
-                                    onChange={(e) => handleInputChange('object', e.target.value)}
-                                    className="col-span-2"
-                                />
-                            </div>
-                        )}
-                        {selectedNode.type === 'output' && (
-                            <div className="grid grid-cols-3 gap-4">
-                                <Label className="text-right font-bold">Object:</Label>
-                                <span className="col-span-2">datastore</span>
-                            </div>
-                        )}
-                        {selectedNode.type === 'process' && (
-                            <>
-                                <div className="grid grid-cols-3 gap-4">
-                                    <Label className="text-right font-bold">Critical:</Label>
-                                    <Input
-                                        value={model && 'attributes' in model ? (model as Process).attributes.critical : ''}
-                                        onChange={(e) => handleInputChange('attributes.critical', e.target.value)}
-                                        className="col-span-2"
-                                    />
-                                </div>
-                                <div className="grid grid-cols-3 gap-4 items-center">
-                                    <Label className="text-right font-bold">CSRF Protected:</Label>
-                                    <Switch
-                                        id="isCsrfProtected"
-                                        checked={model && 'attributes' in model ? (model as Process).attributes.isCsrfProtected : false}
-                                        onCheckedChange={(checked) => handleInputChange('attributes.isCsrfProtected', checked.toString())}
-                                    />
-                                </div>
-                            </>
-                        )}
+            <>
+                {renderCommonProperties(selectedNode)}
+                <div className="space-y-4">
+                    <div className="grid grid-cols-3 gap-4">
+                        <Label className="text-right font-bold">Name:</Label>
+                        <Input
+                            value={metadata.name}
+                            onChange={(e) => handleInputChange('metadata.name', e.target.value)}
+                            className="col-span-2"
+                        />
                     </div>
-                </CardContent>
-            </Card>
+                    <div className="grid grid-cols-3 gap-4">
+                        <Label className="text-right font-bold">Description:</Label>
+                        <Input
+                            value={metadata.description}
+                            onChange={(e) => handleInputChange('metadata.description', e.target.value)}
+                            className="col-span-2"
+                        />
+                    </div>
+                    <div className="grid grid-cols-3 gap-4">
+                        <Label className="text-right font-bold">Type:</Label>
+                        <span className="col-span-2">{metadata.element}</span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-4">
+                        <Label className="text-right font-bold">Tags:</Label>
+                        <div className="col-span-2 flex flex-wrap gap-2">
+                            {tags.map((tag, index) => (
+                                <Badge key={index} variant="secondary">{tag}</Badge>
+                            ))}
+                        </div>
+                    </div>
+                    {selectedNode.type === 'group' && (
+                        <div className="grid grid-cols-3 gap-4">
+                            <Label className="text-right font-bold">Trust:</Label>
+                            <Input
+                                value={model && 'trust' in model ? (model as Zone).trust : ''}
+                                onChange={(e) => handleInputChange('trust', e.target.value)}
+                                className="col-span-2"
+                            />
+                        </div>
+                    )}
+                    {selectedNode.type === 'default' && (
+                        <div className="grid grid-cols-3 gap-4">
+                            <Label className="text-right font-bold">Object:</Label>
+                            <Input
+                                value={model && 'object' in model ? (model as Entity).object : ''}
+                                onChange={(e) => handleInputChange('object', e.target.value)}
+                                className="col-span-2"
+                            />
+                        </div>
+                    )}
+                    {selectedNode.type === 'output' && (
+                        <div className="grid grid-cols-3 gap-4">
+                            <Label className="text-right font-bold">Object:</Label>
+                            <span className="col-span-2">datastore</span>
+                        </div>
+                    )}
+                    {selectedNode.type === 'process' && (
+                        <>
+                            <div className="grid grid-cols-3 gap-4">
+                                <Label className="text-right font-bold">Critical:</Label>
+                                <Input
+                                    value={model && 'attributes' in model ? (model as Process).attributes.critical : ''}
+                                    onChange={(e) => handleInputChange('attributes.critical', e.target.value)}
+                                    className="col-span-2"
+                                />
+                            </div>
+                            <div className="grid grid-cols-3 gap-4 items-center">
+                                <Label className="text-right font-bold">CSRF Protected:</Label>
+                                <Switch
+                                    id="isCsrfProtected"
+                                    checked={model && 'attributes' in model ? (model as Process).attributes.isCsrfProtected : false}
+                                    onCheckedChange={(checked) => handleInputChange('attributes.isCsrfProtected', checked.toString())}
+                                />
+                            </div>
+                        </>
+                    )}
+                </div>
+            </>
         );
     } else if (selectedEdge) {
         const edgeData = selectedEdge.data as { dataflow?: { model: DataFlow }, process?: { model: Process }, isProcessNode?: boolean };
         return (
-            <Card className="w-full">
-                <CardHeader>
-                    <CardTitle>Edge Properties</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    {renderCommonProperties(selectedEdge)}
-                    <div className="space-y-4">
-                        <div className="grid grid-cols-3 gap-4">
-                            <Label className="text-right font-bold">Source:</Label>
-                            <span className="col-span-2">{selectedEdge.source}</span>
-                        </div>
-                        <div className="grid grid-cols-3 gap-4">
-                            <Label className="text-right font-bold">Target:</Label>
-                            <span className="col-span-2">{selectedEdge.target}</span>
-                        </div>
-                        {edgeData.dataflow?.model && (
-                            <div className="grid grid-cols-3 gap-4">
-                                <Label className="text-right font-bold">Dataflow Name:</Label>
-                                <Input
-                                    value={edgeData.dataflow.model.metadata.name}
-                                    onChange={(e) => handleInputChange('dataflow.model.metadata.name', e.target.value)}
-                                    className="col-span-2"
-                                />
-                            </div>
-                        )}
+            <>
+                {renderCommonProperties(selectedEdge)}
+                <div className="space-y-4">
+                    <div className="grid grid-cols-3 gap-4">
+                        <Label className="text-right font-bold">Source:</Label>
+                        <span className="col-span-2">{selectedEdge.source}</span>
                     </div>
-                </CardContent>
-            </Card>
+                    <div className="grid grid-cols-3 gap-4">
+                        <Label className="text-right font-bold">Target:</Label>
+                        <span className="col-span-2">{selectedEdge.target}</span>
+                    </div>
+                    {edgeData.dataflow?.model && (
+                        <div className="grid grid-cols-3 gap-4">
+                            <Label className="text-right font-bold">Dataflow Name:</Label>
+                            <Input
+                                value={edgeData.dataflow.model.metadata.name}
+                                onChange={(e) => handleInputChange('dataflow.model.metadata.name', e.target.value)}
+                                className="col-span-2"
+                            />
+                        </div>
+                    )}
+                </div>
+            </>
         );
     }
 
